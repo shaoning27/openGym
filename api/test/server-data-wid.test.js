@@ -23,7 +23,7 @@ test('PUT /api/data: write ids, their ancestry, and a stale write id refused at 
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-wid-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: [{ id: 'u1', name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' } });
   let log = '';
   child.stdout.on('data', d => log += d); child.stderr.on('data', d => log += d);

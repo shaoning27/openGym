@@ -1,7 +1,7 @@
 /* The two counters behind the sign-in throttle (#118), on a clock the test walks by hand. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createBackoff, createWindow } from '../rate-limit.js';
+import { createBackoff, createWindow } from '../rate-limit.ts';
 
 const clock = () => { const c = { t: 1e12 }; c.now = () => c.t; return c; };
 

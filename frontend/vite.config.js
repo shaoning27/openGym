@@ -8,7 +8,7 @@ import { lazyAssets, stampSw } from './scripts/sw-stamp.mjs'
 
 const backend = process.env.API_TARGET || 'http://127.0.0.1:3000'
 // The API refuses a state-changing request that a browser sent from anywhere other than its own
-// ORIGIN (the CSRF guard in api/server.js). The dev server is on a different port, so the page's
+// ORIGIN (the CSRF guard in api/server.ts). The dev server is on a different port, so the page's
 // real Origin is not ORIGIN — modern browsers get through on Sec-Fetch-Site: same-origin, and
 // presenting the expected Origin here covers the ones that don't send it. Match your .env if you
 // changed ORIGIN: API_ORIGIN=https://gym.example.com npm run dev
@@ -122,5 +122,5 @@ export default defineConfig({
   // lower, scripts/check-bundle-syntax.mjs catches (its test builds the bundle).
   build: { chunkSizeWarningLimit: 1500, target: ['safari15', 'chrome100', 'firefox100', 'edge100'] },
   // Gives happy-dom tests a working localStorage on Node 24+ (#733).
-  test: { setupFiles: ['./src/test-setup.js'] }
+  test: { setupFiles: ['./src/test-setup.ts'] }
 })

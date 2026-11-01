@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { routineFromSession, saveSessionAsRoutine } from './session-routines.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { buildSessionEntries } from './session-start.js'
-import { makeSideSet, setSideField, toggleSide, isWarmupRow } from './workout-model.js'
+import { routineFromSession, saveSessionAsRoutine } from './session-routines.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { makeSideSet, setSideField, toggleSide, isWarmupRow } from './workout-model.ts'
 
 const row = (patch = {}) => ({ w: 40, r: 8, done: true, ...patch })
 const entry = (id, target, sets, extra = {}) => ({ id, target, sets, ...extra })

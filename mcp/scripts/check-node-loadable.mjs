@@ -5,7 +5,7 @@
  * vitest resolves modules through Vite — `import.meta.glob`, `?raw`, a stray `.jsx` import all
  * work there. The server does not run under Vite. So a Vite-only import can land in a shared
  * lib module, leave all 33 tests green, and still kill the server at startup. That is exactly
- * what happened once: `history.js` began importing `t` from `i18n.js` (import.meta.glob over
+ * what happened once: `history.ts` began importing `t` from `i18n.ts` (import.meta.glob over
  * the locale packs, plus React), and the server died on `import` with the suite none the wiser.
  *
  * Run by bare `node` on purpose — being outside vitest IS the check. Do not port this to a
@@ -21,9 +21,9 @@ const LIB = new URL('../../frontend/src/lib/', import.meta.url)
 // Every frontend/src/lib module the server reaches today. Named individually so a failure says
 // which one, rather than which import chain.
 const MODULES = [
-  'i18n-core.js', 'format.js', 'exercises.js', 'exercises-data.js',
-  'history.js', 'muscles.js', 'onerm.js', 'progression.js', 'queue.js',
-  'import-csv.js', 'log-workout.js', 'finish-workout.js', 'dumbbells.js', 'backfill.js', 'workout-date.js', 'sync-merge.js'
+  'i18n-core.ts', 'format.ts', 'exercises.ts', 'exercises-data.js',
+  'history.ts', 'muscles.ts', 'onerm.ts', 'progression.ts', 'queue.ts',
+  'import-csv.ts', 'log-workout.ts', 'finish-workout.ts', 'dumbbells.ts', 'backfill.ts', 'workout-date.ts', 'sync-merge.ts'
 ]
 
 let failed = 0
@@ -39,7 +39,7 @@ for (const m of MODULES) {
 
 // The real assertion: the server's own entry points, which pull the whole graph transitively.
 // A module added to the graph later is covered by this even if the list above never learns it.
-for (const entry of ['../src/state.js', '../src/tools.js', '../src/write-tools.js']) {
+for (const entry of ['../src/state.ts', '../src/tools.ts', '../src/write-tools.ts']) {
   try {
     await import(new URL(entry, import.meta.url))
     console.log(`  ok    mcp/${entry.replace('../', '')}`)

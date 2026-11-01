@@ -8,7 +8,7 @@ import path from 'node:path';
 import { tempData } from './helpers.mjs';
 
 const dir = tempData();
-const cfg = await import('../coach/config.js');
+const cfg = await import('../coach/config.ts');
 const FILE = path.join(dir, 'coach.json');
 
 function onDisk(obj) {

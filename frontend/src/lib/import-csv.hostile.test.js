@@ -5,8 +5,8 @@
 // that a bad row is skipped and counted rather than thrown on, and that nothing leaves parseImport
 // the rest of the app cannot render — plus the merge rule that an import adds and never overwrites.
 import { describe, expect, it } from 'vitest'
-import { parseImport, parseWhen, mergeImport } from './import-csv.js'
-import { EXIDX } from './exercises.js'
+import { parseImport, parseWhen, mergeImport } from './import-csv.ts'
+import { EXIDX } from './exercises.ts'
 
 const BODY_PARTS = new Set(['chest', 'back', 'shoulders', 'upper arms', 'lower arms', 'upper legs', 'lower legs', 'waist', 'cardio', 'neck'])
 const kg = { unit: 'kg' }

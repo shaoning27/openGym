@@ -2,7 +2,7 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { parseHTML } from 'linkedom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Modals, { afterScrollRestore, scrollRestorePending } from './Modals.jsx'
+import Modals, { afterScrollRestore, scrollRestorePending } from './Modals.tsx'
 
 const mocks = vi.hoisted(() => {
   const listeners = new Set()
@@ -26,7 +26,7 @@ const mocks = vi.hoisted(() => {
   }
 })
 
-vi.mock('../store/useUI.js', async () => {
+vi.mock('../store/useUI.ts', async () => {
   const React = await import('react')
   const useUI = (selector = state => state) => React.useSyncExternalStore(
     mocks.subscribe,
@@ -487,7 +487,7 @@ describe('pinning the page behind a sheet', () => {
 // The scroll-restore window says "the page is being put back, wait your turn". It belongs to the
 // close path alone. StrictMode (dev) runs the pin/un-pin layout effect twice when Modals mounts
 // with a sheet already open, and the cleanup in between looked exactly like a close, so anything
-// waiting on the restore (the superset card's scroll, views/Workout.jsx) sat out 350 ms for a
+// waiting on the restore (the superset card's scroll, views/Workout.tsx) sat out 350 ms for a
 // page nobody was putting back. In dev only.
 describe('the restore window under StrictMode', () => {
   it('is not armed by a sheet opening, and still is by one closing', async () => {

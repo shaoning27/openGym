@@ -14,14 +14,14 @@ const mocks = vi.hoisted(() => ({
   MOBILE: true, available: true, ready: new Set(), downloads: [], sheets: [], writes: 0,
   S: { gifSize: 'full', exFigure: 'female', workouts: [{ id: 'w1', entries: [{ id: '0001' }] }] },
 }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('../store/useStore.ts', () => {
   const snapshot = () => ({ S: mocks.S, update: () => { mocks.writes++ } })
   const useStore = selector => (selector ? selector(snapshot()) : snapshot())
   useStore.getState = snapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: vi.fn(), openSheet: render => { mocks.sheets.push(render); return {} } })
   const useUI = selector => (selector ? selector(snap()) : snap())
   useUI.getState = snap
@@ -42,10 +42,10 @@ vi.mock('@capacitor/core', () => {
   }
 })
 
-import Media from './Media.jsx'
-import { AnimationQualityRow, AnimationQualitySheet } from './Animations.jsx'
-import * as packs from '../lib/anim-packs.js'
-import { EXIDX } from '../lib/exercises.js'
+import Media from './Media.tsx'
+import { AnimationQualityRow, AnimationQualitySheet } from './Animations.tsx'
+import * as packs from '../lib/anim-packs.ts'
+import { EXIDX } from '../lib/exercises.ts'
 
 let host, root
 const settle = () => act(() => new Promise(r => setTimeout(r, 0)))

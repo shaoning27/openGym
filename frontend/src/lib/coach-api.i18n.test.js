@@ -3,7 +3,7 @@
  * literals that never went through t(): a German or Brazilian lifter read English in the middle of
  * an otherwise translated chat. They are getters over t() now. This reads every line in every
  * locale pack the way the app loads one (setLang), and pins that the text follows a language
- * picked after coach-api.js loaded, which a map translated once at load time would not.
+ * picked after coach-api.ts loaded, which a map translated once at load time would not.
  *
  * setLang sets the page's lang and dir (right-to-left for Arabic), so this runs with a DOM.
  */
@@ -12,14 +12,14 @@ import { resolve } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({ MOBILE: false, coachLocal: null }))
-vi.mock('./demo.js', () => ({ DEMO: false, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
-vi.mock('./mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('./api.js', () => ({ api: vi.fn() }))
-vi.mock('../store/useStore.js', () => ({ useStore: { getState: () => ({ S: {}, coachLocal: mocks.coachLocal }) } }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('./demo.ts', () => ({ DEMO: false, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
+vi.mock('./mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('./api.ts', () => ({ api: vi.fn() }))
+vi.mock('../store/useStore.ts', () => ({ useStore: { getState: () => ({ S: {}, coachLocal: mocks.coachLocal }) } }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
 
-const { JOB_ERRORS, BYOK_ERRORS, jobErrorText } = await import('./coach-api.js')
-const { setLang, getLang, LANGS, DERIVED_LOCALES } = await import('./i18n.js')
+const { JOB_ERRORS, BYOK_ERRORS, jobErrorText } = await import('./coach-api.ts')
+const { setLang, getLang, LANGS, DERIVED_LOCALES } = await import('./i18n.ts')
 
 const PACKS = Object.fromEntries(Object.entries(import.meta.glob('../locales/*.js', { eager: true }))
   .map(([path, mod]) => [path.match(/([^/]+)\.js$/)[1], mod.default]))
@@ -57,7 +57,7 @@ describe('every failure line, in every pack', () => {
   })
 })
 
-describe('a language picked after coach-api.js loaded', () => {
+describe('a language picked after coach-api.ts loaded', () => {
   it('changes what the same map says, and switching back restores the English', async () => {
     expect(getLang()).toBe('en')
     expect(JOB_ERRORS.unprivileged).toBe(EN.JOB_ERRORS.unprivileged)
@@ -89,17 +89,17 @@ describe('a language picked after coach-api.js loaded', () => {
 
 /* The composer, the quick actions and the intake toast a refused request by its class,
  * JOB_ERRORS[e.data?.code], and fall back to the server's English only where there is no line.
- * These read api/coach/routes.js, where the refusals are worded, and pin that every class it
+ * These read api/coach/routes.ts, where the refusals are worded, and pin that every class it
  * sends has a line here. */
 describe('every refusal the server sends has a line here', () => {
   // Read by path, like Library.test.jsx reads index.css: under a DOM environment import.meta.url is
   // not a file URL. The suite runs from frontend/.
-  const routes = readFileSync(resolve(process.cwd(), '../api/coach/routes.js'), 'utf8')
+  const routes = readFileSync(resolve(process.cwd(), '../api/coach/routes.ts'), 'utf8')
 
   // The guard in front of every Coach route answers 503 while the Coach is switched off or has
   // no provider. Its body carried the words and no class, so the app toasted the server's English.
   it('the Coach-off guard in front of every route names a class this map has a line for', () => {
-    const guard = routes.match(/const guard = [\s\S]*?\n {2}\};/)?.[0]
+    const guard = routes.match(/const guard(?:: any)? = [\s\S]*?\n\s*\};/)?.[0]
     expect(guard).toBeTruthy()
     const body = guard.match(/json\(res, 503, (\{[^}]*\})\)/)?.[1]
     expect(body).toBeTruthy()
@@ -114,7 +114,7 @@ describe('every refusal the server sends has a line here', () => {
   // purpose (it names who can resolve it), so it keeps the server's words; every other class
   // gets the app's line.
   it('every class the enqueue refusal words has a line, except the verbatim shared-account one', () => {
-    const block = routes.match(/const USER_ERROR = \{([\s\S]*?)\n\};/)?.[1]
+    const block = routes.match(/const USER_ERROR(?:: any)? = \{([\s\S]*?)\n\};/)?.[1]
     expect(block).toBeTruthy()
     const classes = [...block.matchAll(/^\s*(\w+):/gm)].map(m => m[1])
     expect(classes).toEqual(expect.arrayContaining(['off', 'busy', 'cap', 'consent', 'shared', 'unprivileged']))

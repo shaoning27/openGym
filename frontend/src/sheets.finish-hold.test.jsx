@@ -1,13 +1,13 @@
 // @vitest-environment happy-dom
 // Finishing a workout while a timed hold counts down. Discard has stopped the hold since GL!59;
-// Finish stopped only the rest timer, so the hold bar (app-wide, App.jsx) went on counting over
+// Finish stopped only the rest timer, so the hold bar (app-wide, App.tsx) went on counting over
 // the summary and Home, chimed at zero, and its callback then wrote into a workout that was gone.
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { finishWorkout, finishWorkoutSheet } from './sheets.jsx'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { finishWorkout, finishWorkoutSheet } from './sheets.tsx'
 import { EXDB } from './lib/exercises-data.js'
 
 const clone = v => JSON.parse(JSON.stringify(v))
@@ -36,7 +36,7 @@ function install(sets) {
   useStore.setState({ S: st, user: null })
 }
 
-// Shaped like the row's own callback in views/Workout.jsx: it writes what was held into the set.
+// Shaped like the row's own callback in views/Workout.tsx: it writes what was held into the set.
 const holdInto = set => vi.fn(elapsed => useStore.getState().update(s => { s.active.entries[0].sets[set].sec = elapsed }))
 
 beforeEach(() => {

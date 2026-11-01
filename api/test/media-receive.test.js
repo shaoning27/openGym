@@ -11,7 +11,7 @@ import path from 'node:path';
 import v8 from 'node:v8';
 import vm from 'node:vm';
 import { Readable } from 'node:stream';
-import { createMediaStore, mediaLimits, MediaError } from '../media.js';
+import { createMediaStore, mediaLimits, MediaError } from '../media.ts';
 import * as M from './media-samples.mjs';
 
 v8.setFlagsFromString('--expose-gc');

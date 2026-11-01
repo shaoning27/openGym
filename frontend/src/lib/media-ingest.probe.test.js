@@ -2,7 +2,7 @@
 // here the probe is the real one and the <video> is: it answers after the delays each test sets,
 // so the time budget is what is under test.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { probeVideo } from './media-ingest.js'
+import { probeVideo } from './media-ingest.ts'
 
 class FakeVideo extends EventTarget {
   constructor(opts) {

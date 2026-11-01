@@ -6,13 +6,13 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { editCompletedSession } from '../lib/session-edit.js'
+import Workout from './Workout.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { editCompletedSession } from '../lib/session-edit.ts'
 
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), appBase: () => '/' }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))

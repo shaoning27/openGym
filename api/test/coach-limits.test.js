@@ -10,10 +10,10 @@ import fs from 'node:fs';
 import { tempData, writeState, sampleState } from './helpers.mjs';
 
 const DIR = tempData();
-const cfg = await import('../coach/config.js');
-const jobs = await import('../coach/jobs.js');
-const cadence = await import('../coach/cadence.js');
-const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.js');
+const cfg = await import('../coach/config.ts');
+const jobs = await import('../coach/jobs.ts');
+const cadence = await import('../coach/cadence.ts');
+const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.ts');
 
 cfg.save({ enabled: true, provider: 'fixture' });
 forcePrivilegeVerdict({ ok: true, dropped: false, why: 'pinned by the test suite' });
@@ -277,7 +277,7 @@ test('a proposal nobody has answered is not replaced by the next scheduled revie
 });
 
 test('a rejected answer tells the admin which rule broke, without quoting the plan', async () => {
-  const { whyUnusable } = await import('../coach/jobs.js');
+  const { whyUnusable } = await import('../coach/jobs.ts');
   assert.equal(whyUnusable([]), null);
   const why = whyUnusable(['routines[0].ex[1].id "0009" needs equipment the user does not have', 'routines[1].name is required']);
   assert.ok(why.includes('needs equipment') && why.includes('routines[1].name is required'));

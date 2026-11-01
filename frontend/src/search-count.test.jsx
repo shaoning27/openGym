@@ -6,12 +6,12 @@ import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exercisePicker } from './sheets.jsx'
-import Library from './views/Library.jsx'
-import { registerExerciseAliases } from './lib/exercise-aliases.js'
-import { EXDB, searchExercises } from './lib/exercises.js'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exercisePicker } from './sheets.tsx'
+import Library from './views/Library.tsx'
+import { registerExerciseAliases } from './lib/exercise-aliases.ts'
+import { EXDB, searchExercises } from './lib/exercises.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const mounted = []

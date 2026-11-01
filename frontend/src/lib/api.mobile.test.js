@@ -6,9 +6,9 @@
    paired base, api() now refuses before any request goes out. */
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('./mobile.js', () => ({ MOBILE: true }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true }))
 
-import { api, beacon, setRemoteAuth } from './api.js'
+import { api, beacon, setRemoteAuth } from './api.ts'
 
 afterEach(() => { vi.unstubAllGlobals(); setRemoteAuth('', null) })
 

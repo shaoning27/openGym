@@ -3,7 +3,7 @@
 
    The other two ways a body fails to arrive, unparseable JSON and a body over the cap, are
    covered by server-bad-input.test.js. Raw sockets here, because an abort has to be a real
-   hang-up: a client that stops writing is not the same as one that goes away. Real server.js
+   hang-up: a client that stops writing is not the same as one that goes away. Real server.ts
    in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -30,7 +30,7 @@ async function startServer(t) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({
     users: [{ id: 'u_body_1', name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });

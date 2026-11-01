@@ -43,7 +43,7 @@ let requestWakeLock, releaseWakeLock, wakeLockSupported
 beforeEach(async () => {
   fakeBrowser()
   vi.resetModules()   // the module holds process-wide state; each test gets a fresh one
-  ;({ requestWakeLock, releaseWakeLock, wakeLockSupported } = await import('./wakelock.js'))
+  ;({ requestWakeLock, releaseWakeLock, wakeLockSupported } = await import('./wakelock.ts'))
 })
 afterEach(() => { delete globalThis.document; delete globalThis.navigator })
 

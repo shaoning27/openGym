@@ -8,14 +8,14 @@
    wiped the week that only the phone had. Here the phone keeps its pairing, its account and its
    data, says the server refuses it, and pairing it again merges what it kept.
 
-   Real modules: store/useStore.js, lib/api.js, lib/remote.js, lib/mobile.js. Mocked: the
+   Real modules: store/useStore.ts, lib/api.ts, lib/remote.ts, lib/mobile.js. Mocked: the
    Capacitor plugins (an in-memory Directory.Data), and fetch, which plays the self-hosted server
    at BASE and Capacitor's local server for any other URL. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { syncFingerprint } from '../lib/sync-changes.js'
+import { syncFingerprint } from '../lib/sync-changes.ts'
 
 const h = vi.hoisted(() => {
-  vi.stubEnv('VITE_MOBILE', '1')   // lib/mobile.js: MOBILE = import.meta.env.VITE_MOBILE === '1'
+  vi.stubEnv('VITE_MOBILE', '1')   // lib/mobile.ts: MOBILE = import.meta.env.VITE_MOBILE === '1'
   // `refuse`: file names whose writes fail, like a full disk.
   return { files: new Map(), server: null, calls: [], refuse: new Set() }
 })
@@ -41,7 +41,7 @@ vi.mock('@capacitor/local-notifications', () => ({
 }))
 vi.mock('@capacitor/app', () => ({ App: { addListener: () => ({ remove() {} }) } }))
 vi.mock('@capacitor/core', () => ({ Capacitor: { getPlatform: () => 'android', isNativePlatform: () => true }, registerPlugin: () => ({}) }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
 
 const BASE = 'https://gym.example.com'
 const USER = { id: 'u1', name: 'andi', admin: true }
@@ -69,7 +69,7 @@ function installFetch() {
   })
 }
 const refusing = () => json(401, { error: 'not signed in' })
-// The paired server, as api/server.js answers: a revision per document, 409 on a stale baseRev.
+// The paired server, as api/server.ts answers: a revision per document, 409 on a stale baseRev.
 function serverWith(doc) {
   const srv = { doc: clone(doc), puts: [] }
   srv.handle = (path, method, init) => {
@@ -106,7 +106,7 @@ const ids = xs => (xs || []).map(x => x.id)
 const SERVER_STATE = { _ts: 1000, _rev: 5, unit: 'kg', restSec: 90, workouts: [workout('w1', '2026-09-10')], routines: [routine('push', 10)], bodyweight: [] }
 // At collection, not in a hook: the cold transform of the store's imports (the 1 MB exercise
 // table among them) takes seconds, and under a parallel run it went past the hook's timeout.
-const { DEF } = await import('./useStore.js')
+const { DEF } = await import('./useStore.ts')
 // `synced`: it last agreed with the server under this version, so it knows what that copy was.
 function pairedPhone({ localStorage: withLocal = true, mirror, synced = true } = {}) {
   h.files.clear()
@@ -143,7 +143,7 @@ function zombiePhone(local) {
 let stores = []
 async function freshStore() {
   vi.resetModules()
-  const { useStore } = await import('./useStore.js')
+  const { useStore } = await import('./useStore.ts')
   stores.push(useStore)
   return useStore
 }
@@ -606,7 +606,7 @@ describe('a request that never answers', () => {
   })
 })
 
-describe('the first-start permission steps (views/PermissionSteps.jsx)', () => {
+describe('the first-start permission steps (views/PermissionSteps.tsx)', () => {
   const firstLaunch = async () => {
     h.files.clear(); localStorage.clear()
     const useStore = await freshStore()

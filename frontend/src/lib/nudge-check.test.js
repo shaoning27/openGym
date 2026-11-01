@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 /* The phone's background check before a nudge or a reminder it scheduled on itself
-   (lib/nudge-check.js): which days it is for, what an answer from GET /api/nudge-check takes back,
+   (lib/nudge-check.ts): which days it is for, what an answer from GET /api/nudge-check takes back,
    and when it is handed to the native NudgeCheck plugin at all. The plugin is a stand-in shaped
    like Capacitor's: a Proxy whose `then` is a native call that never answers (#42). */
 const mocks = vi.hoisted(() => ({ MOBILE: true, auth: null, arm: vi.fn(async () => {}), disarm: vi.fn(async () => {}), registered: 0 }))
-vi.mock('./mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('./api.js', () => ({ remoteAuth: () => mocks.auth }))
+vi.mock('./mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('./api.ts', () => ({ remoteAuth: () => mocks.auth }))
 vi.mock('@capacitor/core', () => ({
   registerPlugin: name => {
     mocks.registered++
@@ -15,7 +15,7 @@ vi.mock('@capacitor/core', () => ({
   }
 }))
 
-import { nudgeCheckPlan, idsToCancel, armNudgeCheck, _resetNudgeCheck } from './nudge-check.js'
+import { nudgeCheckPlan, idsToCancel, armNudgeCheck, _resetNudgeCheck } from './nudge-check.ts'
 
 const at = (iso, hhmm) => new Date(`${iso}T${hhmm}:00`)
 const n = (id, iso, hhmm) => ({ id, title: 'x', body: 'y', schedule: { at: at(iso, hhmm), allowWhileIdle: true } })

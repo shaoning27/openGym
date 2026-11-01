@@ -2,7 +2,7 @@
    stamp only moves forward on the server: a write without it, or with an older one — a client from
    before it, a backup restored over the profile — keeps the stored one, so the devices that saw
    the reset do not take the restored copy for one from before it and wipe it again. Real
-   server.js in a child. */
+   server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -29,7 +29,7 @@ async function startServer(t) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({
     users: [{ id: UID, name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });

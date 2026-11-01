@@ -1,8 +1,8 @@
 import { afterEach, expect, it } from 'vitest'
-import { normalizeAliases, registerExerciseAliases } from './exercise-aliases.js'
-import { CATALOGUE, searchExercises, searchScore } from './exercises.js'
-import { stampEdits, mergeStates, sinceReset } from './sync-merge.js'
-import { buildPlanBundle, parsePlan, mergePlan } from './plan-share.js'
+import { normalizeAliases, registerExerciseAliases } from './exercise-aliases.ts'
+import { CATALOGUE, searchExercises, searchScore } from './exercises.ts'
+import { stampEdits, mergeStates, sinceReset } from './sync-merge.ts'
+import { buildPlanBundle, parsePlan, mergePlan } from './plan-share.ts'
 
 afterEach(() => registerExerciseAliases({}))
 it('normalizes bounded text without accepting malformed imported values', () => {

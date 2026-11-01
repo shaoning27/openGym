@@ -3,27 +3,27 @@
 // it fixes: the WebView countdown never reaches zero, so the only alert that can fire is the one
 // armed when the rest starts — the end must not cancel it, Skip and Dismiss must. And whatever
 // moves the rest on one side (a pause, a resume, ±15 s) must leave the other in the same place.
-// The native side is mocked at lib/rest-alert.js; MOBILE is on, so useUI takes the app's path.
+// The native side is mocked at lib/rest-alert.ts; MOBILE is on, so useUI takes the app's path.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
 
 const h = vi.hoisted(() => ({ native: null }))
-vi.mock('../lib/mobile.js', async importOriginal => ({ ...(await importOriginal()), MOBILE: true }))
-vi.mock('../lib/rest-alert.js', () => ({
+vi.mock('../lib/mobile.ts', async importOriginal => ({ ...(await importOriginal()), MOBILE: true }))
+vi.mock('../lib/rest-alert.ts', () => ({
   armRestAlert: vi.fn(() => Promise.resolve(true)),
   holdRestAlert: vi.fn(),
   disarmRestAlert: vi.fn(),
   bindNativeRest: vi.fn(cb => { h.native = cb }),
   toneNative: vi.fn(() => Promise.resolve(true)),
 }))
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
 
-import { useUI } from './useUI.js'
-import { useStore } from './useStore.js'
-import { api } from '../lib/api.js'
-import { armRestAlert, disarmRestAlert, holdRestAlert } from '../lib/rest-alert.js'
-import { beep, chime } from '../lib/sound.js'
-import { toneNative } from '../lib/rest-alert.js'
+import { useUI } from './useUI.ts'
+import { useStore } from './useStore.ts'
+import { api } from '../lib/api.ts'
+import { armRestAlert, disarmRestAlert, holdRestAlert } from '../lib/rest-alert.ts'
+import { beep, chime } from '../lib/sound.ts'
+import { toneNative } from '../lib/rest-alert.ts'
 
 const hide = hidden => {
   Object.defineProperty(document, 'hidden', { configurable: true, get: () => hidden })

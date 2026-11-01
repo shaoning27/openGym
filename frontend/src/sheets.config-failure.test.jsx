@@ -2,11 +2,11 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet, setsLine } from './sheets.jsx'
-import { bindUI } from './components/ui.jsx'
+import { EXDB } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet, setsLine } from './sheets.tsx'
+import { bindUI } from './components/ui.tsx'
 
 // Sets to failure: "Last set to failure" on the exercise's settings, written only when on.
 const ex = EXDB.find(e => e.id === '0009')

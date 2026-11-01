@@ -4,14 +4,14 @@
 import { describe, expect, it } from 'vitest'
 import {
   stackOf, withStack, canHaveStack, ownedWeightsFor, ownedKindFor, stackFromStep, cleanWeights,
-} from './dumbbells.js'
-import { nextPrescription } from './progression.js'
-import { buildPlannedEntry } from './session-start.js'
-import { dropGrid } from './plates.js'
-import { nextDropWeight } from './workout-model.js'
-import { mergeStates, STAMPED_MAPS } from './sync-merge.js'
-import { STAMPED_MAPS as API_STAMPED_MAPS } from '../../../api/sync-stamps.js'
-import { EXIDX } from './exercises.js'
+} from './dumbbells.ts'
+import { nextPrescription } from './progression.ts'
+import { buildPlannedEntry } from './session-start.ts'
+import { dropGrid } from './plates.ts'
+import { nextDropWeight } from './workout-model.ts'
+import { mergeStates, STAMPED_MAPS } from './sync-merge.ts'
+import { STAMPED_MAPS as API_STAMPED_MAPS } from '../../../api/sync-stamps.ts'
+import { EXIDX } from './exercises.ts'
 
 const FLY = '0596'       // lever seated fly
 const PUSHDOWN = '0201'  // cable pushdown

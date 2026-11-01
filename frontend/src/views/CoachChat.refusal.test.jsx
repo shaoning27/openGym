@@ -2,9 +2,9 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import CoachChat from './CoachChat.jsx'
-import { requestReview, askCoach } from '../lib/coach-api.js'
-import { CONSENT_VERSION } from '../lib/coach.js'
+import CoachChat from './CoachChat.tsx'
+import { requestReview, askCoach } from '../lib/coach-api.ts'
+import { CONSENT_VERSION } from '../lib/coach.ts'
 
 // When the server refuses a Coach request at enqueue it answers in English, with the refusal's
 // class beside the words: { error: 'the Coach is already thinking about your training',
@@ -24,18 +24,18 @@ const mocks = vi.hoisted(() => {
   return state
 })
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector(mocks.storeSnapshot())
   useStore.getState = mocks.storeSnapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const useUI = selector => (selector ? selector(mocks.uiSnapshot()) : mocks.uiSnapshot())
   useUI.getState = mocks.uiSnapshot
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => mocks.nav }))
-vi.mock('../lib/coach-api.js', () => ({
+vi.mock('../lib/coach-api.ts', () => ({
   awaitedJob: () => null,
   settleAwaited: vi.fn(),
   useCoachStatus: () => ({ pending: null, job: null, cap: null, loading: false, lastError: null, last: null, refresh: mocks.refresh, maxMessageLen: 2200 }),
@@ -52,8 +52,8 @@ vi.mock('../lib/coach-api.js', () => ({
   ensureAiConsent: vi.fn(() => Promise.resolve(true)),
   isDeclined: e => e?.code === 'declined',
 }))
-vi.mock('../sheets.jsx', () => ({ startFlow: vi.fn(), confirmSheet: vi.fn() }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../sheets.tsx', () => ({ startFlow: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({
   api: vi.fn(() => Promise.resolve({})), IS_APPLE: false, IS_ANDROID: false, BIO: 'biometrics',
 }))
 vi.mock('../coach.css', () => ({}))
@@ -74,7 +74,7 @@ const state = () => ({
     log: [], snapshots: [], chat: [{ id: 'c1', role: 'user', kind: 'intake', at: 1 }], timings: []
   },
 })
-// What api.js throws for a refusal: the server's words as the message, its body on `data`.
+// What api.ts throws for a refusal: the server's words as the message, its body on `data`.
 const refusal = (error, code, status = 409) => Object.assign(new Error(error), { status, data: { error, code } })
 
 let host, root

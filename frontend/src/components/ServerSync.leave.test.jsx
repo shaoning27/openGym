@@ -8,7 +8,7 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 /* When Disconnect, Sign out or Sign out everywhere fails, the toast says what that action was and
    what still stands: "Sign out everywhere" was the only wording, whichever one had failed. */
 const mocks = vi.hoisted(() => ({ toast: null, disconnectServer: null, signOut: null, signOutAll: null }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({
     sync: null, config: null, syncNow: async () => null,
     disconnectServer: (...a) => mocks.disconnectServer(...a),
@@ -19,19 +19,19 @@ vi.mock('../store/useStore.js', () => {
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: m => mocks.toast(m), openSheet: vi.fn() })
   const useUI = selector => (selector ? selector(snap()) : snap())
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/media-sync.js', () => ({ syncMedia: vi.fn() }))
-vi.mock('../lib/mobile.js', () => ({ MOBILE: false }))
-vi.mock('../lib/api.js', () => ({ passkeyLogin: vi.fn(), webauthnOK: () => true }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: vi.fn() }))
-vi.mock('../views/MobileOnboarding.jsx', () => ({ ConnectSheet: () => null }))
+vi.mock('../lib/media-sync.ts', () => ({ syncMedia: vi.fn() }))
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: false }))
+vi.mock('../lib/api.ts', () => ({ passkeyLogin: vi.fn(), webauthnOK: () => true }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: vi.fn() }))
+vi.mock('../views/MobileOnboarding.tsx', () => ({ ConnectSheet: () => null }))
 
-const { leaveServer, OwedSheet } = await import('./ServerSync.jsx')
+const { leaveServer, OwedSheet } = await import('./ServerSync.tsx')
 
 const fail = () => vi.fn(async () => { throw new Error('boom') })
 beforeEach(() => {

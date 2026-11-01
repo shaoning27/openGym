@@ -3,8 +3,8 @@
 // for the notification permission on its own, and once granted it fired with the switch off —
 // a page cannot give a permission back. "On" is this browser holding a push subscription.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
-import { useUI } from './useUI.js'
-import { useStore } from './useStore.js'
+import { useUI } from './useUI.ts'
+import { useStore } from './useStore.ts'
 
 let showNotification, getNotifications, requestPermission, subscription, originalSettings
 const hide = hidden => {

@@ -6,11 +6,11 @@
  */
 import { describe, expect, it } from 'vitest'
 import fc from 'fast-check'
-import { plateStack, plateDelta, rowLoad, PLATE_SIZES } from './plates.js'
+import { plateStack, plateDelta, rowLoad, PLATE_SIZES } from './plates.ts'
 
 const RUNS = { numRuns: Number(process.env.PROPERTY_RUNS) || 300 }
 const sum = a => a.reduce((s, x) => s + x, 0)
-const Q = 4 // quarter-units, as plates.js counts
+const Q = 4 // quarter-units, as plates.ts counts
 const close = (a, b) => Math.abs(a - b) < 1e-9
 
 // An inventory: some of the real sizes, a few pairs of each, heaviest first like inventoryFor's.

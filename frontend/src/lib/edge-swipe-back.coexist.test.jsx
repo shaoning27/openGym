@@ -5,10 +5,10 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import SwipeRow from '../components/SwipeRow.jsx'
-import SwipeCards from '../components/SwipeCards.jsx'
-import { Slider } from '../components/ui.jsx'
-import { installEdgeSwipeBack } from './edge-swipe-back.js'
+import SwipeRow from '../components/SwipeRow.tsx'
+import SwipeCards from '../components/SwipeCards.tsx'
+import { Slider } from '../components/ui.tsx'
+import { installEdgeSwipeBack } from './edge-swipe-back.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

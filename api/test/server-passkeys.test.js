@@ -1,7 +1,7 @@
 /* More than one passkey per profile, and one-time device links (#95): the routes, the proof they
    ask for — to add a passkey and to remove one — the last-way-in rule, the throttle in front of
    link redemption and the audit trail.
-   Real server.js in a child, the same harness as server-password.test.js; every test talks from
+   Real server.ts in a child, the same harness as server-password.test.js; every test talks from
    its own X-Forwarded-For address (TRUST_PROXY=1), so one test's failures never pause another's.
    The authenticator is software: a P-256 key that makes attestations ("none") and assertions the
    way a browser's would. */
@@ -13,9 +13,9 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { hashPassword } from '../password.js';
-import { hashLinkCode } from '../device-link.js';
-import { MAX_PASSKEYS } from '../passkeys-store.js';
+import { hashPassword } from '../password.ts';
+import { hashLinkCode } from '../device-link.ts';
+import { MAX_PASSKEYS } from '../passkeys-store.ts';
 import { boundPort, softPasskey as makeSoftPasskey } from './helpers.mjs';
 
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -42,7 +42,7 @@ async function startServer(t, { env = {}, users = [], creds = [], deviceLinks } 
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-pk-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users, creds, subs: [], invites: [], ...(deviceLinks ? { deviceLinks } : {}) }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: {
       ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN, RP_ID: 'localhost',

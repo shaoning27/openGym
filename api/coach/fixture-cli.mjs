@@ -49,7 +49,7 @@ function payload() {
 const P = payload();
 const kind = P.task || (/change-set/i.test(prompt) ? 'review' : 'create');
 
-// Well-formed JSON naming an exercise nobody has. This is the failure validate.js exists for,
+// Well-formed JSON naming an exercise nobody has. This is the failure validate.ts exists for,
 // and it is not the same as garbage: every check upstream of the validator is happy with it.
 // The fixture keeps saying it on the repair round too, because the interesting assertion is
 // that a model which cannot be told produces a failed job rather than a retry loop.

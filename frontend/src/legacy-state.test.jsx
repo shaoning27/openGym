@@ -5,7 +5,7 @@
  * with no mode, cardio as minutes and speed, `exWeights` as { w, d }. The app overlays that on
  * today's DEF and every reader copes with the old shapes on its own; nothing migrates it in one
  * place. So this file holds a v1.0.0 state built from that release's own writers
- * (sheets.jsx doFinishWorkout, Plan.jsx, RoutineEdit.jsx at the tag) and checks what the user
+ * (sheets.tsx doFinishWorkout, Plan.tsx, RoutineEdit.tsx at the tag) and checks what the user
  * would notice: the history is there and readable, the numbers are the same, the plan still
  * starts the right routine, and the next save, a sync and a backup keep all of it.
  */
@@ -14,8 +14,8 @@ import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('./lib/sound.js', () => ({ beep: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn(), restOver: vi.fn() }))
-vi.mock('./lib/api.js', async importOriginal => ({ ...(await importOriginal()), api: vi.fn(() => Promise.reject(new Error('offline'))), beacon: vi.fn() }))
+vi.mock('./lib/sound.ts', () => ({ beep: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn(), restOver: vi.fn() }))
+vi.mock('./lib/api.ts', async importOriginal => ({ ...(await importOriginal()), api: vi.fn(() => Promise.reject(new Error('offline'))), beacon: vi.fn() }))
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const BENCH = '0025', SQUAT = '0043', STEPMILL = '2311'
@@ -58,12 +58,12 @@ const render = el => {
 beforeAll(async () => {
   localStorage.clear()
   localStorage.setItem('gym_state_v1', JSON.stringify(V1_STATE))
-  ;({ useStore, DEF } = await import('./store/useStore.js'))
-  H = await import('./lib/history.js')
+  ;({ useStore, DEF } = await import('./store/useStore.ts'))
+  H = await import('./lib/history.ts')
   views = {
-    History: (await import('./views/History.jsx')).default,
-    Stats: (await import('./views/Stats.jsx')).default,
-    Plan: (await import('./views/Plan.jsx')).default,
+    History: (await import('./views/History.tsx')).default,
+    Stats: (await import('./views/Stats.tsx')).default,
+    Plan: (await import('./views/Plan.tsx')).default,
   }
 }, 120000)
 beforeEach(() => { globalThis.IS_REACT_ACT_ENVIRONMENT = true; document.body.innerHTML = '' })
@@ -110,7 +110,7 @@ describe('a phone that has kept its v1.0.0 data updates to this build', () => {
 
   // Last: it saves a change.
   it('keeps all of it through the next save, a sync with a server and a backup', async () => {
-    const { mergeStates } = await import('./lib/sync-merge.js')
+    const { mergeStates } = await import('./lib/sync-merge.ts')
     act(() => useStore.getState().update(s => { s.restSec = 90 }))
     const saved = JSON.parse(localStorage.getItem('gym_state_v1'))
     const server = { ...clone(DEF), _ts: 1, workouts: [{ id: 'new1', d: '2026-10-01', start: 1, end: 2, entries: [] }] }

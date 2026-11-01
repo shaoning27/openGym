@@ -2,8 +2,8 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { passwordError, PasswordSignInSheet, PasswordRegisterForm, PasswordRow, PasswordSheet, EmailSheet, looksLikeEmail } from './PasswordAuth.jsx'
-import { normalizeEmail } from '../../../api/password.js'
+import { passwordError, PasswordSignInSheet, PasswordRegisterForm, PasswordRow, PasswordSheet, EmailSheet, looksLikeEmail } from './PasswordAuth.tsx'
+import { normalizeEmail } from '../../../api/password.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -34,18 +34,18 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, hasData: () => mocks.hasData }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: (render, opts) => { mocks.sheets.push({ render, opts }); return {} } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: (...a) => mocks.api(...a),
   webauthnOK: () => mocks.webauthn,
   passkeyAssertion: (...a) => mocks.passkeyAssertion(...a),
@@ -53,7 +53,7 @@ vi.mock('../lib/api.js', () => ({
   passwordRegister: (...a) => mocks.passwordRegister(...a),
   passwordResetRedeem: (...a) => mocks.passwordResetRedeem(...a),
 }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: vi.fn() }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: vi.fn() }))
 
 const fail = (status, data) => Object.assign(new Error(data?.error || 'HTTP ' + status), { status, data })
 
@@ -300,7 +300,7 @@ describe('Settings → Password', () => {
   })
 
   // The server signs in by an address only for a profile with a password (emailHolder in
-  // api/server.js), so a passkey-only profile, or one whose name is blocked, is not offered one;
+  // api/server.ts), so a passkey-only profile, or one whose name is blocked, is not offered one;
   // an address saved while a password existed stays reachable, and says it is asleep.
   it('the sign-in e-mail row needs a password, and a saved address without one says it does not sign in', async () => {
     const titles = host => [...host.querySelectorAll('.lrow-t')].map(e => e.textContent)
@@ -354,7 +354,7 @@ describe('Settings → Password', () => {
 
 })
 
-/* Removing the password asks for the proof setting one does (proveOwner in api/server.js): the
+/* Removing the password asks for the proof setting one does (proveOwner in api/server.ts): the
    password itself or a passkey of this profile, on the sheet that says what removing means. */
 describe('Settings → Password → Remove', () => {
   const named = name => Object.assign(new Error(name), { name })
@@ -456,7 +456,7 @@ describe('Settings → Password → Remove', () => {
 })
 
 /* Settings → Sign-in e-mail: the address first, checked here, then the owner's proof (proveOwner in
-   api/server.js) — the password or a passkey of this profile — which carries the save. Removing
+   api/server.ts) — the password or a passkey of this profile — which carries the save. Removing
    takes the same proof. Nothing is sent before the proof. */
 describe('Settings → Sign-in e-mail', () => {
   const posts = () => mocks.calls.filter(c => c.path === '/api/account/email')

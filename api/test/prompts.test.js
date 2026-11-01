@@ -8,7 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const { PROMPTS } = await import('../coach/core/prompts.js');
-const { buildPrompt } = await import('../coach/core/prompt.js');
+const { buildPrompt } = await import('../coach/core/prompt.ts');
 
 const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'coach', 'prompts');
 

@@ -4,10 +4,10 @@
    ids already in state are never rewritten. */
 import { afterEach, describe, expect, it } from 'vitest'
 import { EXALIAS } from './exercises-data.js'
-import { EXIDX, canonicalExId } from './exercises.js'
-import { mergePlan, parsePlan } from './plan-share.js'
-import { applyChangeSet, CONSENT_VERSION } from './coach.js'
-import { HEVY_ID_MAP, parseHevyWorkouts } from './import-hevy.js'
+import { EXIDX, canonicalExId } from './exercises.ts'
+import { mergePlan, parsePlan } from './plan-share.ts'
+import { applyChangeSet, CONSENT_VERSION } from './coach.ts'
+import { HEVY_ID_MAP, parseHevyWorkouts } from './import-hevy.ts'
 
 const [ALIAS, TO] = Object.entries(EXALIAS).find(([id, to]) => EXIDX[to] && !Object.keys(EXIDX).includes(id))
 const state = () => ({

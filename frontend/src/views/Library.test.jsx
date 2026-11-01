@@ -6,9 +6,9 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Library from './Library.jsx'
-import { EXDB } from '../lib/exercises.js'
-import { CASED_NAME_LANGS, EXERCISE_NAME_LANGS, _setLangState } from '../lib/i18n-core.js'
+import Library from './Library.tsx'
+import { EXDB } from '../lib/exercises.ts'
+import { CASED_NAME_LANGS, EXERCISE_NAME_LANGS, _setLangState } from '../lib/i18n-core.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -17,13 +17,13 @@ const mocks = vi.hoisted(() => {
   state.snapshot = () => ({ S: state.S, user: null, update: mut => { const next = structuredClone(state.S); mut(next); state.S = next } })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../sheets.jsx', () => ({ exerciseDetailSheet: vi.fn(), addToRoutineSheet: vi.fn(), customExSheet: vi.fn() }))
+vi.mock('../sheets.tsx', () => ({ exerciseDetailSheet: vi.fn(), addToRoutineSheet: vi.fn(), customExSheet: vi.fn() }))
 
 const mounted = []
 function render() {

@@ -38,12 +38,12 @@ const server = await createServer({
   define: { __APP_VERSION__: JSON.stringify('dev') },
 })
 const load = p => server.ssrLoadModule(p)
-const core = await load('/src/lib/i18n-core.js')
-const { registerCustom } = await load('/src/lib/exercises.js')
-const { buildDemoState } = await load('/src/lib/demoSeed.js')
-const plan = await load('/src/lib/plan-share.js')
-const hasReport = existsSync(join(root, 'src/lib/report-print.js'))
-const report = hasReport ? await load('/src/lib/report-print.js') : null
+const core = await load('/src/lib/i18n-core.ts')
+const { registerCustom } = await load('/src/lib/exercises.ts')
+const { buildDemoState } = await load('/src/lib/demoSeed.ts')
+const plan = await load('/src/lib/plan-share.ts')
+const hasReport = existsSync(join(root, 'src/lib/report-print.ts'))
+const report = hasReport ? await load('/src/lib/report-print.ts') : null
 
 async function useLang(l) {
   const base = core.baseLang(l)

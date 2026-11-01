@@ -5,19 +5,19 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { closeOpenRow } from '../lib/use-swipe-row.js'
-import { restoreRoutine, routineSnapshot, deleteRoutine } from '../lib/routines.js'
-import Plan, { deleteRoutineWithUndo, takeOutOfLoop } from './Plan.jsx'
-import { chooseFixedWeek, saveRotation, scheduleModeOf } from '../lib/rotation.js'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { closeOpenRow } from '../lib/use-swipe-row.ts'
+import { restoreRoutine, routineSnapshot, deleteRoutine } from '../lib/routines.ts'
+import Plan, { deleteRoutineWithUndo, takeOutOfLoop } from './Plan.tsx'
+import { chooseFixedWeek, saveRotation, scheduleModeOf } from '../lib/rotation.ts'
 
 const nav = vi.fn()
 vi.mock('react-router-dom', () => ({ useNavigate: () => nav }))
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
 const confirmSheet = vi.hoisted(() => vi.fn())
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   dayAssignSheet: vi.fn(), starterPlanSheet: vi.fn(), menuSheet: vi.fn(), confirmSheet,
   planHasRoutines: () => true, exportPlanFile: vi.fn(), printWholePlan: vi.fn(), importPlanFile: vi.fn(),
 }))
@@ -210,7 +210,7 @@ describe('the loop', () => {
     expect(S().rotation.sequence).toEqual(['c', 'b', 'a'])
   })
 
-  // The store's update, the way Plan's editor saves (Plan.jsx setSeq).
+  // The store's update, the way Plan's editor saves (Plan.tsx setSeq).
   const setSeq = ids => useStore.getState().update(s => {
     if (ids.length) saveRotation(s, ids, 'My loop')
     else { s.queue = null; s.rotation = { ...s.rotation, sequence: [] }; s.scheduleMode = 'rotation' }

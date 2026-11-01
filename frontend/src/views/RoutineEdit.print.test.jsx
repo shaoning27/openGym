@@ -7,20 +7,20 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const env = vi.hoisted(() => ({ mobile: false, printHtml: null }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})) }))
-vi.mock('../sheets.jsx', () => ({ exConfigSheet: vi.fn(), exercisePicker: vi.fn(), glyphPicker: vi.fn(), confirmSheet: vi.fn() }))
-vi.mock('../components/Media.jsx', () => ({ Thumb: () => null }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => null }))
-vi.mock('../lib/plan-share.js', async importOriginal => ({ ...await importOriginal(), printPlan: vi.fn() }))
-vi.mock('../lib/mobile.js', async importOriginal => {
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})) }))
+vi.mock('../sheets.tsx', () => ({ exConfigSheet: vi.fn(), exercisePicker: vi.fn(), glyphPicker: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../components/Media.tsx', () => ({ Thumb: () => null }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => null }))
+vi.mock('../lib/plan-share.ts', async importOriginal => ({ ...await importOriginal(), printPlan: vi.fn() }))
+vi.mock('../lib/mobile.ts', async importOriginal => {
   const real = await importOriginal()
   env.printHtml = vi.fn(() => Promise.resolve())
   return { ...real, get MOBILE() { return env.mobile }, printHtml: env.printHtml }
 })
 
-import RoutineEdit from './RoutineEdit.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { printPlan } from '../lib/plan-share.js'
+import RoutineEdit from './RoutineEdit.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { printPlan } from '../lib/plan-share.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 let root, host

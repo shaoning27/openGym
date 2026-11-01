@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { swapActiveExercise } from './active-exercise-swap.js'
+import { swapActiveExercise } from './active-exercise-swap.ts'
 
 const entry = (id, { sg, done = false, target, sets } = {}) => ({
   id,

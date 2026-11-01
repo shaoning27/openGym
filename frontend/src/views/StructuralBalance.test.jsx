@@ -2,12 +2,12 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import StructuralBalance from './StructuralBalance.jsx'
-import Stats from './Stats.jsx'
-import { buildDemoState } from '../lib/demoSeed.js'
-import { TEMPLATE_LIST } from '../lib/structuralBalanceTemplates.js'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import StructuralBalance from './StructuralBalance.tsx'
+import Stats from './Stats.tsx'
+import { buildDemoState } from '../lib/demoSeed.ts'
+import { TEMPLATE_LIST } from '../lib/structuralBalanceTemplates.ts'
 
 const navSpy = vi.fn()
 vi.mock('react-router-dom', () => ({ useNavigate: () => navSpy }))

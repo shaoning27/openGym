@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { repeatSessionEntries } from './session-repeat.js'
-import { makeSideSet, toggleSide, isWarmupRow, isSideSet } from './workout-model.js'
+import { repeatSessionEntries } from './session-repeat.ts'
+import { makeSideSet, toggleSide, isWarmupRow, isSideSet } from './workout-model.ts'
 
 const row = (patch = {}) => ({ w: 40, r: 8, done: true, ...patch })
 const entry = (id, target, sets, extra = {}) => ({ id, target, sets, ...extra })

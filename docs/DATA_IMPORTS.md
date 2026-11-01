@@ -125,7 +125,7 @@ One row per set. Column names are matched ignoring case and punctuation; the fir
 
 ## For developers
 
-The CSV parser is `frontend/src/lib/import-csv.js`. The Hevy API import and a detected Hevy CSV
+The CSV parser is `frontend/src/lib/import-csv.ts`. The Hevy API import and a detected Hevy CSV
 resolve exercises through the same generated lookup, `frontend/src/lib/hevy-id-map.js` (template id
 for the API, English title for the CSV). To regenerate it, set `HEVY_API_KEY` in the environment or
 `.env` and run `node scripts/build-hevy-id-map.mjs`. Localised (non-English) Hevy titles fall back

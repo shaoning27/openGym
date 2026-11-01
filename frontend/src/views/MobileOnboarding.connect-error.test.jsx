@@ -4,10 +4,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { _setLangState } from '../lib/i18n-core.js'
-import { ConnectSheet } from './MobileOnboarding.jsx'
+import { useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { _setLangState } from '../lib/i18n-core.ts'
+import { ConnectSheet } from './MobileOnboarding.tsx'
 
 let root, host
 const type = (el, value) => act(() => {

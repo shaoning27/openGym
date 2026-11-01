@@ -14,7 +14,7 @@ vi.mock('../locales/de.js', async () => {
 vi.mock('../instr/de.js', () => { log.push('steps'); return { default: {} } })
 vi.mock('../exercise-names/de.js', () => { log.push('names'); return { default: {} } })
 
-import { setLang, t, getLang } from './i18n.js'
+import { setLang, t, getLang } from './i18n.ts'
 
 describe('setLang', () => {
   it('fetches the language packs side by side', async () => {

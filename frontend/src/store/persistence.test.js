@@ -11,21 +11,21 @@
 import { describe, it, expect } from 'vitest'
 import {
   normalizeMeasurementsState, DEFAULT_MEASUREMENT_KEYS, measurementValue
-} from '../lib/measurements.js'
+} from '../lib/measurements.ts'
 
 
-const { DEF, hasData } = await import('./useStore.js')
+const { DEF, hasData } = await import('./useStore.ts')
 
 const clone = o => JSON.parse(JSON.stringify(o))
 
 // The three writers, spelled as the code spells them.
-// Settings.jsx `doExport`: the whole state object, nothing selected out of it.
+// Settings.tsx `doExport`: the whole state object, nothing selected out of it.
 const exportBackup = S => JSON.stringify(S, null, 2)
-// Settings.jsx `doImport` → replaceState → persist, which normalizes on the way in.
+// Settings.tsx `doImport` → replaceState → persist, which normalizes on the way in.
 const importBackup = json => normalizeMeasurementsState(Object.assign(clone(DEF), JSON.parse(json)))
-// api/server.js `PUT /api/data` stores the blob verbatim, minus the in-progress workout.
+// api/server.ts `PUT /api/data` stores the blob verbatim, minus the in-progress workout.
 const pushToServer = S => { const b = clone(S); delete b.active; return JSON.stringify({ state: b }) }
-// useStore.js `pullState` → persist, same overlay-then-normalize as the import path.
+// useStore.ts `pullState` → persist, same overlay-then-normalize as the import path.
 const pullFromServer = wire => normalizeMeasurementsState(Object.assign(clone(DEF), JSON.parse(wire).state))
 
 // A profile that uses all three keys: a non-default field set, a custom field, two check-ins,

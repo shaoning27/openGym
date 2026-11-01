@@ -5,8 +5,8 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import TabBar from './TabBar.jsx'
-import { DEF, useStore } from '../store/useStore.js'
+import TabBar from './TabBar.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
 
 const where = vi.hoisted(() => ({ loc: { pathname: '/home' } }))
 vi.mock('react-router-dom', () => ({

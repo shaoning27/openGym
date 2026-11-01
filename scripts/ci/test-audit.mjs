@@ -17,7 +17,7 @@ const roots = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--js
 const walk = (d) => readdirSync(d).flatMap((n) => {
   if (n === 'node_modules' || n.startsWith('.')) return []
   const p = join(d, n)
-  return statSync(p).isDirectory() ? walk(p) : /\.test\.(m?js|jsx)$/.test(n) ? [p] : []
+  return statSync(p).isDirectory() ? walk(p) : /\.test\.(m?[jt]s|[jt]sx)$/.test(n) ? [p] : []
 })
 
 // The body of the call that opens at `start` (the index of its '('), skipping strings,
@@ -39,7 +39,7 @@ function callBody(src, start) {
 }
 
 const ASSERT = /\bexpect\w*\s*[.(]|\bassert\b|\bassert\.|\bfc\.assert\b|\.rejects\b|\.resolves\b|\bthrows\s*\(|\bok\s*\(|\bstrictEqual\b|\bdeepStrictEqual\b|\bmatch\s*\(\s*\w+\s*,|expectRow|\bcheck\w*\s*\(/
-const SOURCE_READ = /readFileSync\([^)]*(\.jsx?|\.css|\.java|\.swift|\.gradle|Dockerfile|\.xml|\.html|\.mjs)['"`)]|readFileSync\([^)]*(src|App|views|components|android|ios)\b/
+const SOURCE_READ = /readFileSync\([^)]*(\.[jt]sx?|\.css|\.java|\.swift|\.gradle|Dockerfile|\.xml|\.html|\.mjs)['"`)]|readFileSync\([^)]*(src|App|views|components|android|ios)\b/
 
 const files = roots.flatMap((r) => { try { return walk(r) } catch { return [] } })
 const report = { files: files.length, tests: 0, noAssert: [], dupBodies: [], dupNames: [], sourcePattern: [] }

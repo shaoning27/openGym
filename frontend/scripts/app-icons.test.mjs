@@ -1,13 +1,13 @@
 /* The alternate home-screen icons: every file scripts/app-icons.mjs owns is there, the size iOS
  * wants, and drawn the way the script draws it today; and the iOS project lists the same icons as
- * src/lib/app-icon-variants.js, or the picker would offer one the phone has not got. In 1.4.3 the
+ * src/lib/app-icon-variants.ts, or the picker would offer one the phone has not got. In 1.4.3 the
  * picker is iPhone only: Android keeps its one launcher icon (1.4.4 has the alias tests). */
 import { describe, expect, it } from 'vitest'
 import { execFileSync } from 'node:child_process'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { IOS_SIZE, PREVIEW, ROOT, draw, files, pngInfo, scene } from './app-icons.mjs'
-import { APP_ICON_VARIANTS } from '../src/lib/app-icon-variants.js'
+import { APP_ICON_VARIANTS } from '../src/lib/app-icon-variants.ts'
 
 const read = rel => readFileSync(join(ROOT, rel), 'utf8')
 const ALT = APP_ICON_VARIANTS.filter(v => v.id !== 'default')

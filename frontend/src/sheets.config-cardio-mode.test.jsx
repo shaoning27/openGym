@@ -6,11 +6,11 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB, EXIDX } from './lib/exercises.js'
-import { modeOf } from './lib/history.js'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet } from './sheets.jsx'
+import { EXDB, EXIDX } from './lib/exercises.ts'
+import { modeOf } from './lib/history.ts'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet } from './sheets.tsx'
 
 const HIGH_KNEES = '3556'
 const mounted = []

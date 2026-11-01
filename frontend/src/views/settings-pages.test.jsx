@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { PAGES, PAGE_IDS, ROOT_GROUPS, SEARCH, pageVisible, searchSettings, pageTrail, fold } from './settings-pages.js'
+import { PAGES, PAGE_IDS, ROOT_GROUPS, SEARCH, pageVisible, searchSettings, pageTrail, fold } from './settings-pages.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -20,29 +20,29 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, DEF: { reminder: { time: '17:30' } }, hasData: () => false }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: mocks.toast, openSheet: render => { mocks.sheets.push(render); return { close: vi.fn() } } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => (...a) => mocks.navs.push(a) }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(path => Promise.resolve(path === '/api/account/passkeys' ? { passkeys: [] } : {})), webauthnOK: () => false, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), IS_ANDROID: false }))
-vi.mock('../lib/push.js', () => ({ pushSupported: () => mocks.push, enablePush: vi.fn(), disablePush: vi.fn(), sendTestPush: vi.fn(), syncPushSubscription: vi.fn(() => Promise.resolve(mocks.pushOn)) }))
-vi.mock('../lib/wakelock.js', () => ({ wakeLockSupported: () => true }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE }, isAndroid: () => Promise.resolve(false), shareExport: vi.fn(), shareExportBlob: vi.fn(), syncReminder: vi.fn() }))
-vi.mock('./MobileOnboarding.jsx', () => ({ ConnectSheet: () => null }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(path => Promise.resolve(path === '/api/account/passkeys' ? { passkeys: [] } : {})), webauthnOK: () => false, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), IS_ANDROID: false }))
+vi.mock('../lib/push.ts', () => ({ pushSupported: () => mocks.push, enablePush: vi.fn(), disablePush: vi.fn(), sendTestPush: vi.fn(), syncPushSubscription: vi.fn(() => Promise.resolve(mocks.pushOn)) }))
+vi.mock('../lib/wakelock.ts', () => ({ wakeLockSupported: () => true }))
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE }, isAndroid: () => Promise.resolve(false), shareExport: vi.fn(), shareExportBlob: vi.fn(), syncReminder: vi.fn() }))
+vi.mock('./MobileOnboarding.tsx', () => ({ ConnectSheet: () => null }))
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), confirmSheet: vi.fn(), importFromApp: vi.fn(), importFromHevy: vi.fn(),
   equipmentProfileSheet: vi.fn(), plateInventorySheet: vi.fn(), menuSheet: vi.fn(),
 }))
 
-import Settings from './Settings.jsx'
+import Settings from './Settings.tsx'
 
 globalThis.__APP_VERSION__ ??= 'test'
 
@@ -193,7 +193,7 @@ describe('the root', () => {
 })
 
 // Each search hit is a row on its page, on the device and profile it was offered for. The ctx is
-// the one Settings builds (views/Settings.jsx) for the same mocks; push-dependent web rows are
+// the one Settings builds (views/Settings.tsx) for the same mocks; push-dependent web rows are
 // the exception the page settles on open (`via`), tested on their own below.
 describe('the search lands on a row', () => {
   const scenarios = {
@@ -451,7 +451,7 @@ describe('searchSettings', () => {
   })
 
   it('finds the translated choices of a row, and words of its own language', async () => {
-    const { setLang, t } = await import('../lib/i18n.js')
+    const { setLang, t } = await import('../lib/i18n.ts')
     try {
       await setLang('de')
       const first = q => searchSettings(q, guestWeb, t)[0]?.title
@@ -467,7 +467,7 @@ describe('searchSettings', () => {
   })
 
   it('English words match from the start of a word only, so "ton" never finds "buttons"', async () => {
-    const { setLang, t } = await import('../lib/i18n.js')
+    const { setLang, t } = await import('../lib/i18n.ts')
     try {
       await setLang('de')
       const titles = searchSettings('ton', guestWeb, t).map(h => h.title)

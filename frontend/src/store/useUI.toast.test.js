@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { useUI } from './useUI.js'
+import { useUI } from './useUI.ts'
 
 beforeEach(() => { vi.useFakeTimers(); useUI.setState({ toastMsg: '', toastAction: null }) })
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers() })

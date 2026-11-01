@@ -5,10 +5,10 @@
 // what the workout screen would render.
 import { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { beginWorkout, finishWorkout } from './sheets.jsx'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { isWarmupRow } from './lib/workout-model.js'
+import { beginWorkout, finishWorkout } from './sheets.tsx'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { isWarmupRow } from './lib/workout-model.ts'
 
 const BENCH = '0025'
 const clone = v => JSON.parse(JSON.stringify(v))

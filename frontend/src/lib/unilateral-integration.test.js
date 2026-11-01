@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { makeSideSet, setSideField, toggleSide, addSideDrop, setSideDropAt, isSideSet } from './workout-model.js'
-import { applyPrescription } from './progression.js'
-import { buildSessionEntries } from './session-start.js'
-import { workoutVolume, applyIntensifierPlan, setLabel, setsDone } from './history.js'
-import { convertStateUnit } from './units.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { exerciseHistory } from './exercise-history.js'
+import { makeSideSet, setSideField, toggleSide, addSideDrop, setSideDropAt, isSideSet } from './workout-model.ts'
+import { applyPrescription } from './progression.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { workoutVolume, applyIntensifierPlan, setLabel, setsDone } from './history.ts'
+import { convertStateUnit } from './units.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { exerciseHistory } from './exercise-history.ts'
 
 const row = () => makeSideSet({ w: 20, r: 16 })
 const done = s => toggleSide(toggleSide(s, 'L'), 'R')

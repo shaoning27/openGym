@@ -5,14 +5,14 @@ import { describe, expect, it } from 'vitest'
 import {
   dbLoadOf, dbLoadFor, withDbLoad, isBellEx, isOneArm, bellsIn, entryDbLoad, volumeFactor,
   meaningFactor, entryAs, historyAs, currentDbLoad, withMeaning,
-} from './dumbbells.js'
-import { workoutVolume, setLabel, bestWeightFor, freestyleConfig } from './history.js'
-import { best1RM, is1RMRecord, e1rmSeries } from './onerm.js'
-import { exerciseHistory, bestSetFor } from './exercise-history.js'
-import { buildPlannedEntry } from './session-start.js'
-import { mergeStates, stampChange } from './sync-merge.js'
-import { buildPlanBundle, parsePlan } from './plan-share.js'
-import { EXIDX } from './exercises.js'
+} from './dumbbells.ts'
+import { workoutVolume, setLabel, bestWeightFor, freestyleConfig } from './history.ts'
+import { best1RM, is1RMRecord, e1rmSeries } from './onerm.ts'
+import { exerciseHistory, bestSetFor } from './exercise-history.ts'
+import { buildPlannedEntry } from './session-start.ts'
+import { mergeStates, stampChange } from './sync-merge.ts'
+import { buildPlanBundle, parsePlan } from './plan-share.ts'
+import { EXIDX } from './exercises.ts'
 
 const BENCH = '0289'     // dumbbell bench press: two bells
 const ROW = '0292'       // dumbbell one arm bent-over row: one bell
@@ -237,8 +237,8 @@ describe('sync and sharing', () => {
 // "I own no dumbbells" (Discord, deamondo) rides in the same stamped map, under `none`.
 describe('the no-dumbbells switch', () => {
   it('is its own key, beside the per-unit lists, and the later flip wins a sync', async () => {
-    const { ownsNoDumbbells, withNoDumbbells } = await import('./dumbbells.js')
-    const { mergeStates } = await import('./sync-merge.js')
+    const { ownsNoDumbbells, withNoDumbbells } = await import('./dumbbells.ts')
+    const { mergeStates } = await import('./sync-merge.ts')
     const S = { unit: 'kg', dumbbells: { kg: { weights: [10], _ts: 1 } } }
     expect(ownsNoDumbbells(S)).toBe(false)
     const on = { ...S, dumbbells: withNoDumbbells(S, true, 5), _ts: 5 }

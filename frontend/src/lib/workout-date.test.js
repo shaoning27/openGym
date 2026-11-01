@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { legacySyncKey, startTimeOf, sameWorkout, retimeWorkout, rebuildPrHistory, moveWorkout, durationMinOf, setWorkoutDuration } from './workout-date.js'
-import { backfillStart } from './backfill.js'
+import { legacySyncKey, startTimeOf, sameWorkout, retimeWorkout, rebuildPrHistory, moveWorkout, durationMinOf, setWorkoutDuration } from './workout-date.ts'
+import { backfillStart } from './backfill.ts'
 
 const set = w => ({ w, r: 5, done: true })
 const entry = (id, w) => ({ id, sets: [set(w)] })

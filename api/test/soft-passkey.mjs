@@ -31,7 +31,7 @@ export function softPasskey() {
   return {
     id,
     row: (userId, extra = {}) => ({ id, userId, publicKey: cose.toString('base64url'), counter: 0, transports: ['internal'], ...extra }),
-    // What navigator.credentials.create() hands back, serialised the way lib/api.js does.
+    // What navigator.credentials.create() hands back, serialised the way lib/api.ts does.
     attestation(challenge, { origin = ORIGIN } = {}) {
       const clientDataJSON = Buffer.from(JSON.stringify({ type: 'webauthn.create', challenge, origin, crossOrigin: false }));
       const len = Buffer.from([raw.length >> 8, raw.length & 255]);

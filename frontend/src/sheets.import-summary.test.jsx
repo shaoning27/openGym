@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { importFromApp } from './sheets.jsx'
-import { fmtDateRange } from './lib/format.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { importFromApp } from './sheets.tsx'
+import { fmtDateRange } from './lib/format.ts'
 
 // The import summary's date range said "Sun, 3 Feb – Sun, 21 Dec" for a history that ran over
 // two years: without the year, a span across a new year read as a few months.

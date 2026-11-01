@@ -1,8 +1,8 @@
 // @vitest-environment happy-dom
 // Settings → Apple Watch: this phone's choices for its watch, per device, never in the profile.
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { readWatchPrefs, writeWatchPrefs, settingsForWatch, readWatchStatus, writeWatchStatus, onWatchPrefs, WATCH_DEFAULTS, SHOW_DEFAULTS } from './watch-settings.js'
-import { applyEvents, bindWatchAppActions, _resetWatchSync } from './watch-sync.js'
+import { readWatchPrefs, writeWatchPrefs, settingsForWatch, readWatchStatus, writeWatchStatus, onWatchPrefs, WATCH_DEFAULTS, SHOW_DEFAULTS } from './watch-settings.ts'
+import { applyEvents, bindWatchAppActions, _resetWatchSync } from './watch-sync.ts'
 
 beforeEach(() => { localStorage.clear(); _resetWatchSync() })
 

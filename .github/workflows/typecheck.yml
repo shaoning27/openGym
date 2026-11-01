@@ -1,0 +1,32 @@
+name: TypeScript
+
+on:
+  pull_request:
+  push:
+    branches: [main, stores, watch, 'ci-*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            frontend/package-lock.json
+            api/package-lock.json
+            mcp/package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix frontend ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix api ci --omit=optional --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix mcp ci --ignore-scripts --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run check:migration

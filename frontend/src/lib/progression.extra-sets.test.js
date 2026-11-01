@@ -2,7 +2,7 @@
 // Before this, one heavier bonus set pulled the next session's weight up with it, and a bonus
 // set taken short of the target reps reported the whole session as missed.
 import { describe, it, expect } from 'vitest'
-import { nextPrescription, readSession } from './progression.js'
+import { nextPrescription, readSession } from './progression.ts'
 
 const set = (w, r, done = true) => ({ w, r, done })
 const entry = (target, sets) => ({ id: '0025', target, sets })

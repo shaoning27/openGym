@@ -5,32 +5,32 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Admin from './Admin.jsx'
+import Admin from './Admin.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const mocks = vi.hoisted(() => ({ answers: {}, sheets: [] }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: path => {
     const key = path.split('?')[0]
     return key in mocks.answers ? Promise.resolve(mocks.answers[key]) : Promise.reject(new Error('not found'))
   }
 }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ user: { id: 'adm', name: 'Admin', admin: true }, S: {} })
   const useStore = selector => selector ? selector(snap()) : snap()
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: () => {}, openSheet: render => mocks.sheets.push(render) })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {}, useLocation: () => ({ state: null }) }))
-vi.mock('../sheets.jsx', () => ({ confirmSheet: vi.fn() }))
-vi.mock('./AdminCoach.jsx', () => ({ default: () => null }))
+vi.mock('../sheets.tsx', () => ({ confirmSheet: vi.fn() }))
+vi.mock('./AdminCoach.tsx', () => ({ default: () => null }))
 
 const mounted = []
 function render(el) {

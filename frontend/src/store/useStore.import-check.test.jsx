@@ -3,14 +3,14 @@
 /* QA, v1.3.9: importing a backup replaced the server copy outright, and a workout another device
    had synced meanwhile was gone. The import stays a deliberate replace, but the server is asked
    first: what it holds that the backup does not is said in the confirm, with the choice to merge
-   it in (views/Settings.jsx doImport). */
+   it in (views/Settings.tsx doImport). */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const ids = xs => (xs || []).map(x => x.id)

@@ -3,9 +3,9 @@ import {
   rirOf, toScale, displayScale, avgRir, effortSummary, hasEffort, hasEstimableEffort, effortWeeks,
   effortHistogram, isHardSet, HARD_RIR, MIN_RATED,
   effortColor, EFFORT_BANDS, EFFORT_PRESETS
-} from './effort.js'
-import { isoOf } from './format.js'
-import { anchorsByWorkout, resolveSetRir } from './recovery.js'
+} from './effort.ts'
+import { isoOf } from './format.ts'
+import { anchorsByWorkout, resolveSetRir } from './recovery.ts'
 
 const daysAgo = n => { const d = new Date(); d.setDate(d.getDate() - n); return d }
 // One workout on a day, with the sets given. Everything here is a finished set unless a set
@@ -284,7 +284,7 @@ describe('picker preset labels', () => {
 })
 
 describe('estimated fallback resolver', () => {
-  // Built the way Stats.jsx builds it: 90-day anchors, logged first, estimate second.
+  // Built the way Stats.tsx builds it: 90-day anchors, logged first, estimate second.
   const resolving = st => {
     const anchors = anchorsByWorkout(st.workouts, {})
     return (s, w, e) => resolveSetRir(s, s, e, w, anchors.get(w), {})

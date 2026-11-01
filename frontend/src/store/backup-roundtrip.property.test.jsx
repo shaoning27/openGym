@@ -5,18 +5,18 @@
  * "Import backup" on another device, leave the same workouts, routines, weigh-ins and custom
  * exercises in the store, and the same once more after the app restarts from what it saved.
  *
- * Everything on the way is the real code: exportBackupZip and readBackupFile (lib/backup-media.js),
+ * Everything on the way is the real code: exportBackupZip and readBackupFile (lib/backup-media.ts),
  * the store's importBackup and its persist to localStorage. Only the server is left out: this is
  * the device with no account, where the backup file is the only copy there is.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import fc from 'fast-check'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(async () => { throw new Error('offline') }), setRemoteAuth: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(async () => { throw new Error('offline') }), setRemoteAuth: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
 
-import { DEF, useStore } from './useStore.js'
-import { exportBackupZip, readBackupFile } from '../lib/backup-media.js'
+import { DEF, useStore } from './useStore.ts'
+import { exportBackupZip, readBackupFile } from '../lib/backup-media.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const RUNS = { numRuns: Number(process.env.PROPERTY_RUNS) || 40 }
@@ -74,7 +74,7 @@ describe('a backup brings back everything it was made from', () => {
   it('as JSON (Export backup), and still after a restart', async () => {
     await fc.assert(fc.asyncProperty(profile, async P => {
       useStore.setState({ S: otherDevice() })
-      const json = JSON.stringify(P, null, 2)   // Settings.jsx doExport
+      const json = JSON.stringify(P, null, 2)   // Settings.tsx doExport
       const S = await restore(new File([json], 'opengym-backup.json', { type: 'application/json' }))
       expect(view(S)).toEqual(view(P))
       expect(view(saved())).toEqual(view(P))

@@ -7,15 +7,15 @@ import { createRoot } from 'react-dom/client'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})) }))
-vi.mock('../sheets.jsx', () => ({ exConfigSheet: vi.fn(), exercisePicker: vi.fn(), glyphPicker: vi.fn(), confirmSheet: vi.fn() }))
-vi.mock('../components/Media.jsx', () => ({ Thumb: () => null }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => null }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})) }))
+vi.mock('../sheets.tsx', () => ({ exConfigSheet: vi.fn(), exercisePicker: vi.fn(), glyphPicker: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../components/Media.tsx', () => ({ Thumb: () => null }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => null }))
 
-import RoutineEdit from './RoutineEdit.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { exercisePicker, exConfigSheet } from '../sheets.jsx'
-import { EXIDX } from '../lib/exercises.js'
+import RoutineEdit from './RoutineEdit.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { exercisePicker, exConfigSheet } from '../sheets.tsx'
+import { EXIDX } from '../lib/exercises.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 let root, host

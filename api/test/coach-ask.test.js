@@ -5,11 +5,11 @@ import assert from 'node:assert/strict';
 import { tempData } from './helpers.mjs';
 
 tempData();
-const payloadLib = await import('../coach/core/payload.js');
-const { runPipeline } = await import('../coach/core/pipeline.js');
-const { buildPromptParts } = await import('../coach/core/prompt.js');
-const { validateAsk } = await import('../coach/core/validate.js');
-const { SCHEMAS } = await import('../coach/core/schemas.js');
+const payloadLib = await import('../coach/core/payload.ts');
+const { runPipeline } = await import('../coach/core/pipeline.ts');
+const { buildPromptParts } = await import('../coach/core/prompt.ts');
+const { validateAsk } = await import('../coach/core/validate.ts');
+const { SCHEMAS } = await import('../coach/core/schemas.ts');
 
 const set = (w, r, done = true) => ({ w, r, done });
 const S = {

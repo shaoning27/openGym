@@ -1,7 +1,7 @@
 // #303: an instance-wide default language, and the browser's, apply only to a copy nobody has
 // picked a language for — never to an existing profile, whose `lang: 'en'` may be a choice.
 import { describe, expect, it } from 'vitest'
-import { matchLocale, autoLang } from './default-lang.js'
+import { matchLocale, autoLang } from './default-lang.ts'
 
 describe('matchLocale', () => {
   it('matches the full tag first, in any case or separator', () => {

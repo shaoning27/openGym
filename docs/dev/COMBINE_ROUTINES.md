@@ -47,23 +47,23 @@ ticket's resolution comment are the migration checklist; the load-bearing groups
 | **S1** `S.week[d]` value | scalar id → `string[]` | 44 sites: 17 new-shape writers, plural-helper conversions, 11 array-tolerant reads, 4 array-tolerant writes (remove-from-list + delete-when-empty). `S.dayPlan` **excluded** — stays scalar. |
 | **S2** `s.active.routineId` | → `routineIds: []` + per-entry `rid` | 24 sites: `beginWorkout` / `beginBackfill` writers, 9 per-entry `rid` reads (swap, progression settings, add-exercise), the 6-site `startFlow` caller cluster. |
 | **S3** `w.routineId` | → `routineIds: []` + `routineId` mirror | 6 sites. Only `WorkoutRow`'s glyph reads it, and the mirror covers that. `buildCompletedWorkout` is the sole writer. Nothing aggregates saved workouts by routine. |
-| **S4** `effectiveRoutineId` / `effectiveRoutine` / `nextTrainingDay` | plural primaries + thin singular wrappers | 10 call sites (2 internal to `history.js`, 8 across `sheets.jsx`, `mobile.js`, `TabBar.jsx`, `Workout.jsx`, `Home.jsx`). |
+| **S4** `effectiveRoutineId` / `effectiveRoutine` / `nextTrainingDay` | plural primaries + thin singular wrappers | 10 call sites (2 internal to `history.ts`, 8 across `sheets.tsx`, `mobile.ts`, `TabBar.tsx`, `Workout.tsx`, `Home.tsx`). |
 
 **Gotchas the implementation must not trip on** (full list in ENG-10): empty-array
 truthiness (`[]` is truthy — writers must `delete` the key, never store `[]`); `=== id`
-comparisons that silently stop matching against an array; `views/Workout.jsx:35`
+comparisons that silently stop matching against an array; `views/Workout.tsx:35`
 `r !== todayR` identity filter; `hashPlan` string coercion of an array (§7).
 
 ---
 
 ## 2. The merge helper
 
-**New module `frontend/src/lib/session-merge.js`**, paired with `session-merge.test.js`.
-Imports `buildSessionEntries` from `lib/session-start.js`; nothing imports it but `sheets.jsx`
-and `views/Workout.jsx`, so there is no cycle.
+**New module `frontend/src/lib/session-merge.ts`**, paired with `session-merge.test.js`.
+Imports `buildSessionEntries` from `lib/session-start.ts`; nothing imports it but `sheets.tsx`
+and `views/Workout.tsx`, so there is no cycle.
 
 ```js
-import { buildSessionEntries } from './session-start.js'
+import { buildSessionEntries } from './session-start.ts'
 
 // Build a session's entries from an ordered list of routine ids.
 // - resolves + filters to still-existing routines, de-duplicates by id (first wins)
@@ -93,7 +93,7 @@ export function deriveSessionName(names) {
 }
 ```
 
-`buildSessionEntries(st, r)` (in `lib/session-start.js`) is refactored in the same change:
+`buildSessionEntries(st, r)` (in `lib/session-start.ts`) is refactored in the same change:
 
 - **Returns a bare `entries` array** — the `{ entries, excluded }` wrapper is retired
   (ENG-11). Callers that used `excluded` use per-entry `noProg` instead.
@@ -114,7 +114,7 @@ Exactly two ways to build a combined session.
 
 ### 3.1 In-session — workout header ⋮ → Add routine
 
-`views/Workout.jsx` `openViewMenu` is restructured (ENG-12 §3):
+`views/Workout.tsx` `openViewMenu` is restructured (ENG-12 §3):
 
 - First menu item: **Add routine** (icon `plus`, sub "Bring another routine into this
   session").
@@ -138,7 +138,7 @@ scrolling / Next.
 
 ### 3.2 Weekly Plan — a multi-routine day, inline
 
-`views/Plan.jsx` "Week schedule" replaces "tap day → radio sheet" with inline management
+`views/Plan.tsx` "Week schedule" replaces "tap day → radio sheet" with inline management
 (ENG-12 §1):
 
 - Each weekday row renders its assigned routines as **sub-rows** beneath the day header,
@@ -153,10 +153,10 @@ scrolling / Next.
 - Day header shows a muted "`N routines`" hint when N ≥ 1.
 
 Writers `delete` the day key when the last routine is removed — never store `[]`. `DayAssign`
-as a full radio sheet is retired for the populated case (`dayAssignSheet` in `sheets.jsx`);
+as a full radio sheet is retired for the populated case (`dayAssignSheet` in `sheets.tsx`);
 the old multi-select day sheet is removed entirely.
 
-**Today card one-tap** (`views/Home.jsx` `onToday`): starts the day's planned session —
+**Today card one-tap** (`views/Home.tsx` `onToday`): starts the day's planned session —
 `startFlow(effectiveRoutineIds(S, todayISO()))`. When the weekday holds ≥ 2 routines and
 there is no override, that single tap starts the combined session.
 
@@ -189,8 +189,8 @@ export function beginWorkout(routineIds, bw) {
   `plan.kind === 'off'` carry it.
 - `routineIds` accepts `string | string[] | null`; `buildCombinedEntries` normalises with
   `[].concat(x ?? [])`. The ~6 `startFlow` / `onStart` call sites
-  (`components/TabBar.jsx:21`, `views/Home.jsx:56`, `views/Workout.jsx:44,47,52`,
-  `App.jsx:143`) pass `[r.id]` for a specific routine, `effectiveRoutineIds(...)` for
+  (`components/TabBar.tsx:21`, `views/Home.tsx:56`, `views/Workout.tsx:44,47,52`,
+  `App.tsx:143`) pass `[r.id]` for a specific routine, `effectiveRoutineIds(...)` for
   "today's planned session", `[]` for explicit freestyle.
 - **`beginBackfill` stays single-routine** — `LogPastWorkout` UI is unchanged (one
   `SelectRow`). It still emits the new shape: `buildCombinedEntries(st, routineId ? [routineId] : [])`,
@@ -200,7 +200,7 @@ export function beginWorkout(routineIds, bw) {
 
 ## 4. Planner resolver — plural helpers
 
-`frontend/src/lib/history.js` gains the plural primaries; the singular helpers stay as thin
+`frontend/src/lib/history.ts` gains the plural primaries; the singular helpers stay as thin
 wrappers (fewer call sites to touch, and "first routine" is already load-bearing for the
 glyph).
 
@@ -226,18 +226,18 @@ export const effectiveRoutine   = (S, iso) => effectiveRoutines(S, iso)[0] ?? nu
   "what's next" label.
 
 **Call-site conversions** (switch to the plural helper, iterate a list where they rendered
-one): `sheets.jsx` `DayOverride` (`:1508-1524`) and `Calendar` (`:1620-1621`);
-`lib/mobile.js` `buildReminderNotifications` (`:111` — notification body joins names or
-counts); `views/Home.jsx` Today card (`:22`), week-strip dot (`:43`), `next` (`:25`);
-`components/TabBar.jsx:20`; `views/Workout.jsx` `StartChooser` (`:33-35` — replace the
-`r !== todayR` identity filter with an id-set exclusion); `views/Plan.jsx:52`.
+one): `sheets.tsx` `DayOverride` (`:1508-1524`) and `Calendar` (`:1620-1621`);
+`lib/mobile.ts` `buildReminderNotifications` (`:111` — notification body joins names or
+counts); `views/Home.tsx` Today card (`:22`), week-strip dot (`:43`), `next` (`:25`);
+`components/TabBar.tsx:20`; `views/Workout.tsx` `StartChooser` (`:33-35` — replace the
+`r !== todayR` identity filter with an id-set exclusion); `views/Plan.tsx:52`.
 
-**`plannedPerWeek`** (`views/Home.jsx:52`) counts **days, not routines**:
+**`plannedPerWeek`** (`views/Home.tsx:52`) counts **days, not routines**:
 `Object.values(S.week).filter(ids => ids?.length).length`. A combined day = **1**, matching
 `wThisWeek` (which counts `w` records — a combined session saves one `w`). `streakWeeks` is
 `S.workouts`-derived and unaffected.
 
-**`RoutineEdit` delete-cleanup** (`views/RoutineEdit.jsx:449-450`): pull the deleted id out
+**`RoutineEdit` delete-cleanup** (`views/RoutineEdit.tsx:449-450`): pull the deleted id out
 of each `S.week` array, `delete` the key when it empties. `S.dayPlan` line is unchanged
 (scalar — `=== id` still valid).
 
@@ -250,7 +250,7 @@ Object.keys(s.week).forEach(k => {
 
 ---
 
-## 5. `lib/plan-share.js`
+## 5. `lib/plan-share.ts`
 
 The plan bundle carries arrays; import remaps each element.
 
@@ -279,22 +279,22 @@ From [ENG-11](https://linear.app/factical/issue/ENG-11). "Excluded from progress
 from a whole-workout flag to a **per-entry** one, so a rehab routine combined with real work
 excludes only its own exercises.
 
-- **One shared predicate**, exported from `history.js` and unit-tested once:
+- **One shared predicate**, exported from `history.ts` and unit-tested once:
   `entryExcluded(w, entry) → w.excludeFromProgression === true || entry.noProg === true`.
   A legacy workout (whole-workout flag, no per-entry field) reads as all-entries-excluded.
 - **`noProg` is derived purely from the source routine's `excludeFromProgression`** at build
   time and frozen onto the entry. No per-exercise toggle; editing the routine flag later does
   not rewrite a saved session. Written only when `true`.
 
-**`progression.js` — `sessionsFor` (`:150-161`)**: drop the whole-workout
+**`progression.ts` — `sessionsFor` (`:150-161`)**: drop the whole-workout
 `if (w.excludeFromProgression === true) return`; after `const entry = w.entries.find(...)`,
 add `if (entryExcluded(w, entry)) return`. This is the **only** progression-exclusion path in
 the file — `nextPrescription → sessionsFor` is the sole caller; `stallCount` / `readSession`
 work on the list it returns. A `noProg` gap at the same weight does not reset a stall.
 
-**`history.js` — `lastEntryFor`**: becomes universally `noProg`-aware (skips
+**`history.ts` — `lastEntryFor`**: becomes universally `noProg`-aware (skips
 `entryExcluded(w, entry)` entries) for all four call sites (`buildWorkSets`,
-`freestyleConfig`, `sheets.jsx:626` `ExerciseDetail`, `Workout.jsx:111` recap). The
+`freestyleConfig`, `sheets.tsx:626` `ExerciseDetail`, `Workout.tsx:111` recap). The
 `regular`-wrapper hack in `buildWorkSets` (`:335-337`, which rebuilt `S` with excluded
 workouts filtered out) is **retired** — the predicate now lives one level down. Accepted
 consequence: the in-session "Last time …" recap and the Library exercise sheet stop
@@ -302,7 +302,7 @@ surfacing an excluded session; "Last time" now has one definition everywhere —
 recent *counting* entry.
 
 **"Best" / PRs — unchanged.** `bestWeightFor`, `bestWeightForEntry`, and the `prs` calc in
-`finish-workout.js` have never filtered `excludeFromProgression`; `noProg` does not change
+`finish-workout.ts` have never filtered `excludeFromProgression`; `noProg` does not change
 that. A set you performed is a fact; `noProg` suppresses the next *prescription*, not the
 record. (Pin this in a test so a future reader doesn't "fix" it.)
 
@@ -310,7 +310,7 @@ record. (Pin this in a test so a future reader doesn't "fix" it.)
 []` → `nextPrescription` hits `{ kind: 'first' }`, rows seed from the routine's own `target`.
 The sessions stay visible in History and charts.
 
-**`buildCompletedWorkout`** (`lib/finish-workout.js`): the per-entry field whitelist (`:6-26`)
+**`buildCompletedWorkout`** (`lib/finish-workout.ts`): the per-entry field whitelist (`:6-26`)
 must also copy `entry.noProg` (when truthy) and `entry.rid` onto each saved entry, or they
 are dropped at finish. It writes the legacy **`w.excludeFromProgression: true` mirror iff
 every completed entry is `noProg`** — derived from the entries, **not** read from `active`
@@ -328,7 +328,7 @@ excluded routine, through `buildSessionEntries`.
 ## 7. Coach — read-context & plan fingerprint
 
 From [ENG-15](https://linear.app/factical/issue/ENG-15). The plan fingerprint is computed in
-two runtimes that share no build step (`frontend/src/lib/coach.js` and `api/coach/core/`) and
+two runtimes that share no build step (`frontend/src/lib/coach.ts` and `api/coach/core/`) and
 must stay byte-for-byte matched. See `docs/AI_COACH.md` for the feature overview.
 
 **Canonical form** — one string form shared by both runtimes. `canonicalPlan` (both) and
@@ -370,19 +370,19 @@ keys; only the inner routine list is order-significant. `+` matches the ENG-12 d
 
 | File | Change |
 |---|---|
-| `api/coach/core/payload.js` — `canonicalPlan` | day value → `[].concat(S.week[d])`; filter `S.week?.[d]?.length` |
-| `api/coach/core/payload.js` — `cleanPlan` | same normalisation (stays ≡ `canonicalPlan` — the parity `coach.test.js` pins) |
-| `api/coach/core/payload.js` — `aggregates` | `plannedDays`: `filter(k => S.week[k]?.length)` — a combined day already counts as 1 |
-| `api/coach/core/plan-hash.js` — `hashPlan` | week join → `k + '=' + plan.week[k].join('+')` |
+| `api/coach/core/payload.ts` — `canonicalPlan` | day value → `[].concat(S.week[d])`; filter `S.week?.[d]?.length` |
+| `api/coach/core/payload.ts` — `cleanPlan` | same normalisation (stays ≡ `canonicalPlan` — the parity `coach.test.js` pins) |
+| `api/coach/core/payload.ts` — `aggregates` | `plannedDays`: `filter(k => S.week[k]?.length)` — a combined day already counts as 1 |
+| `api/coach/core/plan-hash.ts` — `hashPlan` | week join → `k + '=' + plan.week[k].join('+')` |
 | `api/coach/prompts/common.md` | one plan-reading bullet |
 | `api/coach/prompts/review.md` | `week` change-op clause |
 
-`api/coach/jobs.js:315` (calls the fixed helpers), `api/coach/core/validate.js` (validates
+`api/coach/jobs.ts:315` (calls the fixed helpers), `api/coach/core/validate.ts` (validates
 the model's scalar proposed `week`; an array `beforeValue` for a combined day is
-display-only), the `api/coach/routes.js` handlers, and `cadence.js` (reads `cadence.weekly`)
+display-only), the `api/coach/routes.ts` handlers, and `cadence.ts` (reads `cadence.weekly`)
 all need **no change**.
 
-**Frontend `lib/coach.js` change list:**
+**Frontend `lib/coach.ts` change list:**
 
 | Function | Change |
 |---|---|
@@ -414,12 +414,12 @@ scalar**.
   - **Add exercise → inherit the current unit's `rid`.** The new entry is inserted adjacent
     to that unit, so inheriting its `rid` keeps each routine's block contiguous in the
     grouped `WorkoutDetail`, matches intent, and gives `nextPrescription` a real routine.
-    Sites: `views/Workout.jsx:862` (picker), `:870` (`nextPrescription` routine lookup),
+    Sites: `views/Workout.tsx:862` (picker), `:870` (`nextPrescription` routine lookup),
     `:878` (splice — stamp `rid`).
   - **Swap → keep the replaced slot's `rid`.** In-place substitution; routine identity
-    unchanged. Sites: `sheets.jsx:955-973` (`swapTo` — resolve routine from
+    unchanged. Sites: `sheets.tsx:955-973` (`swapTo` — resolve routine from
     `entries[index].rid`, stamp `current.rid` onto `replacement`);
-    `lib/active-exercise-swap.js:38-41` (split-insert literal — add
+    `lib/active-exercise-swap.ts:38-41` (split-insert literal — add
     `...(current.rid ? { rid: current.rid } : {})`, the way `sg` is already preserved).
   - **`noProg` follows that `rid`**, frozen at insert. An added exercise is never
     independently `noProg`.
@@ -457,7 +457,7 @@ From [ENG-12](https://linear.app/factical/issue/ENG-12) (prototype branch
   renders as one implicit group with no subheader — exactly as today.
 - **Name-derivation rule** — `deriveSessionName` (§2). Used by the Today card, the
   `WorkoutRow` / `WorkoutDetail` headers, `s.active.name` / `w.name`, and the printed plan
-  grid (`plan-share.js` `weekHTML`).
+  grid (`plan-share.ts` `weekHTML`).
 
 ---
 

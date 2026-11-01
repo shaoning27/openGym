@@ -1,6 +1,6 @@
 # Workout view — cards / list / compact / focus
 
-The active workout screen (`frontend/src/views/Workout.jsx`) has four layouts, chosen by
+The active workout screen (`frontend/src/views/Workout.tsx`) has four layouts, chosen by
 `S.workoutView` (`'cards' | 'list' | 'compact' | 'focus'`, default `'cards'`). All four use the
 same active session and completion pipeline.
 
@@ -34,7 +34,7 @@ steppers show inline. The lean default keeps them in each exercise's ⋯ menu; t
 - **Per session:** the workout header's **⋮** button opens a `menuSheet` with the four
   layouts; picking one writes `s.active.workoutView`.
 
-`beginWorkout` / `beginBackfill` (`frontend/src/sheets.jsx`) snapshot `S.workoutView` onto
+`beginWorkout` / `beginBackfill` (`frontend/src/sheets.tsx`) snapshot `S.workoutView` onto
 `s.active.workoutView` when the session is created, and the render prefers
 `A.workoutView || S.workoutView`. So the ⋮ menu re-lays-out the running session only, and
 changing the saved default never disturbs a workout already in progress.
@@ -43,7 +43,7 @@ changing the saved default never disturbs a workout already in progress.
 
 Component-level, no new `lib/` helper:
 
-- `frontend/src/views/FocusView.jsx` and `frontend/src/views/FocusView.css` — Focus layout.
+- `frontend/src/views/FocusView.tsx` and `frontend/src/views/FocusView.css` — Focus layout.
 - `frontend/src/views/Workout.test.jsx` — `workout list view`, `workout compact view`,
   `workout focus view`, and `workout view header menu` describe blocks.
 - `frontend/src/views/Settings.workoutview.test.jsx` — the 4-way Segmented and Focus cases.

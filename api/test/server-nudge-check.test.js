@@ -1,7 +1,7 @@
 /* GET /api/nudge-check: what the phone app's background check asks before a missed-day nudge or
    a workout-day reminder it scheduled on itself fires. Whether that day was trained or excused
    elsewhere, whether the server would still nudge it, and the revision: nothing of the workouts
-   themselves. Real server.js in a child, the same harness as server-admin-delete.test.js. */
+   themselves. Real server.ts in a child, the same harness as server-admin-delete.test.js. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -36,7 +36,7 @@ async function startServer(t) {
     users: [{ id: ANA, name: 'Ana', created: now }, { id: BEA, name: 'Bea', created: now }], creds: [], subs: [], invites: [],
   }));
   fs.writeFileSync(path.join(dataDir, `state-${ANA}.json`), JSON.stringify(state));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' },
   });

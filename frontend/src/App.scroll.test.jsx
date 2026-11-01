@@ -1,16 +1,16 @@
 // @vitest-environment happy-dom
 // The route's scroll restore on the very first load. A fresh load arrives as a POP with nothing
 // remembered, and used to scroll to the top a frame later — on top of a scroll a view had made on
-// mount (the superset card centring its row, views/Workout.jsx), cutting a smooth scroll off. It
+// mount (the superset card centring its row, views/Workout.tsx), cutting a smooth scroll off. It
 // goes to the top now, in the same pass, so a view's own scroll runs after it and stands.
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import App from './App.jsx'
-import { DEF, useStore } from './store/useStore.js'
+import App from './App.tsx'
+import { DEF, useStore } from './store/useStore.ts'
 
-vi.mock('./lib/sound.js', () => ({ setPlayOnSilent: vi.fn(), setVibrate: vi.fn(), setAlarmBuzzer: vi.fn() }))
-vi.mock('./lib/api.js', async importOriginal => {
+vi.mock('./lib/sound.ts', () => ({ setPlayOnSilent: vi.fn(), setVibrate: vi.fn(), setAlarmBuzzer: vi.fn() }))
+vi.mock('./lib/api.ts', async importOriginal => {
   const actual = await importOriginal()
   return { ...actual, api: vi.fn(() => Promise.resolve({})), beacon: vi.fn() }
 })

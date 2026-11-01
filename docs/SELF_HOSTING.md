@@ -69,7 +69,7 @@ you're poking at the API directly:
 
 - `POST /api/pair/create` (needs a session plus the owner proof: a passkey, or the current
   password where that counts) and `POST /api/pair/redeem` (doesn't) implement
-  this — see `api/server.js`. The returned token is the exact same signed value a cookie
+  this — see `api/server.ts`. The returned token is the exact same signed value a cookie
   carries, so "sign out everywhere" invalidates it too — and a phone has no passkey to sign
   back in with, so every paired phone has to be **paired again** afterwards. The phone says
   so ("Your server no longer accepts this phone") and keeps its data until it is.
@@ -1008,9 +1008,9 @@ longest ago makes room. The activity log records each code made (`admin.recovery
 login, so the owner's way back is a command on the server, which works for any profile:
 
 ```sh
-docker compose exec api node recover.js "Their name"
+docker compose exec api node recover.ts "Their name"
 # several profiles with that name? it lists them; pick one:
-docker compose exec api node recover.js --id <profile id>
+docker compose exec api node recover.ts --id <profile id>
 ```
 
 It prints a one-time code to use as above. The command asks the running server for the code over
@@ -1018,8 +1018,8 @@ a local Unix socket that only the server's own user can open (in the image: root
 `docker compose exec` runs as; the AI Coach's sandboxed jobs cannot reach it). It never edits
 `db.json` itself, because the server keeps its data in memory and would overwrite such a change
 on its next save. So the server has to be running: `docker compose up -d` first. On Kubernetes:
-`kubectl exec deploy/<deployment> -c api -- node recover.js "Their name"`. Outside Docker, run
-`node recover.js` from the api directory as the same user and with the same `DATA_DIR` as the
+`kubectl exec deploy/<deployment> -c api -- node recover.ts "Their name"`. Outside Docker, run
+`node recover.ts` from the api directory as the same user and with the same `DATA_DIR` as the
 server (or set `ADMIN_SOCKET_DIR` for both).
 
 The phone app never uses a passkey at all: it pairs with a one-time code from a signed-in

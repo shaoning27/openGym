@@ -11,11 +11,11 @@ import fs from 'node:fs';
 import { tempData, writeState, sampleState } from './helpers.mjs';
 
 const DIR = tempData();
-const cfg = await import('../coach/config.js');
-const jobs = await import('../coach/jobs.js');
-const payload = await import('../coach/core/payload.js');
-const { CHANGE_TYPES } = await import('../coach/core/validate.js');
-const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.js');
+const cfg = await import('../coach/config.ts');
+const jobs = await import('../coach/jobs.ts');
+const payload = await import('../coach/core/payload.ts');
+const { CHANGE_TYPES } = await import('../coach/core/validate.ts');
+const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.ts');
 
 cfg.save({ enabled: true, provider: 'fixture' });
 
@@ -459,7 +459,7 @@ test('a job is refused outright when the privilege drop cannot be performed', ()
 test('the admin test-run answers to the same privilege gate, and spawns nothing without it', async () => {
   // "Test the Coach" runs the provider runtime a job would, so without the drop the child would
   // run as this process and see ./data. It used to skip the gate the job path performs.
-  const { adapterFor } = await import('../coach/adapters/index.js');
+  const { adapterFor } = await import('../coach/adapters/index.ts');
   const adapter = adapterFor('fixture');
   const real = { check: adapter.check, invoke: adapter.invoke };
   let calls = 0;
@@ -616,7 +616,7 @@ test('a job that waited in the queue answers to the gate for the provider it act
   // enqueue asks about the provider configured at the time. Two jobs run at once, so a third
   // waits, and it runs against whatever is configured when its turn comes: switched from an
   // HTTPS provider to a runtime-backed one meanwhile, it used to spawn without the drop.
-  const { adapterFor } = await import('../coach/adapters/index.js');
+  const { adapterFor } = await import('../coach/adapters/index.ts');
   const https = adapterFor('compatible');
   const fixture = adapterFor('fixture');
   const real = { https: https.invoke, fixture: fixture.invoke };

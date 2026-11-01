@@ -1,4 +1,4 @@
-// The phone's durable copy of the profile (lib/mobile.js nativeSave / nativeLoad): written whole to
+// The phone's durable copy of the profile (lib/mobile.ts nativeSave / nativeLoad): written whole to
 // a second file and moved over the first, so a write cut short never leaves half a file where the
 // last good copy was (data safety, owner 2026-10-14).
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -27,7 +27,7 @@ vi.mock('@capacitor/filesystem', () => ({
 let M
 beforeEach(async () => {
   h.files.clear(); h.failRename = false; h.failWrite.clear()
-  M = await import('./mobile.js')
+  M = await import('./mobile.ts')
 })
 
 describe('the state file', () => {

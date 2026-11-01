@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
-// #614: Settings → Reminders → Gym reminder. The native side is mocked (lib/gym-reminder.js has
+// #614: Settings → Reminders → Gym reminder. The native side is mocked (lib/gym-reminder.ts has
 // its own tests); this checks the page's flow: off by default, the explainer before any system
 // prompt, "Always" asked only after it, the gyms list, the time window and the editor's save.
 const mocks = vi.hoisted(() => ({
@@ -14,8 +14,8 @@ const mocks = vi.hoisted(() => ({
   saved: [], asked: [], confirm: true, nav: vi.fn(), toast: vi.fn(), menu: null, location: { state: null },
   here: { lat: 47.3769, lng: 8.5417, accuracy: 12 },
 }))
-vi.mock('../lib/gym-reminder.js', async () => {
-  const real = await vi.importActual('../lib/gym-reminder.js')
+vi.mock('../lib/gym-reminder.ts', async () => {
+  const real = await vi.importActual('../lib/gym-reminder.ts')
   return {
     ...real,
     loadGymConfig: async () => ({ config: real.normConfig(mocks.config), permission: mocks.perm }),
@@ -27,17 +27,17 @@ vi.mock('../lib/gym-reminder.js', async () => {
     openAppSettings: vi.fn(),
   }
 })
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   confirmSheet: o => { mocks.asked.push('explainer'); if (mocks.confirm) o.onConfirm?.(); else o.onCancel?.() },
   menuSheet: o => { mocks.menu = o },
 }))
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: mocks.toast })
   const useUI = sel => (sel ? sel(snap()) : snap())
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ S: { workouts: [] } })
   const useStore = sel => (sel ? sel(snap()) : snap())
   useStore.getState = snap
@@ -58,7 +58,7 @@ vi.mock('leaflet', () => {
 })
 vi.mock('leaflet/dist/leaflet.css', () => ({}))
 
-import GymReminderPage, { GymEditPage, searchAddress } from './GymReminder.jsx'
+import GymReminderPage, { GymEditPage, searchAddress } from './GymReminder.tsx'
 
 let host, root
 const flush = async () => { for (let i = 0; i < 6; i++) await act(async () => { await new Promise(r => setTimeout(r, 0)) }) }
@@ -143,7 +143,7 @@ describe('Gym reminder page', () => {
     expect(host.textContent).toContain('needs location access in the background')
   })
   it('Android, quick arrival check not allowed: says why and leads to the settings; allowed: just On', async () => {
-    const { openAppSettings } = await import('../lib/gym-reminder.js')
+    const { openAppSettings } = await import('../lib/gym-reminder.ts')
     mocks.perm = { location: 'granted', background: 'granted', notifications: 'granted', quick: 'off' }
     await render(<GymReminderPage />)
     expect(rowByText('Quick arrival check').textContent).toContain('Off')

@@ -3,7 +3,7 @@
 // the CSV side — a bad item is skipped, and nothing reaches the store the app cannot render — and
 // the merge rule that routines are added or replace their own earlier copy, never anything else.
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { parseHevyWorkouts, parseHevyRoutines, parseHevyBodyweight, mergeHevyRoutines, fetchHevyPages, importHevyData } from './import-hevy.js'
+import { parseHevyWorkouts, parseHevyRoutines, parseHevyBodyweight, mergeHevyRoutines, fetchHevyPages, importHevyData } from './import-hevy.ts'
 
 const BODY_PARTS = new Set(['chest', 'back', 'shoulders', 'upper arms', 'lower arms', 'upper legs', 'lower legs', 'waist', 'cardio', 'neck'])
 const kg = { unit: 'kg' }

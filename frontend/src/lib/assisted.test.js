@@ -2,10 +2,10 @@
 // harder set, the record, and what progression should aim for. The reporter's case: 30 kg of
 // assistance, then 20 kg — the 20 is the new best, and the next session should ask for less.
 import { describe, it, expect } from 'vitest'
-import { isAssisted, betterWeight, beatsWeight, EXIDX } from './exercises.js'
-import { bestWeightFor, bestWeightForEntry } from './history.js'
-import { readSession, nextPrescription } from './progression.js'
-import { bestSetOf, e1rmSeries, is1RMRecord } from './onerm.js'
+import { isAssisted, betterWeight, beatsWeight, EXIDX } from './exercises.ts'
+import { bestWeightFor, bestWeightForEntry } from './history.ts'
+import { readSession, nextPrescription } from './progression.ts'
+import { bestSetOf, e1rmSeries, is1RMRecord } from './onerm.ts'
 
 const ASSISTED = '0017'          // assisted pull-up, leverage machine
 const PLAIN = '0025'             // barbell bench press
@@ -113,7 +113,7 @@ describe('no one-rep max for an assistance machine', () => {
 
 describe('a sync does not hand the help back', () => {
   it('keeps the smaller assistance and the larger ordinary load', async () => {
-    const { mergeStates } = await import('./sync-merge.js')
+    const { mergeStates } = await import('./sync-merge.ts')
     const phone = { _ts: 2000, exWeights: { [ASSISTED]: { w: 20, d: '2026-09-08' }, [PLAIN]: { w: 100, d: '2026-09-08' } } }
     const server = { _ts: 1000, exWeights: { [ASSISTED]: { w: 30, d: '2026-09-01' }, [PLAIN]: { w: 90, d: '2026-09-01' } } }
     expect(mergeStates(phone, server).exWeights[ASSISTED].w).toBe(20)

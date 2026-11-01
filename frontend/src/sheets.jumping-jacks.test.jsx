@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { EXIDX } from './lib/exercises.js'
-import { exConfigSheet } from './sheets.jsx'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
+import { EXIDX } from './lib/exercises.ts'
+import { exConfigSheet } from './sheets.tsx'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
 
 const mounted = []
 function open(existing) {

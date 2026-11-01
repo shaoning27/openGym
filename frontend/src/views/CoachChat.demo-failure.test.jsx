@@ -2,18 +2,18 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { parseHTML } from 'linkedom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import CoachChat from './CoachChat.jsx'
-import { CONSENT_VERSION } from '../lib/coach.js'   // the consent a fixture grants is the current one, whatever its number
-// Loaded up front: coach-api.js imports it on first use, and a cold load (transform, file reads)
+import CoachChat from './CoachChat.tsx'
+import { CONSENT_VERSION } from '../lib/coach.ts'   // the consent a fixture grants is the current one, whatever its number
+// Loaded up front: coach-api.ts imports it on first use, and a cold load (transform, file reads)
 // outlasted `flush` below on a fast runner (Node 22 on CI), so the first ask was not in yet.
-import '../lib/coach-demo.js'
+import '../lib/coach-demo.ts'
 
-// The demo Coach's failure state, end to end. Every other CoachChat test mocks lib/coach-api.js;
+// The demo Coach's failure state, end to end. Every other CoachChat test mocks lib/coach-api.ts;
 // this one runs the real thing with DEMO forced on, so the chain under test is exactly what the
-// GitHub Pages build ships: a builder throws inside lib/coach-demo.js's timer → demoStatus()
+// GitHub Pages build ships: a builder throws inside lib/coach-demo.ts's timer → demoStatus()
 // reports `lastError` → useCoachStatus hands it over on the next poll → the job-ended effect
 // writes an error line into the thread, and the next request is taken rather than 409'd.
-// Before the catch in coach-demo.js the job stayed 'running' for ever and the demo Coach was
+// Before the catch in coach-demo.ts the job stayed 'running' for ever and the demo Coach was
 // bricked until the page was reloaded.
 const mocks = vi.hoisted(() => {
   const state = { S: null, nav: vi.fn(), toast: vi.fn(), openSheet: vi.fn() }
@@ -26,26 +26,26 @@ const mocks = vi.hoisted(() => {
   return state
 })
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector(mocks.storeSnapshot())
-  useStore.getState = mocks.storeSnapshot          // coach-api.js reads S() from here in demo mode
+  useStore.getState = mocks.storeSnapshot          // coach-api.ts reads S() from here in demo mode
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const useUI = selector => (selector ? selector(mocks.uiSnapshot()) : mocks.uiSnapshot())
   useUI.getState = mocks.uiSnapshot
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => mocks.nav }))
-vi.mock('../lib/demo.js', () => ({ DEMO: true, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
-vi.mock('../sheets.jsx', () => ({ startFlow: vi.fn(), confirmSheet: vi.fn() }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/demo.ts', () => ({ DEMO: true, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
+vi.mock('../sheets.tsx', () => ({ startFlow: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({
   api: vi.fn(() => Promise.resolve({})), IS_APPLE: false, IS_ANDROID: false, BIO: 'biometrics',
 }))
 vi.mock('../coach.css', () => ({}))
 
-const DELAY = 2200        // coach-demo.js's thinking time
-const POLL_MS = 3000      // coach-api.js's cadence while a job is in flight
+const DELAY = 2200        // coach-demo.ts's thinking time
+const POLL_MS = 3000      // coach-api.ts's cadence while a job is in flight
 
 let dom, root, container
 
@@ -66,7 +66,7 @@ async function click(el) {
   expect(el).toBeTruthy()
   await act(async () => { el.dispatchEvent(new dom.Event('click', { bubbles: true })); await flush() })
 }
-// Microtasks only: the dynamic import of coach-demo.js and the status refresh both settle here.
+// Microtasks only: the dynamic import of coach-demo.ts and the status refresh both settle here.
 const flush = async () => { for (let i = 0; i < 20; i++) await Promise.resolve() }
 const settle = async () => { await act(async () => { await flush() }) }
 const elapse = async ms => { await act(async () => { await vi.advanceTimersByTimeAsync(ms); await flush() }) }
@@ -103,7 +103,7 @@ describe('the demo Coach failing inside its timer', () => {
     await settle()
     // coach-api imports the demo on first use; a cold load is file I/O, which twenty microtasks
     // do not wait for, so the request would still be in flight when the first line is read.
-    await import('../lib/coach-demo.js')
+    await import('../lib/coach-demo.ts')
 
     await click(chip(/Last workout/))
     expect(mocks.toast).not.toHaveBeenCalled()                       // the request was accepted

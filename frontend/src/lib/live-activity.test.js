@@ -1,13 +1,13 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-// The workout's Live Activity (lib/live-activity.js): the state the Lock Screen and the Dynamic
+// The workout's Live Activity (lib/live-activity.ts): the state the Lock Screen and the Dynamic
 // Island show, and the Done taps that come back from it. A tap is applied once, by its id, through
 // the workout screen's own tick, and only then taken out of the native queue.
 const h = vi.hoisted(() => { vi.stubEnv('VITE_MOBILE', '1'); return { platform: 'ios' } })
-vi.mock('./mobile.js', () => ({ MOBILE: true, nativePlatform: async () => h.platform }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true, nativePlatform: async () => h.platform }))
 
-const L = await import('./live-activity.js')
+const L = await import('./live-activity.ts')
 
 const set = (over = {}) => ({ w: 60, r: 8, done: false, ...over })
 const entry = (id, sets, over = {}) => ({ id, target: { mode: 'reps', restSec: 120 }, sets, ...over })

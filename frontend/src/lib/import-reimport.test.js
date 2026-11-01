@@ -3,9 +3,9 @@
    new days on the catalogue id, old ones on the custom one, one exercise's history in two. An
    exercise the user already has keeps its id. */
 import { describe, expect, it } from 'vitest'
-import { importId, matchExercise, mergeImport, parseWorkoutCSV } from './import-csv.js'
-import { HEVY_ID_MAP, mergeHevyRoutines, parseHevyRoutines, parseHevyWorkouts } from './import-hevy.js'
-import { EXIDX } from './exercises.js'
+import { importId, matchExercise, mergeImport, parseWorkoutCSV } from './import-csv.ts'
+import { HEVY_ID_MAP, mergeHevyRoutines, parseHevyRoutines, parseHevyWorkouts } from './import-hevy.ts'
+import { EXIDX } from './exercises.ts'
 
 const base = customEx => ({ _ts: 1, workouts: [], customEx, bodyweight: [], exWeights: {}, routines: [] })
 const custom = (id, n) => ({ id, n, custom: true, eq: 'custom', tg: '', desc: '', bp: 'chest' })

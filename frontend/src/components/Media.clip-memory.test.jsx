@@ -2,7 +2,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { useClipInMemory } from './Media.jsx'
+import { useClipInMemory } from './Media.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

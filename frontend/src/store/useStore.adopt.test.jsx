@@ -5,14 +5,14 @@
    while open and flags offline / unsynced for the banner. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn() }))
 const { toast, sheetAsk } = vi.hoisted(() => ({ toast: vi.fn(), sheetAsk: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast }) } }))
 // The question an adoption resumed by the store itself asks (resumeAdoption, checkRev, Sync now).
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: (...a) => sheetAsk(...a) }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: (...a) => sheetAsk(...a) }))
 
-import { api } from '../lib/api.js'
-import { DEF, hasData, useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { DEF, hasData, useStore } from './useStore.ts'
 
 const clone = value => JSON.parse(JSON.stringify(value))
 const routine = id => ({ id, name: id, ex: [] })

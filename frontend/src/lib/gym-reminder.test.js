@@ -7,8 +7,8 @@ const mocks = vi.hoisted(() => ({
   MOBILE: true, platform: 'android', registered: 0, calls: [], listeners: {},
   get: null, configure: null, status: null, auth: null,
 }))
-vi.mock('./mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('./api.js', () => ({ remoteAuth: () => mocks.auth }))
+vi.mock('./mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('./api.ts', () => ({ remoteAuth: () => mocks.auth }))
 vi.mock('@capacitor/core', () => ({
   Capacitor: { getPlatform: () => mocks.platform },
   registerPlugin: name => {
@@ -37,7 +37,7 @@ import {
   clampRadius, normGym, normConfig, normWindow, inWindow, skipReason, statusOf, copyFor, distanceM,
   readGymConfig, saveGymConfig, loadGymConfig, pushGymStatus, onGymReminderOpen, _resetGymReminder,
   GYM_KEY, RADIUS, MAX_GYMS, NOTIFICATION_ID,
-} from './gym-reminder.js'
+} from './gym-reminder.ts'
 
 const at = (iso, hhmm) => new Date(`${iso}T${hhmm}:00`)
 const gym = (over = {}) => ({ id: 'g1', name: 'Downtown', lat: 47.3769, lng: 8.5417, radius: 100, text: '', ...over })

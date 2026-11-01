@@ -1,9 +1,9 @@
-// Missed-workout nudge — the pure half (nudge.js) and its push text (push-messages.js). The tick
-// in server.js is covered end to end in server-nudge.test.js; the rules themselves are here.
+// Missed-workout nudge — the pure half (nudge.ts) and its push text (push-messages.ts). The tick
+// in server.ts is covered end to end in server-nudge.test.js; the rules themselves are here.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { excusedOn, nudgeFor, nudgeMinute, nudgeWindowOpen, toneOf, lineIndex } from '../nudge.js';
-import { nudgePush } from '../push-messages.js';
+import { excusedOn, nudgeFor, nudgeMinute, nudgeWindowOpen, toneOf, lineIndex } from '../nudge.ts';
+import { nudgePush } from '../push-messages.ts';
 import { NUDGE_COPY } from '../nudge-copy.js';
 
 const routines = [{ id: 'push', name: 'Push Day' }, { id: 'pull', name: 'Pull Day' }];

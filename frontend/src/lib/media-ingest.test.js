@@ -3,9 +3,9 @@
 // probe) swapped for stand-ins: which path a file takes, what is refused and why, what the ref
 // says, and that what goes into the store is the scrubbed file under its own hash.
 import { describe, it, expect, vi } from 'vitest'
-import { ingestMediaFile } from './media-ingest.js'
-import { sha256Hex } from './sha256.js'
-import { bytes, latin1, fill, jpeg, png, gif, gce, frame, comment, appExt, box, mp4, webm } from './media-samples.test-util.js'
+import { ingestMediaFile } from './media-ingest.ts'
+import { sha256Hex } from './sha256.ts'
+import { bytes, latin1, fill, jpeg, png, gif, gce, frame, comment, appExt, box, mp4, webm } from './media-samples.test-util.ts'
 
 const MB = 1024 * 1024
 const LIMITS = { imageMB: 2, rawPhotoMB: 40, gifMB: 8, videoMB: 40, videoSec: 60 }

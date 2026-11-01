@@ -1,8 +1,8 @@
 // Update a routine from a running session: the warm-ups added in the workout, and the rest and
 // note edited on the exercise's settings sheet from inside it, can be written back to the slot.
 import { describe, it, expect } from 'vitest'
-import { routineSlotIndex, routineChangesFromEntry, updateRoutineFromEntry } from './routines.js'
-import { MAX_PLANNED_WARMUPS } from './history.js'
+import { routineSlotIndex, routineChangesFromEntry, updateRoutineFromEntry } from './routines.ts'
+import { MAX_PLANNED_WARMUPS } from './history.ts'
 
 const BENCH = '0025'    // barbell bench press
 const ROW = '0027'      // barbell bent over row

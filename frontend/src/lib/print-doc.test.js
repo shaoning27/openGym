@@ -1,7 +1,7 @@
-// The shared printout shell (lib/print-doc.js).
+// The shared printout shell (lib/print-doc.ts).
 import { afterEach, describe, expect, it } from 'vitest'
-import { esc, paperFor, pageNumberContent, printShell, probeMarks, LOGO_SVG } from './print-doc.js'
-import { _setLangState } from './i18n-core.js'
+import { esc, paperFor, pageNumberContent, printShell, probeMarks, LOGO_SVG } from './print-doc.ts'
+import { _setLangState } from './i18n-core.ts'
 
 afterEach(() => _setLangState('en', {}, null, null))
 

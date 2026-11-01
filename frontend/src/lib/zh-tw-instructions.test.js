@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import zhTW from '../instr/zh-TW.js'
 import { EXDB } from './exercises-data.js'
-import { INSTR_LANGS } from './i18n-core.js'
+import { INSTR_LANGS } from './i18n-core.ts'
 import V13_IDS from './catalogue-v13-ids.json' with { type: 'json' }
 // English steps live in their own pack since the catalogue moved to catalogue/ (v1.4.0)
 import EN from '../instr/en.js'

@@ -3,7 +3,7 @@
 /* Data safety on the phone (owner, 2026-10-14: "make sure data is never ever lost"). A phone in
    local mode has no server: the file mirror in the app's data directory is the copy that survives
    a WebView whose storage iOS evicted, or localStorage the WebView had not written to disk yet when
-   the app was killed. Real modules: store/useStore.js, lib/mobile.js. Mocked: the Capacitor
+   the app was killed. Real modules: store/useStore.ts, lib/mobile.js. Mocked: the Capacitor
    plugins, with an in-memory Directory.Data. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -29,7 +29,7 @@ vi.mock('@capacitor/local-notifications', () => ({
 }))
 vi.mock('@capacitor/app', () => ({ App: { addListener: () => ({ remove() {} }) } }))
 vi.mock('@capacitor/core', () => ({ Capacitor: { getPlatform: () => 'ios', isNativePlatform: () => true }, registerPlugin: () => ({}) }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
 
 const readFile = name => { const v = h.files.get('DATA/' + name); return v == null ? null : JSON.parse(v) }
 const tick = () => new Promise(r => setTimeout(r, 20))
@@ -38,13 +38,13 @@ const workout = id => ({ id, d: '2026-10-10', start: 1, end: 2, entries: [] })
 let stores = []
 async function freshStore() {
   vi.resetModules()
-  const { useStore } = await import('./useStore.js')
+  const { useStore } = await import('./useStore.ts')
   stores.push(useStore)
   return useStore
 }
 // A phone in local mode with a history and a workout running, in localStorage and in the file.
 async function localPhone() {
-  const { DEF } = await import('./useStore.js')
+  const { DEF } = await import('./useStore.ts')
   const S = { ...JSON.parse(JSON.stringify(DEF)), _ts: 5000, workouts: [workout('w1'), workout('w2')],
     active: { id: 'run', d: '2026-10-14', start: 4000, cur: 0, entries: [{ id: '0025', target: { mode: 'reps' }, sets: [{ w: 60, r: 8, done: false }, { w: 60, r: 8, done: false }] }] } }
   h.files.clear()

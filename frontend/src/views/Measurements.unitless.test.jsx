@@ -3,12 +3,12 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Measurements, { manageMeasurementsSheet, measurementLogSheet } from './Measurements.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { bindUI } from '../components/ui.jsx'
-import { normalizeMeasurementsState } from '../lib/measurements.js'
-import { importFromApp } from '../sheets.jsx'
+import Measurements, { manageMeasurementsSheet, measurementLogSheet } from './Measurements.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { bindUI } from '../components/ui.tsx'
+import { normalizeMeasurementsState } from '../lib/measurements.ts'
+import { importFromApp } from '../sheets.tsx'
 
 // #718 follow-up: a custom measurement can have no unit at all (a scale's visceral fat rating,
 // a metabolic age), and our own body CSV brings measurements back in.

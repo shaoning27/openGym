@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { buildLoggedWorkout, appendLoggedWorkout, resolveExercise, findDuplicate } from './log-workout.js'
-import { setLabel, workoutVolume, setsDone } from './history.js'
-import { best1RM } from './onerm.js'
-import { mergeStates, stampChange } from './sync-merge.js'
+import { buildLoggedWorkout, appendLoggedWorkout, resolveExercise, findDuplicate } from './log-workout.ts'
+import { setLabel, workoutVolume, setsDone } from './history.ts'
+import { best1RM } from './onerm.ts'
+import { mergeStates, stampChange } from './sync-merge.ts'
 
 // Pinned to an evening, local time, so "today" and "now" mean the same thing on every machine.
 const NOW = new Date('2026-10-20T19:30:00').getTime()

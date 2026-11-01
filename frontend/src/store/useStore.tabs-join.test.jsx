@@ -9,16 +9,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const h = vi.hoisted(() => ({ api: null }))
-vi.mock('../lib/api.js', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: () => {}, stopRest: () => {}, abandonWork: () => {} }) } }))
+vi.mock('../lib/api.ts', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: () => {}, stopRest: () => {}, abandonWork: () => {} }) } }))
 
 // The store's heavy imports (the 1 MB exercise table, the sync and mobile libraries) are
 // transformed here, while the file is collected. Cold, that took seconds and was billed to the
 // first test, past its timeout under a parallel run. The store itself is not imported here, so
 // no extra tab listens on the window; vi.resetModules() in openTab keeps the transforms.
 await Promise.all([
-  import('../lib/exercises.js'), import('../lib/mobile.js'), import('../lib/sync-merge.js'), import('../lib/media-store.js'),
-  import('../lib/remote.js'), import('../lib/health-sync.js'), import('../lib/i18n.js'),
+  import('../lib/exercises.ts'), import('../lib/mobile.ts'), import('../lib/sync-merge.ts'), import('../lib/media-store.ts'),
+  import('../lib/remote.ts'), import('../lib/health-sync.ts'), import('../lib/i18n.ts'),
 ])
 
 const clone = v => JSON.parse(JSON.stringify(v))
@@ -35,7 +35,7 @@ let DEF
 let OWNER = 'u0'
 async function openTab(user = { id: OWNER }) {
   vi.resetModules()
-  const m = await import('./useStore.js')
+  const m = await import('./useStore.ts')
   DEF = m.DEF
   tabs.push(m.useStore)
   m.useStore.setState({ user, ready: true })
@@ -77,7 +77,7 @@ beforeEach(async () => {
   OWNER = 'u' + (Number(OWNER.slice(1)) + 1)
   localStorage.setItem('gym_owner', OWNER)
   tabs = []
-  DEF = (await import('./useStore.js')).DEF
+  DEF = (await import('./useStore.ts')).DEF
 })
 afterEach(() => { for (const t of tabs) t.setState({ user: null, ready: false }); localStorage.clear() })
 

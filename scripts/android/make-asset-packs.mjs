@@ -11,7 +11,7 @@
 //   ... --dry-run   only says what it would make
 //
 // Per quality and figure the same files as the iPhone's packs (scripts/media/make-pack-manifests.mjs,
-// packDrawingId in frontend/src/lib/anim-quality.js): `anim-<px>-<figure>`, inside it
+// packDrawingId in frontend/src/lib/anim-quality.ts): `anim-<px>-<figure>`, inside it
 // `<packId>/<drawing>.webp`. Only qualities sharper than the built-in files (--builtin, the
 // APK's 240) and whose folder exists are made. A Play pack name must be a Gradle module name, so
 // anim-480-male is the module anim_480_male; a pack over Play's 1.5 GB per-pack limit is split
@@ -34,14 +34,14 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { EXDB } from '../../frontend/src/lib/exercises-data.js'
-import { PACK_QUALITIES, FIGURES, packId, packDrawingId } from '../../frontend/src/lib/anim-quality.js'
+import { PACK_QUALITIES, FIGURES, packId, packDrawingId } from '../../frontend/src/lib/anim-quality.ts'
 import { drawingsFor } from '../media/make-pack-manifests.mjs'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 export const ANDROID = path.join(ROOT, 'frontend/android')
 // Play's limit is 1.5 GB per asset pack; a margin below it for the pack's own overhead.
 export const PART_MAX_BYTES = 1400 * 1024 * 1024
-const PROBE_EX = '0001'   // lib/anim-packs.js probeFor: the drawing the app checks a pack by
+const PROBE_EX = '0001'   // lib/anim-packs.ts probeFor: the drawing the app checks a pack by
 
 /** anim-480-male → anim_480_male (a Gradle module and Play pack name). */
 export const moduleName = (id, part = 0) => id.replace(/-/g, '_') + (part ? `_p${part}` : '')

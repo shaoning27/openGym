@@ -1,8 +1,8 @@
 // @vitest-environment happy-dom
-// useUI pulls in api.js, which reads navigator.userAgent at module scope.
+// useUI pulls in api.ts, which reads navigator.userAgent at module scope.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
-import { useUI } from './useUI.js'
-import { useStore } from './useStore.js'
+import { useUI } from './useUI.ts'
+import { useStore } from './useStore.ts'
 
 // "Off" has to hold at the timer itself, not at the four places that start one — the same
 // reason the rest-after-a-set rule is a shared condition rather than four copies.

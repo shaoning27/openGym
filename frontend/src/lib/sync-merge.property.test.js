@@ -15,7 +15,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import fc from 'fast-check'
-import { mergeStates, stampChange, stampWorkout } from './sync-merge.js'
+import { mergeStates, stampChange, stampWorkout } from './sync-merge.ts'
 
 const clone = o => JSON.parse(JSON.stringify(o))
 const EXS = ['bench', 'squat', 'dead', 'row']

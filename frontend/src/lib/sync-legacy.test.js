@@ -1,10 +1,10 @@
 /* The first merge of a copy v1.3.9 still owed the server, after another device synced
-   (lib/sync-legacy.js). QA retest 2026-10-06: the old app's offline setting changes were undone. */
+   (lib/sync-legacy.ts). QA retest 2026-10-06: the old app's offline setting changes were undone. */
 import { describe, expect, it } from 'vitest'
-import { mergeStates, stampChange } from './sync-merge.js'
-import { legacyBase, liftLegacy, restHash139 } from './sync-legacy.js'
+import { mergeStates, stampChange } from './sync-merge.ts'
+import { legacyBase, liftLegacy, restHash139 } from './sync-legacy.ts'
 
-// v1.3.9's `s` fingerprint, as that app computed it (lib/sync-changes.js at the v1.3.9 tag).
+// v1.3.9's `s` fingerprint, as that app computed it (lib/sync-changes.ts at the v1.3.9 tag).
 const NOT_CONTENT = new Set(['_ts', '_rev', 'active', 'workouts', 'bodyweight', 'routines', 'customEx'])
 function fp139(S) {
   const rest = {}

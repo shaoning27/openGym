@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { nextPrescription, readSession, stallCount, sessionsFor, tripleSetsOf, plannedOf, planChanged, applyPrescription, POLICIES_FOR, POLICY_NAME, POLICY_DESC, DELOAD_AFTER } from './progression.js'
-import { buildSessionEntries } from './session-start.js'
-import { routineFromSession } from './session-routines.js'
-import { isWarmupRow, makeSideSet } from './workout-model.js'
-import { EXDB, isAssisted } from './exercises.js'
+import { nextPrescription, readSession, stallCount, sessionsFor, tripleSetsOf, plannedOf, planChanged, applyPrescription, POLICIES_FOR, POLICY_NAME, POLICY_DESC, DELOAD_AFTER } from './progression.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { routineFromSession } from './session-routines.ts'
+import { isWarmupRow, makeSideSet } from './workout-model.ts'
+import { EXDB, isAssisted } from './exercises.ts'
 
 // Triple progression (issue #179): reps, then sets, then load.
 const LIFT = EXDB.find(e => e.bp !== 'cardio' && !['upper legs', 'lower legs', 'back', 'hips', 'glutes'].includes(e.bp) && !['body weight', 'band', 'resistance band'].includes(e.eq) && !isAssisted(e.id)).id
@@ -209,14 +209,14 @@ describe('triple progression keeps the rules every policy follows', () => {
 
 describe('triple progression in the plan around it', () => {
   it('reads its set range on the routine line', async () => {
-    const { setsRepsOf, exLine } = await import('./history.js')
+    const { setsRepsOf, exLine } = await import('./history.ts')
     expect(setsRepsOf(cfg)).toBe('3–5 × 8–12')
     expect(exLine(cfg, 'kg')).toBe('3–5 × 8–12 · 60 kg')
     expect(setsRepsOf({ ...cfg, setsMax: undefined })).toBe('3 × 8–12')
   })
 
   it('travels with a shared plan', async () => {
-    const { buildPlanBundle, parsePlan } = await import('./plan-share.js')
+    const { buildPlanBundle, parsePlan } = await import('./plan-share.ts')
     const S = { unit: 'kg', week: {}, customEx: [], routines: [routine] }
     const ex = parsePlan(JSON.stringify(buildPlanBundle(S, 'Plan'))).routines[0].ex[0]
     expect(ex).toMatchObject({ prog: 'triple', sets: 3, setsMax: 5, reps: 12, repsMin: 8 })

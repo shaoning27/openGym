@@ -5,16 +5,16 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from '../store/useStore.js'
-import Home from './Home.jsx'
+import { useStore } from '../store/useStore.ts'
+import Home from './Home.tsx'
 
 const mocks = vi.hoisted(() => ({ charts: [] }))
 vi.mock('react-router-dom', () => ({ useNavigate: () => vi.fn() }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), bwSheet: vi.fn(), goalSheet: vi.fn(), dayOverrideSheet: vi.fn(),
   calendarSheet: vi.fn(), startFlow: vi.fn(), bwDeltaColor: () => '', weighInsSheet: vi.fn(),
 }))
-vi.mock('../components/LineChart.jsx', () => ({ default: props => { mocks.charts.push(props); return null } }))
+vi.mock('../components/LineChart.tsx', () => ({ default: props => { mocks.charts.push(props); return null } }))
 
 let host, root
 beforeEach(() => {

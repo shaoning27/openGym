@@ -26,7 +26,7 @@ test('GET /api/data/rev tracks PUT /api/data', async t => {
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-rev-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: [{ id: uid, name: 'R', created: new Date().toISOString() }], creds: [], subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' } });
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' } });
   t.after(() => { child.kill('SIGKILL'); fs.rmSync(dataDir, { recursive: true, force: true }); });
 
   // The boot line carries the port the listener actually bound, so there is no window in which

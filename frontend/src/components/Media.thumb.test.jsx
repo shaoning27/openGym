@@ -7,8 +7,8 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 // A still that will not load (offline and never cached, a lapsed session on a gated instance)
 // gets the neutral tile an exercise without media has, not the browser's broken-image glyph (#281).
-vi.mock('../store/useStore.js', () => ({ useStore: () => null }))
-const { Thumb } = await import('./Media.jsx')
+vi.mock('../store/useStore.ts', () => ({ useStore: () => null }))
+const { Thumb } = await import('./Media.tsx')
 
 const mounted = []
 function mount(el) {

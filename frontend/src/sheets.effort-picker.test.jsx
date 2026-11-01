@@ -8,8 +8,8 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useUI } from './store/useUI.js'
-import { effortPickerSheet } from './sheets.jsx'
+import { useUI } from './store/useUI.ts'
+import { effortPickerSheet } from './sheets.tsx'
 
 const mounted = []
 

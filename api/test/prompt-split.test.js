@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildPrompt, buildPromptParts, taskOf } from '../coach/core/prompt.js';
-import { SCHEMAS } from '../coach/core/schemas.js';
-import { build, FULL_DETAIL_SESSIONS } from '../coach/core/payload.js';
-import { chatCompletionsSpec } from '../coach/core/adapters/openai.js';
-import { validatePlan } from '../coach/core/validate.js';
+import { buildPrompt, buildPromptParts, taskOf } from '../coach/core/prompt.ts';
+import { SCHEMAS } from '../coach/core/schemas.ts';
+import { build, FULL_DETAIL_SESSIONS } from '../coach/core/payload.ts';
+import { chatCompletionsSpec } from '../coach/core/adapters/openai.ts';
+import { validatePlan } from '../coach/core/validate.ts';
 import { D as fixtureDay } from './helpers.mjs';
 
 const S = (workouts = []) => ({
@@ -70,7 +70,7 @@ test('the create schema requires what the week resolves through: a routine id, a
 });
 
 test('the create schema caps the two arrays the validator caps, so a repeating model stops', () => {
-  // validate.js slices at MAX_ROUTINES / MAX_EX_PER_ROUTINE; a model that never stops emitting
+  // validate.ts slices at MAX_ROUTINES / MAX_EX_PER_ROUTINE; a model that never stops emitting
   // otherwise runs to the output limit first and the answer arrives truncated and unparseable.
   assert.equal(SCHEMAS.create.properties.routines.maxItems, 7);
   assert.equal(SCHEMAS.create.properties.routines.items.properties.ex.maxItems, 20);

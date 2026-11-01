@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet } from './sheets.jsx'
+import { EXDB } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet } from './sheets.tsx'
 
 // #445: with Pyramid sets on, the exercise settings had no weight field at all. Each set now has
 // its own, next to its reps and rest.

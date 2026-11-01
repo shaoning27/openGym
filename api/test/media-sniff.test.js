@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { sniffMedia, mp4Info, MEDIA_TYPES } from '../media.js';
+import { sniffMedia, mp4Info, MEDIA_TYPES } from '../media.ts';
 import * as M from './media-samples.mjs';
 
 const head = b => b.subarray(0, 64);

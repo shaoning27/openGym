@@ -2,7 +2,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Login from './Login.jsx'
+import Login from './Login.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -18,24 +18,24 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, hasData: () => false }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: vi.fn(), openSheet: render => { mocks.sheets.push(render); return {} } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   webauthnOK: () => mocks.webauthn, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), BIO: 'your fingerprint', bio: () => 'your fingerprint',
   api: vi.fn(), passkeyAssertion: vi.fn(), passwordLogin: vi.fn(), passwordRegister: vi.fn(), passwordResetRedeem: vi.fn(),
   createPasskey: vi.fn(),
 }))
-vi.mock('../lib/demo.js', () => ({ DEMO: false, REPO: 'https://example.invalid' }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../lib/demo.ts', () => ({ DEMO: false, REPO: 'https://example.invalid' }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: vi.fn(), confirmSheet: vi.fn() }))
 
 const mounted = []
 function mount(el) {

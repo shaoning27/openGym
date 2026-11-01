@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet, menuSheet } from './sheets.jsx'
+import { EXDB } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet, menuSheet } from './sheets.tsx'
 
 const ex = EXDB.find(e => e.id === '0009')
 const mounted = []

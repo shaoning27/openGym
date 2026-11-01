@@ -1,6 +1,6 @@
 /* Recovery codes (#584): for someone who lost every way in, on any instance. An admin makes one in
    the dashboard (any admin for a profile that is not an admin, the owner for an admin, nobody for
-   the owner), or the server's own command does (recover.js, through the local admin socket, for
+   the owner), or the server's own command does (recover.ts, through the local admin socket, for
    anyone, the owner included). The person redeems it like a device link: the device gets a new
    passkey and is signed in. One-time, a day, hashed at rest, counted like a reset code. */
 import { test } from 'node:test';
@@ -11,8 +11,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn, execFile } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { hashLinkCode } from '../device-link.js';
-import { MAX_PASSKEYS } from '../passkeys-store.js';
+import { hashLinkCode } from '../device-link.ts';
+import { MAX_PASSKEYS } from '../passkeys-store.ts';
 import { boundPort } from './helpers.mjs';
 import { softPasskey, ORIGIN } from './soft-passkey.mjs';
 
@@ -30,7 +30,7 @@ async function startServer(t, { env = {}, users = [], creds = [] } = {}) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users, creds, subs: [], invites: [] }));
   // Password sign-in OFF: recovery has to work without it.
   const childEnv = { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN, RP_ID: 'localhost', PASSWORD_LOGIN: '', TRUST_PROXY: '1', INVITE_ONLY: '', ADMIN_UIDS: '', AUDIT_LOG: '1', ...env };
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'], env: childEnv });
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'], env: childEnv });
   const h = { api: '', log: '', dataDir, env: childEnv, child };
   child.stdout.on('data', d => h.log += d);
   child.stderr.on('data', d => h.log += d);
@@ -47,8 +47,8 @@ async function startServer(t, { env = {}, users = [], creds = [] } = {}) {
   };
   h.db = () => JSON.parse(fs.readFileSync(path.join(dataDir, 'db.json'), 'utf8'));
   h.audit = () => { try { return fs.readFileSync(path.join(dataDir, 'audit.log'), 'utf8').trim().split('\n').map(l => JSON.parse(l)); } catch { return []; } };
-  // The server's own command, run the way `docker compose exec api node recover.js` runs it.
-  h.cli = (...args) => new Promise(resolve => execFile(process.execPath, ['recover.js', ...args], { cwd: API, env: childEnv }, (err, stdout, stderr) => resolve({ code: err ? err.code : 0, out: stdout, err: stderr })));
+  // The server's own command, run the way `docker compose exec api node recover.ts` runs it.
+  h.cli = (...args) => new Promise(resolve => execFile(process.execPath, ['recover.ts', ...args], { cwd: API, env: childEnv }, (err, stdout, stderr) => resolve({ code: err ? err.code : 0, out: stdout, err: stderr })));
   return h;
 }
 const user = (id, name, extra = {}) => ({ id, name, created: new Date().toISOString(), ...extra });
@@ -139,7 +139,7 @@ test('a profile full of passkeys still gets back in: the one used longest ago ma
   assert.ok(h.audit().some(e => e.ev === 'auth.recovery.ok' && /replaced Key 0/.test(e.msg || '')));
 });
 
-test('recover.js asks the running server for the owner’s code, by name or by id', async t => {
+test('recover.ts asks the running server for the owner’s code, by name or by id', async t => {
   const fresh = softPasskey();
   const h = await startServer(t, { users: [OWNER, ADMIN, ANA, user('u9', 'Ana')] });
   const r = await h.cli('Olga');
@@ -163,9 +163,9 @@ test('recover.js asks the running server for the owner’s code, by name or by i
   assert.equal((await h.cli()).code, 2);
 });
 
-test('the admin socket is private, and recover.js says so when no server runs', async t => {
+test('the admin socket is private, and recover.ts says so when no server runs', async t => {
   const h = await startServer(t, { users: [OWNER] });
-  const { socketDir, socketPath } = await import('../admin-socket.js');
+  const { socketDir, socketPath } = await import('../admin-socket.ts');
   const dir = socketDir(h.env);
   const st = fs.statSync(dir);
   assert.equal(st.mode & 0o777, 0o700);

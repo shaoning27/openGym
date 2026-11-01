@@ -10,25 +10,25 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
    The screen now says why as soon as the address is typed, and never tries the request. */
 const mocks = vi.hoisted(() => ({ toast: vi.fn(), localModels: vi.fn(async () => ({ ok: true, models: ['llama3'] })), setCoachLocal: vi.fn(async () => {}) }))
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ user: null, config: null, coachLocal: null, setCoachLocal: mocks.setCoachLocal, refreshConfig: vi.fn() })
   const useStore = selector => selector ? selector(snap()) : snap()
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: vi.fn() })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../lib/mobile.js', () => ({ MOBILE: true }))
-vi.mock('../lib/coach-secrets.js', () => ({ getApiKey: async () => null, setApiKey: vi.fn(async () => {}), clearApiKey: vi.fn(async () => {}) }))
-vi.mock('../lib/coach-local.js', () => ({ localModels: (...a) => mocks.localModels(...a), localForget: vi.fn() }))
-vi.mock('./MobileOnboarding.jsx', () => ({ ConnectSheet: () => null }))
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: true }))
+vi.mock('../lib/coach-secrets.ts', () => ({ getApiKey: async () => null, setApiKey: vi.fn(async () => {}), clearApiKey: vi.fn(async () => {}) }))
+vi.mock('../lib/coach-local.ts', () => ({ localModels: (...a) => mocks.localModels(...a), localForget: vi.fn() }))
+vi.mock('./MobileOnboarding.tsx', () => ({ ConnectSheet: () => null }))
 
-const { default: CoachSetup } = await import('./CoachSetup.jsx')
+const { default: CoachSetup } = await import('./CoachSetup.tsx')
 
 const mounted = []
 function mount(el) {

@@ -8,17 +8,17 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const mocks = vi.hoisted(() => ({ S: null, printReport: vi.fn() }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ S: mocks.S, user: { name: 'Ana' } })
   const useStore = selector => (selector ? selector(snap()) : snap())
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../lib/report-print.js', () => ({ printReport: (...a) => mocks.printReport(...a) }))
+vi.mock('../lib/report-print.ts', () => ({ printReport: (...a) => mocks.printReport(...a) }))
 
-const { ReportSheet } = await import('./ReportSheet.jsx')
-const { todayISO } = await import('../lib/format.js')
-const { reportRange } = await import('../lib/report.js')
+const { ReportSheet } = await import('./ReportSheet.tsx')
+const { todayISO } = await import('../lib/format.ts')
+const { reportRange } = await import('../lib/report.ts')
 
 let root, host, close
 const iso = n => { const d = new Date(); d.setHours(12); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10) }

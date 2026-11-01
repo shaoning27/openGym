@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import { tempData } from './helpers.mjs';
 
 const dir = tempData();
-const cfg = await import('../coach/config.js');
+const cfg = await import('../coach/config.ts');
 
 function connectInstance(token = 'tok-instance') {
   cfg.reset();

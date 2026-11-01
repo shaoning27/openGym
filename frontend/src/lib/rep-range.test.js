@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { normalizeRepRange } from './rep-range.js'
+import { normalizeRepRange } from './rep-range.ts'
 
 describe('normalizeRepRange', () => {
   it('keeps valid positive integer bounds unchanged', () => {

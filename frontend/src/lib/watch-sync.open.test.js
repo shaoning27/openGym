@@ -5,13 +5,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const health = vi.hoisted(() => ({ on: false, listeners: new Set() }))
-vi.mock('./health-sync.js', () => ({
+vi.mock('./health-sync.ts', () => ({
   loadHealth: async () => ({ on: health.on }),
   onHealthChange: cb => { health.listeners.add(cb); return () => health.listeners.delete(cb) },
 }))
 
-import { shouldOpenOnWatch, startWatchSync, applyEvents, bindWatchAppActions, _setWatchPluginForTest, _resetWatchSync, OPEN_ON_WATCH_WINDOW_MS } from './watch-sync.js'
-import { WATCH_DEFAULTS, writeWatchPrefs } from './watch-settings.js'
+import { shouldOpenOnWatch, startWatchSync, applyEvents, bindWatchAppActions, _setWatchPluginForTest, _resetWatchSync, OPEN_ON_WATCH_WINDOW_MS } from './watch-sync.ts'
+import { WATCH_DEFAULTS, writeWatchPrefs } from './watch-settings.ts'
 
 const now = 1_800_000_000_000
 const live = (over = {}) => ({ id: 'w-9', start: now - 1000, entries: [], ...over })

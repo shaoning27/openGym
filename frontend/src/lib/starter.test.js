@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { EXIDX } from './exercises.js'
-import { ALL_EQUIPMENT, eqAvailable } from './equipment.js'
-import { buildStarterPlan, starterPlanDays, starterPlanOptions, starterRoutines } from './starter.js'
+import { EXIDX } from './exercises.ts'
+import { ALL_EQUIPMENT, eqAvailable } from './equipment.ts'
+import { buildStarterPlan, starterPlanDays, starterPlanOptions, starterRoutines } from './starter.ts'
 
 // The approved prescription, written out again rather than imported: a test that reads the
 // same table as the code would pass no matter what that table said. [weekday, name, sets].

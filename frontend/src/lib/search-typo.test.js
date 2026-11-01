@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { EXDB, matchExercise, normalizeStr, searchExercises, similarExercises } from './exercises.js'
+import { EXDB, matchExercise, normalizeStr, searchExercises, similarExercises } from './exercises.ts'
 
 const benchPress = {
   n: 'dumbbell bench press', bp: 'chest', tg: 'pectorals', eq: 'dumbbell',

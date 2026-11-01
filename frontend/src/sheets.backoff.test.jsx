@@ -2,13 +2,13 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet } from './sheets.jsx'
-import { exLine } from './lib/history.js'
+import { EXDB } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet } from './sheets.tsx'
+import { exLine } from './lib/history.ts'
 
-// Back-off sets (lib/backoff.js): a switch under the progression Step, saved as `backoff: true`.
+// Back-off sets (lib/backoff.ts): a switch under the progression Step, saved as `backoff: true`.
 const ex = EXDB.find(e => e.id === '0025')          // barbell bench press
 const assisted = EXDB.find(e => e.id === '0009')    // assisted chest dip: less load is harder
 const mounted = []

@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-/* The phone's screen lock before a paired phone deletes its account (lib/device-auth.js). The
+/* The phone's screen lock before a paired phone deletes its account (lib/device-auth.ts). The
    native DeviceAuth plugin is a stand-in shaped like Capacitor's: a Proxy that answers every
    property, `then` included, with a native call; one resolved as a promise's value would hang
    (#42), which the wrapper object avoids. The web build registers nothing. */
 const mocks = vi.hoisted(() => ({ MOBILE: true, check: vi.fn(), verify: vi.fn(), registered: 0 }))
-vi.mock('./mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('./mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
 vi.mock('@capacitor/core', () => ({
   registerPlugin: name => {
     mocks.registered++
@@ -18,7 +18,7 @@ vi.mock('@capacitor/core', () => ({
 }))
 
 const nativeError = code => Object.assign(new Error(code), { code })
-const fresh = async () => { vi.resetModules(); return import('./device-auth.js') }
+const fresh = async () => { vi.resetModules(); return import('./device-auth.ts') }
 
 beforeEach(() => {
   mocks.MOBILE = true

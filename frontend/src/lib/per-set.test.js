@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { perSetSessions, perSetLines, dropOffSet, PER_SET_MAX } from './per-set.js'
+import { perSetSessions, perSetLines, dropOffSet, PER_SET_MAX } from './per-set.ts'
 
 // Issue #145: Stats → Exercise progress, one line per set number, so you can see which set
 // you drop off on. A set's number is its place among that session's working sets.

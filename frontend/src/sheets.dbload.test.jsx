@@ -5,11 +5,11 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXIDX } from './lib/exercises.js'
-import { useStore, DEF } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet, exerciseDetailSheet } from './sheets.jsx'
-import { withDbLoad } from './lib/dumbbells.js'
+import { EXIDX } from './lib/exercises.ts'
+import { useStore, DEF } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet, exerciseDetailSheet } from './sheets.tsx'
+import { withDbLoad } from './lib/dumbbells.ts'
 
 const BENCH = EXIDX['0289']   // dumbbell bench press
 const SQUAT = EXIDX['0043']   // barbell

@@ -133,7 +133,7 @@ const LOANWORDS = new Set([
 ])
 
 // Swiss spellings of words this codebase writes with ß. DATE_LOCALES maps de to de-DE, and
-// de-CH is derived from de by replacing ß with ss (i18n-core.js) — so the base pack has to be
+// de-CH is derived from de by replacing ß with ss (i18n-core.ts) — so the base pack has to be
 // the ß one, or the Swiss locale derives nothing and the two spellings drift apart again.
 // No trailing boundary: German compounds ("Gesässdehnung", "Fussgelenk") are exactly where the
 // Swiss form hides. "Masse" is left out on purpose — it is legitimate German for mass, and only

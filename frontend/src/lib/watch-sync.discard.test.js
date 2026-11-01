@@ -3,12 +3,12 @@
 // watch drops its Apple Health workout instead of saving it as if it had been finished.
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('./health-sync.js', () => ({
+vi.mock('./health-sync.ts', () => ({
   loadHealth: async () => ({ on: true }),
   onHealthChange: () => () => {},
 }))
 
-import { startWatchSync, markDiscarded, discardedFor, _setWatchPluginForTest, _resetWatchSync, DISCARDED_FOR_MS } from './watch-sync.js'
+import { startWatchSync, markDiscarded, discardedFor, _setWatchPluginForTest, _resetWatchSync, DISCARDED_FOR_MS } from './watch-sync.ts'
 
 beforeEach(() => { localStorage.clear(); _resetWatchSync() })
 

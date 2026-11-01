@@ -2,20 +2,20 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { WorkoutSettings } from './WorkoutSettingsSheet.jsx'
-import { useUI } from '../store/useUI.js'
-import { useStore } from '../store/useStore.js'
+import { WorkoutSettings } from './WorkoutSettingsSheet.tsx'
+import { useUI } from '../store/useUI.ts'
+import { useStore } from '../store/useStore.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const sound = vi.hoisted(() => ({ canVibrate: true, iPhone: false }))
-vi.mock('../lib/sound.js', () => ({
+vi.mock('../lib/sound.ts', () => ({
   unlock: vi.fn(), beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(),
   vibrateSupported: () => sound.canVibrate, appleTouchDevice: () => sound.iPhone,
 }))
-vi.mock('../lib/wakelock.js', () => ({ wakeLockSupported: () => true }))
+vi.mock('../lib/wakelock.ts', () => ({ wakeLockSupported: () => true }))
 const navTo = vi.hoisted(() => vi.fn())
-vi.mock('../lib/nav.js', async importOriginal => {
+vi.mock('../lib/nav.ts', async importOriginal => {
   const real = await importOriginal()
   real.setNav(navTo)
   return real

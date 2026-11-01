@@ -5,7 +5,7 @@ import V13_IDS from './catalogue-v13-ids.json' with { type: 'json' }
 import { checkName, stagedExercises } from '../../../scripts/de-name-rules.mjs'
 import {
   EXERCISE_NAME_LANGS, RTL_LANGS, _setLangState, derivePack, exerciseNameFor, exerciseNameSearchText
-} from './i18n-core.js'
+} from './i18n-core.ts'
 
 // Every translated-name pack, checked the same way. The packs are generated from
 // catalogue/i18n/<lang>.json and may be partial (anything missing shows the English title), so

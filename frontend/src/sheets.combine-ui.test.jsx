@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { addRoutineToSessionSheet, workoutDetailSheet } from './sheets.jsx'
-import { EXDB } from './lib/exercises.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { addRoutineToSessionSheet, workoutDetailSheet } from './sheets.tsx'
+import { EXDB } from './lib/exercises.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const ids = EXDB.filter(e => e.bp !== 'cardio').slice(0, 4).map(e => e.id)

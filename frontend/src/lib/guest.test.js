@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { guestAllowed } from './guest.js'
+import { guestAllowed } from './guest.ts'
 
 // The flag is the easy half. The half worth pinning down is what happens when the server did not
 // answer: a failed config fetch must not be read as "guests are disabled", or an instance that is

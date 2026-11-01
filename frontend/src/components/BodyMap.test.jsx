@@ -2,7 +2,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import BodyMap, { BodyMapLegend } from './BodyMap.jsx'
+import BodyMap, { BodyMapLegend } from './BodyMap.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

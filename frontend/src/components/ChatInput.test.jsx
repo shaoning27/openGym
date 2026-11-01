@@ -2,7 +2,7 @@
 import React, { act, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import ChatInput, { composerHeight, MIN_HEIGHT } from './ChatInput.jsx'
+import ChatInput, { composerHeight, MIN_HEIGHT } from './ChatInput.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

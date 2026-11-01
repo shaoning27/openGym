@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { ALL_EQUIPMENT } from './equipment.js'
-import { isLoadedEq } from './exercises.js'
+import { ALL_EQUIPMENT } from './equipment.ts'
+import { isLoadedEq } from './exercises.ts'
 
 // Issue #393: clubbell and macebell are real loaded tools with no catalogue entries yet.
 describe('clubbell and macebell', () => {

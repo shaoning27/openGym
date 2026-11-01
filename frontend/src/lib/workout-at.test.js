@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { workoutAt } from './history.js'
-import { muscleBalanceWindow } from './muscles.js'
+import { workoutAt } from './history.ts'
+import { muscleBalanceWindow } from './muscles.ts'
 
 // Several copies of "when did this workout happen" had drifted apart, and the two ways they were
 // wrong are the two things worth pinning: the UTC-midnight parse, and `||` swallowing a start
@@ -58,8 +58,8 @@ describe('muscleBalanceWindow dates its cutoff the same way', () => {
   })
 })
 
-/* Several call sites had their own copy of the rule: Stats.jsx twice, recovery.js, effort.js,
-   coach-demo.js, coach-insights.js, muscles.js, strength-exercises.js and the MCP server's
+/* Several call sites had their own copy of the rule: Stats.tsx twice, recovery.ts, effort.ts,
+   coach-demo.ts, coach-insights.ts, muscles.ts, strength-exercises.ts and the MCP server's
    muscle_balance. A grep is the only guard that would have caught that, so here it is. */
 describe('nothing re-implements the rule', () => {
   it('no source file dates a workout by hand', async () => {
@@ -72,10 +72,10 @@ describe('nothing re-implements the rule', () => {
       if (e.isDirectory()) return e.name === 'locales' ? [] : walk(p)
       return /\.(js|jsx)$/.test(e.name) && !/\.test\.(js|jsx)$/.test(e.name) ? [p] : []
     })
-    // `w.start || new Date(w.d)` and its spellings. history.js itself is where the rule lives.
+    // `w.start || new Date(w.d)` and its spellings. history.ts itself is where the rule lives.
     const handRolled = /\bstart\s*(\|\||\?\?)\s*(Number\()?new Date\s*\(/
     const offenders = [...walk(root), ...walk(mcp)]
-      .filter(p => !p.endsWith(path.join('lib', 'history.js')))
+      .filter(p => !p.endsWith(path.join('lib', 'history.ts')))
       .filter(p => handRolled.test(fs.readFileSync(p, 'utf8')))
       .map(p => path.relative(root, p))
     expect(offenders).toEqual([])

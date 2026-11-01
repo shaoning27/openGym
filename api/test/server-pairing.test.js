@@ -2,7 +2,7 @@
    codes with it: a code is a session-in-waiting, and one minted before the sign-out could
    otherwise be redeemed for a fresh token carrying the new session version. And minting a code
    asks the owner proof (proveOwner): a session alone, which may be a stolen cookie, gets no code.
-   Real server.js in a child. */
+   Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -16,7 +16,7 @@ import { boundPort, softPasskey } from './helpers.mjs';
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SECRET = crypto.randomBytes(32).toString('hex');
 
-// Same construction as server.js makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
+// Same construction as server.ts makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
 function mintSession(uid, sv = 0) {
   const payload = `${uid}:${Date.now() + 86400000}:${sv}`;
   return payload + '.' + crypto.createHmac('sha256', SECRET).update(payload).digest('base64url');
@@ -33,7 +33,7 @@ async function startServer(t) {
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-pair-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: USERS, creds: Object.entries(KEYS).map(([uid, k]) => k.row(uid)), subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });

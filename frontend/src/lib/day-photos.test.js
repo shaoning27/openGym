@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { dayPhotosOf, readDayPhoto, addDayPhoto, removeDayPhoto, restoreDayPhoto, serverTakesDayPhotos, fileProgressPhoto, workoutOn } from './day-photos.js'
-import { referencedHashes, referencedFiles, WORKOUT_MEDIA_MAX } from './media-refs.js'
-import { mergeStates, STAMPED_MAPS } from './sync-merge.js'
+import { dayPhotosOf, readDayPhoto, addDayPhoto, removeDayPhoto, restoreDayPhoto, serverTakesDayPhotos, fileProgressPhoto, workoutOn } from './day-photos.ts'
+import { referencedHashes, referencedFiles, WORKOUT_MEDIA_MAX } from './media-refs.ts'
+import { mergeStates, STAMPED_MAPS } from './sync-merge.ts'
 
 /* Progress photos filed under a day (#557): an optional per-photo map beside the workouts, merged
    like day notes, its files kept like every other photo's. */

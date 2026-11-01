@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 import { tempData } from './helpers.mjs';
 
 tempData();
-const { isDue } = await import('../coach/cadence.js');
+const { isDue } = await import('../coach/cadence.ts');
 
 const DAY = 86400000, MIN = 60000;
 // Sunday 20 September 2026, 18:00 UTC — the default slot (day 0, 18:00).
@@ -23,7 +23,7 @@ const wallClock = ms => {
   const iso = new Date(ms).toISOString();
   return { date: iso.slice(0, 10), hhmm: iso.slice(11, 16), weekday: new Date(ms).getUTCDay() };
 };
-// The same wall clock the tick hands in — server.js userNow, for a real zone.
+// The same wall clock the tick hands in — server.ts userNow, for a real zone.
 const wallClockIn = (tz, ms) => {
   const p = new Intl.DateTimeFormat('en-CA', {
     timeZone: tz, hourCycle: 'h23',

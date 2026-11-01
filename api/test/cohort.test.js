@@ -5,9 +5,9 @@ import assert from 'node:assert/strict';
 import { tempData, writeState, sampleState } from './helpers.mjs';
 
 const DIR = tempData();
-const cfg = await import('../coach/config.js');
-const jobs = await import('../coach/jobs.js');
-const cohort = await import('../coach/cohort.js');
+const cfg = await import('../coach/config.ts');
+const jobs = await import('../coach/jobs.ts');
+const cohort = await import('../coach/cohort.ts');
 
 const today = new Date().toISOString().slice(0, 10);
 const daysAgo = n => { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10); };
@@ -110,7 +110,7 @@ test('forgetting a profile takes it out of the room at once, cache or no cache',
 });
 
 test('three accounts that log the same made-up exercise cannot write into a fourth one\'s prompt', async () => {
-  const payload = await import('../coach/core/payload.js');
+  const payload = await import('../coach/core/payload.ts');
   // Every entry's id is whatever that account's client wrote. Once three sharing accounts
   // log one, the room's medians used to carry it, as it was, into every other sharing
   // account's review and debrief.

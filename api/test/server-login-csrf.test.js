@@ -13,7 +13,7 @@
    body that is not declared application/json is refused before anything reads it.
 
    The passkey here is a real P-256 key, the assertion is signed the way an authenticator signs
-   one, and @simplewebauthn/server verifies it. Real server.js in a child. */
+   one, and @simplewebauthn/server verifies it. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -68,7 +68,7 @@ async function startServer(t, extraEnv = {}) {
     creds: [{ id: CRED_ID, userId: 'u_attacker', publicKey: b64u(coseKey()), counter: 0, transports: ['internal'] }],
     subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN, RP_ID, ...extraEnv }
   });

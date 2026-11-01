@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { routineFromSession } from './session-routines.js'
-import { modeOf, pickedExerciseConfig } from './history.js'
-import { isHold, isOneLimb } from './exercises.js'
+import { routineFromSession } from './session-routines.ts'
+import { modeOf, pickedExerciseConfig } from './history.ts'
+import { isHold, isOneLimb } from './exercises.ts'
 
 // The 1.4.3 catalogue defaults (a plank starts timed #694, a one-arm row per side #736) are for
 // exercises picked fresh. What someone already logged or planned keeps its own shape.

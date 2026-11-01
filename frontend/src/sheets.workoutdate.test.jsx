@@ -5,11 +5,11 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { workoutDateSheet, workoutDetailSheet, workoutDurationSheet } from './sheets.jsx'
-import { backfillStart } from './lib/backfill.js'
-import { startTimeOf } from './lib/workout-date.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { workoutDateSheet, workoutDetailSheet, workoutDurationSheet } from './sheets.tsx'
+import { backfillStart } from './lib/backfill.ts'
+import { startTimeOf } from './lib/workout-date.ts'
 
 const mounted = []
 function render(open) {

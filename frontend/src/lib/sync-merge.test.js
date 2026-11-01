@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { highestStamp, stampChange, keepReset, localExtras, mergeDeletions, stampDeletions, stampEdits, mergeBodyweight, mergeResetIds, mergeStampedMap, mergeStates, newerOf, resetIdsOf, RESET_ID_MAX, sinceReset, stampCustomEx, stampRoutines, stampWorkout, unionById } from './sync-merge.js'
-import { mergeImport } from './import-csv.js'
-import { convertBodyWeight, convertStateUnit, convertWeight } from './units.js'
-import { retimeWorkout } from './workout-date.js'
-import { inventoryFor, loadKindFor, withLoadKind, withPlatePairs, withStandardPlates } from './plates.js'
+import { highestStamp, stampChange, keepReset, localExtras, mergeDeletions, stampDeletions, stampEdits, mergeBodyweight, mergeResetIds, mergeStampedMap, mergeStates, newerOf, resetIdsOf, RESET_ID_MAX, sinceReset, stampCustomEx, stampRoutines, stampWorkout, unionById } from './sync-merge.ts'
+import { mergeImport } from './import-csv.ts'
+import { convertBodyWeight, convertStateUnit, convertWeight } from './units.ts'
+import { retimeWorkout } from './workout-date.ts'
+import { inventoryFor, loadKindFor, withLoadKind, withPlatePairs, withStandardPlates } from './plates.ts'
 
 const workout = (id, d = '2026-09-01', start = 1) => ({ id, d, start, entries: [] })
 const routine = (id, name = id) => ({ id, name, ex: [] })
@@ -368,7 +368,7 @@ describe('balanceOverrides keep the choice made last', () => {
   })
 })
 
-// Plate loading (lib/plates.js): an exercise's loading and each unit's plate inventory are
+// Plate loading (lib/plates.ts): an exercise's loading and each unit's plate inventory are
 // stamped like a Structural Balance override, the way back to the default included, so the
 // change made last survives a conflict either way round. A plain key union let the copy that was
 // newer as a whole undo a choice made on the other device, and brought a reset list back.

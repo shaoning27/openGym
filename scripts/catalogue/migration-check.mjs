@@ -16,10 +16,10 @@ const NEW = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../fr
 const [oldTree, ...files] = process.argv.slice(2)
 const OLD = path.resolve(oldTree, 'frontend/src')
 const load = async (root) => ({
-  ex: await import(pathToFileURL(path.join(root, 'lib/exercises.js'))),
-  hist: await import(pathToFileURL(path.join(root, 'lib/history.js'))),
-  orm: await import(pathToFileURL(path.join(root, 'lib/onerm.js'))),
-  mus: await import(pathToFileURL(path.join(root, 'lib/muscles.js'))),
+  ex: await import(pathToFileURL(path.join(root, 'lib/exercises.ts'))),
+  hist: await import(pathToFileURL(path.join(root, 'lib/history.ts'))),
+  orm: await import(pathToFileURL(path.join(root, 'lib/onerm.ts'))),
+  mus: await import(pathToFileURL(path.join(root, 'lib/muscles.ts'))),
 })
 const o = await load(OLD), n = await load(NEW)
 

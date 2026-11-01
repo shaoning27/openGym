@@ -11,7 +11,7 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const mocks = vi.hoisted(() => ({
   refreshConfig: vi.fn(async () => ({})),
   calls: [],
-  // The shape GET /api/admin/coach answers with (api/coach/routes.js), trimmed to one provider.
+  // The shape GET /api/admin/coach answers with (api/coach/routes.ts), trimmed to one provider.
   status: {
     disabledByEnv: false, enabled: false, provider: 'anthropic',
     providers: [{ id: 'anthropic', label: 'Anthropic API', runtime: 'HTTPS', apiKey: true, http: true, connected: false }],
@@ -22,7 +22,7 @@ const mocks = vi.hoisted(() => ({
     jobsToday: 0, lastSuccess: null, lastError: null, recent: [],
   },
 }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: async (path, opts) => {
     mocks.calls.push([path, opts?.method || 'GET'])
     if (path === '/api/admin/coach') return structuredClone(mocks.status)
@@ -30,20 +30,20 @@ vi.mock('../lib/api.js', () => ({
     return {}
   },
 }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ refreshConfig: mocks.refreshConfig })
   const useStore = selector => selector ? selector(snap()) : snap()
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: vi.fn(), openSheet: vi.fn() })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 
-const { default: AdminCoach } = await import('./AdminCoach.jsx')
+const { default: AdminCoach } = await import('./AdminCoach.tsx')
 
 const mounted = []
 afterEach(() => { act(() => { mounted.splice(0).forEach(({ root, host }) => { root.unmount(); host.remove() }) }) })
@@ -70,7 +70,7 @@ describe('AdminCoach keeps the app\'s own config current', () => {
 
 /* Extra-headers textarea helpers (issue #385): parse client-side, empty clears. */
 describe('AdminCoach extra headers', async () => {
-  const { parseHeadersText, headersToText } = await import('./AdminCoach.jsx')
+  const { parseHeadersText, headersToText } = await import('./AdminCoach.tsx')
 
   it('round-trips a map through the textarea format', () => {
     expect(headersToText({ 'x-opencode-session': 'sess-1' })).toBe('x-opencode-session: sess-1')

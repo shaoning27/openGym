@@ -2,7 +2,7 @@
 // finished workout (hrFromSamples). Dense samples give each set its own reading; sparse ones only
 // the session; ticks that say nothing about when a set was done give nothing.
 import { describe, expect, it } from 'vitest'
-import { hrFromSamples, cleanSamples } from './heart-rate.js'
+import { hrFromSamples, cleanSamples } from './heart-rate.ts'
 
 const T0 = Date.UTC(2026, 9, 15, 17, 0, 0)
 const s = sec => T0 + sec * 1000

@@ -2,8 +2,8 @@
    exercise) twice: random ids each time, and the merge unites by id. Import ids now come from what
    is imported. (QA 2026-10-06, also in v1.3.9.) */
 import { describe, expect, it } from 'vitest'
-import { parseWorkoutCSV, mergeImport } from './import-csv.js'
-import { mergeStates } from './sync-merge.js'
+import { parseWorkoutCSV, mergeImport } from './import-csv.ts'
+import { mergeStates } from './sync-merge.ts'
 
 const CSV = [
   'Date,Workout Name,Duration,Exercise Name,Set Order,Weight,Reps,Distance,Seconds,Notes,Workout Notes,RPE',

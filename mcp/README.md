@@ -33,10 +33,10 @@ to answer for — its user id is in `./data/db.json` under `users[].id`:
 
 ```bash
 # single-user instance (the common self-hosted case) — auto-detected:
-node src/index.js
+node src/index.ts
 
 # multi-user instance, or just to be explicit:
-OPENGYM_UID=<your-uid> OPENGYM_DATA=/path/to/openGym/data node src/index.js
+OPENGYM_UID=<your-uid> OPENGYM_DATA=/path/to/openGym/data node src/index.ts
 ```
 
 ### 3. Register with your LLM client
@@ -49,7 +49,7 @@ Add the server to your LLM client's MCP config. For Claude Desktop, edit
   "mcpServers": {
     "opengym": {
       "command": "node",
-      "args": ["/absolute/path/to/openGym/mcp/src/index.js"],
+      "args": ["/absolute/path/to/openGym/mcp/src/index.ts"],
       "env": {
         "OPENGYM_DATA": "/absolute/path/to/openGym/data",
         "OPENGYM_UID": "<your-uid>"   // optional — auto-detected if you have one profile
@@ -91,7 +91,7 @@ first; its reps hold unless a policy that moves reps moved them, or the profile 
 sessions from the last session (`starts_from`). Ask `preview_session` before naming a weight.
 
 Each tool returns JSON the LLM can format as it likes; structured fields (sets, dates, levels)
-are pre-formatted into human-readable labels in `src/labels.js` so the LLM doesn't need to
+are pre-formatted into human-readable labels in `src/labels.ts` so the LLM doesn't need to
 re-interpret them.
 
 ## Logging workouts
@@ -165,13 +165,13 @@ Things to know about that token:
 ## How it reuses the training logic
 
 The MCP server imports the training helpers under `frontend/src/lib/` directly as Node ESM
-and calls the same functions the React UI does (`history.js`, `onerm.js`, `muscles.js`,
-`exercises.js`). The numbers it returns match what the Stats screen shows, because they are
+and calls the same functions the React UI does (`history.ts`, `onerm.ts`, `muscles.ts`,
+`exercises.ts`). The numbers it returns match what the Stats screen shows, because they are
 the same code.
 
-The one lib file that wasn't Node-safe was `i18n.js` (Vite's `import.meta.glob` at module
-top level) — split into `i18n-core.js` (pure, Node-safe) + `i18n.js` (Vite/React bits,
-re-exports from core). `exercises.js` got a one-line `import.meta.env || {}` guard. No new
+The one lib file that wasn't Node-safe was `i18n.ts` (Vite's `import.meta.glob` at module
+top level) — split into `i18n-core.ts` (pure, Node-safe) + `i18n.ts` (Vite/React bits,
+re-exports from core). `exercises.ts` got a one-line `import.meta.env || {}` guard. No new
 dependencies landed in `frontend/`, no public exports changed.
 
 ## Design constraints honoured
@@ -192,7 +192,7 @@ dependencies landed in `frontend/`, no public exports changed.
 cd mcp && npm test
 ```
 
-58 cases seeding state from `frontend/src/lib/demoSeed.js` (the same deterministic fixture
+58 cases seeding state from `frontend/src/lib/demoSeed.ts` (the same deterministic fixture
 the public demo runs on). Pins JSON shape and the user-facing edge cases: rest-day override,
 missing routine, zero-workout history, no synced state, superset links, three 1RM formulas.
 "Today" is pinned via `vi.useFakeTimers({ now: ..., toFake: ['Date'] })` so date-dependent
@@ -201,7 +201,7 @@ their own 92 tests in `frontend/src/lib/*.test.js`.
 
 `log_workout` has two more files: `write-tools.test.js` against a stand-in api (conflicts,
 retries, a rejected token, dry runs, duplicates), and `log-workout.e2e.test.js` against the real
-`api/server.js` on a temp data directory, which needs `npm ci` in `api/` (it skips without it on
+`api/server.ts` on a temp data directory, which needs `npm ci` in `api/` (it skips without it on
 a laptop and fails under `CI`). The workout it builds is tested in
 `frontend/src/lib/log-workout.test.js`.
 

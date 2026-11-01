@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { copyRoutine, deleteRoutine } from './routines.js'
+import { copyRoutine, deleteRoutine } from './routines.ts'
 
 const routine = {
   id: 'r1',

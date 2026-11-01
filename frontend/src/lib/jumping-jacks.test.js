@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { EXIDX, isCardio } from './exercises.js'
-import { buildSets, defaultConfig, exLine, modeOf, setLabel } from './history.js'
-import { modeForEntry } from './workout-model.js'
-import { repeatSessionEntries } from './session-repeat.js'
+import { EXIDX, isCardio } from './exercises.ts'
+import { buildSets, defaultConfig, exLine, modeOf, setLabel } from './history.ts'
+import { modeForEntry } from './workout-model.ts'
+import { repeatSessionEntries } from './session-repeat.ts'
 
 // Issue #678: these countable movements used to open the running-style min/speed form.
 const JACKS = ['3094', '3224', '0501', '7555', '3108', '0264', '0610', '2465']

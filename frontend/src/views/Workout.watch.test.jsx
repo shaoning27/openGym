@@ -1,18 +1,18 @@
 // @vitest-environment happy-dom
-// A set ticked on the Apple Watch runs the workout screen's own tick (lib/watch-sync.js): the
+// A set ticked on the Apple Watch runs the workout screen's own tick (lib/watch-sync.ts): the
 // weight and reps from the watch go into the row, the row is done, and the rest starts, exactly
 // as a tap on the phone does it. Applied once, however often the event arrives.
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout, { _resetHintQuiet } from './Workout.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { applyEvents, _resetWatchSync } from '../lib/watch-sync.js'
+import Workout, { _resetHintQuiet } from './Workout.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { applyEvents, _resetWatchSync } from '../lib/watch-sync.ts'
 
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = v => JSON.parse(JSON.stringify(v))

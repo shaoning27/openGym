@@ -1,6 +1,6 @@
 /* /api/data carries a server revision: GET hands it out, PUT with `baseRev` is refused (409, with
    the current document) when another write landed in between, PUT without `baseRev` overwrites
-   as clients from before revisions always did. Real server.js in a child. */
+   as clients from before revisions always did. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -26,7 +26,7 @@ async function startServer(t) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({
     users: [{ id: 'u_rev_1', name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });

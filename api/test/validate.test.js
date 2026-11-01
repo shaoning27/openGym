@@ -14,7 +14,7 @@ import assert from 'node:assert/strict';
 import { tempData } from './helpers.mjs';
 
 tempData();
-const { validatePlan, validateReview, CHANGE_TYPES } = await import('../coach/core/validate.js');
+const { validatePlan, validateReview, CHANGE_TYPES } = await import('../coach/core/validate.ts');
 
 const PLAN = {
   routines: [{
@@ -458,7 +458,7 @@ test('a custom exercise may not claim a library id', () => {
 });
 
 test('ids that are prototype keys are refused', () => {
-  // plan-share.js uses bare object literals for its id maps: writing __proto__ is ignored and
+  // plan-share.ts uses bare object literals for its id maps: writing __proto__ is ignored and
   // reading it back yields Object.prototype, which persists into synced state as {}.
   const r = validatePlan({
     routines: [{ id: '__proto__', name: 'A', ex: [{ id: '0001', sets: 3, reps: 10 }] }],
@@ -474,7 +474,7 @@ test('a load step has an upper bound', () => {
 });
 
 /* ---------- debriefs ---------- */
-const { validateDebrief } = await import('../coach/core/validate.js');
+const { validateDebrief } = await import('../coach/core/validate.ts');
 
 test('a debrief keeps summary, a clamped whole-number score and the three short lists', () => {
   const r = validateDebrief({

@@ -44,8 +44,8 @@ describe('History grows as it is scrolled', () => {
     vi.resetModules()
     observers = []
     window.IntersectionObserver = FakeIO
-    ;({ DEF, useStore } = await import('../store/useStore.js'))
-    ;({ default: History, HISTORY_PAGE: PAGE } = await import('./History.jsx'))
+    ;({ DEF, useStore } = await import('../store/useStore.ts'))
+    ;({ default: History, HISTORY_PAGE: PAGE } = await import('./History.tsx'))
   })
   afterEach(() => {
     for (const r of roots.splice(0)) act(() => r.unmount())

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { EXIDX } from './exercises.js'
-import { MUSCLES, musclesOf, sessionLoad, sessionLevels, loadOfWorkouts } from './muscles.js'
+import { EXIDX } from './exercises.ts'
+import { MUSCLES, musclesOf, sessionLoad, sessionLevels, loadOfWorkouts } from './muscles.ts'
 
 // #670: the live workout's map. `done` is what the ticked sets hit, `planned` the whole session.
 const SQUAT = '0043'

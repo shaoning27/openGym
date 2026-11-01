@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
-// Seasonal themes (lib/seasonal.js): the date window, the choice, the opt-in colours, once a day.
+// Seasonal themes (lib/seasonal.ts): the date window, the choice, the opt-in colours, once a day.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { THEMES, inSeason, seasonChoice, themeOn, activeSeason, seasonAccent, seasonInWorkout, onceToday, doneToday } from './seasonal.js'
+import { THEMES, inSeason, seasonChoice, themeOn, activeSeason, seasonAccent, seasonInWorkout, onceToday, doneToday } from './seasonal.ts'
 
 const local = (y, m, d, h = 12, min = 0) => new Date(y, m - 1, d, h, min)
 

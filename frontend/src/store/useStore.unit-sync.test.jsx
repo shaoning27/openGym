@@ -4,15 +4,15 @@
    still in kg, logs a weigh-in. The conversion was not pushed, and the merge knew nothing of
    units: the server ended in kg with the numbers back in kg — and the kept loads still in lb under
    the kg label (55 kg became 121.5 kg). Now the conversion goes to the server at once, and a merge
-   brings a copy in the other unit over before anything is compared (lib/sync-merge.js). */
+   brings a copy in the other unit over before anything is compared (lib/sync-merge.ts). */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
-import { convertBodyWeight, convertStateUnit, convertWeight } from '../lib/units.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
+import { convertBodyWeight, convertStateUnit, convertWeight } from '../lib/units.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const TODAY = '2026-09-27'

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { progressionGuidance } from './progression-copy.js'
+import { progressionGuidance } from './progression-copy.ts'
 
 describe('policy-labelled progression guidance', () => {
   it('keeps the calculated outcome and identifies the policy that produced it', () => {

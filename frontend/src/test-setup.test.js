@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { ensureWebStorage } from './test-setup.js'
+import { ensureWebStorage } from './test-setup.ts'
 
 // What Node 24+ leaves on the global without --localstorage-file (#733): a localStorage that is
 // undefined, or one whose getter throws.

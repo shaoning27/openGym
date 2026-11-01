@@ -1,13 +1,13 @@
-// Tool-layer tests for mcp/src/tools.js, seeded from frontend/src/lib/demoSeed.js — the same
+// Tool-layer tests for mcp/src/tools.ts, seeded from frontend/src/lib/demoSeed.ts — the same
 // deterministic fixture the public demo runs on. The pure lib functions have their own 92
 // tests in frontend/src/lib/*.test.js; here we pin JSON shape + the user-facing edge cases
 // (rest-day override, missing routine, zero-workout history, no synced state, superset links).
 import { describe, beforeAll, afterAll, beforeEach, test, expect, vi } from 'vitest'
-import { buildDemoState } from '../../frontend/src/lib/demoSeed.js'
-import { EXDB, exOr } from '../../frontend/src/lib/exercises.js'
-import { _seedStateForTests } from '../src/state.js'
-import { TOOLS } from '../src/tools.js'
-import { bestSetOf } from '../../frontend/src/lib/onerm.js'
+import { buildDemoState } from '../../frontend/src/lib/demoSeed.ts'
+import { EXDB, exOr } from '../../frontend/src/lib/exercises.ts'
+import { _seedStateForTests } from '../src/state.ts'
+import { TOOLS } from '../src/tools.ts'
+import { bestSetOf } from '../../frontend/src/lib/onerm.ts'
 
 // Re-stated here so the assertions stand alone without reaching into lib internals to learn
 // the demo state's exact values.
@@ -178,7 +178,7 @@ describe('get_routine', () => {
     delete S.routines[0].prog
     delete S.routines[0].ex[0].prog
 
-    // policyFor defaults reps to linear (progression.js:73) and RoutineEdit.jsx:59 shows
+    // policyFor defaults reps to linear (progression.ts:73) and RoutineEdit.tsx:59 shows
     // that same default, so reporting 'off' here would misdescribe every untouched routine.
     const r = call('get_routine', { routine_id: S.routines[0].id })
     expect(r.policy).toBe('linear')
@@ -553,7 +553,7 @@ describe('get_workout', () => {
     }]
     const w = call('get_workout', { date: '2026-07-25' })
     expect(w.entries[0].sets[0].label).toBe('60×5')             // reps
-    // 90 sec → 1 min 30 sec → mm:ss label is "1:30" (fmtSec in history.js)
+    // 90 sec → 1 min 30 sec → mm:ss label is "1:30" (fmtSec in history.ts)
     expect(w.entries[1].sets[0].label).toBe('1:30')             // 90 s in mm:ss, no weight
     expect(w.entries[2].sets[0].label).toBe('1:30 · 20')        // weighted plank
     expect(w.entries[3].sets[0].label).toBe('20 min @ 8 km/h')   // cardio
@@ -754,7 +754,7 @@ describe('estimate_1rm', () => {
   })
 
   test('a heavy warm-up is never a PR — the table matches the app, which excludes warm-ups', () => {
-    // The app scans with bestSetOf(), which skips warm-ups (onerm.js). prTable used to gate on
+    // The app scans with bestSetOf(), which skips warm-ups (onerm.ts). prTable used to gate on
     // s.done alone, so a ramp row heavier than the work set became a record the coach reported
     // and the athlete never saw — for the same exercise, from the same state.
     S.workouts = [{
@@ -870,7 +870,7 @@ describe('muscle_balance', () => {
     const total = r => r.worked.reduce((n, w) => n + w.effective_sets, 0)
     const before = total(call('muscle_balance', { period: 'all' }))
 
-    // Exactly what sheets.jsx:421-426 leaves behind when a custom exercise is deleted: the
+    // Exactly what sheets.tsx:421-426 leaves behind when a custom exercise is deleted: the
     // customEx row is gone, the history entry keeps `n` + `muscleSnapshot`. loadOf reads that
     // snapshot off the entry — so nothing may be attached over the top of it.
     S.customEx = []
@@ -1000,7 +1000,7 @@ describe('preview_session', () => {
   }
 
   // The session builder reads equipment and body part from the global exercise index, which holds
-  // no custom exercises here (see customOf in tools.js). A custom leg lift then ramped on the small
+  // no custom exercises here (see customOf in tools.ts). A custom leg lift then ramped on the small
   // load step, where the app, which registers its customs, takes the larger one for legs.
   test('a custom leg lift ramps on the same load step as in the app, and the index is left as it was', () => {
     const custom = { id: 'c-hack', n: 'Hack Squat (mine)', bp: 'upper legs', eq: 'barbell', tg: 'quads', sm: [], custom: true }
@@ -1168,7 +1168,7 @@ describe('preview_session', () => {
     expect(r.exercises).toEqual([])
   })
 
-  test('with progression off the routine\'s own numbers open, whatever history says (matches session-start.js)', () => {
+  test('with progression off the routine\'s own numbers open, whatever history says (matches session-start.ts)', () => {
     only({ id: '0025', sets: 3, reps: 8, weight: 50 }, {
       prog: 'off',
       exWeights: { '0025': { w: 72.5, d: '2026-07-20' } },
@@ -1296,7 +1296,7 @@ describe('`to` defaults to today, as documented', () => {
 
 /* ---------- argument validation at the real SDK boundary ---------- */
 
-// Driven through McpServer + an in-memory transport with the registration loop from src/index.js,
+// Driven through McpServer + an in-memory transport with the registration loop from src/index.ts,
 // because the thing under test is what zod does to the arguments BEFORE a handler ever runs.
 describe('date arguments must be dates the calendar has', () => {
   let client

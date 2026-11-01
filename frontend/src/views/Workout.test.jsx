@@ -2,14 +2,14 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { parseHTML } from 'linkedom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
-import { api, beacon } from '../lib/api.js'
-import { nextPrescription } from '../lib/progression.js'
-import { buildCombinedEntries } from '../lib/session-merge.js'
-import { buildCompletedWorkout } from '../lib/finish-workout.js'
-import { isWarmupRow } from '../lib/workout-model.js'
-import { discardedFor } from '../lib/watch-sync.js'
-import { finishWorkout, finishWorkoutSheet } from '../sheets.jsx'
+import Workout from './Workout.tsx'
+import { api, beacon } from '../lib/api.ts'
+import { nextPrescription } from '../lib/progression.ts'
+import { buildCombinedEntries } from '../lib/session-merge.ts'
+import { buildCompletedWorkout } from '../lib/finish-workout.ts'
+import { isWarmupRow } from '../lib/workout-model.ts'
+import { discardedFor } from '../lib/watch-sync.ts'
+import { finishWorkout, finishWorkoutSheet } from '../sheets.tsx'
 
 // A menu's actions in order, whether it came as one list or in groups (menuSheet `sections`).
 const menuItemsOf = menu => (menu.sections ? menu.sections.flatMap(g => g.items || []) : menu.items || []).filter(Boolean)
@@ -70,15 +70,15 @@ const mocks = vi.hoisted(() => {
   return state
 })
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector(mocks.storeSnapshot())
   useStore.getState = mocks.storeSnapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const useUI = selector => selector ? selector(mocks.uiSnapshot()) : mocks.uiSnapshot()
   useUI.getState = mocks.uiSnapshot
-  // A move hands the running rest to its exercise's new index (Workout.jsx moveUnitAt).
+  // A move hands the running rest to its exercise's new index (Workout.tsx moveUnitAt).
   useUI.setState = patch => {
     const next = typeof patch === 'function' ? patch(mocks.uiSnapshot()) : patch
     if ('timer' in next) mocks.timer = next.timer
@@ -87,9 +87,9 @@ vi.mock('../store/useUI.js', () => {
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => mocks.nav }))
-// The Live Activity's Done (lib/live-activity.js): the handler the workout screen binds.
-vi.mock('../lib/live-activity.js', () => ({ bindLiveActions: h => { mocks.live = h; return () => { if (mocks.live === h) mocks.live = null } } }))
-vi.mock('../sheets.jsx', () => ({
+// The Live Activity's Done (lib/live-activity.ts): the handler the workout screen binds.
+vi.mock('../lib/live-activity.ts', () => ({ bindLiveActions: h => { mocks.live = h; return () => { if (mocks.live === h) mocks.live = null } } }))
+vi.mock('../sheets.tsx', () => ({
   startFlow: vi.fn(),
   exercisePicker: mocks.exercisePicker,
   exConfigSheet: mocks.exConfigSheet,
@@ -103,7 +103,7 @@ vi.mock('../sheets.jsx', () => ({
   swapActiveWorkoutToBackup: mocks.swapActiveWorkoutToBackup,
   menuSheet: mocks.menuSheet,
   barWeightSheet: vi.fn(),
-  // Both note sheets belong here even though the tests never open one: Workout.jsx reads
+  // Both note sheets belong here even though the tests never open one: Workout.tsx reads
   // sessionNoteSheet during render, so a missing export is a render crash, not a no-op.
   exerciseNoteSheet: vi.fn(),
   setNoteSheet: mocks.setNoteSheet,
@@ -113,16 +113,16 @@ vi.mock('../sheets.jsx', () => ({
   exerciseHistorySheet: mocks.exerciseHistorySheet,
   addRoutineToSessionSheet: vi.fn(),
 }))
-vi.mock('../components/Media.jsx', () => ({ default: () => null }))
-vi.mock('../components/WorkoutThumb.jsx', () => ({
+vi.mock('../components/Media.tsx', () => ({ default: () => null }))
+vi.mock('../components/WorkoutThumb.tsx', () => ({
   default: ({ onExpand }) => React.createElement('button', { className: 'wthumb', 'aria-label': 'Expand', onClick: onExpand }),
   hasWorkoutMedia: () => true,
 }))
-vi.mock('../components/DurationWheel.jsx', () => ({ durationSheet: mocks.durationSheet }))
-vi.mock('../components/WorkoutSettingsSheet.jsx', () => ({ workoutSettingsSheet: mocks.workoutSettingsSheet }))
-// api.js reads navigator.userAgent at module scope. This file installs its own DOM inside the
+vi.mock('../components/DurationWheel.tsx', () => ({ durationSheet: mocks.durationSheet }))
+vi.mock('../components/WorkoutSettingsSheet.tsx', () => ({ workoutSettingsSheet: mocks.workoutSettingsSheet }))
+// api.ts reads navigator.userAgent at module scope. This file installs its own DOM inside the
 // tests rather than declaring a vitest environment, so it must not depend on an ambient one.
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: vi.fn(() => Promise.resolve({})),
   beacon: vi.fn(),
   IS_APPLE: false, IS_ANDROID: false, BIO: 'biometrics',
@@ -911,7 +911,7 @@ describe('Workout discard timer lifecycle', () => {
   })
 })
 
-// The live-presence "left" signal goes through lib/api.js beacon() (upstream's: the web app's
+// The live-presence "left" signal goes through lib/api.ts beacon() (upstream's: the web app's
 // own origin, nothing on a phone, where the api() call beside it reaches the server).
 describe('Workout live-presence heartbeat', () => {
   it('leaving the screen signed in sends the "left" signal through beacon() and the API, as navigated', async () => {
@@ -3213,7 +3213,7 @@ describe('per-side effort completion', () => {
 // exercise name has to show the same label the detail sheet does (Glutes), not the raw id.
 describe('Workout exercise tags', () => {
   it('names a custom exercise\'s target muscle by its display name', async () => {
-    const { registerCustom } = await import('../lib/exercises.js')
+    const { registerCustom } = await import('../lib/exercises.ts')
     registerCustom([{ id: 'cqa1', n: 'QA Custom Thrust', bp: 'upper legs', eq: 'barbell', custom: true, tg: 'gluteal', sm: [], primaries: ['gluteal'], secondaries: [], muscleGroups: ['gluteal'] }])
     try {
       await mount([exercise('cqa1', [false])])
@@ -3226,7 +3226,7 @@ describe('Workout exercise tags', () => {
   // The cardio target "cardiovascular system" is a translated key of its own; mapping it through
   // MUSCLE_NAME must not turn "Herz-Kreislauf" back into English for every built-in cardio exercise.
   it('keeps the cardio target translated (burpee, de)', async () => {
-    const { _setLangState } = await import('../lib/i18n-core.js')
+    const { _setLangState } = await import('../lib/i18n-core.ts')
     const { default: de } = await import('../locales/de.js')
     _setLangState('de', de, null, null)
     try {
@@ -3385,7 +3385,7 @@ describe('the reference line: last time or best set', () => {
   // right, each word stood on the wrong side of its numbers and the numbers after it turned
   // round; isolated in its own direction it reads as before, next to sets that are forced.
   it('leaves a set with right-to-left words in its own direction', async () => {
-    const { _setLangState } = await import('../lib/i18n-core.js')
+    const { _setLangState } = await import('../lib/i18n-core.ts')
     const { default: ar } = await import('../locales/ar.js')
     const side = r => ({ w: 15, r, done: true })
     const sided = [{ d: '2026-08-26', start: Date.parse('2026-08-26T18:00:00'), routineIds: ['A'],
@@ -3602,8 +3602,8 @@ describe('the workout screen chrome (v1.3.11)', () => {
   })
 
   it('offers each planned backup of the slot in one tap, and only the ones that exist (#649)', async () => {
-    const { EXIDX } = await import('../lib/exercises.js')
-    const { exerciseNameText } = await import('../lib/format.js')
+    const { EXIDX } = await import('../lib/exercises.ts')
+    const { exerciseNameText } = await import('../lib/format.ts')
     await mount([exercise('0025', [false], { target: { mode: 'reps', sets: 3, reps: 5, weight: 60, subs: ['0047', 'gone', '0025'] } })])
     await openMore()
     const today = lastMenu().sections[0].items.filter(Boolean)

@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXIDX } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet } from './sheets.jsx'
+import { EXIDX } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet } from './sheets.tsx'
 
 /* #583: a bodyweight exercise with nothing added has no weight to step up, so the progression
    asks for no Step there; it climbs in reps, then sets. A weighted one keeps its Step. */

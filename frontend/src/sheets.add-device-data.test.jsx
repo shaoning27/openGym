@@ -2,8 +2,8 @@
 // The sign-in question about entries logged while signed out: a count of one reads in the
 // singular ("1 workout and 1 weigh-in"), per noun, in English and in the packs.
 import { afterEach, describe, expect, it } from 'vitest'
-import { _setLangState } from './lib/i18n-core.js'
-import { addDeviceDataMessage, addDeviceSetupMessage } from './sheets.jsx'
+import { _setLangState } from './lib/i18n-core.ts'
+import { addDeviceDataMessage, addDeviceSetupMessage } from './sheets.tsx'
 import de from './locales/de.js'
 import ru from './locales/ru.js'
 

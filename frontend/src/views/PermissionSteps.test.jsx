@@ -4,7 +4,7 @@
 // dialog (App Review 5.1.1(iv): our screen must never let the real ask be skipped). Shown
 // once per device, never for a permission already granted or one the OS will not ask for again,
 // never off the phone app. Continue goes through the same request the first rest makes
-// (rest-alert.js), so the first rest does not ask a second time.
+// (rest-alert.ts), so the first rest does not ask a second time.
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -12,29 +12,29 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const h = vi.hoisted(() => ({ MOBILE: true, display: 'prompt', after: 'granted', finish: vi.fn(), requests: 0, health: { status: 'unsupported', granted: false, platform: null }, healthOn: false, enable: [] }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return h.MOBILE }, nativePlatform: async () => (h.MOBILE ? 'ios' : null) }))
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return h.MOBILE }, nativePlatform: async () => (h.MOBILE ? 'ios' : null) }))
 vi.mock('@capacitor/local-notifications', () => ({
   LocalNotifications: {
     checkPermissions: async () => ({ display: h.display }),
     requestPermissions: async () => { h.requests++; h.display = h.after; return { display: h.after } },
   },
 }))
-// Apple Health (iPhone only): lib/health-sync.js is played here; its own tests cover the writing.
-vi.mock('../lib/health-sync.js', () => ({
+// Apple Health (iPhone only): lib/health-sync.ts is played here; its own tests cover the writing.
+vi.mock('../lib/health-sync.ts', () => ({
   healthStatus: async () => h.health,
   loadHealth: async () => ({ on: h.healthOn, written: {} }),
   enableHealth: async S => { h.enable.push(S); h.healthOn = true; return { ok: true } },
 }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ finishPermSteps: h.finish, S: { unit: 'kg', workouts: [] } })
   const useStore = sel => (sel ? sel(snap()) : snap())
   useStore.getState = snap
   return { useStore }
 })
 
-const { default: PermissionSteps } = await import('./PermissionSteps.jsx')
-const { pendingSteps, SEEN_KEY } = await import('../lib/onboarding-perms.js')
-const { NOTIF_ASKED_KEY, _resetNotifAsk } = await import('../lib/rest-alert.js')
+const { default: PermissionSteps } = await import('./PermissionSteps.tsx')
+const { pendingSteps, SEEN_KEY } = await import('../lib/onboarding-perms.ts')
+const { NOTIF_ASKED_KEY, _resetNotifAsk } = await import('../lib/rest-alert.ts')
 
 let host, root
 beforeEach(() => {
@@ -71,7 +71,7 @@ describe('the screen', () => {
     await click(button('Continue'))
     expect(h.requests).toBe(1)
     expect(h.finish).toHaveBeenCalledTimes(1)
-    // The first rest does not ask again: the answer is on record where rest-alert.js looks.
+    // The first rest does not ask again: the answer is on record where rest-alert.ts looks.
     expect(localStorage.getItem(NOTIF_ASKED_KEY)).toBe('granted')
     expect(JSON.parse(localStorage.getItem(SEEN_KEY))).toEqual(['notifications'])
   })

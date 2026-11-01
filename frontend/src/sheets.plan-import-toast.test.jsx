@@ -4,11 +4,11 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { planImportSheet } from './sheets.jsx'
-import { parsePlan } from './lib/plan-share.js'
-import { EXDB } from './lib/exercises.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { planImportSheet } from './sheets.tsx'
+import { parsePlan } from './lib/plan-share.ts'
+import { EXDB } from './lib/exercises.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const ids = EXDB.filter(e => e.bp !== 'cardio').slice(0, 2).map(e => e.id)

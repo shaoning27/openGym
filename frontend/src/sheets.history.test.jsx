@@ -6,10 +6,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exerciseHistorySheet, exerciseDetailSheet } from './sheets.jsx'
-import { EXIDX } from './lib/exercises.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exerciseHistorySheet, exerciseDetailSheet } from './sheets.tsx'
+import { EXIDX } from './lib/exercises.ts'
 
 const mounted = []
 

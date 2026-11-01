@@ -4,7 +4,7 @@
 // to do nothing.
 // @vitest-environment happy-dom
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { closeThenNav, nav, navToWorkout, setNav } from './nav.js'
+import { closeThenNav, nav, navToWorkout, setNav } from './nav.ts'
 
 let calls
 beforeEach(() => {

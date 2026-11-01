@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { sha256Hex, sha256HexJs, createSha256 } from './sha256.js'
+import { sha256Hex, sha256HexJs, createSha256 } from './sha256.ts'
 
 const enc = s => new TextEncoder().encode(s)
 // FIPS 180-2 / NIST vectors.

@@ -2,25 +2,25 @@
 // #375: on silent, the end of a rest buzzed nowhere — the page's buzz and the notification
 // channel's are both muted. With "Vibrate when the phone is on silent" on, the native alarm is
 // told to buzz as an alarm, and the page's own end-of-rest buzz goes through alertBuzz (which
-// App.jsx points at the native alarm buzz). A set tick stays an ordinary buzz.
+// App.tsx points at the native alarm buzz). A set tick stays an ordinary buzz.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/mobile.js', async importOriginal => ({ ...(await importOriginal()), MOBILE: true }))
-vi.mock('../lib/rest-alert.js', () => ({
+vi.mock('../lib/mobile.ts', async importOriginal => ({ ...(await importOriginal()), MOBILE: true }))
+vi.mock('../lib/rest-alert.ts', () => ({
   armRestAlert: vi.fn(() => Promise.resolve(true)),
   holdRestAlert: vi.fn(),
   disarmRestAlert: vi.fn(),
   bindNativeRest: vi.fn(),
   toneNative: vi.fn(() => Promise.resolve(true)),
 }))
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
 
-import { useUI } from './useUI.js'
-import { useStore } from './useStore.js'
-import { armRestAlert } from '../lib/rest-alert.js'
-import { alertBuzz, chime, vibrate } from '../lib/sound.js'
-import { toneNative } from '../lib/rest-alert.js'
+import { useUI } from './useUI.ts'
+import { useStore } from './useStore.ts'
+import { armRestAlert } from '../lib/rest-alert.ts'
+import { alertBuzz, chime, vibrate } from '../lib/sound.ts'
+import { toneNative } from '../lib/rest-alert.ts'
 
 let original
 beforeEach(() => {
@@ -91,7 +91,7 @@ describe('vibrate on silent', () => {
   })
 
   it('is off for a profile that never chose', async () => {
-    const { DEF } = await import('./useStore.js')
+    const { DEF } = await import('./useStore.ts')
     expect(DEF.vibrateOnSilent).toBe(false)
   })
 })

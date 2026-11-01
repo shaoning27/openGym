@@ -4,10 +4,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB } from './lib/exercises.js'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exerciseDetailSheet, exercisePicker } from './sheets.jsx'
+import { EXDB } from './lib/exercises.ts'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exerciseDetailSheet, exercisePicker } from './sheets.tsx'
 
 const mounted = []
 const S = () => useStore.getState().S

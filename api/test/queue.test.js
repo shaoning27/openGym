@@ -2,7 +2,7 @@
 // server.js. Pure function, no server needed: the tick only calls this one export.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { effectiveRoutineId, pinState } from '../queue.js';
+import { effectiveRoutineId, pinState } from '../queue.ts';
 
 const routines = [
   { id: 'r1', name: 'Push' },

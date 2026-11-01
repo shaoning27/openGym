@@ -3,19 +3,19 @@
 // the apply engine accepts. Also the three things this mode has to get right on its own: the
 // daily cap, the key never touching S, and a proposal surviving in the device file.
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { todayISO } from './format.js'
+import { todayISO } from './format.ts'
 
 // The device file and the secret store are in-memory here; nativeFetch is the script.
 const device = { data: null }
-vi.mock('./mobile.js', () => ({
+vi.mock('./mobile.ts', () => ({
   MOBILE: true,
   readJsonFile: async () => device.data,
   writeJsonFile: async (_n, d) => { device.data = JSON.parse(JSON.stringify(d)) }
 }))
 const secret = { key: 'sk-test-1' }
-vi.mock('./coach-secrets.js', () => ({ getApiKey: async () => secret.key, setApiKey: async v => { secret.key = v }, clearApiKey: async () => { secret.key = null } }))
+vi.mock('./coach-secrets.ts', () => ({ getApiKey: async () => secret.key, setApiKey: async v => { secret.key = v }, clearApiKey: async () => { secret.key = null } }))
 const wire = { calls: [], answer: null }
-vi.mock('./capacitor-fetch.js', () => ({
+vi.mock('./capacitor-fetch.ts', () => ({
   nativeFetch: async (url, init) => {
     wire.calls.push({ url, init, body: init.body ? JSON.parse(init.body) : null })
     const a = typeof wire.answer === 'function' ? wire.answer(wire.calls.length, url, init) : wire.answer
@@ -23,10 +23,10 @@ vi.mock('./capacitor-fetch.js', () => ({
   }
 }))
 
-const local = await import('./coach-local.js')
-const { _resetCoachDevice, loadCoachDevice, saveCoachDevice, COACH_LIMITS } = await import('./coach-device.js')
-const { applyChangeSet, markStale, planHash } = await import('./coach.js')
-const { todayISO } = await import('./format.js')
+const local = await import('./coach-local.ts')
+const { _resetCoachDevice, loadCoachDevice, saveCoachDevice, COACH_LIMITS } = await import('./coach-device.ts')
+const { applyChangeSet, markStale, planHash } = await import('./coach.ts')
+const { todayISO } = await import('./format.ts')
 const { EXERCISES } = await import('../../../api/coach/core/library-data.js')
 
 const EX = EXERCISES[0].id, EX2 = EXERCISES[1].id
@@ -114,7 +114,7 @@ describe('the Coach on a phone with its own key', () => {
   })
 
   it('a saved model the key cannot use is swapped for one it can, and the swap is kept (#758)', async () => {
-    const { HTTP_PROVIDERS } = await import('../../../api/coach/core/providers.js')
+    const { HTTP_PROVIDERS } = await import('../../../api/coach/core/providers.ts')
     const next = HTTP_PROVIDERS.gemini.defaultModel
     device.data = { mode: 'byok', provider: 'gemini', model: 'gemini-2.5-pro', baseUrl: null }
     wire.answer = (n, url) => url.includes('/models?')
@@ -278,7 +278,7 @@ describe('the Coach on a phone with its own key', () => {
 
 describe('timeouts on the phone', () => {
   it('gives a local endpoint the long budget and cloud providers the short one', async () => {
-    const { timeoutFor, TIMEOUT_MS, LOCAL_ENDPOINT_TIMEOUT_MS } = await import('./coach-local.js')
+    const { timeoutFor, TIMEOUT_MS, LOCAL_ENDPOINT_TIMEOUT_MS } = await import('./coach-local.ts')
     expect(timeoutFor('compatible')).toBe(LOCAL_ENDPOINT_TIMEOUT_MS)
     expect(LOCAL_ENDPOINT_TIMEOUT_MS).toBeGreaterThanOrEqual(20 * 60000)
     for (const p of ['anthropic', 'openai', 'gemini']) expect(timeoutFor(p)).toBe(TIMEOUT_MS)

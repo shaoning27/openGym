@@ -22,7 +22,7 @@ flowchart LR
 
   subgraph Server["Your server (docker compose)"]
     N["web: nginx<br/>app files, 180 px media"]
-    API["api: node:http<br/>server.js"]
+    API["api: node:http<br/>server.ts"]
     D[("./data<br/>db.json, state-&lt;user&gt;.json,<br/>uploads/, audit.log")]
   end
 
@@ -48,12 +48,12 @@ in a file in the app's private storage (MOBILE.md explains the modes).
 
 | Path | What lives there |
 |---|---|
-| `frontend/src/` | The app. `App.jsx` routes to `views/` (one file per screen), `sheets.jsx` holds the bottom sheets, `components/` the shared UI, `store/` the two Zustand stores, `lib/` the logic |
+| `frontend/src/` | The app. `App.tsx` routes to `views/` (one file per screen), `sheets.tsx` holds the bottom sheets, `components/` the shared UI, `store/` the two Zustand stores, `lib/` the logic |
 | `frontend/src/lib/` | Pure helpers, each with a `*.test.js` beside it: progression, 1RM, recovery, sync merge, imports, media, the native bridges |
 | `frontend/src/locales/` | One pack per language. The key is the English text, English itself has no pack |
 | `frontend/src/{instr,exercise-names,exercise-desc}/`, `lib/exercises-data.js` | Generated from `catalogue/` by `scripts/catalogue/build.mjs`. Don't edit by hand |
 | `frontend/android/`, `frontend/ios/` | The Capacitor shells and the native plugins (rest alarm, Health Connect, Apple Health, watch, widgets, animation packs) |
-| `api/` | `server.js` (routes, sessions, storage), plus small modules split out so they can be tested alone: `media.js`, `sync-stamps.js`, `queue.js`, `nudge.js`, `rate-limit.js`, `durable.js`, `password.js`, `passkeys-store.js`, `device-link.js` |
+| `api/` | `server.ts` (routes, sessions, storage), plus small modules split out so they can be tested alone: `media.ts`, `sync-stamps.ts`, `queue.ts`, `nudge.ts`, `rate-limit.ts`, `durable.ts`, `password.ts`, `passkeys-store.ts`, `device-link.ts` |
 | `api/coach/` | The optional AI Coach. `core/` has no server state and is shared with the phone apps |
 | `web/` | The nginx image: builds the frontend, adds `catalogue/media`, proxies `/api` |
 | `catalogue/` | The exercise database: one JSON per exercise, translations, the licensed 180 px media |
@@ -66,22 +66,22 @@ in a file in the app's private storage (MOBILE.md explains the modes).
 
 ```mermaid
 flowchart TB
-  V["views/ and sheets.jsx<br/>(screens and bottom sheets)"] --> S["store/useStore.js<br/>persisted state S"]
-  V --> U["store/useUI.js<br/>modals, toasts, timers"]
+  V["views/ and sheets.tsx<br/>(screens and bottom sheets)"] --> S["store/useStore.ts<br/>persisted state S"]
+  V --> U["store/useUI.ts<br/>modals, toasts, timers"]
   V --> L["lib/ (pure logic)"]
   S --> L
-  S -- "debounced push, pull, merge" --> API["lib/api.js<br/>the only fetch wrapper"]
-  S -- "file mirror" --> M["lib/mobile.js<br/>Capacitor Filesystem"]
+  S -- "debounced push, pull, merge" --> API["lib/api.ts<br/>the only fetch wrapper"]
+  S -- "file mirror" --> M["lib/mobile.ts<br/>Capacitor Filesystem"]
   L -. "native bridges" .-> P["Capacitor plugins<br/>android/ and ios/"]
 ```
 
-- **State.** `useStore.js` holds everything a profile owns (`S`): routines, workouts, weigh-ins,
+- **State.** `useStore.ts` holds everything a profile owns (`S`): routines, workouts, weigh-ins,
   settings. It is saved to `localStorage`, mirrored to a file on the phones (WebView storage can be
-  evicted), and pushed to the server when signed in. `useUI.js` is everything that should not
+  evicted), and pushed to the server when signed in. `useUI.ts` is everything that should not
   survive a reload.
 - **Logic in `lib/`.** Anything that decides what you lift next, or reads a logged session back, is
   a pure function with a test beside it. Views stay thin.
-- **Platform switches.** `lib/mobile.js` (`MOBILE`), `lib/channel.js` (APK or store build) and the
+- **Platform switches.** `lib/mobile.ts` (`MOBILE`), `lib/channel.ts` (APK or store build) and the
   `VITE_DEMO` flag for the demo. Native code is only reached through Capacitor plugins.
 
 ## Sync
@@ -99,14 +99,14 @@ sequenceDiagram
   S-->>P: 200, rev 8
   L->>S: PUT /api/data (baseRev 7)
   S-->>L: 409 + document at rev 8
-  L->>L: merge field by field (lib/sync-merge.js)
+  L->>L: merge field by field (lib/sync-merge.ts)
   L->>S: PUT /api/data (baseRev 8)
   S-->>L: 200, rev 9
 ```
 
 Every change carries its own timestamp, down to one setting or one field of a routine, so the merge
 keeps the newest edit of each and a deletion stays deleted. The server applies the same rules for
-writers that don't stamp (older apps, API scripts) in `api/sync-stamps.js`.
+writers that don't stamp (older apps, API scripts) in `api/sync-stamps.ts`.
 
 ## Code that exists twice on purpose
 
@@ -115,29 +115,29 @@ imported. When you change one side, change the other in the same pull request:
 
 | Frontend | Server | Held together by |
 |---|---|---|
-| `lib/sync-merge.js` | `api/sync-stamps.js` | `lib/sync-stamps-parity.test.js` runs both on the same cases |
-| `lib/glyphs.js` | `api/coach/core/glyphs.js` | `lib/coach-parity.test.js` |
-| `lib/nudge.js` | `api/nudge.js` | mirrored cases in `lib/nudge.test.js` and `api/test/nudge.test.js` |
-| `lib/queue.js` | `api/queue.js` | mirrored cases in `lib/queue.test.js` and `api/test/queue.test.js` |
+| `lib/sync-merge.ts` | `api/sync-stamps.ts` | `lib/sync-stamps-parity.test.js` runs both on the same cases |
+| `lib/glyphs.ts` | `api/coach/core/glyphs.ts` | `lib/coach-parity.test.js` |
+| `lib/nudge.ts` | `api/nudge.ts` | mirrored cases in `lib/nudge.test.js` and `api/test/nudge.test.js` |
+| `lib/queue.ts` | `api/queue.ts` | mirrored cases in `lib/queue.test.js` and `api/test/queue.test.js` |
 
 The last two have no test that compares the code itself, so a change on one side only is not
 caught automatically.
 
-The Coach goes the other way: `frontend/src/lib/coach-local.js` imports `api/coach/core/` directly,
+The Coach goes the other way: `frontend/src/lib/coach-local.ts` imports `api/coach/core/` directly,
 so the phone apps run the same prompts and validation as the server. That is why the web image
 copies `api/coach/core/` into its build stage.
 
 ## Server
 
-`api/server.js` is a single `node:http` server. Routes are keys of one object
+`api/server.ts` is a single `node:http` server. Routes are keys of one object
 (`routes['GET /api/health']`), matched on method and path. Storage is two kinds of JSON file under
 `DATA_DIR`: `db.json` for users, passkeys, invites and push subscriptions,
 and one `state-<uid>.json` per profile. Every write goes to a temp file first and is renamed over
-the old one (`durable.js`), so a crash never leaves half a file.
+the old one (`durable.ts`), so a crash never leaves half a file.
 
 Sign-in is a passkey (`@simplewebauthn/server`), optionally a password, plus a signed session
 cookie. Phones get the same signed session as a bearer token, made by pairing with a one-time code
-(`device-link.js`). Every route is listed in `api/openapi.yaml`, and `openapi-routes.test.js` fails
+(`device-link.ts`). Every route is listed in `api/openapi.yaml`, and `openapi-routes.test.js` fails
 when the two disagree.
 
 ## Exercise media
@@ -161,11 +161,11 @@ packages are put together and signed on the release machine (`scripts/android/bu
 ## Native extras (iPhone)
 
 - **Apple Watch** (`ios/App/Watch`, logic in the `WatchCore` Swift package with its own tests):
-  the phone sends a snapshot of the running workout (`lib/watch-sync.js` →
+  the phone sends a snapshot of the running workout (`lib/watch-sync.ts` →
   `WatchBridgePlugin.swift`), the watch runs the session on its own, and sends back small events
   ("set done") that the phone applies through the workout screen's own actions.
 - **Widgets and the Live Activity** (`ios/App/OpenGymWidgets`): the page writes a small snapshot to
-  the App Group (`lib/widgets.js` → `WidgetBridgePlugin.swift`), the widgets read it.
+  the App Group (`lib/widgets.ts` → `WidgetBridgePlugin.swift`), the widgets read it.
 - **Animation packs** (`ios/App/AnimationPacksDownloader`, `AnimationPacksPlugin.swift`): the
   sharper animation sizes as Apple-hosted Background Assets.
 

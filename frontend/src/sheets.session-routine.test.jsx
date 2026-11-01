@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { workoutDetailSheet } from './sheets.jsx'
-import { setNav } from './lib/nav.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { workoutDetailSheet } from './sheets.tsx'
+import { setNav } from './lib/nav.ts'
 
 const mounted = []
 const workout = () => ({

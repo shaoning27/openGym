@@ -3,11 +3,11 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Measurements, { manageMeasurementsSheet, measurementLogSheet } from './Measurements.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { bindUI } from '../components/ui.jsx'
-import { normalizeMeasurementsState } from '../lib/measurements.js'
+import Measurements, { manageMeasurementsSheet, measurementLogSheet } from './Measurements.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { bindUI } from '../components/ui.tsx'
+import { normalizeMeasurementsState } from '../lib/measurements.ts'
 
 const mounted = []
 function render(node) {

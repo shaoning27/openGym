@@ -1,13 +1,13 @@
 // Treadmill incline per cardio set (Discord "Add incline level for treadmill"): optional on the
 // set, offered where a grade means something, and carried everywhere a cardio set is read back.
 import { describe, it, expect } from 'vitest'
-import { INCLINE_MAX, clampIncline, inclineFits, hasIncline, inclineFrom } from './incline.js'
-import { EXIDX } from './exercises.js'
-import { setLabel, buildSets, insertWarmupRow, copyRowAt, exLine } from './history.js'
-import { buildPlanBundle, parsePlan } from './plan-share.js'
-import { workoutText } from './workout-text.js'
-import { finishCardio } from './finish-compare.js'
-import { parseWorkoutCSV } from './import-csv.js'
+import { INCLINE_MAX, clampIncline, inclineFits, hasIncline, inclineFrom } from './incline.ts'
+import { EXIDX } from './exercises.ts'
+import { setLabel, buildSets, insertWarmupRow, copyRowAt, exLine } from './history.ts'
+import { buildPlanBundle, parsePlan } from './plan-share.ts'
+import { workoutText } from './workout-text.ts'
+import { finishCardio } from './finish-compare.ts'
+import { parseWorkoutCSV } from './import-csv.ts'
 
 const TREADMILL = '2259'      // walking on treadmill
 const INCLINE_WALK = '3666'   // walking on incline treadmill

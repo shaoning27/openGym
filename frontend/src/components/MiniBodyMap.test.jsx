@@ -3,7 +3,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import MiniBodyMap from './MiniBodyMap.jsx'
+import MiniBodyMap from './MiniBodyMap.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 let host, root

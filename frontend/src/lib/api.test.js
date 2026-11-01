@@ -1,8 +1,8 @@
 // @vitest-environment happy-dom
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { webauthnOK, bio, BIO, passkeyError, api } from './api.js'
+import { webauthnOK, bio, BIO, passkeyError, api } from './api.ts'
 import de from '../locales/de.js'
-import { _setLangState } from './i18n-core.js'
+import { _setLangState } from './i18n-core.ts'
 
 const originalPublicKeyCredential = window.PublicKeyCredential
 const originalCredentials = navigator.credentials
@@ -38,7 +38,7 @@ describe('webauthnOK', () => {
 
 describe('api()', () => {
   it('a failed request throws with the status and the parsed body attached', async () => {
-    const { api } = await import('./api.js')
+    const { api } = await import('./api.ts')
     const original = globalThis.fetch
     globalThis.fetch = async () => ({ ok: false, status: 409, json: async () => ({ error: 'conflict', rev: 3, state: { _rev: 3 } }) })
     try {
@@ -57,26 +57,26 @@ describe('api() refuses an answer that is not the server\'s', () => {
   afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers() })
 
   it('a 200 page of HTML is an error with the status it came with', async () => {
-    const { api } = await import('./api.js')
+    const { api } = await import('./api.ts')
     vi.stubGlobal('fetch', async () => html())
     await expect(api('/api/data', { method: 'PUT', body: '{}' })).rejects.toMatchObject({ code: 'bad-response', status: 200 })
     await expect(api('/api/me')).rejects.toMatchObject({ code: 'bad-response', status: 200 })
   })
 
   it('a JSON answer still comes back as it is', async () => {
-    const { api } = await import('./api.js')
+    const { api } = await import('./api.ts')
     vi.stubGlobal('fetch', async () => new Response(JSON.stringify({ ok: true, rev: 4 }), { status: 200, headers: { 'content-type': 'application/json' } }))
     await expect(api('/api/data', { method: 'PUT', body: '{}' })).resolves.toEqual({ ok: true, rev: 4 })
   })
 
   it('a refused request whose body is not JSON keeps its HTTP status', async () => {
-    const { api } = await import('./api.js')
+    const { api } = await import('./api.ts')
     vi.stubGlobal('fetch', async () => new Response('<html>Bad gateway</html>', { status: 502, headers: { 'content-type': 'text/html' } }))
     await expect(api('/api/data')).rejects.toMatchObject({ status: 502, message: 'HTTP 502', data: {} })
   })
 
   it('pairing with something that is not an openGym server fails instead of saving an empty pairing', async () => {
-    const { pairRedeem } = await import('./api.js')
+    const { pairRedeem } = await import('./api.ts')
     vi.stubGlobal('fetch', async () => html())
     await expect(pairRedeem('https://gym.example.com', 'ABCD2345')).rejects.toMatchObject({ code: 'bad-response' })
     vi.stubGlobal('fetch', async () => new Response('{}', { status: 200, headers: { 'content-type': 'application/json' } }))
@@ -96,7 +96,7 @@ describe('api() gives up on a request that never answers', () => {
 
   it('a GET after 20 s, and the request itself is aborted', async () => {
     vi.useFakeTimers()
-    const { api } = await import('./api.js')
+    const { api } = await import('./api.ts')
     const signals = hang()
     const p = api('/api/data/rev')
     const done = vi.fn()
@@ -110,7 +110,7 @@ describe('api() gives up on a request that never answers', () => {
 
   it('a PUT after 60 s, since it carries the whole profile', async () => {
     vi.useFakeTimers()
-    const { api } = await import('./api.js')
+    const { api } = await import('./api.ts')
     hang()
     const p = api('/api/data', { method: 'PUT', body: '{}' })
     const done = vi.fn()
@@ -123,7 +123,7 @@ describe('api() gives up on a request that never answers', () => {
 
   it('a caller that knows its request is slow sets its own limit, and the option is not sent along', async () => {
     vi.useFakeTimers()
-    const { api } = await import('./api.js')
+    const { api } = await import('./api.ts')
     hang()
     const p = api('/api/admin/coach/test', { method: 'POST', body: '{}', timeout: 150000 })
     const done = vi.fn()
@@ -137,7 +137,7 @@ describe('api() gives up on a request that never answers', () => {
 })
 
 // Settings asks for a passkey as proof before a way in is added or removed (components/
-// PasswordAuth.jsx, ProveOwner), and calls the prompt off when its sheet closes: the signal has
+// PasswordAuth.tsx, ProveOwner), and calls the prompt off when its sheet closes: the signal has
 // to reach the browser's prompt, or a prompt nobody sees any more could still answer.
 describe('passkeyAssertion', () => {
   const originalCredentials = navigator.credentials
@@ -146,7 +146,7 @@ describe('passkeyAssertion', () => {
   const assertion = { id: 'k1', rawId: new Uint8Array([1]).buffer, type: 'public-key', response: { clientDataJSON: new Uint8Array([2]).buffer, authenticatorData: new Uint8Array([3]).buffer, signature: new Uint8Array([4]).buffer, userHandle: null } }
 
   it('hands the signal to the prompt, and answers with the challenge id and the assertion', async () => {
-    const { passkeyAssertion } = await import('./api.js')
+    const { passkeyAssertion } = await import('./api.ts')
     vi.stubGlobal('fetch', async () => options())
     const get = vi.fn(async () => assertion)
     setCapability(navigator, 'credentials', { get })
@@ -161,7 +161,7 @@ describe('passkeyAssertion', () => {
   })
 
   it('a prompt called off rejects as an AbortError', async () => {
-    const { passkeyAssertion } = await import('./api.js')
+    const { passkeyAssertion } = await import('./api.ts')
     vi.stubGlobal('fetch', async () => options())
     setCapability(navigator, 'credentials', {
       get: ({ signal }) => new Promise((resolve, reject) => signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' }))))

@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { workoutVolume, insertWarmupRow, buildSets, applyIntensifierPlan } from './history.js'
-import { applyPrescription } from './progression.js'
-import { isSideSet } from './workout-model.js'
+import { workoutVolume, insertWarmupRow, buildSets, applyIntensifierPlan } from './history.ts'
+import { applyPrescription } from './progression.ts'
+import { isSideSet } from './workout-model.ts'
 
 // The config sheet tells users warm-ups are "left out of volume, records and progression",
-// and history.js repeats that as an invariant in a comment. Volume was the one place it
+// and history.ts repeats that as an invariant in a comment. Volume was the one place it
 // was false — harmless while warm-ups were hand-added and rare, wrong now that a routine
 // plans them by default and the number is written into the saved workout for good.
 describe('warm-ups and volume', () => {

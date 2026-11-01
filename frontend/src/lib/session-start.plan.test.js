@@ -3,11 +3,11 @@
 // the way the finish path does (buildCompletedWorkout), so the history each one reads has the
 // exact shape the app saves — `target`, `rid` and all.
 import { describe, it, expect } from 'vitest'
-import { buildCombinedEntries } from './session-merge.js'
-import { buildSessionEntries } from './session-start.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { POLICIES } from './progression.js'
-import { isWarmupRow } from './workout-model.js'
+import { buildCombinedEntries } from './session-merge.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { POLICIES } from './progression.ts'
+import { isWarmupRow } from './workout-model.ts'
 
 const BENCH = '0025'   // barbell bench press — loaded, 2.5 kg step
 const work = e => e.sets.filter(s => !isWarmupRow(s))

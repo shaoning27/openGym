@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { supersetMeta, setSupersetMeta, syncSupersetMeta } from './superset-meta.js'
-import { restSecFor } from './supersetFlow.js'
+import { supersetMeta, setSupersetMeta, syncSupersetMeta } from './superset-meta.ts'
+import { restSecFor } from './supersetFlow.ts'
 
 describe('a superset\'s name and rest between rounds (#292)', () => {
   it('is written onto every member and read back from the group', () => {

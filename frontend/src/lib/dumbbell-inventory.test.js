@@ -4,13 +4,13 @@ import { describe, expect, it } from 'vitest'
 import {
   presetWeights, cleanWeights, dumbbellsOf, ownsDumbbells, withDumbbells, ownedWeightsFor,
   ownedUp, ownedDown, ownedFloor, stepOwned, ownedDeload, ownedAround, withDbLoad,
-} from './dumbbells.js'
-import { nextPrescription, selectDeloadCandidate } from './progression.js'
-import { buildPlannedEntry } from './session-start.js'
-import { dropGrid } from './plates.js'
-import { nextDropWeight } from './workout-model.js'
-import { mergeStates } from './sync-merge.js'
-import { EXIDX } from './exercises.js'
+} from './dumbbells.ts'
+import { nextPrescription, selectDeloadCandidate } from './progression.ts'
+import { buildPlannedEntry } from './session-start.ts'
+import { dropGrid } from './plates.ts'
+import { nextDropWeight } from './workout-model.ts'
+import { mergeStates } from './sync-merge.ts'
+import { EXIDX } from './exercises.ts'
 
 const CURL = '0294'      // dumbbell biceps curl
 const BENCH = '0289'     // dumbbell bench press

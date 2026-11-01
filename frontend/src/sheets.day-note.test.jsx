@@ -6,12 +6,12 @@ import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { dayOverrideSheet, dayNoteSheet, calendarSheet } from './sheets.jsx'
-import Heatmap from './components/Heatmap.jsx'
-import History, { historyRows } from './views/History.jsx'
-import { withDayNote, dayNoteOf } from './lib/day-notes.js'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { dayOverrideSheet, dayNoteSheet, calendarSheet } from './sheets.tsx'
+import Heatmap from './components/Heatmap.tsx'
+import History, { historyRows } from './views/History.tsx'
+import { withDayNote, dayNoteOf } from './lib/day-notes.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const S = () => useStore.getState().S

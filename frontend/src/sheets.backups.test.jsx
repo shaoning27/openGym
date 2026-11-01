@@ -2,12 +2,12 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB, EXIDX } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet, exercisePicker, swapActiveWorkoutToBackup } from './sheets.jsx'
-import { exerciseNameFor } from './lib/i18n.js'
-import { exerciseNameText } from './lib/format.js'
+import { EXDB, EXIDX } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet, exercisePicker, swapActiveWorkoutToBackup } from './sheets.tsx'
+import { exerciseNameFor } from './lib/i18n.ts'
+import { exerciseNameText } from './lib/format.ts'
 
 /* Planned substitutes (Discord "Substitutions for a routine"): picked in the routine editor's
    exercise sheet, offered first by the swap picker, kept by every sheet that saves the slot. */

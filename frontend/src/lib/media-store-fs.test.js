@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
-import { fsBackend, toBase64 } from './media-store-fs.js'
-import { sha256Hex } from './sha256.js'
-import { jpeg, mp4 } from './media-samples.test-util.js'
+import { fsBackend, toBase64 } from './media-store-fs.ts'
+import { sha256Hex } from './sha256.ts'
+import { jpeg, mp4 } from './media-samples.test-util.ts'
 
 // Capacitor's Filesystem, in memory: files as base64 (or UTF-8 text for index.json), keyed by
 // path. Each call is recorded, so the tests can see how a big file crossed the bridge.

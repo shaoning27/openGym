@@ -1,11 +1,11 @@
 // Replace an exercise in a routine (#110): the slot keeps what was set up for it, only the
 // exercise changes — and the new exercise does not inherit the old one's progress.
 import { describe, it, expect } from 'vitest'
-import { replaceSlotExercise } from './routines.js'
-import { buildCombinedEntries } from './session-merge.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { lastEntryFor } from './history.js'
-import { isWarmupRow } from './workout-model.js'
+import { replaceSlotExercise } from './routines.ts'
+import { buildCombinedEntries } from './session-merge.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { lastEntryFor } from './history.ts'
+import { isWarmupRow } from './workout-model.ts'
 
 const BENCH = '0025'      // barbell bench press
 const DB_BENCH = '0289'   // dumbbell bench press

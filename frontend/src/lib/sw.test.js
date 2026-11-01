@@ -164,7 +164,7 @@ describe('sw.js install and activate', () => {
 // The push service rotates a subscription (expiry, a key change) and the worker re-registers it,
 // usually with no page open. It sent no device id, so the server's row lost it and the rest-timer
 // alert for that account went to every device until a page next booted. The page leaves the id
-// in a cache the worker can read (lib/push.js shareDeviceId).
+// in a cache the worker can read (lib/push.ts shareDeviceId).
 describe('sw.js re-registers a rotated push subscription with the page\'s device id', () => {
   const rotated = {
     endpoint: 'https://push.example/e2',
@@ -179,8 +179,8 @@ describe('sw.js re-registers a rotated push subscription with the page\'s device
   }
   // The same cache name and key on both sides, read out of the two files, so the page and the
   // worker cannot drift apart without this failing.
-  const constant = (src, name) => src.match(new RegExp('const ' + name + " = '([^']+)'"))?.[1]
-  const pageSrc = readFileSync(new URL('./push.js', import.meta.url), 'utf8')
+  const constant = (src, name) => src.match(new RegExp('const ' + name + "(?:: any)? = '([^']+)'"))?.[1]
+  const pageSrc = readFileSync(new URL('./push.ts', import.meta.url), 'utf8')
   const swSrc = readFileSync(new URL('../../public/sw.js', import.meta.url), 'utf8')
   const DEVICE_CACHE = constant(pageSrc, 'DEVICE_CACHE')
   const DEVICE_URL = constant(pageSrc, 'DEVICE_URL')

@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { bodyCSV } from './export-csv.js'
-import { parseCSV, parseBodyweight, parseImport, mergeImport } from './import-csv.js'
+import { bodyCSV } from './export-csv.ts'
+import { parseCSV, parseBodyweight, parseImport, mergeImport } from './import-csv.ts'
 import {
   CUSTOM_MEASUREMENT_UNITS, fromMeasurementDisplay, measurementSeries, measurementUnitLabel,
   normalizeMeasurementsState, parseCustomCsvColumn,
-} from './measurements.js'
+} from './measurements.ts'
 
 // #718 follow-ups: a unitless custom field (a score, a count), and the units travelling through
 // the body CSV both ways, so an export read back into a fresh profile means the same thing.

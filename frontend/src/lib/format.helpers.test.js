@@ -1,7 +1,7 @@
 // The small formatting helpers most screens lean on and no other test pins down: a span of days,
 // a duration that may be unknown, names cased for a toast, volume and plain numbers.
 import { afterEach, describe, expect, it } from 'vitest'
-import { fmtDateRange, durPart, capWords, fmtVol, fmtNum, setWeightDecimals } from './format.js'
+import { fmtDateRange, durPart, capWords, fmtVol, fmtNum, setWeightDecimals } from './format.ts'
 
 const NOW = new Date('2026-10-19T12:00:00')
 

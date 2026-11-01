@@ -1,6 +1,6 @@
 /* FIRST_USER_ADMIN (#328): the first profile made on an instance with no profiles becomes its
    admin, through either way of registering. Never retroactive — an instance that already has
-   profiles changes nothing. Off unless FIRST_USER_ADMIN=1. Real server.js in a child, the
+   profiles changes nothing. Off unless FIRST_USER_ADMIN=1. Real server.ts in a child, the
    same harness as server-passkeys.test.js. */
 import { test, before } from 'node:test';
 import assert from 'node:assert/strict';
@@ -10,7 +10,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { hashPassword } from '../password.js';
+import { hashPassword } from '../password.ts';
 import { boundPort } from './helpers.mjs';
 
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -43,7 +43,7 @@ function softPasskey() {
   return {
     id,
     row: (userId, extra = {}) => ({ id, userId, publicKey: cose.toString('base64url'), counter: 0, transports: ['internal'], ...extra }),
-    // What navigator.credentials.create() hands back, serialised the way lib/api.js does.
+    // What navigator.credentials.create() hands back, serialised the way lib/api.ts does.
     attestation(challenge, { origin = ORIGIN } = {}) {
       const clientDataJSON = Buffer.from(JSON.stringify({ type: 'webauthn.create', challenge, origin, crossOrigin: false }));
       const len = Buffer.from([raw.length >> 8, raw.length & 255]);
@@ -81,7 +81,7 @@ async function startServer(t, { env = {}, users = [], creds = [], deviceLinks } 
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-fa-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users, creds, subs: [], invites: [], ...(deviceLinks ? { deviceLinks } : {}) }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: {
       ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN, RP_ID: 'localhost',

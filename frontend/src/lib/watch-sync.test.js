@@ -3,7 +3,7 @@
 // watch's events applied once each through the workout screen's own actions, drained from the
 // native queue and acknowledged only when done.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { buildSnapshot, buildReady, applyEvents, bindWatchActions, bindWatchAppActions, drainWatchEvents, _setWatchPluginForTest, _resetWatchSync, SNAPSHOT_VERSION } from './watch-sync.js'
+import { buildSnapshot, buildReady, applyEvents, bindWatchActions, bindWatchAppActions, drainWatchEvents, _setWatchPluginForTest, _resetWatchSync, SNAPSHOT_VERSION } from './watch-sync.ts'
 
 const state = (over = {}) => ({
   unit: 'kg', restSec: 90, workouts: [], routines: [],
@@ -218,8 +218,8 @@ describe('heart rate from the watch', () => {
 
 describe('the workout\'s animations for the watch', () => {
   it('are what the phone shows: the built-in clip of each exercise in the app package', async () => {
-    const { clipsFor } = await import('./watch-sync.js')
-    const { EXIDX } = await import('./exercises.js')
+    const { clipsFor } = await import('./watch-sync.ts')
+    const { EXIDX } = await import('./exercises.ts')
     const clips = clipsFor(state(), {})
     expect(clips.map(c => c.exId)).toEqual(['0025', '0001'].filter(id => EXIDX[id]?.gif))
     for (const c of clips) {
@@ -230,7 +230,7 @@ describe('the workout\'s animations for the watch', () => {
   })
 
   it('or the downloaded 240 px pack of the figure, when it is there', async () => {
-    const { clipsFor } = await import('./watch-sync.js')
+    const { clipsFor } = await import('./watch-sync.ts')
     const packs = { 'anim-240-male': { state: 'ready', base: 'opengym-pack://anim-240-male' } }
     const clips = clipsFor(state(), packs)
     expect(clips.length).toBeGreaterThan(0)
@@ -272,7 +272,7 @@ describe('the sync cases on the phone', () => {
 
 describe('patching a saved workout', () => {
   it('the later change wins; the watch\'s heart rate lands either way; the volume is counted again', async () => {
-    const { patchSetIn } = await import('./watch-sync.js')
+    const { patchSetIn } = await import('./watch-sync.ts')
     const s = { active: null, workouts: [{ id: 'w', vol: 0, entries: [{ id: '0025', sets: [{ w: 60, r: 8, done: true, at: 2000 }] }] }] }
     const stamp = vi.fn(), recount = vi.fn(w => { w.vol = 1 })
     // the phone's edit (at 2000) is later than the watch's tick (at 1000): numbers stay, hr lands

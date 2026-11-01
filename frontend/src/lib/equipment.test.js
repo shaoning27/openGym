@@ -1,6 +1,6 @@
 import { describe, expect, test, it } from 'vitest'
-import { activeProfile, exAvailable, eqAvailable, profileEquipment, newProfile, ACC_V, ALL_EQUIPMENT, ACCESSORIES, accessoriesOf } from './equipment.js'
-import { EXIDX } from './exercises.js'
+import { activeProfile, exAvailable, eqAvailable, profileEquipment, newProfile, ACC_V, ALL_EQUIPMENT, ACCESSORIES, accessoriesOf } from './equipment.ts'
+import { EXIDX } from './exercises.ts'
 
 // QA 1.3.11: an imported custom exercise is stored with eq "custom", which no profile can tick, so
 // any active profile hid it from the Library, the picker and the muscle explorer for good.

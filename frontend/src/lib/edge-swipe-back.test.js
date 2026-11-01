@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   EDGE_PX, COMMIT_FRACTION, edgeSwipeEnabled, startsAtEdge, progressOf, lockOf, releaseOf,
   backTarget, installEdgeSwipeBack, BACK_PREVIEW_EVENT,
-} from './edge-swipe-back.js'
+} from './edge-swipe-back.ts'
 
 describe('where it is on', () => {
   it('the iPhone/iPad app and the iOS home-screen web app only', () => {
@@ -205,7 +205,7 @@ describe('every page back arrow is marked', () => {
 })
 
 // TestFlight 1.4.2 (27): the page it goes back to shows underneath, sliding in from a little to
-// the left (parallax) under a fading shade; App.jsx renders it when asked (BACK_PREVIEW_EVENT).
+// the left (parallax) under a fading shade; App.tsx renders it when asked (BACK_PREVIEW_EVENT).
 describe('the page underneath', () => {
   let events
   const stack = () => {
@@ -213,7 +213,7 @@ describe('the page underneath', () => {
     back = document.querySelector('[data-back]'); back.onclick = vi.fn()
     row = document.querySelector('.swrow')
   }
-  // What App.jsx does on the event: the page underneath appears (or goes) in #app.
+  // What App.tsx does on the event: the page underneath appears (or goes) in #app.
   const onPreview = e => {
     events.push(e.detail)
     const app = document.getElementById('app')

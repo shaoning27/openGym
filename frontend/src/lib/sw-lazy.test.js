@@ -58,8 +58,8 @@ describe('the worker keeps the on-demand code too', () => {
   it('the build lists code and styles, not the language packs (but the English steps)', () => {
     const chunk = (...moduleIds) => ({ type: 'chunk', moduleIds })
     const bundle = {
-      'assets/index-a.js': chunk('/app/frontend/src/main.jsx'),
-      'assets/media-ingest-b.js': chunk('/app/frontend/src/lib/media-ingest.js'),
+      'assets/index-a.js': chunk('/app/frontend/src/main.tsx'),
+      'assets/media-ingest-b.js': chunk('/app/frontend/src/lib/media-ingest.ts'),
       'assets/de-c.js': chunk('/app/frontend/src/locales/de.js'),
       'assets/de-d.js': chunk('/app/frontend/src/instr/de.js'),
       'assets/ru-e.js': chunk('/app/frontend/src/exercise-names/ru.js'),

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { stateJson } from './state-json.js'
+import { stateJson } from './state-json.ts'
 
 describe('stateJson', () => {
   it('is exactly JSON.stringify of the state', () => {

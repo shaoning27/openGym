@@ -2,7 +2,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { DeleteAccountSheet, DeleteAccountRow, deleteAccountError } from './DeleteAccount.jsx'
+import { DeleteAccountSheet, DeleteAccountRow, deleteAccountError } from './DeleteAccount.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -23,26 +23,26 @@ const mocks = vi.hoisted(() => {
   state.confirmDeviceOwner = vi.fn(async () => 'ok')
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, hasData: () => false }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: (render, opts) => { mocks.sheets.push({ render, opts }); return {} } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: (...a) => mocks.api(...a),
   webauthnOK: () => mocks.webauthn,
   passkeyAssertion: (...a) => mocks.passkeyAssertion(...a),
   passwordLogin: vi.fn(), passwordRegister: vi.fn(), passwordResetRedeem: vi.fn(),
 }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: vi.fn() }))
-vi.mock('../lib/device-auth.js', () => ({
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: vi.fn() }))
+vi.mock('../lib/device-auth.ts', () => ({
   deviceLock: (...a) => mocks.deviceLock(...a),
   confirmDeviceOwner: (...a) => mocks.confirmDeviceOwner(...a),
 }))

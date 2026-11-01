@@ -8,7 +8,7 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vites
 import { readFileSync } from 'node:fs'
 
 const h = vi.hoisted(() => {
-  vi.stubEnv('VITE_MOBILE', '1')   // lib/mobile.js: MOBILE = import.meta.env.VITE_MOBILE === '1'
+  vi.stubEnv('VITE_MOBILE', '1')   // lib/mobile.ts: MOBILE = import.meta.env.VITE_MOBILE === '1'
   const store = new Map()
   vi.stubGlobal('localStorage', { getItem: k => (store.has(k) ? store.get(k) : null), setItem: (k, v) => store.set(k, String(v)), clear: () => store.clear() })
   return { platform: 'android', calls: [], registerPlugin: null, perm: 'granted', request: null }
@@ -39,11 +39,11 @@ vi.mock('@capacitor/local-notifications', () => ({
   },
 }))
 
-// Transforming what rest-alert.js pulls in (mobile.js → history.js → exercises.js and its 1 MB
+// Transforming what rest-alert.ts pulls in (mobile.ts → history.ts → exercises.ts and its 1 MB
 // table) takes seconds on a cold worker, and a busy machine pushed that past the first test's
 // timeout. Done here, while the file is collected, no test is billed for it; vi.resetModules()
 // below runs the modules again but keeps their transform, so every import stays a fresh start.
-await Promise.all([import('./mobile.js'), import('./accent.js'), import('./rest-sounds.js')])
+await Promise.all([import('./mobile.ts'), import('./accent.ts'), import('./rest-sounds.ts')])
 
 const settle = async () => { for (let i = 0; i < 10; i++) await new Promise(r => setTimeout(r, 0)) }
 
@@ -68,7 +68,7 @@ afterAll(() => { vi.unstubAllEnvs() })
 describe('the rest alert in the iOS app', () => {
   it('schedules the end on the phone, like Android, and rejects nothing', async () => {
     h.platform = 'ios'
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await expect(alert.armRestAlert(Date.now() + 90_000, { totalSec: 90 })).resolves.toBe(true)
     alert.holdRestAlert(60, 90)
     alert.disarmRestAlert()
@@ -82,7 +82,7 @@ describe('the rest alert in the iOS app', () => {
 describe('the rest alert in a browser shell', () => {
   it('registers nothing, rejects nothing and leaves the end to the server push', async () => {
     h.platform = 'web'
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await expect(alert.armRestAlert(Date.now() + 90_000, { totalSec: 90 })).resolves.toBe(false)
     alert.holdRestAlert(60, 90)
     alert.setRestAccent('red')
@@ -97,7 +97,7 @@ describe('the rest alert in a browser shell', () => {
 describe('the rest alert in the Android app', () => {
   it('reaches the plugin without ever waiting on the proxy, and registers it once', async () => {
     h.platform = 'android'
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await expect(alert.armRestAlert(Date.now() + 90_000, { totalSec: 90 })).resolves.toBe(true)
     alert.holdRestAlert(60, 90)
     alert.setRestAccent('red')
@@ -115,7 +115,7 @@ describe('the rest alert in the Android app', () => {
     h.registerPlugin = vi.fn(() => new Proxy({}, {
       get: (_, prop) => prop === 'then' ? () => new Promise(() => {}) : prop === 'schedule' ? schedule : async () => ({ remove: async () => {} }),
     }))
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     const at = Date.now() + 90_000
     await alert.armRestAlert(at, { totalSec: 90, accent: 'red', sound: false })
     expect(schedule).toHaveBeenCalledWith(expect.objectContaining({
@@ -132,7 +132,7 @@ describe('the rest alert in the Android app', () => {
     h.registerPlugin = vi.fn(() => new Proxy({}, {
       get: (_, prop) => prop === 'then' ? () => new Promise(() => {}) : prop === 'schedule' ? schedule : async () => ({ remove: async () => {} }),
     }))
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await alert.armRestAlert(Date.now() + 90_000, { totalSec: 90 })
     expect(schedule).toHaveBeenLastCalledWith(expect.objectContaining({ vibrate: true, channelId: 'rest-over' }))
     await alert.armRestAlert(Date.now() + 90_000, { totalSec: 90, vibrate: false })
@@ -156,7 +156,7 @@ describe('the alarm buzz in the Android app', () => {
   it('tells the alarm to buzz as an alarm only with Vibrate on', async () => {
     h.platform = 'android'
     const calls = capture()
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await alert.armRestAlert(Date.now() + 90_000, { totalSec: 90, alarmBuzz: true })
     expect(calls.schedule.at(-1)).toMatchObject({ vibrate: true, alarmBuzz: true })
     await alert.armRestAlert(Date.now() + 90_000, { totalSec: 90, vibrate: false, alarmBuzz: true })
@@ -168,7 +168,7 @@ describe('the alarm buzz in the Android app', () => {
   it('hands the plugin the end tone Settings → Sound picked', async () => {
     h.platform = 'android'
     const calls = capture()
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await alert.armRestAlert(Date.now() + 90_000, { totalSec: 90, sound: true })
     expect(calls.schedule.at(-1)).toMatchObject({ sound: true, classic: false })
     await alert.armRestAlert(Date.now() + 90_000, { totalSec: 90, sound: true, classic: true })
@@ -180,7 +180,7 @@ describe('the alarm buzz in the Android app', () => {
   it('buzzAsAlarm reaches the plugin with the pattern and answers true', async () => {
     h.platform = 'android'
     const calls = capture()
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await expect(alert.buzzAsAlarm([200, 100, 200])).resolves.toBe(true)
     expect(calls.buzz).toEqual([{ pattern: [200, 100, 200] }])
     await expect(alert.buzzAsAlarm([])).resolves.toBe(false)
@@ -189,7 +189,7 @@ describe('the alarm buzz in the Android app', () => {
 
   it('answers false in a browser shell without touching any plugin', async () => {
     h.platform = 'web'
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await expect(alert.buzzAsAlarm([200, 100, 200])).resolves.toBe(false)
     expect(h.registerPlugin).not.toHaveBeenCalled()
     expect(unhandled).toEqual([])
@@ -263,7 +263,7 @@ describe('the notification permission never holds the rest alarm back', () => {
     h.perm = 'prompt'
     h.request = vi.fn(() => new Promise(() => {}))   // the dialog nobody answers
     const calls = capture()
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     await expect(alert.armRestAlert(Date.now() + 60_000, { totalSec: 60, alarmBuzz: true })).resolves.toBe(true)
     expect(calls.schedule).toHaveLength(1)
     expect(calls.schedule[0]).toMatchObject({ alarmBuzz: true })
@@ -286,7 +286,7 @@ describe('the notification permission never holds the rest alarm back', () => {
         : prop === 'hold' ? () => gate
         : async () => ({ remove: async () => {} }),
     }))
-    const alert = await import('./rest-alert.js')
+    const alert = await import('./rest-alert.ts')
     // Only the clock is faked: the chain runs on real promises. Moving it past the end is what
     // a slow bridge call does, without sleeping for it.
     vi.useFakeTimers({ toFake: ['Date'] })
@@ -307,12 +307,12 @@ describe('the notification permission never holds the rest alarm back', () => {
     h.perm = 'prompt'
     h.request = vi.fn(async () => { h.perm = 'prompt-with-rationale'; return { display: 'denied' } })
     capture()
-    let alert = await import('./rest-alert.js')
+    let alert = await import('./rest-alert.ts')
     for (let i = 0; i < 3; i++) await expect(alert.armRestAlert(Date.now() + 60_000, { totalSec: 60, alarmBuzz: true })).resolves.toBe(true)
     await settle()
     expect(h.request).toHaveBeenCalledTimes(1)
     vi.resetModules()                                 // the app is started again
-    alert = await import('./rest-alert.js')
+    alert = await import('./rest-alert.ts')
     await expect(alert.armRestAlert(Date.now() + 60_000, { totalSec: 60 })).resolves.toBe(true)
     await settle()
     expect(h.request).toHaveBeenCalledTimes(1)
@@ -325,14 +325,14 @@ describe('the notification permission never holds the rest alarm back', () => {
     h.perm = 'prompt'
     h.request = vi.fn(async () => ({ display: 'denied' }))
     capture()
-    let alert = await import('./rest-alert.js')
+    let alert = await import('./rest-alert.ts')
     await alert.armRestAlert(Date.now() + 60_000, { totalSec: 60 })
     await alert.armRestAlert(Date.now() + 60_000, { totalSec: 60 })
     await settle()
     expect(h.request).toHaveBeenCalledTimes(1)
     expect(localStorage.getItem('gym_rest_notif_asked')).toBeNull()
     vi.resetModules()
-    alert = await import('./rest-alert.js')
+    alert = await import('./rest-alert.ts')
     await alert.armRestAlert(Date.now() + 60_000, { totalSec: 60 })
     await settle()
     expect(h.request).toHaveBeenCalledTimes(2)
@@ -345,7 +345,7 @@ describe('the notification permission never holds the rest alarm back', () => {
     for (const perm of ['granted', 'denied']) {
       vi.resetModules()
       h.perm = perm
-      const alert = await import('./rest-alert.js')
+      const alert = await import('./rest-alert.ts')
       await alert.armRestAlert(Date.now() + 60_000, { totalSec: 60 })
       await settle()
     }

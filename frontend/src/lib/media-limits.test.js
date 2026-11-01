@@ -1,8 +1,8 @@
 // The sizes the editor and Settings say ("0.2 MB", "12.5 of 200 MB used") are written with the
 // language's own decimal mark, like every other number in the app.
 import { afterEach, describe, expect, it } from 'vitest'
-import { fmtMB } from './media-limits.js'
-import { _setLangState } from './i18n-core.js'
+import { fmtMB } from './media-limits.ts'
+import { _setLangState } from './i18n-core.ts'
 
 afterEach(() => _setLangState('en', null, null, null))
 

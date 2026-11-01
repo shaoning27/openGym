@@ -1,7 +1,7 @@
-// The performance report's numbers (lib/report.js): every figure the PDF prints is counted here.
+// The performance report's numbers (lib/report.ts): every figure the PDF prints is counted here.
 import { describe, it, expect } from 'vitest'
-import { reportRange, reportData, totalsOf, bucketsOf, calendarOf, topLiftsOf, prsOf, inRange, workSetsOf } from './report.js'
-import { reportPrintHTML, workoutPrintHTML, barChartSVG, lineChartSVG } from './report-print.js'
+import { reportRange, reportData, totalsOf, bucketsOf, calendarOf, topLiftsOf, prsOf, inRange, workSetsOf } from './report.ts'
+import { reportPrintHTML, workoutPrintHTML, barChartSVG, lineChartSVG } from './report-print.ts'
 
 const at = (iso, h = 18) => new Date(iso + `T${String(h).padStart(2, '0')}:00:00`).getTime()
 const workout = (d, entries, extra = {}) => ({ id: 'w' + d, d, start: at(d), end: at(d) + 60 * 60000, name: 'Push', entries, ...extra })

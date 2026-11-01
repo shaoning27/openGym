@@ -5,10 +5,10 @@
 // them; a reading that does not hold up is never written; a saved workout patched later is stamped
 // so a sync keeps the change.
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { sanitizeHr, hrLabel } from './heart-rate.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { mergeStates } from './sync-merge.js'
-import { patchSetIn } from './watch-sync.js'
+import { sanitizeHr, hrLabel } from './heart-rate.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { mergeStates } from './sync-merge.ts'
+import { patchSetIn } from './watch-sync.ts'
 
 const workout = (id, sets, extra = {}) => ({ id, d: '2026-10-10', name: 'Push', start: 1000, end: 4000, entries: [{ id: '0025', target: { sets: sets.length, reps: 8 }, sets }], ...extra })
 const plainSets = () => [{ w: 60, r: 8, done: true, at: 2000 }, { w: 60, r: 7, done: true, at: 3000 }]
@@ -94,7 +94,7 @@ describe('the store: load, save, backup', () => {
 
   it('a profile without the fields loads and saves byte for byte', async () => {
     localStorage.setItem('gym_state_v1', JSON.stringify(fixture(plainSets())))
-    const { useStore } = await import('../store/useStore.js')
+    const { useStore } = await import('../store/useStore.ts')
     useStore.getState().update(() => {})
     const saved = JSON.parse(localStorage.getItem('gym_state_v1'))
     expect(JSON.stringify(saved.workouts)).toBe(JSON.stringify(fixture(plainSets()).workouts))
@@ -102,7 +102,7 @@ describe('the store: load, save, backup', () => {
 
   it('a profile with them loads, saves, exports and imports with them', async () => {
     localStorage.setItem('gym_state_v1', JSON.stringify(fixture(hrSets())))
-    const { useStore } = await import('../store/useStore.js')
+    const { useStore } = await import('../store/useStore.ts')
     useStore.getState().update(() => {})
     expect(JSON.parse(localStorage.getItem('gym_state_v1')).workouts[0].entries[0].sets).toEqual(hrSets())
     // Settings → Export is JSON.stringify(S); Import is importBackup of it

@@ -1,4 +1,4 @@
-// log_workout against the real api/server.js in a child process, on a temp data directory: what
+// log_workout against the real api/server.ts in a child process, on a temp data directory: what
 // the server stores when the MCP writes, read back off disk and through the server's own routes.
 // Needs api/'s dependencies (`npm ci` in api/). Without them it skips on a laptop and fails in CI,
 // so a green run there always means it ran.
@@ -45,7 +45,7 @@ describe.skipIf(!HAVE_API)('log_workout against the real api', () => {
     fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 })
     fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: [{ id: UID, name: 'Matt', created: new Date().toISOString() }], creds: [], subs: [], invites: [] }))
     fs.writeFileSync(path.join(dataDir, `state-${UID}.json`), JSON.stringify(DOC))
-    child = spawn(process.execPath, ['server.js'], {
+    child = spawn(process.execPath, ['server.ts'], {
       cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
       env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' },
     })
@@ -65,9 +65,9 @@ describe.skipIf(!HAVE_API)('log_workout against the real api', () => {
     // The read tools read the same directory the server writes, as on a real install.
     process.env.OPENGYM_DATA = dataDir
     process.env.OPENGYM_UID = UID
-    ;({ logWorkout } = await import('../src/write-tools.js'))
-    ;({ getState } = await import('../src/state.js'))
-    ;({ TOOLS } = await import('../src/tools.js'))
+    ;({ logWorkout } = await import('../src/write-tools.ts'))
+    ;({ getState } = await import('../src/state.ts'))
+    ;({ TOOLS } = await import('../src/tools.ts'))
   }, 30000)
   afterAll(() => {
     child?.kill('SIGKILL')

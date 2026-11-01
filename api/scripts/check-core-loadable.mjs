@@ -10,8 +10,8 @@
 import { readdirSync } from 'node:fs';
 
 const CORE = new URL('../coach/core/', import.meta.url);
-const files = readdirSync(CORE).filter(f => f.endsWith('.js')).sort();
-const adapters = readdirSync(new URL('adapters/', CORE)).filter(f => f.endsWith('.js')).sort().map(f => 'adapters/' + f);
+const files = readdirSync(CORE).filter(f => f.endsWith('.ts') || (f.endsWith('.js') && !readdirSync(CORE).includes(f.replace(/\.js$/, '.ts')))).sort();
+const adapters = readdirSync(new URL('adapters/', CORE)).filter(f => f.endsWith('.ts')).sort().map(f => 'adapters/' + f);
 
 let failed = 0;
 for (const m of [...files, ...adapters]) {
@@ -25,11 +25,11 @@ for (const m of [...files, ...adapters]) {
 }
 // And the server's own use of it, which pulls the whole graph transitively.
 try {
-  await import(new URL('../coach/jobs.js', import.meta.url));
-  console.log('  ok    jobs.js');
+  await import(new URL('../coach/jobs.ts', import.meta.url));
+  console.log('  ok    jobs.ts');
 } catch (e) {
   failed++;
-  console.error(`  FAIL  jobs.js — ${e.message}`);
+  console.error(`  FAIL  jobs.ts — ${e.message}`);
 }
 
 if (failed) {

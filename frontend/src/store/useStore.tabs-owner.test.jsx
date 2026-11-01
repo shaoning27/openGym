@@ -10,8 +10,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const h = vi.hoisted(() => ({ api: null, toasts: [] }))
-vi.mock('../lib/api.js', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: m => h.toasts.push(m), stopRest: () => {}, abandonWork: () => {} }) } }))
+vi.mock('../lib/api.ts', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: m => h.toasts.push(m), stopRest: () => {}, abandonWork: () => {} }) } }))
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const w = (id, d = '2026-09-01') => ({ id, d, start: 1, end: 2, entries: [] })
@@ -69,7 +69,7 @@ async function openTab(user) {
   const add = window.addEventListener
   window.addEventListener = function (type, l, o) { if (type === 'storage') tab.ls.push(l); else add.call(this, type, l, o) }
   try {
-    const m = await import('./useStore.js')
+    const m = await import('./useStore.ts')
     DEF = m.DEF
     tab.store = m.useStore
   } finally { window.addEventListener = add }
@@ -112,7 +112,7 @@ const savedCopy = (doc, rev) => {
 beforeEach(async () => {
   localStorage.clear()
   OWNER = 'o' + (Number(OWNER.slice(1)) + 1)
-  DEF = (await import('./useStore.js')).DEF
+  DEF = (await import('./useStore.ts')).DEF
 })
 afterEach(() => {
   for (const t of tabs) t.store.setState({ user: null, ready: false })
@@ -122,7 +122,7 @@ afterEach(() => {
 
 describe('a second tab while the first one changes owner', () => {
   it('sign-out with a second tab open leaves nothing of the account in the browser', async () => {
-    DEF = (await import('./useStore.js')).DEF
+    DEF = (await import('./useStore.ts')).DEF
     const srv = server({ ...account(), _rev: 1 })
     localStorage.setItem('gym_owner', OWNER)
     savedCopy(srv.doc, 1)
@@ -147,7 +147,7 @@ describe('a second tab while the first one changes owner', () => {
   })
 
   it('a device-link sign-in to another account with a second tab open copies nothing of the old account', async () => {
-    DEF = (await import('./useStore.js')).DEF
+    DEF = (await import('./useStore.ts')).DEF
     const srv = server({ ...account(), _rev: 1 })
     localStorage.setItem('gym_owner', OWNER)
     savedCopy(srv.doc, 1)
@@ -176,7 +176,7 @@ describe('a second tab while the first one changes owner', () => {
   })
 
   it('a guest tab left open after "Keep profile as is" puts none of the guest copy into the account', async () => {
-    DEF = (await import('./useStore.js')).DEF
+    DEF = (await import('./useStore.ts')).DEF
     const srv = server({ ...account(), _rev: 3 })
     localStorage.setItem('gym_state_v1', JSON.stringify({
       ...clone(DEF), _ts: Date.now(), restSec: 90, accent: 'lime',
@@ -222,7 +222,7 @@ describe('a guest tab while the other tab signs in or creates a profile', () => 
   afterEach(() => { location.hash = '' })
 
   it('a profile created in the other tab shows in the guest tab at once, and the workout with it', async () => {
-    DEF = (await import('./useStore.js')).DEF
+    DEF = (await import('./useStore.ts')).DEF
     const srv = server(null)
     localStorage.setItem('gym_state_v1', JSON.stringify(guestCopy(running())))
     localStorage.setItem('gym_guest', '1')
@@ -230,7 +230,7 @@ describe('a guest tab while the other tab signs in or creates a profile', () => 
     const B = await openTab(null)
     expect(B.getState().S.active?.id).toBe('act1')
     h.toasts = []
-    // Register (views/Login.jsx): setUser without a question, then the push of this copy.
+    // Register (views/Login.tsx): setUser without a question, then the push of this copy.
     await act(A, () => A.getState().setUser({ id: OWNER, name: 'Nova' }))
     expect(ids(B.getState().S)).toEqual(['gW1'])          // not blank
     expect(B.getState().S.active?.id).toBe('act1')
@@ -244,7 +244,7 @@ describe('a guest tab while the other tab signs in or creates a profile', () => 
   })
 
   it('a sign-in to an existing account: the guest tab gets the account, the running workout included, once it is answered', async () => {
-    DEF = (await import('./useStore.js')).DEF
+    DEF = (await import('./useStore.ts')).DEF
     const srv = server({ ...account(), _rev: 3 })
     localStorage.setItem('gym_state_v1', JSON.stringify(guestCopy(running())))
     localStorage.setItem('gym_guest', '1')
@@ -264,7 +264,7 @@ describe('a guest tab while the other tab signs in or creates a profile', () => 
   })
 
   it('a guest tab on another screen is not told about a workout it does not show', async () => {
-    DEF = (await import('./useStore.js')).DEF
+    DEF = (await import('./useStore.ts')).DEF
     server(null)
     localStorage.setItem('gym_state_v1', JSON.stringify(guestCopy(running())))
     localStorage.setItem('gym_guest', '1')
@@ -279,7 +279,7 @@ describe('a guest tab while the other tab signs in or creates a profile', () => 
   })
 
   it('a new profile with nothing in it: the other tab takes it without waiting for a save', async () => {
-    DEF = (await import('./useStore.js')).DEF
+    DEF = (await import('./useStore.ts')).DEF
     server(null)
     localStorage.setItem('gym_state_v1', JSON.stringify({ ...clone(DEF), _ts: Date.now(), restSec: 75 }))
     const A = await openTab(null)

@@ -2,9 +2,9 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { bwSheet, goalSheet } from './sheets.jsx'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { bwSheet, goalSheet } from './sheets.tsx'
 
 // The big weight read-out (body weight, goal, top weight after an exercise) used to be text:
 // the only ways to a number were the slider, ±0.1 and the ±0.5/±1 chips, so 72.3 → 85.7 was a

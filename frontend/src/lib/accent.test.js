@@ -1,11 +1,11 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { ACCENTS } from './format.js'
+import { ACCENTS } from './format.ts'
 import {
   cleanHex, sanitizeAccent, accentKey, accentValue, contrast, inkOn, readableIn, adjustedIn,
   customAccentVars, accentPair, applyAccent, applyTintFallback, THEMES, isGrey, inkOnBoth, mix, GREY_TEXT, GREY_GAP,
-} from './accent.js'
-import { mergeStates, stampChange } from './sync-merge.js'
+} from './accent.ts'
+import { mergeStates, stampChange } from './sync-merge.ts'
 
 describe('cleanHex', () => {
   it('takes #rrggbb only, in lowercase', () => {
@@ -226,7 +226,7 @@ describe('sync with an app from before own colours', () => {
     expect(accentValue(out)).toBe('#123456')
   })
   it('what an old app makes of "custom": its own default, nothing broken', () => {
-    // App.jsx before own colours: ACCENTS[accent] ? accent : 'lime'
+    // App.tsx before own colours: ACCENTS[accent] ? accent : 'lime'
     const S = { accent: 'custom', accentCustom: '#123456' }
     expect(ACCENTS[S.accent] ? S.accent : 'lime').toBe('lime')
   })

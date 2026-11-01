@@ -12,25 +12,25 @@ const mocks = vi.hoisted(() => ({
   sync: { status: 'offline', lastError: { status: 0, code: 'network' } },
   syncNow: null, signOut: null, syncMedia: null, MOBILE: false
 }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ sync: mocks.sync, syncNow: mocks.syncNow, signOut: mocks.signOut, config: null })
   const useStore = selector => (selector ? selector(snap()) : snap())
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: vi.fn(), openSheet: vi.fn() })
   const useUI = selector => (selector ? selector(snap()) : snap())
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/media-sync.js', () => ({ syncMedia: (...a) => mocks.syncMedia(...a) }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('../lib/api.js', () => ({ passkeyLogin: vi.fn(), webauthnOK: () => true }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: vi.fn() }))
-vi.mock('../views/MobileOnboarding.jsx', () => ({ ConnectSheet: () => null }))
+vi.mock('../lib/media-sync.ts', () => ({ syncMedia: (...a) => mocks.syncMedia(...a) }))
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('../lib/api.ts', () => ({ passkeyLogin: vi.fn(), webauthnOK: () => true }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: vi.fn() }))
+vi.mock('../views/MobileOnboarding.tsx', () => ({ ConnectSheet: () => null }))
 
-const { OwedSheet } = await import('./ServerSync.jsx')
+const { OwedSheet } = await import('./ServerSync.tsx')
 
 let host, root
 beforeEach(() => {

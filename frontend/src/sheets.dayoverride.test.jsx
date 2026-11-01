@@ -7,10 +7,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { dayOverrideSheet } from './sheets.jsx'
-import { todayISO, isoOf, fmtDate, exCount } from './lib/format.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { dayOverrideSheet } from './sheets.tsx'
+import { todayISO, isoOf, fmtDate, exCount } from './lib/format.ts'
 
 const routines = [
   { id: 'd1', name: 'US W1 D1', emoji: null, ex: [{ id: '0025' }] },

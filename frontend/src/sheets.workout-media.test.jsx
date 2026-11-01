@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 // A logged workout's photos and videos in its detail sheet and the history row: a picked file
-// goes through the same ingest as an exercise's picture (mocked here — lib/media-ingest.js has its
+// goes through the same ingest as an exercise's picture (mocked here — lib/media-ingest.ts has its
 // own tests), lands in the local store as pending and on the saved record, stamped; the grid shows
 // posters and opens the full-screen viewer, where one can be removed; a seventh is refused.
 import React, { act } from 'react'
@@ -8,16 +8,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
 
 const h = vi.hoisted(() => ({ ingest: null }))
-vi.mock('./lib/media-ingest.js', () => ({ ingestMediaFile: (...a) => h.ingest(...a) }))
+vi.mock('./lib/media-ingest.ts', () => ({ ingestMediaFile: (...a) => h.ingest(...a) }))
 
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { _setLangState } from './lib/i18n-core.js'
-import { bindUI } from './components/ui.jsx'
-import { createMediaStore, memoryBackend, _setMediaStore } from './lib/media-store.js'
-import { workoutDetailSheet, WorkoutRow } from './sheets.jsx'
-import WorkoutMediaSection, { openWorkoutMediaViewer } from './components/WorkoutMedia.jsx'
-import { WORKOUT_MEDIA_MAX } from './lib/media-refs.js'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { _setLangState } from './lib/i18n-core.ts'
+import { bindUI } from './components/ui.tsx'
+import { createMediaStore, memoryBackend, _setMediaStore } from './lib/media-store.ts'
+import { workoutDetailSheet, WorkoutRow } from './sheets.tsx'
+import WorkoutMediaSection, { openWorkoutMediaViewer } from './components/WorkoutMedia.tsx'
+import { WORKOUT_MEDIA_MAX } from './lib/media-refs.ts'
 
 bindUI(useUI)
 

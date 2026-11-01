@@ -2,7 +2,7 @@
    happens here — a row pruned after a dead send, a rebuilt db.json — so the client re-sends it on
    every boot (an upsert that keeps `created`), asks /api/push/status before Settings shows "on",
    and tags it with a device id so a rest-timer alert goes to the device that started the rest.
-   Real server.js in a child. */
+   Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -31,7 +31,7 @@ async function startServer(t, subs = []) {
     users: [{ id: 'u_test_1', name: 'One', created: new Date().toISOString() }, { id: 'u_test_2', name: 'Two', created: new Date().toISOString() }],
     creds: [], subs, invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });

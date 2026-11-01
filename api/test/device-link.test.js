@@ -4,7 +4,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createDeviceLink, findDeviceLink, burnDeviceLink, dropDeviceLinks, hashLinkCode, makeLinkCode, DEVICE_LINK_TTL_MS
-} from '../device-link.js';
+} from '../device-link.ts';
 
 describe('createDeviceLink', () => {
   it('issues a code bound to the user, with an expiry, and keeps only its hash', () => {

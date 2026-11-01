@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB, EXIDX } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet } from './sheets.jsx'
+import { EXDB, EXIDX } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet } from './sheets.tsx'
 
 // An exercise's own rest: the default, "No timer" (Discord lajawi; a 0:00 used to mean the
 // default, so there was no way to say none) or a time of its own, as for the warm-ups. The wheel

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { buildPacks, drawingsFor, packManifest } from '../../../scripts/media/make-pack-manifests.mjs'
 import { EXDB } from './exercises-data.js'
-import { PACK_QUALITIES, packId, packDrawingId, clipSources } from './anim-quality.js'
-import { gifSrc } from './exercises.js'
+import { PACK_QUALITIES, packId, packDrawingId, clipSources } from './anim-quality.ts'
+import { gifSrc } from './exercises.ts'
 
 /* The asset packs scripts/media/make-pack-manifests.mjs writes, from the catalogue's names alone:
    every exercise the app shows resolves inside its figure's pack, at every quality. */

@@ -1,13 +1,13 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-// The iPhone widgets' snapshot (lib/widgets.js): what the page hands the widget extension through
+// The iPhone widgets' snapshot (lib/widgets.ts): what the page hands the widget extension through
 // the App Group. The shape is what ios/App/OpenGymWidgets/WidgetSnapshot.swift decodes, so a field
 // renamed here is a widget gone blank there. Text only, nothing from the exercise media.
 const h = vi.hoisted(() => { vi.stubEnv('VITE_MOBILE', '1'); return { platform: 'ios' } })
-vi.mock('./mobile.js', () => ({ MOBILE: true, nativePlatform: async () => h.platform }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true, nativePlatform: async () => h.platform }))
 
-const { buildWidgetSnapshot, startWidgetSync, _setWidgetPluginForTest, _resetWidgets, WIDGET_DAYS } = await import('./widgets.js')
+const { buildWidgetSnapshot, startWidgetSync, _setWidgetPluginForTest, _resetWidgets, WIDGET_DAYS } = await import('./widgets.ts')
 
 // 2026-10-14 is a Wednesday (getDay 3).
 const TODAY = '2026-10-14'

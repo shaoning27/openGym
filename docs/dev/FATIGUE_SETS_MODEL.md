@@ -2,7 +2,7 @@
 
 ## Problem (observed on real history: 1707 workouts, ~daily Jefit splits)
 
-`fatigueOf()` in `frontend/src/lib/recovery.js` reports near-permanent whole-body
+`fatigueOf()` in `frontend/src/lib/recovery.ts` reports near-permanent whole-body
 `fatigued` for high-frequency split training. Computed on the reporter's state
 (`state-ygurXGuvcyWHwpO9.json`, 23 sessions / 30d): quadriceps/calves/hamstring
 `1.000`, chest `0.666` and triceps `0.612` even though upper body was last hit
@@ -23,7 +23,7 @@ green.
 3. **Saturation `1-exp(-v)` compresses the top.** Daily training drives raw
    stimulus to 5-13, everything above ~3 maps to >0.95. "Legs yesterday" and
    "chest 2 days ago, light dumbbells" become indistinguishable.
-4. **Downward-only reference never adapts up** (`recovery.js:264-265`). A
+4. **Downward-only reference never adapts up** (`recovery.ts:264-265`). A
    trained lifter (repeated-bout effect: faster recovery, strength back in
    ~3d vs −40% in untrained) scores ever-more fatigue at constant training.
    MPS in trained lifters is lower and shorter (peak ~5h, tail 24-48h; Damas /
@@ -56,7 +56,7 @@ claim is disputed (https://www.globalperformanceinsights.com/post/has-the-acute-
   30h, glutes/quads/hams/adductors/calves/lower-back 48h, core/small 24h.
   Calibrated so 8 hard sets on legs -> F0 ~0.63 (fatigued), ready in ~4d;
   5 sets chest -> F0 ~0.46, ready in ~2d (matches the 10RM 48-72h recovery).
-- **Keep** `1-exp(-v)` scale and `0.25/0.5` thresholds (`recovery-view.js`), so
+- **Keep** `1-exp(-v)` scale and `0.25/0.5` thresholds (`recovery-view.ts`), so
   no UI/locale changes. Keep chronological accumulation, 30-day scan bound,
   future-date clamp, deleted-snapshot handling, and `strengthOf()` untouched.
 - **Preserved invariants** (checked by `scripts/fatigue-monotonic-probe.mjs`):
@@ -89,7 +89,7 @@ fixed while 3x/week full-body demo histories barely move.
 Two orthogonal multipliers on top of the phase-1 sets, both causal and bounded:
 
 - **RIR weight per set** (`rirWeightFor`, `estimateSetRir`): logged `rir`/`rpe`
-  (via `effort.js`, `HARD_RIR = 3`) always wins; otherwise RIR is estimated by
+  (via `effort.ts`, `HARD_RIR = 3`) always wins; otherwise RIR is estimated by
   Epley inverse against the exercise's 90-day rolling best anchor
   (`30*(anchor/w-1)-r`, clamped 0..10, null above `REP_CAP = 12`, for
   load-less rows, or assisted work). The anchor itself is RIR-calibrated: each
@@ -126,8 +126,8 @@ on the same day; the direction is the same, the magnitudes now respect quality.
 `EffortCard` only rendered on logged ratings, so import histories saw nothing.
 It now falls back to estimates with the same precedence fatigue uses (logged >
 Epley-inverse vs 90-day anchor > nothing), sharing `anchorsByWorkout` /
-`resolveSetRir` from `recovery.js` (no import cycle: the view wires both,
-`effort.js` takes an injected resolver defaulting to logged-only, so default-path
+`resolveSetRir` from `recovery.ts` (no import cycle: the view wires both,
+`effort.ts` takes an injected resolver defaulting to logged-only, so default-path
 numbers are byte-identical). Well-rated windows (`rated >= MIN_RATED`) keep
 logged numbers; the badge `· estimated` plus the `{rated} · {estimated} of
 {sets}` denominator keep estimates labeled. Two new locale strings in all 16
@@ -135,7 +135,7 @@ packs, pt-BR fingerprint refreshed. Measured on the reporter's history (30d):
 358 estimated of 407 sets, avg RIR ~5.3, 37% hard — the Jefit pyramids read
 exactly as trained: heavy top sets plus light ramp volume.
 
-- `frontend/src/lib/recovery.js` — phase 1: sets stimulus + per-muscle HL; phase 2:
+- `frontend/src/lib/recovery.ts` — phase 1: sets stimulus + per-muscle HL; phase 2:
   RIR weighting, 90-day anchors (kg-canonical), acute:chronic gain, 120d info pool.
 - `frontend/src/lib/recovery.test.js`, `recovery-view.test.js`,
   `src/views/Stats.recovery.test.jsx` — re-pinned expectations (same

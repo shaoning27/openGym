@@ -2,12 +2,12 @@
 // exercise the stats it is there to show off — including the effort card, which renders as
 // dashes on a history that is rated too thinly or not at all.
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest'
-import { buildDemoState } from './demoSeed.js'
+import { buildDemoState } from './demoSeed.ts'
 import {
   effortSummary, effortWeeks, effortHistogram, hasEffort, displayScale, avgRir,
   rirOf, isHardSet, MIN_RATED, HARD_RIR
-} from './effort.js'
-import { effortOf, modeOf } from './history.js'
+} from './effort.ts'
+import { effortOf, modeOf } from './history.ts'
 
 const S = buildDemoState()
 const eachSet = fn => S.workouts.forEach(w => w.entries.forEach(e => e.sets.forEach(s => fn(s, w, e))))

@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { planPacks, splitParts, moduleName, packIndex, moduleGradle, write, clean, PART_MAX_BYTES } from '../../../scripts/android/make-asset-packs.mjs'
 import { buildPacks } from '../../../scripts/media/make-pack-manifests.mjs'
 import { EXDB } from './exercises-data.js'
-import { packDrawingId } from './anim-quality.js'
+import { packDrawingId } from './anim-quality.ts'
 
 /* The Google Play asset packs scripts/android/make-asset-packs.mjs puts into the Android project
    on the release machine: the same drawings per pack as the iPhone's, Play-valid names, split under

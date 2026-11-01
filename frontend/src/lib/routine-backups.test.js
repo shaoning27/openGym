@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { cleanBackups, withBackups, MAX_BACKUPS, backupSlotConfig } from './routine-backups.js'
-import { replaceSlotExercise } from './routines.js'
-import { parsePlan, buildPlanBundle } from './plan-share.js'
+import { cleanBackups, withBackups, MAX_BACKUPS, backupSlotConfig } from './routine-backups.ts'
+import { replaceSlotExercise } from './routines.ts'
+import { parsePlan, buildPlanBundle } from './plan-share.ts'
 
 /* Planned substitutes for an exercise in a routine (Discord): an optional list on the entry. */
 describe('cleanBackups', () => {

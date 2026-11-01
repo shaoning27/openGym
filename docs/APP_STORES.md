@@ -12,7 +12,7 @@ The two Android builds are flavours of one Gradle project (`frontend/android/app
 `sideload` keeps the updater (InstallPlugin, `REQUEST_INSTALL_PACKAGES`), `play` leaves both out,
 since Google Play does not allow an app to update itself. Same application id, same key, so a
 phone can move from the APK to Play without losing its data. The page asks which build it runs in
-(`ChannelPlugin`, `lib/channel.js`) and shows the update row only in the APK.
+(`ChannelPlugin`, `lib/channel.ts`) and shows the update row only in the APK.
 
 **Why the release machine:** the full-quality exercise animations may only ever be inside the
 app package itself (Gym visual licence, Part B), never in a repository, a CI run or a file anyone
@@ -184,7 +184,7 @@ on the phone (Settings → Reset, or uninstall).
 6. What review sent back on v1.4.2, so it doesn't happen twice: no "free" in the subtitle (price
    words belong to the price field), and no "Not now" on a screen in front of a system permission
    dialog. The first-start permission screens have a single Continue that opens the iOS dialog,
-   where the no belongs (Guideline 5.1.1(iv), `views/PermissionSteps.jsx`).
+   where the no belongs (Guideline 5.1.1(iv), `views/PermissionSteps.tsx`).
 
 ## Licensing
 

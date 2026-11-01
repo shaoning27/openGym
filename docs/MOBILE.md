@@ -74,7 +74,7 @@ or Settings → Account → **"Connect to my server"** later) to finish. Notes:
   too: it's the same signed session token either way, just delivered over a header instead
   of a cookie. The phone has no passkey to sign back in with, so it has to be **paired
   again**; nothing on it is lost meanwhile (see below). See `/api/pair/create` and
-  `/api/pair/redeem` in `api/server.js` for the exchange itself.
+  `/api/pair/redeem` in `api/server.ts` for the exchange itself.
 - Settings → Account → "Disconnect" first checks that your server has every change. If it has, the
   phone drops cleanly back to local mode. If not, it says how many changes are missing and
   offers **Try again**, **Export backup**, or **Disconnect anyway**, which keeps those
@@ -202,7 +202,7 @@ that.
   (strength training as soon as one exercise is not cardio; walking, running, stationary bike,
   elliptical or stair machine for a cardio-only workout on a catalogue machine; "other" otherwise).
   Each weigh-in as a weight record, in kilograms. A workout without a real start and end is left
-  out rather than given made-up times. `src/lib/health-connect.js` works this out; its tests
+  out rather than given made-up times. `src/lib/health-connect.ts` works this out; its tests
   pin it.
 - **Permissions.** The manifest declares `WRITE_EXERCISE`, `WRITE_WEIGHT` and, since v1.4.3,
   `READ_HEART_RATE` and `READ_WEIGHT` (see "Reading back" below). Each is asked for only when its
@@ -242,7 +242,7 @@ default, each independent of writing and of the other:
 
 - **Heart rate from your watch.** For each workout finished in the last 24 hours, the heart-rate
   samples between its start and end (+5 min) are read: `HC.readHeartRate({ from, to })` →
-  `{ samples: [[ms, bpm]] }`. `lib/heart-rate.js` `hrFromSamples` splits them over the sets: a set
+  `{ samples: [[ms, bpm]] }`. `lib/heart-rate.ts` `hrFromSamples` splits them over the sets: a set
   ends at its tick (`at`) and lasts as long as its reps (3 s each, 15-120 s), seconds or minutes
   take, never starting before the previous tick (the same estimate as the .fit export); its rest
   runs to the next set. A set gets `hr` / `restHr` (`{ avg, max }`, the Apple Watch fields) only
@@ -253,7 +253,7 @@ default, each independent of writing and of the other:
   every 10 minutes (2 after coming back to the foreground) until the 24 hours are over.
 - **Weigh-ins from other apps.** `HC.readWeights({ since })` → `{ records: [{ t, kg, id, origin,
   clientId }] }`: 30 days back the first time (what Health Connect gives without the history
-  permission), afterwards from the newest seen minus two days. `lib/health-read.js` `mergeWeighIns`
+  permission), afterwards from the newest seen minus two days. `lib/health-read.ts` `mergeWeighIns`
   takes the latest of each day, skips openGym's own records (`clientRecordId` `opengym-*`, origin
   `ch.duartesantos.opengym*`), keeps a day that has a weigh-in typed into openGym, does not bring
   back one deleted in openGym after it was measured, and converts to lb for an lb profile. Imported
@@ -297,10 +297,10 @@ and **Delete**.
   `node scripts/media/make-pack-manifests.mjs <out>` writes, per pack, the ids and the manifest
   `xcrun ba-package` takes (`fileSource` `<px>/<id>.webp`, relative to a source root with one
   folder per quality), plus a summary. `--layout clip` writes `clip/<id>.webp` instead.
-- **What shows** (`src/lib/anim-quality.js`, `clipSources`): the chosen quality's pack for the
+- **What shows** (`src/lib/anim-quality.ts`, `clipSources`): the chosen quality's pack for the
   figure shown if it is installed, else the next smaller installed pack of that figure, else the
   built-in file, then the still. Never a blank, and never the other figure's drawing. Custom
-  exercises keep their own media (`components/CustomMedia.jsx`) and never go through any of this.
+  exercises keep their own media (`components/CustomMedia.tsx`) and never go through any of this.
 - **Downloads.** Choosing a quality whose pack is not there starts its download for the figure
   shown, and the built-in animations show meanwhile; switching the figure (Look & Home → Exercise
   drawings) fetches the other figure's pack of that quality. Auto does the same, over Wi-Fi.
@@ -323,7 +323,7 @@ and **Delete**.
   are generated on the release machine by `scripts/android/make-asset-packs.mjs` and never
   committed. The `sideload` flavour (the APKs) answers "unavailable" and only ever has its
   built-in animations: 180 px in the Standard APK, 240 px in Plus, 360 px in HD. Each APK's updater
-  stays with its own kind (`pickApk` in `lib/update.js`, told by `VITE_APK_VARIANT`).
+  stays with its own kind (`pickApk` in `lib/update.ts`, told by `VITE_APK_VARIANT`).
 
 App Store Connect, once: the App Group `group.ch.opengym.app`; the bundle id
 `ch.opengym.app.AnimationPacksDownloader` (an app extension); the App Groups capability on
@@ -344,7 +344,7 @@ gym has a radius (100 m by default, 50 to 500) and an optional text. Up to 20 gy
 most 20 regions per app). Walking into one posts "Gym spotted. Ready for your workout? 💪"; a tap
 opens the Start screen (or the running workout).
 
-- **No nagging** (`src/lib/gym-reminder.js` `skipReason`, the same rule in
+- **No nagging** (`src/lib/gym-reminder.ts` `skipReason`, the same rule in
   `GymReminderRules.java` and `ios/App/GymReminderCore`): at most once a day, not after a workout
   logged today, not on a day note that excuses today, not while a session started in the last
   12 hours runs, and only inside the optional time window (an overnight one wraps). The phone
@@ -357,7 +357,7 @@ opens the Start screen (or the running workout).
   iOS: an ephemeral `URLSession` with 3 s timeouts plus a hard stop). "Done" keeps it quiet and is
   remembered for the rest of the day. No server (local only), offline, an error or no answer in
   time: the phone's own status decides, as before. The page hands over the server and its headers
-  with `GymReminder.server` (`lib/gym-reminder.js` `pushGymServer`); Android keeps them encrypted
+  with `GymReminder.server` (`lib/gym-reminder.ts` `pushGymServer`); Android keeps them encrypted
   with the app's Keystore key (`NudgeCheck.seal`), iOS in the Keychain (this device only).
 - **Locations stay on the phone.** The gyms live only in the native side's own storage: Android
   `shared_prefs/opengym_gym_reminder.xml`, left out of cloud backup and device transfer
@@ -462,7 +462,7 @@ so `npx` fetches it for that one run.
 
 The alternate icons people can pick in Settings → Look & Home → App icon (iPhone only in 1.4.3;
 Android gets them in 1.4.4) are not made by that generator. `node scripts/app-icons.mjs` draws
-them from the list in `src/lib/app-icon-variants.js` and the glyph in `resources/icon.svg`, with
+them from the list in `src/lib/app-icon-variants.ts` and the glyph in `resources/icon.svg`, with
 no dependencies: the SVG per icon in `resources/icons/`, an `AppIcon-<Name>` set (1024 px, opaque)
 per icon in the iOS asset catalog, and the previews in `public/app-icons/`. An icon with `art`
 (Halloween) is a hand-made SVG in `resources/icons/` instead, which the script renders; it may use
@@ -552,7 +552,7 @@ web assets; `scripts/ios/finish-ipa.sh` adds them and signs it on the release ma
   each upcoming planned day, at most 3 past the last workout, rescheduled whenever a workout is
   logged. A workout logged on another device (the web, a second phone) reaches these only when
   the app syncs, so a paired phone also runs a **background check** before them
-  (`lib/nudge-check.js`, the native `NudgeCheck` plugin): it asks the server
+  (`lib/nudge-check.ts`, the native `NudgeCheck` plugin): it asks the server
   `GET /api/nudge-check?date=…` (a few bytes: was the day trained or excused, would the server
   still nudge it) and takes back that day's reminder and nudge when the answer says so. Offline,
   an error or no answer leaves everything as it was, and the app resyncs in full whenever it is

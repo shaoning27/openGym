@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { detailTags } from './sheets.jsx'
-import { exOr } from './lib/exercises.js'
+import { detailTags } from './sheets.tsx'
+import { exOr } from './lib/exercises.ts'
 
 // QA 10-06: the bench press showed "Chest" twice on its detail page, once as the body part and
 // once as the main muscle.

@@ -1,11 +1,11 @@
-// #306: the end-of-rest sounds are played twice over, by the page (lib/sound.js, Web Audio) and by
+// #306: the end-of-rest sounds are played twice over, by the page (lib/sound.ts, Web Audio) and by
 // a locked Android phone (RestTone.java, rendered samples). The Java side cannot run here (no
 // gradle in the test run), so its numbers are read out of the source and held against the table
 // the page plays from: a note changed on one side only fails here.
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
-import { REST_SOUNDS, REST_SOUND_IDS } from './rest-sounds.js'
-import { TIMBRES } from './sound.js'
+import { REST_SOUNDS, REST_SOUND_IDS } from './rest-sounds.ts'
+import { TIMBRES } from './sound.ts'
 
 const java = name => readFileSync(new URL(`../../android/app/src/main/java/ch/duartesantos/opengym/${name}.java`, import.meta.url), 'utf8')
 const tone = java('RestTone')

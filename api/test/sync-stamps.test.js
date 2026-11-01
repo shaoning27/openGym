@@ -1,7 +1,7 @@
-/* PUT /api/data's stamping (sync-stamps.js): the records of removals and edits never shrink, a
+/* PUT /api/data's stamping (sync-stamps.ts): the records of removals and edits never shrink, a
    writer that does not stamp (an older app, an API planner) gets what it changed stamped, and an
    entry held against a removal on record is kept as added back. Unit cases first, then the real
-   server.js in a child. (QA 2026-10-06: an offline v1.3.9 phone wiped the RC's removal records; a
+   server.ts in a child. (QA 2026-10-06: an offline v1.3.9 phone wiped the RC's removal records; a
    planner's new week was undone by a phone that reconnected with an older change.) */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -12,7 +12,7 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { boundPort } from './helpers.mjs';
-import { stampPut } from '../sync-stamps.js';
+import { stampPut } from '../sync-stamps.ts';
 
 const clone = v => JSON.parse(JSON.stringify(v));
 const NOW = 1_800_000_000_000;
@@ -99,7 +99,7 @@ test('PUT /api/data: an older app\'s push does not wipe the records, and its del
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-stamps-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: [{ id: 'u1', name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' } });
   let log = '';
   child.stdout.on('data', d => log += d); child.stderr.on('data', d => log += d);
@@ -246,7 +246,7 @@ test('PUT /api/data: a document the server corrected for an older app is one rev
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-stamps-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: [{ id: 'u1', name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' } });
   let log = '';
   child.stdout.on('data', d => log += d); child.stderr.on('data', d => log += d);
@@ -384,7 +384,7 @@ test('PUT /api/data: an older app\'s two changes of one setting in a row both la
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-stamps-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: [{ id: 'u1', name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' } });
   let log = '';
   child.stdout.on('data', d => log += d); child.stderr.on('data', d => log += d);

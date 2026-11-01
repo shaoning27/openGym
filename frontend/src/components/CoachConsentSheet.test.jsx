@@ -9,7 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const mocks = vi.hoisted(() => ({ toast: vi.fn(), S: null, update: null }))
-vi.mock('../store/useUI.js', async () => {
+vi.mock('../store/useUI.ts', async () => {
   const { create } = await import('zustand')
   let n = 0
   const useUI = create((set, get) => ({
@@ -24,18 +24,18 @@ vi.mock('../store/useUI.js', async () => {
   }))
   return { useUI }
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ S: mocks.S, update: mocks.update })
   const useStore = selector => (selector ? selector(snap()) : snap())
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../lib/mobile.js', () => ({ MOBILE: false, readJsonFile: async () => null, writeJsonFile: async () => {} }))
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: false, readJsonFile: async () => null, writeJsonFile: async () => {} }))
 vi.mock('../coach.css', () => ({}))
 
-const { useUI } = await import('../store/useUI.js')
-const { askAiConsent, AiConsentSection } = await import('./CoachConsentSheet.jsx')
-const { consentTarget, allowAi, hasAiConsent, _resetAiConsent } = await import('../lib/coach-consent.js')
+const { useUI } = await import('../store/useUI.ts')
+const { askAiConsent, AiConsentSection } = await import('./CoachConsentSheet.tsx')
+const { consentTarget, allowAi, hasAiConsent, _resetAiConsent } = await import('../lib/coach-consent.ts')
 
 function Sheets() {
   const sheets = useUI(s => s.sheets)

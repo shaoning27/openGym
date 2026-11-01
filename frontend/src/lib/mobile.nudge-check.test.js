@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-/* syncReminder hands what it scheduled to the background check (lib/nudge-check.js), and nothing
+/* syncReminder hands what it scheduled to the background check (lib/nudge-check.ts), and nothing
    once nothing is scheduled: the check follows the notifications, never the other way round. */
 const mocks = vi.hoisted(() => ({ perm: 'granted', schedule: vi.fn(async () => {}), arm: vi.fn(async () => true) }))
 vi.mock('@capacitor/local-notifications', () => ({
@@ -11,9 +11,9 @@ vi.mock('@capacitor/local-notifications', () => ({
     schedule: (...a) => mocks.schedule(...a),
   }
 }))
-vi.mock('./nudge-check.js', () => ({ armNudgeCheck: (...a) => mocks.arm(...a) }))
+vi.mock('./nudge-check.ts', () => ({ armNudgeCheck: (...a) => mocks.arm(...a) }))
 
-import { syncReminder } from './mobile.js'
+import { syncReminder } from './mobile.ts'
 
 const S = reminder => ({ reminder, routines: [{ id: 'push', name: 'Push' }], week: { 0: ['push'], 1: ['push'], 2: ['push'], 3: ['push'], 4: ['push'], 5: ['push'], 6: ['push'] }, workouts: [] })
 

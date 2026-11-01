@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { weeklyWeights, weighInAt, logWeighIn } from './bodyweight.js'
+import { weeklyWeights, weighInAt, logWeighIn } from './bodyweight.ts'
 
 // Discord 'Weight': every weigh-in, week by week, with the week's mean.
 describe('weeklyWeights', () => {

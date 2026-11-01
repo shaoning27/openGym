@@ -6,15 +6,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const h = vi.hoisted(() => ({ api: null }))
-vi.mock('../lib/api.js', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: () => {}, stopRest: () => {}, abandonWork: () => {} }) } }))
+vi.mock('../lib/api.ts', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: () => {}, stopRest: () => {}, abandonWork: () => {} }) } }))
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const T = Date.UTC(2026, 9, 6, 8)
 const W = (id, t) => ({ id, d: '2026-10-01', start: t, end: t + 3600e3, entries: [] })
 const OWNER = 'u1'
 
-// v1.3.9's fingerprint (lib/sync-changes.js at the v1.3.9 tag).
+// v1.3.9's fingerprint (lib/sync-changes.ts at the v1.3.9 tag).
 const NOT_CONTENT = new Set(['_ts', '_rev', 'active', 'workouts', 'bodyweight', 'routines', 'customEx'])
 const hash = v => { const s = JSON.stringify(v) ?? ''; let x = 0x811c9dc5; for (let i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 0x01000193) >>> 0 } return x.toString(36) }
 function fp139(S) {
@@ -58,14 +58,14 @@ function leaveOldCopy(base, mut) {
 }
 async function openApp() {
   vi.resetModules()
-  const m = await import('./useStore.js')
+  const m = await import('./useStore.ts')
   m.useStore.setState({ user: { id: OWNER, name: 'Ana' }, ready: true })
   return m.useStore
 }
 
 beforeEach(async () => {
   localStorage.clear()
-  DEF = (await import('./useStore.js')).DEF
+  DEF = (await import('./useStore.ts')).DEF
 })
 afterEach(() => localStorage.clear())
 

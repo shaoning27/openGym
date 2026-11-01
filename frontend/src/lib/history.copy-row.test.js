@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { copyRowAt, copySpanAt, insertRowAt, removeRowAt } from './history.js'
-import { makeSideSet, setSideField, toggleSide, isSideSet } from './workout-model.js'
+import { copyRowAt, copySpanAt, insertRowAt, removeRowAt } from './history.ts'
+import { makeSideSet, setSideField, toggleSide, isSideSet } from './workout-model.ts'
 
 // Swipe on sets (v1.3.11): swipe right copies a set, swipe left removes one with an Undo.
 describe('copyRowAt', () => {

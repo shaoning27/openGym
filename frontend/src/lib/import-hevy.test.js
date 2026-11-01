@@ -2,9 +2,9 @@ import { describe, expect, it, vi, afterEach } from 'vitest'
 import {
   matchHevyTemplate, buildHevyExerciseMap, parseHevyWorkouts, parseHevyBodyweight,
   parseHevyRoutines, mergeHevyRoutines, localWhen, importHevyData, HevyApiError, HEVY_ID_MAP, hevySummaryCounts,
-} from './import-hevy.js'
-import { EXIDX } from './exercises.js'
-import { mergeImport } from './import-csv.js'
+} from './import-hevy.ts'
+import { EXIDX } from './exercises.ts'
+import { mergeImport } from './import-csv.ts'
 
 const TEMPLATES = [
   {

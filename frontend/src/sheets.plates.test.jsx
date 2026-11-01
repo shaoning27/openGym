@@ -1,17 +1,17 @@
 // @vitest-environment happy-dom
 // The plate-loading editor (barWeightSheet) and the plate inventory sheet write S.loadKind,
-// S.barWeights and S.plates the way lib/plates.js reads them: a load kind and a unit's plate list
+// S.barWeights and S.plates the way lib/plates.ts reads them: a load kind and a unit's plate list
 // are stamped with the time they were set, the way back to the default included, so the last
-// change wins a sync (lib/sync-merge.js).
+// change wins a sync (lib/sync-merge.ts).
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore, DEF } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { barWeightSheet, plateInventorySheet, barDefaultsSheet } from './sheets.jsx'
-import { EXIDX } from './lib/exercises.js'
-import { loadKindFor, baseWeightFor } from './lib/plates.js'
-import { barWeightFor } from './lib/bar.js'
+import { useStore, DEF } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { barWeightSheet, plateInventorySheet, barDefaultsSheet } from './sheets.tsx'
+import { EXIDX } from './lib/exercises.ts'
+import { loadKindFor, baseWeightFor } from './lib/plates.ts'
+import { barWeightFor } from './lib/bar.ts'
 
 const SQUAT = '0043'      // barbell
 const COCOONS = '0260'    // body weight

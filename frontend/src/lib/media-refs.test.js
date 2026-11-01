@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
-import { normalizeMediaRef, referencedHashes, referencedFiles, cleanUrl, linkKind, mediaOf, fmtClip, HASH_RE } from './media-refs.js'
+import { normalizeMediaRef, referencedHashes, referencedFiles, cleanUrl, linkKind, mediaOf, fmtClip, HASH_RE } from './media-refs.ts'
 
 const A = 'a'.repeat(64)
 const B = 'b'.repeat(64)
@@ -58,7 +58,7 @@ describe('normalizeMediaRef', () => {
 })
 
 describe('referencedHashes', () => {
-  // The same answers as api/media.js referencedHashes: the server keeps and the client keeps the
+  // The same answers as api/media.ts referencedHashes: the server keeps and the client keeps the
   // same set. The fixture is the api tests' own.
   const fixture = JSON.parse(readFileSync(new URL('../../../api/test/fixtures/media-refs.json', import.meta.url), 'utf8'))
   for (const c of fixture.referencedHashes) {

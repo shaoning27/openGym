@@ -18,7 +18,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import AdminCoach from './AdminCoach.jsx'
+import AdminCoach from './AdminCoach.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -32,11 +32,11 @@ const mocks = vi.hoisted(() => ({
 
 // The confirm dialog is captured, not rendered: a test reads what it was asked and presses
 // its onConfirm itself, the same shape CheckIn.test.jsx uses.
-vi.mock('../sheets.jsx', () => ({ confirmSheet: (...a) => mocks.confirmSheet(...a) }))
+vi.mock('../sheets.tsx', () => ({ confirmSheet: (...a) => mocks.confirmSheet(...a) }))
 
 // One fake API. `routes` maps a path to a value, a function of the parsed body, or an Error to
 // reject with — so a test can say "the server refuses this" without touching the component.
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: (path, opts = {}) => {
     const body = opts.body ? JSON.parse(opts.body) : undefined
     mocks.calls.push({ path, method: opts.method || 'GET', body })
@@ -47,7 +47,7 @@ vi.mock('../lib/api.js', () => ({
   }
 }))
 
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({
     toast: (...a) => mocks.toast(...a),
     openSheet: render => { mocks.sheets.push(render); return { id: 's', close: () => {}, lock: () => {} } },

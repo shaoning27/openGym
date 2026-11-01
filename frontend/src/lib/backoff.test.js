@@ -1,11 +1,11 @@
-// Back-off sets (lib/backoff.js): the top set is planned and progressed, every set after it is
+// Back-off sets (lib/backoff.ts): the top set is planned and progressed, every set after it is
 // one step lighter, and the sequence only moves up when every planned set reached its target.
 import { describe, it, expect } from 'vitest'
-import { isBackoff, backoffAt, backoffWeights, applyBackoff } from './backoff.js'
-import { buildSessionEntries } from './session-start.js'
-import { readSession, nextPrescription } from './progression.js'
-import { cascadeWeight } from './history.js'
-import { isWarmupRow, makeSideSet } from './workout-model.js'
+import { isBackoff, backoffAt, backoffWeights, applyBackoff } from './backoff.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { readSession, nextPrescription } from './progression.ts'
+import { cascadeWeight } from './history.ts'
+import { isWarmupRow, makeSideSet } from './workout-model.ts'
 
 const LIFT = '0025'
 

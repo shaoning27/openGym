@@ -6,13 +6,13 @@
    instead of handing the whole map to the copy that happened to be newer. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
 const { toast } = vi.hoisted(() => ({ toast: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
-import { withOverride } from '../lib/structuralBalance.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
+import { withOverride } from '../lib/structuralBalance.ts'
 
 const DIPS = 'poliquin:dips'
 const PULLUPS = 'atg:pullups'

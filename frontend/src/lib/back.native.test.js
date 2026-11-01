@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { initBackButton } from './back.js'
+import { initBackButton } from './back.ts'
 
 const { App, ui, remove } = vi.hoisted(() => ({
   App: { addListener: vi.fn(), exitApp: vi.fn() },
@@ -8,8 +8,8 @@ const { App, ui, remove } = vi.hoisted(() => ({
   remove: vi.fn(),
 }))
 vi.mock('@capacitor/app', () => ({ App }))
-vi.mock('./mobile.js', () => ({ MOBILE: true }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ui } }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ui } }))
 
 let back
 beforeEach(() => {

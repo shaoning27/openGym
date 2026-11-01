@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest'
-import { scheduleModeOf, queueRecovery, rotationIds, startPass, saveRotation, startNewPass, stopPass, refillAfter, refillIfComplete, chooseRotation, chooseFixedWeek, segmentAt, sequenceOf, isSimpleSequence, REST } from './rotation.js'
-import { queueNext, queueRemaining, queueView } from './queue.js'
-import { effectiveRoutineIds } from './history.js'
+import { scheduleModeOf, queueRecovery, rotationIds, startPass, saveRotation, startNewPass, stopPass, refillAfter, refillIfComplete, chooseRotation, chooseFixedWeek, segmentAt, sequenceOf, isSimpleSequence, REST } from './rotation.ts'
+import { queueNext, queueRemaining, queueView } from './queue.ts'
+import { effectiveRoutineIds } from './history.ts'
 
 const routines = [{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }, { id: 'c', name: 'C' }, { id: 'own', name: 'Core' }]
 const TODAY = '2026-09-12'
 const NOW = Date.parse(TODAY + 'T10:00:00')
 
-// today/now are passed straight into the functions under test (see rotation.js), so none of
+// today/now are passed straight into the functions under test (see rotation.ts), so none of
 // this needs the system clock or fake timers at all.
 const S = (over = {}) => ({ routines, workouts: [], week: {}, dayPlan: {}, queue: null, rotation: null, ...over })
 // A finished workout on routine `id`, dated `d`. `start` defaults comfortably before NOW — not
@@ -316,7 +316,7 @@ describe('refilling a completed managed pass', () => {
 
 describe('the finished-workout boundary', () => {
   it('refills from the workout the finish screen actually writes', async () => {
-    const { buildCompletedWorkout } = await import('./finish-workout.js')
+    const { buildCompletedWorkout } = await import('./finish-workout.ts')
     const active = {
       id: 'w1', d: TODAY, start: NOW, routineIds: ['b'], name: 'B',
       entries: [{ id: '0025', sets: [{ w: 60, reps: 5, done: true }] }],
@@ -407,7 +407,7 @@ describe('a complete managed pass left behind by a sync merge', () => {
 })
 
 // #536: a loop may hold a routine twice and rest days. It runs as segments, each a pass of the
-// queue as before (so queue.js and the reminders' api/queue.js are untouched); a rest pushes the
+// queue as before (so queue.ts and the reminders' api/queue.ts are untouched); a rest pushes the
 // next segment's start back by a day.
 describe('rest days and repeats (#536)', () => {
   const loop = (sequence, { rotation, ...over } = {}) => S({ scheduleMode: 'rotation', ...over, rotation: { id: 'r1', sequence, label: 'Loop', ...rotation } })

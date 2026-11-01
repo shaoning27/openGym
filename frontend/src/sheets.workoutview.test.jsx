@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { beginWorkout, logPastWorkoutSheet } from './sheets.jsx'
-import { todayISO } from './lib/format.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { beginWorkout, logPastWorkoutSheet } from './sheets.tsx'
+import { todayISO } from './lib/format.ts'
 
 // beginWorkout / beginBackfill snapshot S.workoutView onto s.active so the header ⋮ can
 // re-lay-out the running session without touching the saved default.

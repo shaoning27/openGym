@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { workoutVolume } from './history.js'
-import { parseWhen, parseWorkoutCSV, parseBodyweight, mergeImport } from './import-csv.js'
+import { workoutVolume } from './history.ts'
+import { parseWhen, parseWorkoutCSV, parseBodyweight, mergeImport } from './import-csv.ts'
 
 const CSV = [
   'Date,Exercise,Weight,Reps,Set Type',

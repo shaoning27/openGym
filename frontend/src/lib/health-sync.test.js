@@ -50,7 +50,7 @@ let hs
 beforeEach(async () => {
   vi.resetModules()
   h.files.clear(); h.calls = []; h.status = { status: 'available', granted: false }; h.grant = true; h.fail = null; h.removeFail = null; h.left = null; h.platform = 'android'; h.plugins = []
-  hs = await import('./health-sync.js')
+  hs = await import('./health-sync.ts')
 })
 
 describe('off (the default)', () => {
@@ -236,7 +236,7 @@ describe('on the iPhone', () => {
   beforeEach(async () => {
     vi.resetModules()
     h.platform = 'ios'
-    hs = await import('./health-sync.js')
+    hs = await import('./health-sync.ts')
   })
   it('talks to Apple Health and says which one it is', async () => {
     expect(await hs.healthStatus()).toMatchObject({ status: 'available', platform: 'ios' })
@@ -257,7 +257,7 @@ describe('on the iPhone', () => {
   it('Android has no watch to tell', async () => {
     vi.resetModules()
     h.platform = 'android'
-    hs = await import('./health-sync.js')
+    hs = await import('./health-sync.ts')
     await hs.enableHealth(state([workout('w1', 17)]))
     expect(h.calls.filter(c => c[0] === 'setEnabled')).toEqual([])
     expect((await hs.healthStatus()).platform).toBe('android')

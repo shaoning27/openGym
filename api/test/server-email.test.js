@@ -10,7 +10,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { hashPassword, hashResetCode, normalizeEmail, maskEmail } from '../password.js';
+import { hashPassword, hashResetCode, normalizeEmail, maskEmail } from '../password.ts';
 import { boundPort } from './helpers.mjs';
 
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -57,7 +57,7 @@ let oldHash;  // GOOD at N = 2^14, as an instance with older parameters would ha
 // still being built, so a test run on its own would otherwise give its user no hash at all.
 before(async () => { pwHash ??= await hashPassword(GOOD); });
 
-// A hash in password.js's own format at a cost other than today's, so a sign-in rehashes it.
+// A hash in password.ts's own format at a cost other than today's, so a sign-in rehashes it.
 const hashAt = (pw, ln) => new Promise((resolve, reject) => {
   const salt = crypto.randomBytes(16);
   crypto.scrypt(pw.normalize('NFKC'), salt, 32, { N: 2 ** ln, r: 8, p: 1, maxmem: 64 * 1024 * 1024 }, (err, key) => err ? reject(err)
@@ -69,7 +69,7 @@ async function startServer(t, { env = {}, users = [], creds = [], invites = [] }
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-pw-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users, creds, subs: [], invites }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: {
       ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN, RP_ID: 'localhost',

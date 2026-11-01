@@ -4,7 +4,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   addPasskeyRecord, listPasskeys, removePasskeyRecord, passkeyRemovalRefused, renamePasskeyRecord, passkeyName, MAX_PASSKEYS
-} from '../passkeys-store.js';
+} from '../passkeys-store.ts';
 
 const cred = (id, userId = 'u1') => ({
   id, userId, publicKey: 'pk-' + id, counter: 0, transports: ['internal']

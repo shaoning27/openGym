@@ -7,14 +7,14 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from '../store/useStore.js'
-import { startFlow } from '../sheets.jsx'
-import { todayISO, isoOf, fmtDate } from '../lib/format.js'
-import Home from './Home.jsx'
-import { setLang } from '../lib/i18n.js'
+import { useStore } from '../store/useStore.ts'
+import { startFlow } from '../sheets.tsx'
+import { todayISO, isoOf, fmtDate } from '../lib/format.ts'
+import Home from './Home.tsx'
+import { setLang } from '../lib/i18n.ts'
 
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), bwSheet: vi.fn(), goalSheet: vi.fn(), dayOverrideSheet: vi.fn(),
   calendarSheet: vi.fn(), startFlow: vi.fn(), bwDeltaColor: () => '',
 }))

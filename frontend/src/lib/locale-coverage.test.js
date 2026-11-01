@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { LANGS, DERIVED_LOCALES } from './i18n-core.js'
+import { LANGS, DERIVED_LOCALES } from './i18n-core.ts'
 import { PT_BR_OVERRIDES } from '../locales/pt-BR.js'
-import { BODYPARTS, allExercises } from './exercises.js'
+import { BODYPARTS, allExercises } from './exercises.ts'
 
 const PACK_KEYS = [
   'English exercise names',

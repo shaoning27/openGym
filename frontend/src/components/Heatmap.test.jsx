@@ -2,9 +2,9 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import Heatmap from './Heatmap.jsx'
-import { isoOf } from '../lib/format.js'
-import { workoutDay } from '../lib/history.js'
+import Heatmap from './Heatmap.tsx'
+import { isoOf } from '../lib/format.ts'
+import { workoutDay } from '../lib/history.ts'
 
 let root, host
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

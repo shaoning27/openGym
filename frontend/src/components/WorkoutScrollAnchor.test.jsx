@@ -2,7 +2,7 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { parseHTML } from 'linkedom'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import WorkoutScrollAnchor from './WorkoutScrollAnchor.jsx'
+import WorkoutScrollAnchor from './WorkoutScrollAnchor.tsx'
 
 let root, container, dom, scrollY, pageHeight
 const height = () => pageHeight + (parseFloat(container.firstChild?.style.paddingBottom) || 0)

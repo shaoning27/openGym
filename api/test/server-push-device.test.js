@@ -2,7 +2,7 @@
    subscription of its own, sendPush fell back to every subscription of the account, so the phone
    rang for a rest timed on the desktop. The subscriptions here have private endpoints: the send
    path refuses and prunes each one it would have contacted, without opening a socket, so what is
-   left in db.json says which ones it tried. Real server.js in a child. */
+   left in db.json says which ones it tried. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -32,7 +32,7 @@ async function startServer(t, subs) {
     users: [{ id: 'u_test_1', name: 'One', created: new Date().toISOString() }], creds: [], invites: [], subs
   }));
   fs.writeFileSync(path.join(dataDir, 'state-u_test_1.json'), JSON.stringify({ _rev: 1, lang: 'en', workouts: [], routines: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', AUDIT_LOG: '0', REMINDER_TICK_MS: '100000' }
   });

@@ -7,14 +7,14 @@ import http from 'node:http';
 import { tempData } from './helpers.mjs';
 
 tempData();
-const cfg = await import('../coach/config.js');
-const { coachRoutes } = await import('../coach/routes.js');
+const cfg = await import('../coach/config.ts');
+const { coachRoutes } = await import('../coach/routes.ts');
 
 // Every test starts from an empty coach.json: reset() only forgets the cache, and save() merges
 // over what is on disk, so a key filed by the previous test would otherwise still be there.
 const fresh = (patch = {}) => { cfg.reset(); cfg.save({ enabled: true, provider: 'fixture', auth: {}, models: {}, providerOptions: {}, boundUid: {}, ...patch }); };
 
-// The four helpers server.js hands in, as fakes: an admin is always signed in here.
+// The four helpers server.ts hands in, as fakes: an admin is always signed in here.
 function harness() {
   const out = {};
   const routes = coachRoutes({
@@ -154,8 +154,8 @@ test('the compatible endpoint: base URL is validated, a keyless endpoint counts 
 test('the card does not run a runtime to ask its version when the privilege drop cannot be performed', async () => {
   // `codex --version` is a child process like a job's, and without the drop it would run as this
   // process and see ./data. The job path and the test run refused it; the card's check did not.
-  const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.js');
-  const { adapterFor } = await import('../coach/adapters/index.js');
+  const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.ts');
+  const { adapterFor } = await import('../coach/adapters/index.ts');
   const ids = ['codex', 'claude', 'fixture'];
   const real = Object.fromEntries(ids.map(id => [id, adapterFor(id).check]));
   let calls = 0;
@@ -213,9 +213,9 @@ test('the disclosure says which host a job would go to, and nothing more of the 
 /* ---------- debrief + cohort routes ---------- */
 test('a debrief is enqueued as its own kind, and the cohort routes gate on the admin switch and the opt-in', async () => {
   fresh({ community: false });
-  const jobs = await import('../coach/jobs.js');
+  const jobs = await import('../coach/jobs.ts');
   const { writeState, sampleState, D } = await import('./helpers.mjs');
-  const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.js');
+  const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.ts');
   forcePrivilegeVerdict({ ok: true, dropped: false, why: 'pinned by the test suite' });
   writeState(process.env.DATA_DIR, 'admin-1', sampleState());
   const { call } = harness();

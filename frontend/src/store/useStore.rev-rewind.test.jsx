@@ -2,17 +2,17 @@
 
 /* The server's data can go back in time: a restored nightly backup, a write lost to a power cut.
    The revision is a counter, so the same number then names a different document. Every write
-   carries a write id and its ancestors' (`_wid`, `_wids`, api/server.js), and a device never takes
+   carries a write id and its ancestors' (`_wid`, `_wids`, api/server.ts), and a device never takes
    a document that does not descend from the one it last synced: it merges and pushes instead, so
    what it had confirmed comes back rather than vanishing here too (QA 2026-10-06). The server below
    answers like api/server.js. */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn(), stopRest: vi.fn(), abandonWork: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn(), stopRest: vi.fn(), abandonWork: vi.fn() }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const workout = id => ({ id, d: '2026-10-01', start: 1, entries: [] })

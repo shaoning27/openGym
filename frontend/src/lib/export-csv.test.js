@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { csvField, workoutsCSV, workoutRows, bodyCSV, WORKOUT_COLUMNS } from './export-csv.js'
-import { parseCSV, parseWorkoutCSV, parseBodyweight, parseImport, mergeImport } from './import-csv.js'
+import { csvField, workoutsCSV, workoutRows, bodyCSV, WORKOUT_COLUMNS } from './export-csv.ts'
+import { parseCSV, parseWorkoutCSV, parseBodyweight, parseImport, mergeImport } from './import-csv.ts'
 
 // Local times, the way the app stores a workout's start and end.
 const at = (d, h, m = 0) => new Date(`${d}T${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:00`).getTime()

@@ -8,12 +8,12 @@
 // answers over each other on every sync round.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
 
-import { api } from '../lib/api.js'
-import { effectiveLang } from '../lib/default-lang.js'
-import { useStore, freshState, DEF } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { effectiveLang } from '../lib/default-lang.ts'
+import { useStore, freshState, DEF } from './useStore.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const nav = langs => Object.defineProperty(navigator, 'languages', { value: langs, configurable: true })

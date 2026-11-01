@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { routineAdditions, addToRoutine } from './session-routines.js'
+import { routineAdditions, addToRoutine } from './session-routines.ts'
 
 // #592: exercises added in the middle of a routine's session, offered to that routine at the finish.
 const routine = { id: 'r1', name: 'Push A', prog: 'double', ex: [{ id: '0025', sets: 3, reps: 8, weight: 60 }] }

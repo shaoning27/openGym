@@ -10,9 +10,9 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useUI } from '../store/useUI.js'
-import { _setLangState } from '../lib/i18n-core.js'
-import { ConnectSheet, CfAccessSheet, SHEET_SETTLE_MS } from './MobileOnboarding.jsx'
+import { useUI } from '../store/useUI.ts'
+import { _setLangState } from '../lib/i18n-core.ts'
+import { ConnectSheet, CfAccessSheet, SHEET_SETTLE_MS } from './MobileOnboarding.tsx'
 
 let root, host, sheet, savedVV
 const rect = (top, bottom) => () => ({ top, bottom, left: 0, right: 300, width: 300, height: bottom - top })

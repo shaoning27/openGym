@@ -4,8 +4,8 @@
    out exactly as it went in. Their photo files count as referenced (the GC keeps them). */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { stampPut, STAMPED_MAPS } from '../sync-stamps.js';
-import { referencedHashes } from '../media.js';
+import { stampPut, STAMPED_MAPS } from '../sync-stamps.ts';
+import { referencedHashes } from '../media.ts';
 
 const H = n => String(n).repeat(64).slice(0, 64);
 const photo = h => ({ kind: 'image', hash: h, mime: 'image/webp', size: 1000, width: 800, height: 600, at: 1 });

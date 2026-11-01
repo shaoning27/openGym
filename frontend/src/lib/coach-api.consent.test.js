@@ -1,8 +1,8 @@
 // @vitest-environment happy-dom
 // The door every Coach job goes through asks first (Apple 5.1.2(i)): once per provider and host,
 // before the first request that would send training data there. Pinned here with the real
-// coach-api.js and coach-consent.js; the sheet itself is a stand-in that answers as told, and
-// no request ever leaves (api.js, the phone's pipeline and the demo are all fakes).
+// coach-api.ts and coach-consent.ts; the sheet itself is a stand-in that answers as told, and
+// no request ever leaves (api.ts, the phone's pipeline and the demo are all fakes).
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({
@@ -10,30 +10,30 @@ const mocks = vi.hoisted(() => ({
   disclosure: { provider: 'openai', providerLabel: 'OpenAI API', host: 'api.openai.com', categories: [], version: 1 },
   answer: true,
 }))
-vi.mock('./demo.js', () => ({ get DEMO() { return mocks.DEMO }, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
-vi.mock('./mobile.js', () => ({ get MOBILE() { return mocks.MOBILE }, readJsonFile: async () => null, writeJsonFile: async () => {} }))
-vi.mock('./api.js', () => ({
+vi.mock('./demo.ts', () => ({ get DEMO() { return mocks.DEMO }, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
+vi.mock('./mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE }, readJsonFile: async () => null, writeJsonFile: async () => {} }))
+vi.mock('./api.ts', () => ({
   api: vi.fn(async path => (path === '/api/coach/disclosure' ? mocks.disclosure : { job: { id: 'j1' } })),
 }))
-vi.mock('../store/useStore.js', () => ({ useStore: { getState: () => ({ S: { coach: {} }, coachLocal: mocks.coachLocal }) } }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
-vi.mock('../components/CoachConsentSheet.jsx', () => ({ askAiConsent: vi.fn(async () => mocks.answer) }))
-vi.mock('./coach-local.js', () => ({
+vi.mock('../store/useStore.ts', () => ({ useStore: { getState: () => ({ S: { coach: {} }, coachLocal: mocks.coachLocal }) } }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('../components/CoachConsentSheet.tsx', () => ({ askAiConsent: vi.fn(async () => mocks.answer) }))
+vi.mock('./coach-local.ts', () => ({
   setNotifier: vi.fn(),
   localDisclosure: vi.fn(async () => mocks.disclosure),
   localReview: vi.fn(async () => ({ job: { id: 'local-1' } })),
 }))
-vi.mock('./coach-demo.js', () => ({
+vi.mock('./coach-demo.ts', () => ({
   demoDisclosure: vi.fn(() => ({ provider: 'demo' })),
   demoReview: vi.fn(async () => ({ job: { id: 'demo-1' } })),
 }))
 
-const { api } = await import('./api.js')
-const { askAiConsent } = await import('../components/CoachConsentSheet.jsx')
-const local = await import('./coach-local.js')
-const demo = await import('./coach-demo.js')
-const { requestReview, requestPlan, refinePlan, requestDebrief, isDeclined } = await import('./coach-api.js')
-const { aiConsents, withdrawAi, _resetAiConsent } = await import('./coach-consent.js')
+const { api } = await import('./api.ts')
+const { askAiConsent } = await import('../components/CoachConsentSheet.tsx')
+const local = await import('./coach-local.ts')
+const demo = await import('./coach-demo.ts')
+const { requestReview, requestPlan, refinePlan, requestDebrief, isDeclined } = await import('./coach-api.ts')
+const { aiConsents, withdrawAi, _resetAiConsent } = await import('./coach-consent.ts')
 
 const jobCalls = () => vi.mocked(api).mock.calls.filter(([p]) => p !== '/api/coach/disclosure')
 

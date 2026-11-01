@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { favIds, isFav, toggleFav, sortFavouritesFirst, sortYoursFirst, usageOf } from './favourites.js'
+import { favIds, isFav, toggleFav, sortFavouritesFirst, sortYoursFirst, usageOf } from './favourites.ts'
 
 const ex = id => ({ id, n: id })
 

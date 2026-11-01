@@ -3,10 +3,10 @@
 // for the lifter whose Monday is heavy and Thursday light. Sessions are started and finished the
 // way the app does it, so the history has the shape the app saves.
 import { describe, it, expect } from 'vitest'
-import { buildCombinedEntries } from './session-merge.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { lastEntryFor, lastAcrossRoutines } from './history.js'
-import { isWarmupRow } from './workout-model.js'
+import { buildCombinedEntries } from './session-merge.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { lastEntryFor, lastAcrossRoutines } from './history.ts'
+import { isWarmupRow } from './workout-model.ts'
 
 const BENCH = '0025'   // barbell bench press, 2.5 kg step
 const work = e => e.sets.filter(s => !isWarmupRow(s))

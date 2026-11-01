@@ -43,7 +43,7 @@ async function startServer(t) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({
     users: [{ id: 'u_cost_1', name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });
@@ -159,7 +159,7 @@ test('the poll really is reading through the stat cache', async t => {
 // The other two sites want `lang` for a push payload, which nothing outside the push service can
 // observe — so they are pinned here, at the only place that can see them: the source.
 test('the three hot-path state reads all go through readStateCached', () => {
-  const src = fs.readFileSync(path.join(API, 'server.js'), 'utf8');
+  const src = fs.readFileSync(path.join(API, 'server.ts'), 'utf8');
   // Every route is one `'METHOD /path': async (req, res) => {` entry in the routes object, so a
   // handler runs from its key to the start of the next one.
   const handler = key => {

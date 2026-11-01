@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { BODYPARTS, EXDB, EXIDX, registerCustom } from './exercises.js'
-import { COMPOUND_LIFT_BATCH_1, USER_EXERCISE_MUSCLE_OVERRIDES } from './exercise-muscle-batch-1.js'
-import { MUSCLES, musclesOf, muscleWeightsOf } from './muscles.js'
+import { BODYPARTS, EXDB, EXIDX, registerCustom } from './exercises.ts'
+import { COMPOUND_LIFT_BATCH_1, USER_EXERCISE_MUSCLE_OVERRIDES } from './exercise-muscle-batch-1.ts'
+import { MUSCLES, musclesOf, muscleWeightsOf } from './muscles.ts'
 
 const ids = Object.keys(COMPOUND_LIFT_BATCH_1)
 const catalogueIds = new Set(EXDB.map(ex => ex.id))

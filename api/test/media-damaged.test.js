@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { createMediaStore, mediaLimits } from '../media.js';
+import { createMediaStore, mediaLimits } from '../media.ts';
 import * as M from './media-samples.mjs';
 
 const quiet = { warn() {}, error() {}, log() {} };

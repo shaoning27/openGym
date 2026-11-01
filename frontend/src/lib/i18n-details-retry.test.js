@@ -18,7 +18,7 @@ beforeEach(async () => {
   net.loads = 0
   vi.doMock('../instr/en.js', async () => { net.loads++; return net.up ? { default: { 9999: ['Stand tall.', 'Lift.'] } } : offline() })
   vi.doMock('../exercise-desc/en.js', async () => (net.up ? { default: { 9999: 'A lift.' } } : offline()))
-  i18n = await import('./i18n.js')
+  i18n = await import('./i18n.ts')
 })
 afterEach(() => { vi.useRealTimers() })
 

@@ -1,7 +1,7 @@
 /* An unreadable db.json (a write cut short by a power loss, a damaged restore) booted with zero
    users and the first save replaced it: every profile locked out, every history orphaned, the
    first visitor admin under FIRST_USER_ADMIN. And an unreadable state file read as "no state yet",
-   which a device adopted and a write replaced. (QA 2026-10-06.) Real server.js in a child. */
+   which a device adopted and a write replaced. (QA 2026-10-06.) Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -25,7 +25,7 @@ function dataDir(t) {
   return d;
 }
 function start(t, d, env = {}) {
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: d, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', ...env } });
   const h = { log: '', child };
   child.stdout.on('data', x => h.log += x); child.stderr.on('data', x => h.log += x);

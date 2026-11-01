@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { BODYPARTS, EXDB, EXIDX, registerCustom } from './exercises.js'
-import { MACHINE_BATCH_2 } from './exercise-muscle-batch-2.js'
-import { MUSCLES, musclesOf, muscleWeightsOf } from './muscles.js'
+import { BODYPARTS, EXDB, EXIDX, registerCustom } from './exercises.ts'
+import { MACHINE_BATCH_2 } from './exercise-muscle-batch-2.ts'
+import { MUSCLES, musclesOf, muscleWeightsOf } from './muscles.ts'
 
 const ids = Object.keys(MACHINE_BATCH_2)
 const catalogue = new Map(EXDB.map(exercise => [exercise.id, exercise]))

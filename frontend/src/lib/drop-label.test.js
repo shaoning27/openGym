@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { changeTitle } from './coach.js'
+import { changeTitle } from './coach.ts'
 
 // "Drop {0}" labels a drop set's sub-row ("Drop 1", lighter weight right after the set), sitting
 // next to the ✕ that removes it. It once also titled the Coach's "remove this exercise" change,

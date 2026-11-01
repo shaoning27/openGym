@@ -38,8 +38,8 @@ function specOperations(yaml) {
 
 test('every route the server registers is in openapi.yaml, and nothing else is', () => {
   const routes = new Set([
-    ...routeKeys(read(path.join(API, 'server.js'))),
-    ...routeKeys(read(path.join(API, 'coach', 'routes.js')))
+    ...routeKeys(read(path.join(API, 'server.ts'))),
+    ...routeKeys(read(path.join(API, 'coach', 'routes.ts')))
   ]);
   const ops = new Set(specOperations(spec));
   assert.ok(routes.size > 40, `only found ${routes.size} routes — the route table moved`);
@@ -61,21 +61,21 @@ test('every tag the spec uses is one the docs generator renders', () => {
   // operation whose first tag is not in it — silently, which is how ten Coach routes went
   // missing from the published page while being perfectly well documented here.
   const docs = read(path.join(ROOT, 'scripts', 'build-api-docs.mjs'));
-  const known = [.../const TAGS = \{([\s\S]*?)\n\}/.exec(docs)[1].matchAll(/^\s{2}(\w+):/gm)].map(m => m[1]);
+  const known = [.../const TAGS = \{([\s\S]*?)\n\}/.exec(docs)[1].matchAll(/^\s+(\w+):/gm)].map(m => m[1]);
   for (const tag of used) assert.ok(known.includes(tag), `tag "${tag}" renders nowhere — add it to TAGS in scripts/build-api-docs.mjs`);
 });
 
 /* The e-mail routes answer with codes a client switches on. /api/register/password answered
    `400 email-invalid` for a while with the spec listing only the password policy under 400. */
 test('every error code the e-mail and password signup routes return is in their spec entry', () => {
-  const server = read(path.join(API, 'server.js'));
+  const server = read(path.join(API, 'server.ts'));
   const handler = key => {
     const start = server.indexOf(`  '${key}': async`);
     assert.ok(start >= 0, key);
-    const next = server.slice(start + 1).search(/\n {2}'(GET|POST|PUT|DELETE) \//);
+    const next = server.slice(start + 1).search(/\n\s+'(GET|POST|PUT|DELETE) \//);
     return server.slice(start, next < 0 ? undefined : start + 1 + next);
   };
-  const emailCodes = Object.fromEntries([...server.matchAll(/^\s{2}(\w+): \{ error: '[^']*', code: '([^']+)' \}/gm)].map(m => [m[1], m[2]]));
+  const emailCodes = Object.fromEntries([...server.matchAll(/^\s+(\w+): \{ error: '[^']*', code: '([^']+)' \}/gm)].map(m => [m[1], m[2]]));
   const operation = (p, method) => {
     const from = spec.indexOf(`\n  ${p}:\n`);
     assert.ok(from >= 0, p);

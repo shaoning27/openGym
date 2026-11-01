@@ -8,8 +8,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const h = vi.hoisted(() => ({ api: null }))
-vi.mock('../lib/api.js', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
+vi.mock('../lib/api.ts', () => ({ api: (...a) => h.api(...a), setRemoteAuth: () => {} }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const w = (id, d = '2026-09-01') => ({ id, d, start: 1, end: 2, entries: [] })
@@ -34,7 +34,7 @@ function server(doc) {
 }
 async function openApp() {
   vi.resetModules()
-  const m = await import('./useStore.js')
+  const m = await import('./useStore.ts')
   m.useStore.setState({ user: { id: 'u1' }, ready: true })
   return m
 }

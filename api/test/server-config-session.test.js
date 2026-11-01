@@ -28,12 +28,12 @@ async function startServer(t, env = {}) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({
     users: [{ id: UID, name: 'C', created: new Date().toISOString() }], creds: [], subs: [], invites: []
   }));
-  // The fixture provider is "connected" by definition (coach/config.js isConnected), which is all
+  // The fixture provider is "connected" by definition (coach/config.ts isConnected), which is all
   // publicConfig() needs to produce a block.
   fs.writeFileSync(path.join(dataDir, 'coach.json'), JSON.stringify({ enabled: true, provider: 'fixture' }));
   // MEDIA_UPLOADS=0: the answers below are compared whole, and they are about the login flags
   // and the Coach block. The public media block has its own tests in server-media.test.js.
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', INVITE_ONLY: '1', ALLOW_GUEST: '0', COACH_DISABLED: '', MEDIA_UPLOADS: '0', ...env }
   });

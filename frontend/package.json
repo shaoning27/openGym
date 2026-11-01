@@ -11,7 +11,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:fatigue-probe": "node scripts/fatigue-monotonic-probe.mjs",
-    "pdf:check": "node scripts/pdf/render-samples.mjs --out pdf-samples --langs en,de,ar --paper A4,Letter --check"
+    "pdf:check": "node scripts/pdf/render-samples.mjs --out pdf-samples --langs en,de,ar --paper A4,Letter --check",
+    "build:worker": "node scripts/build-service-worker.mjs",
+    "prebuild": "npm run build:worker",
+    "predev": "npm run build:worker",
+    "pretest": "npm run build:worker",
+    "prebuild:mobile": "npm run build:worker"
   },
   "license": "AGPL-3.0-or-later",
   "dependencies": {
@@ -42,5 +47,8 @@
     "linkedom": "^0.18.13",
     "vite": "^8.3.4",
     "vitest": "^4.1.12"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.0.0"
   }
 }

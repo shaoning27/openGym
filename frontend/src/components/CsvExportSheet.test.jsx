@@ -8,22 +8,22 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const mocks = vi.hoisted(() => ({ S: null, share: vi.fn(async () => {}), toast: vi.fn() }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ S: mocks.S })
   const useStore = selector => (selector ? selector(snap()) : snap())
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: mocks.toast, openSheet: vi.fn() })
   const useUI = selector => (selector ? selector(snap()) : snap())
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/mobile.js', () => ({ MOBILE: true, shareExport: (...a) => mocks.share(...a) }))
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: true, shareExport: (...a) => mocks.share(...a) }))
 
-const { CsvExportSheet } = await import('./CsvExportSheet.jsx')
-const { todayISO } = await import('../lib/format.js')
+const { CsvExportSheet } = await import('./CsvExportSheet.tsx')
+const { todayISO } = await import('../lib/format.ts')
 
 let root, host, close
 const iso = n => { const d = new Date(); d.setHours(12); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10) }

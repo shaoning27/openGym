@@ -3,14 +3,14 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Window } from 'happy-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { EXIDX } from '../lib/exercises.js'
-import { MUSCLES, levelsOf } from '../lib/muscles.js'
-import { FATIGUE_STATES, STRENGTH_FLOOR, fatigueHalfLifeOf, FATIGUE_SETS_PER_UNIT, resolveSetRir } from '../lib/recovery.js'
-import { fatigueStateOf } from '../lib/recovery-view.js'
-import Stats from './Stats.jsx'
-import Modals from '../components/Modals.jsx'
-import { bindUI } from '../components/ui.jsx'
-import { useUI } from '../store/useUI.js'
+import { EXIDX } from '../lib/exercises.ts'
+import { MUSCLES, levelsOf } from '../lib/muscles.ts'
+import { FATIGUE_STATES, STRENGTH_FLOOR, fatigueHalfLifeOf, FATIGUE_SETS_PER_UNIT, resolveSetRir } from '../lib/recovery.ts'
+import { fatigueStateOf } from '../lib/recovery-view.ts'
+import Stats from './Stats.tsx'
+import Modals from '../components/Modals.tsx'
+import { bindUI } from '../components/ui.tsx'
+import { useUI } from '../store/useUI.ts'
 
 const DAY = 86400000
 const HOUR = 3600000
@@ -29,27 +29,27 @@ const mocks = vi.hoisted(() => ({
 }))
 
 // Passed through untouched; the spy only counts how often the Effort card reads a set.
-vi.mock('../lib/recovery.js', async importOriginal => {
+vi.mock('../lib/recovery.ts', async importOriginal => {
   const actual = await importOriginal()
   return { ...actual, resolveSetRir: vi.fn(actual.resolveSetRir) }
 })
 
-vi.mock('../store/useStore.js', () => ({
+vi.mock('../store/useStore.ts', () => ({
   useStore: selector => selector({ S: mocks.S }),
 }))
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   bwSheet: () => {}, goalSheet: () => {}, calendarSheet: () => {}, workoutDetailSheet: () => {},
   exerciseHistorySheet: mocks.exerciseHistorySheet,
   WorkoutRow: () => React.createElement('div'), bwDeltaColor: () => 'inherit', weighInsSheet: () => {},
 }))
-vi.mock('../components/LineChart.jsx', () => ({ default: props => {
+vi.mock('../components/LineChart.tsx', () => ({ default: props => {
   mocks.charts.push(props)
   return React.createElement('div')
 } }))
-vi.mock('../components/Heatmap.jsx', () => ({ default: () => React.createElement('div') }))
-vi.mock('../components/Icon.jsx', () => ({ default: props => React.createElement('span', props) }))
-vi.mock('../components/BodyMap.jsx', () => ({
+vi.mock('../components/Heatmap.tsx', () => ({ default: () => React.createElement('div') }))
+vi.mock('../components/Icon.tsx', () => ({ default: props => React.createElement('span', props) }))
+vi.mock('../components/BodyMap.tsx', () => ({
   default: props => {
     mocks.maps.push(props)
     React.useEffect(() => {

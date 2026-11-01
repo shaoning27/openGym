@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { linkTokenFromSearch, deviceLinkUrl, deviceLabel } from './device-link.js'
+import { linkTokenFromSearch, deviceLinkUrl, deviceLabel } from './device-link.ts'
 
 describe('linkTokenFromSearch', () => {
   it('reads ?link= from the query string', () => {

@@ -6,10 +6,10 @@
 // enabled" to a server whose admin was looking at a green test.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn() }))
 
-import { api } from '../lib/api.js'
-import { useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { useStore } from './useStore.ts'
 
 beforeEach(() => { api.mockReset(); useStore.setState({ config: null }) })
 afterEach(() => { useStore.setState({ config: null }) })
@@ -36,7 +36,7 @@ describe('server config', () => {
 
   it('a sign-in re-asks only when the held copy was fetched without a session', async () => {
     // GET /api/config carries a `coach` key only for a session — the block, or null on an
-    // instance with no Coach (api/server.js). So no key means the copy came back
+    // instance with no Coach (api/server.ts). So no key means the copy came back
     // unauthenticated, and coachAvailable() hangs every Coach entry point off that block.
     localStorage.clear()
     api.mockResolvedValueOnce({ invite_only: false, allow_guest: true })

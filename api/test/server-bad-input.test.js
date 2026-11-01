@@ -1,6 +1,6 @@
 /* A client's mistake is a 400 (or a 413), never a 500 with a stack trace in the log: unparseable
    or non-object JSON bodies, a state document that is an array, null entries inside it, and a
-   rest-timer request without a usable `seconds` (QA C17, C19, C20). Real server.js in a child. */
+   rest-timer request without a usable `seconds` (QA C17, C19, C20). Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -15,7 +15,7 @@ import { boundPort } from './helpers.mjs';
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SECRET = crypto.randomBytes(32).toString('hex');
 
-// Same construction as server.js makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
+// Same construction as server.ts makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
 function mintSession(uid, sv = 0) {
   const payload = `${uid}:${Date.now() + 86400000}:${sv}`;
   return payload + '.' + crypto.createHmac('sha256', SECRET).update(payload).digest('base64url');
@@ -30,7 +30,7 @@ async function startServer(t) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({
     users: [{ id: UID, name: 'One', created: new Date().toISOString() }], creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });
@@ -156,7 +156,7 @@ test('PUT /api/data: an array is not a document, and null entries never reach th
   assert.deepEqual(onDisk().routines.map(x => x.id), ['r1']);
   // Absent lists stay absent from a client that stamps its own changes: every client fills its
   // own defaults. From one that does not, a list it left out is one it never knew, and the stored
-  // one stays (sync-stamps.js keepUnknown).
+  // one stays (sync-stamps.ts keepUnknown).
   r = await put({ state: { unit: 'kg' }, baseRev: 2 });
   assert.equal(r.status, 200);
   assert.deepEqual(onDisk().workouts.map(w => w.id), ['w2', 'w3']);

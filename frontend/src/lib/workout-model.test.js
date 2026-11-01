@@ -6,7 +6,7 @@ import {
   nextDropWeight, nextBurstReps, splitBurstReps,
   isSideSet, makeSideSet, syncSideAggregate, setSideField, toggleSide, WEIGHT_ORIGIN_MANUAL,
   addSideDrop, removeSideDropAt, setSideDropAt, addSideCluster, removeSideClusterAt, setSideClusterAt,
-} from './workout-model.js'
+} from './workout-model.ts'
 
 describe('phaseForSet / isWarmupRow', () => {
   it('reads both the explicit phase and the legacy boolean', () => {

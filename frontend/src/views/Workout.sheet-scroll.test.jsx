@@ -7,19 +7,19 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
-import Modals from '../components/Modals.jsx'
-import { useUI } from '../store/useUI.js'
-import { DEF, useStore } from '../store/useStore.js'
+import Workout from './Workout.tsx'
+import Modals from '../components/Modals.tsx'
+import { useUI } from '../store/useUI.ts'
+import { DEF, useStore } from '../store/useStore.ts'
 
-vi.mock('../lib/sound.js', async importOriginal => ({
+vi.mock('../lib/sound.ts', async importOriginal => ({
   ...(await importOriginal()), beep: vi.fn(), chime: vi.fn(), unlock: vi.fn(), vibrate: vi.fn(),
 }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: vi.fn(() => Promise.resolve({})), IS_APPLE: false, IS_ANDROID: false, BIO: 'biometrics',
 }))
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../components/Media.jsx', () => ({ default: () => null }))
+vi.mock('../components/Media.tsx', () => ({ default: () => null }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -28,7 +28,7 @@ let host, root, originalS, scrolls, rafs
 const row = () => ({ w: 60, r: 5, done: false })
 const entry = (id, sg) => ({ id, sg, target: { mode: 'reps', sets: 2, reps: 5, weight: 60, bodyweight: false }, sets: [row(), row()] })
 
-// The restore window is module state in Modals.jsx, kept as a time. Each test's fake clock starts
+// The restore window is module state in Modals.tsx, kept as a time. Each test's fake clock starts
 // a minute past the previous one's, so a sheet an earlier test closed is long done.
 let clock = Date.now()
 

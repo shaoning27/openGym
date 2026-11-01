@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { tappable, revealChip } from './use-sheet-keyboard.js'
+import { tappable, revealChip } from './use-sheet-keyboard.ts'
 
 const keyEvent = (key, target) => {
   const ev = { key, target, currentTarget: target, preventDefault: vi.fn() }

@@ -1,9 +1,9 @@
 // @vitest-environment happy-dom
 import { act } from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { startFlow } from './sheets.jsx'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { startFlow } from './sheets.tsx'
 
 // Start opens the quick weigh-in unless Settings → During a workout → "Weigh in before
 // workouts" is off (issue #137) — then the session begins at once, with no body weight on it.

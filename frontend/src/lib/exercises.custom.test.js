@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { CATALOGUE, EXIDX, healCustomEx, isCustomEx, registerCustom } from './exercises.js'
+import { CATALOGUE, EXIDX, healCustomEx, isCustomEx, registerCustom } from './exercises.ts'
 
 // #378 / #358: a custom exercise stored without `custom: true` (a plan import before 1.3.8) had
 // no Edit, no Delete and a broken thumbnail. Being one of the user's own is where it lives.

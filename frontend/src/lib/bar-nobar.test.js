@@ -2,7 +2,7 @@
 // 0 in the bar field meant "clear the override" and snapped back to the 9 kg default — so the
 // plate math and the drop-set steps were computed from a bar that is not there.
 import { describe, it, expect } from 'vitest'
-import { barWeightFor, hasBarOverride, isNoBar, plateSplit, defaultBarWeight } from './bar.js'
+import { barWeightFor, hasBarOverride, isNoBar, plateSplit, defaultBarWeight } from './bar.ts'
 
 const smith = { id: 'sm', eq: 'smith machine' }
 const bb = { id: 'bb', eq: 'barbell' }

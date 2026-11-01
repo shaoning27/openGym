@@ -21,7 +21,7 @@ export const CATEGORIES = list('strength, stretching, mobility, plyometrics, car
 export const MUSCLES = list('trapezius, deltoids, chest, upper-back, serratus, biceps, triceps, forearm, abs, obliques, lower-back, gluteal, quadriceps, hamstring, adductors, hip-flexors, calves, tibialis')
 // Kit the equipment field cannot name because the exercise's own equipment is something else: a
 // dumbbell fly also needs a bench, an inverted row a bar. The app's profile checklist has these
-// two (frontend/src/lib/equipment.js ACCESSORIES), and reads most of them off the name.
+// two (frontend/src/lib/equipment.ts ACCESSORIES), and reads most of them off the name.
 export const NEEDS = list('bench, pull-up bar')
 export const LANGS = list('ar, bn, de, es, fr, hi, hu, it, ko, pl, pt, pt-BR, ru, th, tr, uk, zh, zh-TW')
 const KEYS = ['id', 'name', 'bodyPart', 'equipment', 'target', 'secondaryMuscles', 'category', 'hold', 'needs', 'description', 'instructions', 'muscleMap', 'femaleVariant', 'maleVariant', 'variantOf', 'textSource']

@@ -15,7 +15,7 @@
 //
 // A figure's pack holds every drawing that figure shows: per catalogue exercise its drawing for
 // that figure, or its own when it is drawn once (those go into both packs). The rule is
-// packDrawingId in frontend/src/lib/anim-quality.js, the one the app resolves with, so a pack
+// packDrawingId in frontend/src/lib/anim-quality.ts, the one the app resolves with, so a pack
 // can never miss a file the app asks it for.
 //
 // --layout: where a file lands inside the pack. `pack` (the default) puts it under the pack's
@@ -29,7 +29,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { EXDB } from '../../frontend/src/lib/exercises-data.js'
-import { PACK_QUALITIES, FIGURES, packId, packDrawingId } from '../../frontend/src/lib/anim-quality.js'
+import { PACK_QUALITIES, FIGURES, packId, packDrawingId } from '../../frontend/src/lib/anim-quality.ts'
 
 /** The drawing ids a figure shows, sorted. */
 export function drawingsFor(catalogue, figure) {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { EXDB, EXIDX } from './exercises.js'
+import { EXDB, EXIDX } from './exercises.ts'
 import V13_IDS from './catalogue-v13-ids.json' with { type: 'json' }
 
 // Workouts, routines, records and backups store exercise ids, so an id that ever shipped must

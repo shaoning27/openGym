@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { exifDateOf, exifDateOfFile } from './exif-date.js'
+import { exifDateOf, exifDateOfFile } from './exif-date.ts'
 
 /* The date a photo was taken, read from a JPEG's EXIF (#557). The JPEGs here are built byte by
    byte: SOI, an APP1 "Exif" segment with a TIFF header, IFD0 pointing at the Exif IFD, and

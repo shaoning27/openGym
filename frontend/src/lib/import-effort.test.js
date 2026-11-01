@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { parseWorkoutCSV } from './import-csv.js'
-import { setLabel, effortOf } from './history.js'
+import { parseWorkoutCSV } from './import-csv.ts'
+import { setLabel, effortOf } from './history.ts'
 
 // Headers as the real exports write them, trimmed to the columns that matter here.
 const HEVY = 'title,start_time,end_time,exercise_title,set_index,set_type,weight_kg,reps,rpe'

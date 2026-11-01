@@ -7,17 +7,17 @@ import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({ S: null }))
-vi.mock('../store/useStore.js', () => ({ useStore: selector => selector({ S: mocks.S }) }))
+vi.mock('../store/useStore.ts', () => ({ useStore: selector => selector({ S: mocks.S }) }))
 vi.mock('react-router-dom', () => ({ useNavigate: () => vi.fn() }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   bwSheet: vi.fn(), goalSheet: vi.fn(), calendarSheet: vi.fn(), workoutDetailSheet: vi.fn(),
   exerciseHistorySheet: vi.fn(), WorkoutRow: () => React.createElement('div'), bwDeltaColor: () => '', weighInsSheet: vi.fn(),
 }))
-vi.mock('../components/Heatmap.jsx', () => ({ default: () => React.createElement('div') }))
-vi.mock('../components/LineChart.jsx', () => ({ default: () => React.createElement('div') }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => React.createElement('div'), BodyMapLegend: () => null }))
+vi.mock('../components/Heatmap.tsx', () => ({ default: () => React.createElement('div') }))
+vi.mock('../components/LineChart.tsx', () => ({ default: () => React.createElement('div') }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => React.createElement('div'), BodyMapLegend: () => null }))
 
-import Stats, { WeeklyPlanVolume } from './Stats.jsx'
+import Stats, { WeeklyPlanVolume } from './Stats.tsx'
 
 const press = { id: 'press', n: 'Press', primaries: ['chest'], secondaries: ['triceps'], custom: true }
 const state = over => ({

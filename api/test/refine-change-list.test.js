@@ -10,10 +10,10 @@ import assert from 'node:assert/strict';
 import { tempData } from './helpers.mjs';
 
 tempData();
-const { runPipeline } = await import('../coach/core/pipeline.js');
-const { buildPromptParts } = await import('../coach/core/prompt.js');
-const { build } = await import('../coach/core/payload.js');
-const { changesOntoPlan, isChangeList } = await import('../coach/core/refine-changes.js');
+const { runPipeline } = await import('../coach/core/pipeline.ts');
+const { buildPromptParts } = await import('../coach/core/prompt.ts');
+const { build } = await import('../coach/core/payload.ts');
+const { changesOntoPlan, isChangeList } = await import('../coach/core/refine-changes.ts');
 
 // The answer from the issue, verbatim.
 const ISSUE = {

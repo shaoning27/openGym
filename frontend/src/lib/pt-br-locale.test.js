@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { createHash } from 'node:crypto'
 import pt from '../locales/pt.js'
 import ptBR, { PT_BR_OVERRIDES } from '../locales/pt-BR.js'
-import { DATE_LOCALES, LANGS } from './i18n-core.js'
+import { DATE_LOCALES, LANGS } from './i18n-core.ts'
 
 const placeholders = value => [...String(value).matchAll(/\{\d+\}/g)].map(match => match[0]).sort()
 const byCodeUnit = ([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)

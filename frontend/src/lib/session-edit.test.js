@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { editCompletedSession, saveWorkoutEdit, editLeftEmpty, deleteEditedWorkout, editChangesNothing } from './session-edit.js'
-import { mergeStates } from './sync-merge.js'
-import { entryExcluded, lastEntryFor } from './history.js'
+import { editCompletedSession, saveWorkoutEdit, editLeftEmpty, deleteEditedWorkout, editChangesNothing } from './session-edit.ts'
+import { mergeStates } from './sync-merge.ts'
+import { entryExcluded, lastEntryFor } from './history.ts'
 
 const entry = (w, id = '0025') => ({ id, sets: [{ w, r: 5, done: true }], target: { mode: 'reps' } })
 const fixture = () => ({
@@ -48,7 +48,7 @@ describe('saved workout editing', () => {
     // The kept 40 came from this very session, and the edit took it away.
     expect(state.exWeights['0025']).toEqual({ w: 30, d: '2026-09-02' })
     // Still the first 20 ever. The later 30 never had a badge, and a session that was not
-    // edited is never handed one (the rule a date move follows too, lib/workout-date.js).
+    // edited is never handed one (the rule a date move follows too, lib/workout-date.ts).
     expect(state.workouts[0].prs).toEqual(['0025'])
     expect(state.workouts[1].prs).toEqual([])
   })
@@ -187,7 +187,7 @@ describe('saved workout editing', () => {
     expect(lastEntryFor(state, '0025').sets[0].w).toBe(80)
   })
 
-  // The header ⋮'s "Don't count for progression" for the whole workout (lib/session-noprog.js)
+  // The header ⋮'s "Don't count for progression" for the whole workout (lib/session-noprog.ts)
   // opens on for a workout saved out as a whole, and off for one that counts.
   it('opens a workout kept out as a whole with the whole-workout switch on, and a counting one with it off', () => {
     const state = fixture()
@@ -257,7 +257,7 @@ describe('saved workout editing', () => {
 })
 
 // An edit that unticks or removes every set would save a workout with nothing in it. The editor
-// offers to delete it instead (sheets.jsx saveWorkoutEdits), and Save itself refuses.
+// offers to delete it instead (sheets.tsx saveWorkoutEdits), and Save itself refuses.
 describe('an edit that leaves no set', () => {
   it('is told apart from one with a set left, ticked sets only', () => {
     const state = fixture()

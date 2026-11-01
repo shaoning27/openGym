@@ -5,10 +5,10 @@
 import { describe, expect, it, beforeEach, afterEach } from 'vitest'
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
-import { useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { sessionNoteSheet, workoutDetailSheet } from '../sheets.jsx'
-import { buildCompletedWorkout } from './finish-workout.js'
+import { useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { sessionNoteSheet, workoutDetailSheet } from '../sheets.tsx'
+import { buildCompletedWorkout } from './finish-workout.ts'
 
 const mounted = []
 function render(open) {

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { buildCompletedWorkout, sessionEnd, FORGOTTEN_GAP_MS } from './finish-workout.js'
-import { cascadeWeight } from './history.js'
-import { buildSessionEntries } from './session-start.js'
-import { makeSideSet, setSideField, toggleSide, WEIGHT_ORIGIN_MANUAL } from './workout-model.js'
+import { buildCompletedWorkout, sessionEnd, FORGOTTEN_GAP_MS } from './finish-workout.ts'
+import { cascadeWeight } from './history.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { makeSideSet, setSideField, toggleSide, WEIGHT_ORIGIN_MANUAL } from './workout-model.ts'
 
 describe('completed workout boundary', () => {
   it('builds the same legacy-shaped record doFinishWorkout stores and keeps it visible', () => {

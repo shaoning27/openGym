@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { matchExercise, matchHevyTitle, parseWorkoutCSV, detectSource, exerciseCandidates } from './import-csv.js'
-import { EXIDX } from './exercises.js'
+import { matchExercise, matchHevyTitle, parseWorkoutCSV, detectSource, exerciseCandidates } from './import-csv.ts'
+import { EXIDX } from './exercises.ts'
 
 // The names other apps actually export, and the catalogue entry each has to land on.
 // Everything here was reported as arriving in the app as a *custom* exercise (issue #74):

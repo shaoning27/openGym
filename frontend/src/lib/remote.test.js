@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { normalizeServerUrl } from './remote.js'
+import { normalizeServerUrl } from './remote.ts'
 
 // The pairing flow lives or dies on this being forgiving about what someone types on a phone
 // keyboard, while still refusing input that can't possibly be a server address.

@@ -1,5 +1,22 @@
 {
   "devDependencies": {
-    "js-yaml": "^4.1.0"
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/web-push": "^3.6.4",
+    "js-yaml": "^4.1.0",
+    "typescript": "^7.0.2"
+  },
+  "private": true,
+  "engines": {
+    "node": "^22.18.0 || >=24.0.0"
+  },
+  "scripts": {
+    "typecheck": "npm run typecheck:frontend && npm run typecheck:api && npm run typecheck:mcp",
+    "typecheck:frontend": "tsc -p frontend/tsconfig.json && tsc -p frontend/tsconfig.worker.json",
+    "typecheck:api": "tsc -p api/tsconfig.json",
+    "typecheck:mcp": "tsc -p mcp/tsconfig.json",
+    "check:migration": "node scripts/ci/check-typescript-migration.mjs && node frontend/scripts/build-service-worker.mjs --check"
   }
 }

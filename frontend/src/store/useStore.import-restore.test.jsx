@@ -4,16 +4,16 @@
    though it was deleted since (QA 2026-10-06): the removal record used to delete it again, at once
    with "Merge them in" and on the next conflict of any other device with "Replace". And the
    replace must not wipe what another device synced while the confirm was open. The server below
-   answers like api/server.js (409 with the current document on a stale baseRev). */
+   answers like api/server.ts (409 with the current document on a stale baseRev). */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
 const { toast } = vi.hoisted(() => ({ toast: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
-import { mergeStates, stampChange } from '../lib/sync-merge.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
+import { mergeStates, stampChange } from '../lib/sync-merge.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const ids = xs => (xs || []).map(x => x.id).sort()

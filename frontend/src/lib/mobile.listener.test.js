@@ -17,7 +17,7 @@ vi.mock('@capacitor/app', () => ({ get App() { return mocks.App } }))
 const load = async () => {
   vi.stubEnv('VITE_MOBILE', '1')
   vi.resetModules()
-  return import('./mobile.js')
+  return import('./mobile.ts')
 }
 const tick = () => new Promise(r => setTimeout(r, 0))
 // What Capacitor's plugin proxy does when the App plugin is not behind the bridge: addListener

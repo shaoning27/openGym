@@ -1,12 +1,12 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { DEF, restoredStateFor } from '../store/useStore.js'
-import { mergeStates } from './sync-merge.js'
-import { exportBackupZip, readBackupFile } from './backup-media.js'
-import { createMediaStore, memoryBackend } from './media-store.js'
-import { sha256Hex } from './sha256.js'
-import { png } from './media-samples.test-util.js'
-import { parsePlan, buildPlanBundle } from './plan-share.js'
+import { DEF, restoredStateFor } from '../store/useStore.ts'
+import { mergeStates } from './sync-merge.ts'
+import { exportBackupZip, readBackupFile } from './backup-media.ts'
+import { createMediaStore, memoryBackend } from './media-store.ts'
+import { sha256Hex } from './sha256.ts'
+import { png } from './media-samples.test-util.ts'
+import { parsePlan, buildPlanBundle } from './plan-share.ts'
 
 /* DATA SAFETY for the v1.4.2 small fixes ("don't fry our DB"). The new data is optional only:
    warmupRestOff and sideRestSec on a routine entry (rest for warm-ups and between sides), subs on

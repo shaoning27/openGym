@@ -7,11 +7,11 @@ import { act } from 'react'
 import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 const mocks = vi.hoisted(() => ({ health: { on: false }, link: { paired: true, installed: true } }))
-vi.mock('../lib/health-sync.js', () => ({ loadHealth: async () => mocks.health, onHealthChange: () => () => {} }))
-vi.mock('../lib/watch-sync.js', () => ({ watchStatus: async () => mocks.link }))
+vi.mock('../lib/health-sync.ts', () => ({ loadHealth: async () => mocks.health, onHealthChange: () => () => {} }))
+vi.mock('../lib/watch-sync.ts', () => ({ watchStatus: async () => mocks.link }))
 
-import WatchSettingsPage from './WatchSettings.jsx'
-import { readWatchPrefs, writeWatchStatus } from '../lib/watch-settings.js'
+import WatchSettingsPage from './WatchSettings.tsx'
+import { readWatchPrefs, writeWatchStatus } from '../lib/watch-settings.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 let where = null

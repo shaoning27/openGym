@@ -23,11 +23,11 @@ import {
   resolveSetRir,
   rirWeightFor,
   strengthOf,
-} from './recovery.js'
-import { EXDB, registerCustom } from './exercises.js'
-import { MUSCLES, exerciseMuscleSnapshot, musclesOf } from './muscles.js'
-import { fatigueStateOf } from './recovery-view.js'
-import { estimate1RM } from './onerm.js'
+} from './recovery.ts'
+import { EXDB, registerCustom } from './exercises.ts'
+import { MUSCLES, exerciseMuscleSnapshot, musclesOf } from './muscles.ts'
+import { fatigueStateOf } from './recovery-view.ts'
+import { estimate1RM } from './onerm.ts'
 
 const HOUR = 60 * 60 * 1000
 const DAY = 24 * HOUR
@@ -591,7 +591,7 @@ describe('drop-set drops add discounted fatigue sets on top of the main set', ()
 })
 
 describe('a rest-pause row\'s clusters add no extra fatigue sets', () => {
-  // Its own r is already the total across every burst (see applyIntensifierPlan/history.js),
+  // Its own r is already the total across every burst (see applyIntensifierPlan/history.ts),
   // so the main set term already covers all of it — clusters are a breakdown only.
   it('matches a plain set of the same w/r exactly, regardless of how the clusters break it down', () => {
     const burstRow = { done: true, type: 'restpause', w: 80, r: 8, clusters: [{ r: 4, restSec: 15 }] }

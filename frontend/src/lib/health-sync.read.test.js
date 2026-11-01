@@ -62,7 +62,7 @@ beforeEach(async () => {
   h.files.clear(); h.calls = []; h.platform = 'android'; h.granted = { heartRate: true, weight: true }; h.hr = []; h.weights = []; h.fail = null
   S = { unit: 'kg', workouts: [workout('w1')], bodyweight: [] }
   applied = 0
-  hs = await import('./health-sync.js')
+  hs = await import('./health-sync.ts')
 })
 
 afterEach(() => { vi.useRealTimers() })
@@ -114,7 +114,7 @@ describe('heart rate', () => {
   })
 
   it('never touches the Apple Watch’s own reading on the iPhone', async () => {
-    vi.resetModules(); h.platform = 'ios'; hs = await import('./health-sync.js')
+    vi.resetModules(); h.platform = 'ios'; hs = await import('./health-sync.ts')
     const watch = { avg: 111, max: 140 }
     S.workouts[0].entries[0].sets[0].hr = watch
     S.workouts[0].hr = { avg: 110, max: 140, src: 'watch', n: 600 }
@@ -173,7 +173,7 @@ describe('weigh-ins', () => {
   })
 
   it('on the iPhone, where Apple Health never says whether reading is allowed, just reads', async () => {
-    vi.resetModules(); h.platform = 'ios'; hs = await import('./health-sync.js')
+    vi.resetModules(); h.platform = 'ios'; hs = await import('./health-sync.ts')
     h.weights = [rec(2, 80.4)]
     expect((await hs.enableRead('weight', getState, { apply })).ok).toBe(true)
     expect(S.bodyweight[0].src).toBe('ah')
@@ -191,7 +191,7 @@ describe('weigh-ins with the history permission', () => {
     const core = await import('@capacitor/core')
     const hc = core.registerPlugin()
     vi.spyOn(core, 'registerPlugin').mockReturnValue({ ...hc, status: async () => ({ status: 'available', granted: false, read: { ...h.granted }, history: true }) })
-    hs = await import('./health-sync.js')
+    hs = await import('./health-sync.ts')
   }
 
   it('asks for it with the weight and then reads a year back', async () => {

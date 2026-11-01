@@ -3,7 +3,7 @@
 // already relative; the API call was not, so it went to the proxy's own root where nothing
 // answers it. The base is read from where the app is being served.
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { api, appBase, beacon } from './api.js'
+import { api, appBase, beacon } from './api.ts'
 import { readFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
 import { dirname, join } from 'node:path'
@@ -99,7 +99,7 @@ describe('the cache lifetime nginx gives a build chunk', () => {
     const re = new RegExp(/location ~\* (\S+) \{/.exec(NGINX.slice(at))[1], 'i')
     for (const u of ['/assets/index-DdAX9ec6.js', '/gym/assets/rolldown-runtime-QTnfLwEv.js', '/assets/index-zMZnqmc9.css', '/assets/pt-BR-p55Y2oCC.js'])
       expect(re.test(u), u).toBe(true)
-    for (const u of ['/sw.js', '/index.html', '/manifest.json', '/assets/index.js', '/icon-180.png'])
+    for (const u of ['/sw.js', '/index.html', '/manifest.json', '/assets/index.ts', '/icon-180.png'])
       expect(re.test(u), u).toBe(false)
   })
 })
@@ -209,7 +209,7 @@ describe('the file nginx looks for under BASE_PATH', () => {
 
   it('takes the prefix off, so the shell at the prefix is found rather than redirected to itself', () => {
     expect(onDisk('/g+ym', '/g+ym/')).toBe('/')
-    expect(onDisk('/g+ym', '/g+ym/assets/index.js')).toBe('/assets/index.js')
+    expect(onDisk('/g+ym', '/g+ym/assets/index.ts')).toBe('/assets/index.ts')
     expect(onDisk('/g+ym', '/g+ym/icon-180.png')).toBe('/icon-180.png')
     expect(onDisk('/gym', '/gym/icon-180.png')).toBe('/icon-180.png')
     expect(onDisk('/a/b', '/a/b/index.html')).toBe('/index.html')
@@ -217,13 +217,13 @@ describe('the file nginx looks for under BASE_PATH', () => {
   })
 
   it('reads BASE_PATH as text, not as a pattern', () => {
-    expect(onDisk('/g.ym', '/g.ym/assets/index.js')).toBe('/assets/index.js')
-    expect(onDisk('/g.ym', '/gXym/assets/index.js')).toBe('/gXym/assets/index.js')
-    expect(onDisk('/gym', '/gymnasium/index.js')).toBe('/gymnasium/index.js')
+    expect(onDisk('/g.ym', '/g.ym/assets/index.ts')).toBe('/assets/index.ts')
+    expect(onDisk('/g.ym', '/gXym/assets/index.ts')).toBe('/gXym/assets/index.ts')
+    expect(onDisk('/gym', '/gymnasium/index.ts')).toBe('/gymnasium/index.ts')
   })
 
   it('changes nothing at the site root', () => {
-    for (const uri of ['/', '/index.html', '/assets/index.js', '/icon-180.png', '//x.js'])
+    for (const uri of ['/', '/index.html', '/assets/index.ts', '/icon-180.png', '//x.js'])
       expect(onDisk('', uri)).toBe(uri)
   })
 })

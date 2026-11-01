@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseBodyweight, parseImport } from './import-csv.js'
+import { parseBodyweight, parseImport } from './import-csv.ts'
 
 const record = (day, value, unit) => `<Record type="HKQuantityTypeIdentifierBodyMass" unit="${unit}" value="${value}" startDate="2026-09-${day} 08:00:00 +0000"/>`
 
@@ -61,8 +61,8 @@ describe('Strong measurements export', () => {
 // weigh-in. An imported weigh-in is marked, and only one typed into openGym goes out.
 describe('imported weigh-ins never go back to the health hub', () => {
   it('marks what an import brings, and leaves what was there alone', async () => {
-    const { mergeImport } = await import('./import-csv.js')
-    const { healthRecords, planSync } = await import('./health-connect.js')
+    const { mergeImport } = await import('./import-csv.ts')
+    const { healthRecords, planSync } = await import('./health-connect.ts')
     const S = { unit: 'kg', workouts: [], bodyweight: [{ d: '2026-09-01', w: 79, t: Date.parse('2026-09-01T07:00:00') }] }
     const parsed = parseImport(record('01', 80, 'kg') + record('02', 81, 'kg') + record('03', 82, 'kg'))
     expect(mergeImport(S, parsed)).toEqual({ added: 2, skipped: 1 })
@@ -74,8 +74,8 @@ describe('imported weigh-ins never go back to the health hub', () => {
   })
 
   it('a CSV of weights and a Hevy import count as imports too', async () => {
-    const { mergeImport } = await import('./import-csv.js')
-    const { parseHevyBodyweight } = await import('./import-hevy.js')
+    const { mergeImport } = await import('./import-csv.ts')
+    const { parseHevyBodyweight } = await import('./import-hevy.ts')
     const S = { unit: 'kg', workouts: [], bodyweight: [] }
     mergeImport(S, parseImport('Date,Weight (kg)\n2026-09-01,80\n2026-09-02,80.5'))
     mergeImport(S, parseHevyBodyweight([{ date: '2026-09-03', weight_kg: 81 }]))

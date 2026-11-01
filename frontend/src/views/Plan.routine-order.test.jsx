@@ -7,18 +7,18 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import Plan from './Plan.jsx'
+import { useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import Plan from './Plan.tsx'
 
 const nav = vi.fn()
 vi.mock('react-router-dom', () => ({ useNavigate: () => nav }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   dayAssignSheet: vi.fn(), starterPlanSheet: vi.fn(), confirmSheet: vi.fn(), menuSheet: vi.fn(),
   planHasRoutines: () => true, exportPlanFile: vi.fn(), printWholePlan: vi.fn(), importPlanFile: vi.fn(),
 }))
 
-import { confirmSheet } from '../sheets.jsx'
+import { confirmSheet } from '../sheets.tsx'
 
 const routine = (id, name) => ({ id, name, emoji: null, ex: [{ id: '0025' }] })
 let host, root

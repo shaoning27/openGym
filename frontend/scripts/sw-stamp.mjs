@@ -8,7 +8,7 @@
 // photo after an update, added at the gym, failed.
 const PACK = /[\\/]src[\\/](?:locales|instr|exercise-names)[\\/]/
 // …except the English steps: every language falls back to them, they are no longer in the main
-// bundle (i18n.js loads them on the first exercise opened), and left out, a phone that had not
+// bundle (i18n.ts loads them on the first exercise opened), and left out, a phone that had not
 // opened one with a network showed no steps at all offline. exercise-desc/ is not a PACK and
 // stays in the list, English descriptions included.
 const KEEP = /[\\/]src[\\/]instr[\\/]en\.js$/

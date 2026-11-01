@@ -1,9 +1,9 @@
 /* The account's own delete (App Store rule 5.1.1(v)): a signed-in profile removes itself with
-   the same clean-up the admin's delete runs (removeAccount in server.js), typing its name back
+   the same clean-up the admin's delete runs (removeAccount in server.ts), typing its name back
    and proving it is the owner the way the other changes to a way in do (proveOwner): here with
    the current password, the passkey half is in server-passkeys.test.js. A paired phone, which
    can hold no passkey for the server, proves a profile without a password by its pairing. The last admin cannot
-   leave an instance others still use. Real server.js in a child, same harness as
+   leave an instance others still use. Real server.ts in a child, same harness as
    server-admin-delete.test.js. */
 import { test, before } from 'node:test';
 import assert from 'node:assert/strict';
@@ -13,7 +13,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { hashPassword } from '../password.js';
+import { hashPassword } from '../password.ts';
 import { boundPort } from './helpers.mjs';
 
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -46,7 +46,7 @@ async function startServer(t, { users: which = ['admin', 'user'], env = {} } = {
     invites: [{ code: 'CODE1', usedBy: USER, usedAt: new Date().toISOString() }],
   }));
   for (const uid of [USER, ADMIN]) fs.writeFileSync(path.join(dataDir, `state-${uid}.json`), JSON.stringify({ unit: 'kg', workouts: [], _rev: 3 }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', PASSWORD_LOGIN: '1', AUDIT_LOG: '1', ...env },
   });

@@ -3,13 +3,13 @@
 // http is not encrypted. Not for https://, a bare address (tried as https://) or the phone itself.
 import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('../store/useStore.js', () => ({ useStore: () => ({}) }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({}) } }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: () => {} }))
-vi.mock('../components/Icon.jsx', () => ({ default: () => null }))
-vi.mock('../components/ui.jsx', () => ({ Button: () => null }))
+vi.mock('../store/useStore.ts', () => ({ useStore: () => ({}) }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({}) } }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: () => {} }))
+vi.mock('../components/Icon.tsx', () => ({ default: () => null }))
+vi.mock('../components/ui.tsx', () => ({ Button: () => null }))
 
-const { plainHttp } = await import('./MobileOnboarding.jsx')
+const { plainHttp } = await import('./MobileOnboarding.tsx')
 
 describe('plainHttp', () => {
   it('warns for an http:// server on the network', () => {

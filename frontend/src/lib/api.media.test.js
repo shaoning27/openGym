@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { apiBlob, apiUpload, setRemoteAuth } from './api.js'
+import { apiBlob, apiUpload, setRemoteAuth } from './api.ts'
 
 afterEach(() => setRemoteAuth('', null))
 

@@ -2,12 +2,12 @@
 // that says "volume" counts the done warm-ups too. The saved `vol` never changes, so the switch
 // can go back and forth without touching history. Records and progression never read warm-ups.
 import { describe, expect, it } from 'vitest'
-import { workoutVolume, sessionVolume, lifetimeVolume, countsWarmups } from './history.js'
-import { totalsOf, reportData } from './report.js'
-import { exerciseHistory } from './exercise-history.js'
-import { insightsFor, sessionInsights } from './coach-insights.js'
-import { workoutCardModel } from './workout-card.js'
-import { workoutText } from './workout-text.js'
+import { workoutVolume, sessionVolume, lifetimeVolume, countsWarmups } from './history.ts'
+import { totalsOf, reportData } from './report.ts'
+import { exerciseHistory } from './exercise-history.ts'
+import { insightsFor, sessionInsights } from './coach-insights.ts'
+import { workoutCardModel } from './workout-card.ts'
+import { workoutText } from './workout-text.ts'
 
 const BENCH = '0025'
 const warm = (w, r, done = true) => ({ w, r, done, phase: 'warmup', warmup: true })

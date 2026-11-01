@@ -7,12 +7,12 @@
    belongs to merges instead of asking. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
 const { toast, stopRest, abandonWork } = vi.hoisted(() => ({ toast: vi.fn(), stopRest: vi.fn(), abandonWork: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast, stopRest, abandonWork }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast, stopRest, abandonWork }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
 
 const clone = value => JSON.parse(JSON.stringify(value))
 const workout = (id, d = '2026-09-01') => ({ id, d, start: 1, entries: [] })

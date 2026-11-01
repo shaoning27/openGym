@@ -5,14 +5,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const device = { data: null }
-vi.mock('./mobile.js', () => ({
+vi.mock('./mobile.ts', () => ({
   MOBILE: true,
   readJsonFile: async () => device.data,
   writeJsonFile: async (_n, d) => { device.data = JSON.parse(JSON.stringify(d)) }
 }))
-vi.mock('./coach-secrets.js', () => ({ getApiKey: async () => 'sk-test-1' }))
+vi.mock('./coach-secrets.ts', () => ({ getApiKey: async () => 'sk-test-1' }))
 const wire = { calls: [], answer: null }
-vi.mock('./capacitor-fetch.js', () => ({
+vi.mock('./capacitor-fetch.ts', () => ({
   nativeFetch: async (url, init) => {
     wire.calls.push({ url, body: JSON.parse(init.body) })
     const a = wire.answer
@@ -20,10 +20,10 @@ vi.mock('./capacitor-fetch.js', () => ({
   }
 }))
 
-const local = await import('./coach-local.js')
-const { _resetCoachDevice, loadCoachDevice } = await import('./coach-device.js')
+const local = await import('./coach-local.ts')
+const { _resetCoachDevice, loadCoachDevice } = await import('./coach-device.ts')
 const { EXERCISES } = await import('../../../api/coach/core/library-data.js')
-const { todayISO } = await import('./format.js')
+const { todayISO } = await import('./format.ts')
 
 const EX = EXERCISES[0].id
 const chat = content => ({ status: 200, body: { choices: [{ finish_reason: 'stop', message: { content } }] } })

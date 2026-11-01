@@ -2,7 +2,7 @@
 // those as .3 and .8. The setting adds precision that is already in the number — it changes
 // nothing about what is stored.
 import { describe, it, expect, afterEach } from 'vitest'
-import { fmtNum, setWeightDecimals, weightDecimals } from './format.js'
+import { fmtNum, setWeightDecimals, weightDecimals } from './format.ts'
 
 afterEach(() => setWeightDecimals(1))
 

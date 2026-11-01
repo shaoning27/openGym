@@ -1,11 +1,11 @@
 // @vitest-environment happy-dom
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-/* The animation packs on this device (lib/anim-packs.js): the per-device choice, the bridge to
+/* The animation packs on this device (lib/anim-packs.ts): the per-device choice, the bridge to
    the native AnimationPacks plugin and the download a choice or a figure starts. The plugin is a
    stand-in shaped like Capacitor's: a Proxy whose `then` is a native call that never answers (#42). */
 const mocks = vi.hoisted(() => ({ MOBILE: true, available: true, ready: new Set(), calls: [], listeners: {}, downloadFails: null, base: false, info: {}, testflight: false }))
-vi.mock('./mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('./mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
 vi.mock('@capacitor/core', () => {
   const impl = {
     available: async () => ({ available: mocks.available, testflight: mocks.testflight, ...(mocks.offered ? { packs: mocks.offered } : {}) }),
@@ -31,7 +31,7 @@ vi.mock('@capacitor/core', () => {
   }
 })
 
-import * as packs from './anim-packs.js'
+import * as packs from './anim-packs.ts'
 
 const phone = { shortSide: 390 }
 beforeEach(() => {

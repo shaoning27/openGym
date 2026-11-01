@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { scanCode, importCodeFromImage } from './scan.js'
+import { scanCode, importCodeFromImage } from './scan.ts'
 
 // In the test environment VITE_MOBILE is unset, so MOBILE is false — the same as a web build.
 // The native ML Kit scanner must refuse to run there rather than reach for a plugin that isn't

@@ -13,10 +13,10 @@ import http from 'node:http';
 import { tempData, writeState, sampleState } from './helpers.mjs';
 
 const DIR = tempData();
-const cfg = await import('../coach/config.js');
-const jobs = await import('../coach/jobs.js');
-const { coachRoutes } = await import('../coach/routes.js');
-const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.js');
+const cfg = await import('../coach/config.ts');
+const jobs = await import('../coach/jobs.ts');
+const { coachRoutes } = await import('../coach/routes.ts');
+const { forcePrivilegeVerdict } = await import('../coach/adapters/spawn.ts');
 forcePrivilegeVerdict({ ok: true, dropped: false, why: 'pinned by the test suite' });
 
 /* ---------- a provider on localhost ---------- */
@@ -53,7 +53,7 @@ await new Promise(r => server.listen(0, '127.0.0.1', r));
 const BASE = `http://127.0.0.1:${server.address().port}`;
 test.after(() => server.close());
 
-/* ---------- the routes, driven like server.js drives them ---------- */
+/* ---------- the routes, driven like server.ts drives them ---------- */
 const admin = { id: 'admin', name: 'Admin' };
 const fakeReq = (body, user = admin) => ({ headers: {}, _body: body, _user: user });
 const fakeRes = () => { const r = { status: 0, body: null }; return r; };

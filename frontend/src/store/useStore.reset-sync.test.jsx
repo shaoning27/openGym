@@ -3,17 +3,17 @@
 /* QA, v1.3.9 (t8): "Reset everything" on one device was undone by the next device that pushed a
    change of its own — its push got the 409, the merge took the union, and the wiped profile was
    back. The reset now carries its time (`resetAt`) and the names of what it wiped (`resetIds`); a
-   merge with a copy that has not seen it drops exactly those (lib/sync-merge.js). And the stamp
+   merge with a copy that has not seen it drops exactly those (lib/sync-merge.ts). And the stamp
    only moves forward: a backup restored after the reset is not wiped again by the devices that
    saw it (review of 771184c9). */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
-import { resetIdsOf } from '../lib/sync-merge.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
+import { resetIdsOf } from '../lib/sync-merge.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const ids = xs => (xs || []).map(x => x.id)

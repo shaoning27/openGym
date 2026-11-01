@@ -4,9 +4,9 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { loadStarterPlan, starterPlanSheet } from './sheets.jsx'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { loadStarterPlan, starterPlanSheet } from './sheets.tsx'
 
 const mounted = []
 

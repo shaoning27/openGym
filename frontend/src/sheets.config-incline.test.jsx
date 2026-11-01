@@ -5,10 +5,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXIDX } from './lib/exercises.js'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet } from './sheets.jsx'
+import { EXIDX } from './lib/exercises.ts'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet } from './sheets.tsx'
 
 const TREADMILL = '2259'   // walking on treadmill
 const BIKE = '2138'        // stationary bike run v. 3

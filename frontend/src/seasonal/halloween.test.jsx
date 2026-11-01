@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-// Halloween's moving parts (seasonal/halloween.jsx): the spider once a day at a start, the
+// Halloween's moving parts (seasonal/halloween.tsx): the spider once a day at a start, the
 // reduced-motion path, the workout screen, and the pumpkin's one surprise a day.
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -8,13 +8,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const ui = vi.hoisted(() => ({ toast: null }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({ toast: ui.toast }) } }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({ toast: ui.toast }) } }))
 const buzz = vi.hoisted(() => ({ vibrate: null }))
-vi.mock('../lib/sound.js', () => ({ vibrate: p => buzz.vibrate(p) }))
+vi.mock('../lib/sound.ts', () => ({ vibrate: p => buzz.vibrate(p) }))
 
 let host, root, reduce = false
 // Each test gets the module afresh: the spider's and the witch's "this session" live in it.
-const load = async () => { vi.resetModules(); return import('./halloween.jsx') }
+const load = async () => { vi.resetModules(); return import('./halloween.tsx') }
 beforeEach(() => {
   localStorage.clear()
   reduce = false

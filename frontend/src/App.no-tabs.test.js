@@ -4,11 +4,11 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 
-const app = readFileSync(new URL('./App.jsx', import.meta.url), 'utf8')
+const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8')
 
 describe('the tab bar', () => {
   it('stays away from the first-launch onboarding', () => {
-    const cond = app.match(/const noTabs = ([^\n]+)/)?.[1] || ''
+    const cond = app.match(/const noTabs(?:: any)? = ([^\n]+)/)?.[1] || ''
     expect(cond).toContain('needsMobileOnboarding')
     expect(app).toMatch(/\{!noTabs && <TabBar /)
   })

@@ -1,5 +1,5 @@
-// Tests for mcp/src/state.js — the uid/config resolution and what a read failure looks like.
-// state.js reads OPENGYM_DATA at module load and caches module-globally, so each case stubs the
+// Tests for mcp/src/state.ts — the uid/config resolution and what a read failure looks like.
+// state.ts reads OPENGYM_DATA at module load and caches module-globally, so each case stubs the
 // env and imports a fresh copy. Temp dirs only; nothing here touches a real profile.
 import { describe, test, expect, afterEach, afterAll, vi } from 'vitest'
 import fs from 'node:fs'
@@ -30,12 +30,12 @@ function mk(files) {
   return d
 }
 
-// A fresh state.js bound to `dir`.
+// A fresh state.ts bound to `dir`.
 async function load(dir, uid = 'alex') {
   vi.resetModules()
   vi.stubEnv('OPENGYM_DATA', dir)
   vi.stubEnv('OPENGYM_UID', uid)
-  return import('../src/state.js')
+  return import('../src/state.ts')
 }
 
 afterEach(() => { vi.unstubAllEnvs() })

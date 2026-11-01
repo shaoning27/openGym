@@ -7,12 +7,12 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import App from './App.jsx'
-import { DEF, useStore } from './store/useStore.js'
-import { BACK_PREVIEW_EVENT } from './lib/edge-swipe-back.js'
+import App from './App.tsx'
+import { DEF, useStore } from './store/useStore.ts'
+import { BACK_PREVIEW_EVENT } from './lib/edge-swipe-back.ts'
 
-vi.mock('./lib/sound.js', async importOriginal => ({ ...(await importOriginal()), setPlayOnSilent: vi.fn(), setVibrate: vi.fn(), setAlarmBuzzer: vi.fn(), setNativeBuzzer: vi.fn() }))
-vi.mock('./lib/api.js', async importOriginal => {
+vi.mock('./lib/sound.ts', async importOriginal => ({ ...(await importOriginal()), setPlayOnSilent: vi.fn(), setVibrate: vi.fn(), setAlarmBuzzer: vi.fn(), setNativeBuzzer: vi.fn() }))
+vi.mock('./lib/api.ts', async importOriginal => {
   const actual = await importOriginal()
   return { ...actual, api: vi.fn(() => Promise.resolve({})), beacon: vi.fn() }
 })
@@ -38,7 +38,7 @@ beforeEach(async () => {
   scrolls = []
   window.scrollTo = vi.fn((x, y) => { scrolls.push([x, y]); Object.defineProperty(window, 'scrollY', { configurable: true, value: y }) })
   await act(async () => { root.render(<App />) })
-  // Settings is its own chunk (App.jsx lazyView); the app fetches it right after the start.
+  // Settings is its own chunk (App.tsx lazyView); the app fetches it right after the start.
   await vi.waitFor(() => expect(document.querySelector('#app [data-back], #app .page-in > *')).not.toBeNull())
   await act(async () => {})
 })

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* The alternate home-screen icons (Settings → Look & Home → App icon), drawn from
- * src/lib/app-icon-variants.js and the dumbbell in resources/icon.svg.
+ * src/lib/app-icon-variants.ts and the dumbbell in resources/icon.svg.
  *
  * The glyph is five rectangles, so this draws them itself (4x4 to 8x8 samples per pixel for the
  * edges) and writes the PNGs with node:zlib: no sharp or resvg to install, and the same bytes on
@@ -20,7 +20,7 @@ import { deflateSync } from 'node:zlib'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { APP_ICON_VARIANTS } from '../src/lib/app-icon-variants.js'
+import { APP_ICON_VARIANTS } from '../src/lib/app-icon-variants.ts'
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 export const PREVIEW = 112

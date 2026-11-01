@@ -1,4 +1,4 @@
-// The Coach in the demo build: the canned provider behind lib/coach-api.js when DEMO is set.
+// The Coach in the demo build: the canned provider behind lib/coach-api.ts when DEMO is set.
 //
 // Nothing here is a render test. What matters about this module is the job machine (one job at
 // a time, an answer 2.2 s later, a pending proposal that survives until it is resolved) and the
@@ -11,10 +11,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import {
   demoStatus, demoPlan, demoReview, demoRefine, demoDebrief, demoAsk, demoResolve, demoCohort, demoDisclosure
-} from './coach-demo.js'
-import { EXDB, EXIDX } from './exercises.js'
-import { planHash, validateProposal, applyChangeSet } from './coach.js'
-import { DATA_CATEGORIES } from '../../../api/coach/core/categories.js'
+} from './coach-demo.ts'
+import { EXDB, EXIDX } from './exercises.ts'
+import { planHash, validateProposal, applyChangeSet } from './coach.ts'
+import { DATA_CATEGORIES } from '../../../api/coach/core/categories.ts'
 
 const DELAY = 2200                       // the module's own thinking time
 const NOW = new Date('2026-09-22T12:00:00Z').getTime()
@@ -381,7 +381,7 @@ describe('coach-demo — the disclosure', () => {
 })
 
 describe('coach-demo — defects found while writing these tests', () => {
-  // DEFECT 1 (fixed in coach-demo.js, see the report): when a routine's only rep-mode exercise
+  // DEFECT 1 (fixed in coach-demo.ts, see the report): when a routine's only rep-mode exercise
   // sits at index 1, `first` and `second` resolved to the same entry, so the demo proposed
   // swapping an exercise away AND changing the set count of the exercise it had just swapped
   // away. Accepting both is what the review screen's "Apply" does by default, and the apply
@@ -402,7 +402,7 @@ describe('coach-demo — defects found while writing these tests', () => {
     expect(() => applyChangeSet(s, p, p.changes.map(c => c.id))).not.toThrow()
   })
 
-  // DEFECT 2 (fixed in coach-demo.js, see the report): buildDebrief guards `w.entries` twice
+  // DEFECT 2 (fixed in coach-demo.ts, see the report): buildDebrief guards `w.entries` twice
   // and then hands the raw workout to workoutVolume(), which does `w.entries.forEach`. A
   // workout carrying a date but no entries threw *inside the 2.2 s timer*, where nothing
   // catches it — `job` stayed 'running' for ever and every later request 409'd, so the demo

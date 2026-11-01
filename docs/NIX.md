@@ -15,7 +15,7 @@ managed by your NixOS configuration. This document covers both.
 | Output | What it is |
 | --- | --- |
 | `packages.opengym-frontend` | The React/Vite PWA, built with `buildNpmPackage`. Static files land in `$out/share/opengym`, with the exercise stills and animations from `catalogue/media` in `exercise-media/` next to them. |
-| `packages.opengym-api` | The Node.js API (`node server.js`, wrapped as `bin/opengym-api`). |
+| `packages.opengym-api` | The Node.js API (`node server.ts`, wrapped as `bin/opengym-api`). |
 | `packages.opengym-mcp` | The MCP server for LLM clients (`bin/opengym-mcp`): read tools, plus `log_workout` once paired (`mcp/README.md`). |
 | `packages.default` | Alias for `opengym-frontend`. |
 | `apps.opengym` | Runs the **full local stack** — API + frontend (exercise media included) behind a throwaway Caddy (`nix run .#opengym`, default `http://localhost:8080`). |
@@ -104,7 +104,7 @@ inside it, the standard flow applies:
 
 ```bash
 cd frontend && npm install && npm run dev     # Vite dev server on :5173, proxies /api to :3000
-cd api && npm install && node server.js       # API on :3000
+cd api && npm install && node server.ts       # API on :3000
 cd mcp && npm test                            # MCP server tests
 ```
 
@@ -118,7 +118,7 @@ always on a **single origin** — at the store paths the module exposes:
 | `config.services.opengym.web.root` | `…-opengym-frontend/share/opengym` | the built SPA, exercise media included |
 | `config.services.opengym.media.root` | `${web.root}/exercise-media` | `still/<id>.webp` and `clip/<id>.mp4`, 180 px |
 
-The URL contract the frontend expects ([`frontend/src/lib/exercises.js`](../frontend/src/lib/exercises.js)):
+The URL contract the frontend expects ([`frontend/src/lib/exercises.ts`](../frontend/src/lib/exercises.ts)):
 
 | URL path | Served from | Notes |
 | --- | --- | --- |

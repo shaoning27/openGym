@@ -34,7 +34,7 @@ beforeEach(() => {
 
 describe('system bars follow the theme on Android', () => {
   it('asks for dark icons on light and light icons on dark, once per change', async () => {
-    const { setSystemBarsLight } = await import('./system-bars.js')
+    const { setSystemBarsLight } = await import('./system-bars.ts')
     await setSystemBarsLight(true)
     await setSystemBarsLight(true)
     await setSystemBarsLight(false)
@@ -43,7 +43,7 @@ describe('system bars follow the theme on Android', () => {
 
   it('on iOS, Capacitor\'s SystemBars sets the status bar style', async () => {
     h.platform = 'ios'
-    const { setSystemBarsLight } = await import('./system-bars.js')
+    const { setSystemBarsLight } = await import('./system-bars.ts')
     await setSystemBarsLight(true)
     await setSystemBarsLight(false)
     expect(h.calls).toEqual([['ios.setStyle', { style: 'LIGHT' }], ['ios.setStyle', { style: 'DARK' }]])
@@ -51,19 +51,19 @@ describe('system bars follow the theme on Android', () => {
 
   it('stays quiet in a browser shell', async () => {
     h.platform = 'web'
-    const { setSystemBarsLight } = await import('./system-bars.js')
+    const { setSystemBarsLight } = await import('./system-bars.ts')
     await setSystemBarsLight(true)
     expect(h.calls).toEqual([])
   })
 
   it('an APK without the plugin is not an error', async () => {
     h.fail = true
-    const { setSystemBarsLight } = await import('./system-bars.js')
+    const { setSystemBarsLight } = await import('./system-bars.ts')
     await expect(setSystemBarsLight(true)).resolves.toBeUndefined()
   })
 
   it('the app sends every resolved theme, and the activity registers the plugin', () => {
-    const app = readFileSync(new URL('../App.jsx', import.meta.url), 'utf8')
+    const app = readFileSync(new URL('../App.tsx', import.meta.url), 'utf8')
     expect(app).toMatch(/function applyPrefs[\s\S]*?setSystemBarsLight\(de\.dataset\.theme === 'light'\)/)
     const dir = '../../android/app/src/main/java/ch/duartesantos/opengym/'
     const activity = readFileSync(new URL(dir + 'MainActivity.java', import.meta.url), 'utf8')

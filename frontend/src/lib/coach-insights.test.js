@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { insightsFor, sessionInsights, windowWorkouts } from './coach-insights.js'
-import { EXIDX } from './exercises.js'
+import { insightsFor, sessionInsights, windowWorkouts } from './coach-insights.ts'
+import { EXIDX } from './exercises.ts'
 
 // Pick two real catalogue ids from different body parts so the body-part grouping is real.
 const ids = Object.keys(EXIDX)

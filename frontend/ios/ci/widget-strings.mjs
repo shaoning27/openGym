@@ -2,7 +2,7 @@
 // Writes the widget extension's own strings (ios/App/OpenGymWidgets/<lang>.lproj/
 // Localizable.strings) in every language the app speaks: the names and descriptions iOS shows in
 // its widget gallery, and the line a widget shows before the app ever wrote anything. Everything
-// else a widget says comes from the app, in the app's language (lib/widgets.js). Run it after
+// else a widget says comes from the app, in the app's language (lib/widgets.ts). Run it after
 // changing the phrases below, and commit what it writes:
 //
 //   node frontend/ios/ci/widget-strings.mjs

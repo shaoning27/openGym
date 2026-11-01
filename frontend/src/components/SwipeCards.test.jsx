@@ -2,7 +2,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import SwipeCards, { cardAxis, cardCommits } from './SwipeCards.jsx'
+import SwipeCards, { cardAxis, cardCommits } from './SwipeCards.tsx'
 
 let host
 let root

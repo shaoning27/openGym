@@ -1,7 +1,7 @@
 // A custom exercise used to store its muscles in the order the chips were tapped, so the same
 // exercise read differently depending on how it was built (Discord, luckapow).
 import { describe, expect, it } from 'vitest'
-import { inMuscleOrder, MUSCLES } from './muscles.js'
+import { inMuscleOrder, MUSCLES } from './muscles.ts'
 
 describe('muscles in the map order', () => {
   it('is the same list whatever order it was picked in', () => {

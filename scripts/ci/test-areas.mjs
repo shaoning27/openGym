@@ -1,6 +1,6 @@
 // The parts of openGym a user would name, and which files belong to each. Used by
 // test-report.mjs to count tests and coverage per area, for test files and source files alike
-// (frontend/src/lib/plates.js and plates.test.js both land in "Plates & equipment").
+// (frontend/src/lib/plates.ts and plates.test.js both land in "Plates & equipment").
 //
 // First match wins, so the narrow areas come before the broad ones. A file that matches
 // nothing is "Other UI" for the frontend's views/components and "Other" elsewhere; if an
@@ -16,7 +16,7 @@ export const AREAS = [
   { name: 'Workout logging', re: /workout|session|set|superset|queue|rotation|routine|plan|week|day-|starter|focusview|home|active-|swap|per-set|duration|speed|backfill|swipe/ },
   { name: 'Exercise catalogue & media', re: /exercise|catalogue|muscle|anim|media|library|similar|favour|glyph|body-paths|bodymap|instr/ },
   { name: 'Phone, watch & health apps', re: /native|android|ios|mobile|channel|capacitor|watch|health|widget|system-bars|keyboard|edge-swipe|onboarding|platform|heart-rate|update\./ },
-  { name: 'App state & API server', re: /^usestore|^useui|^server\.js$|^store\.|^api\.js$|^boot\.js$/ },
+  { name: 'App state & API server', re: /^usestore|^useui|^server\.[jt]s$|^store\.|^api\.[jt]s$|^boot\.[jt]s$/ },
   { name: 'Languages', re: /i18n|locale|lang|plural|pt-br|translat|exercise-names|source-strings|empty-placeholder/ },
 ]
 
@@ -25,6 +25,6 @@ export function areaOf(path) {
   const base = p.split('/').pop()
   for (const a of AREAS) if (a.re.test(base)) return a.name
   for (const a of AREAS) if (a.re.test(p)) return a.name
-  if (/(^|\/)(views|components)\//.test(p) || /\.jsx$/.test(p)) return 'Other UI'
+  if (/(^|\/)(views|components)\//.test(p) || /\.[jt]sx$/.test(p)) return 'Other UI'
   return 'Other'
 }

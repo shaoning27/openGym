@@ -6,15 +6,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const mocks = vi.hoisted(() => ({ sheets: [], vibrate: vi.fn() }))
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ openSheet: render => { mocks.sheets.push(render); return { close: vi.fn() } } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/sound.js', () => ({ vibrate: (...a) => mocks.vibrate(...a) }))
+vi.mock('../lib/sound.ts', () => ({ vibrate: (...a) => mocks.vibrate(...a) }))
 
-import DurationWheel, { durationSheet, WHEEL_ITEM, SETTLE_MS } from './DurationWheel.jsx'
+import DurationWheel, { durationSheet, WHEEL_ITEM, SETTLE_MS } from './DurationWheel.tsx'
 
 let host, root
 beforeEach(() => {

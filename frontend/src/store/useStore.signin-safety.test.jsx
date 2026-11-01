@@ -7,12 +7,12 @@
    plan as if the account had been reset. (QA 2026-10-06.) */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn() }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
-import { mergeStates, stampEdits } from '../lib/sync-merge.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
+import { mergeStates, stampEdits } from '../lib/sync-merge.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const puts = () => api.mock.calls.filter(([, o]) => o?.method === 'PUT').map(([, o]) => JSON.parse(o.body))

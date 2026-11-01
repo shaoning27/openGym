@@ -4,7 +4,7 @@
 // weighting for walking: a rated row follows the same curve a rated lift does, an unrated one
 // stays exactly where it was.
 import { describe, expect, it } from 'vitest'
-import { fatigueOf } from './recovery.js'
+import { fatigueOf } from './recovery.ts'
 
 const HOUR = 3600000
 const NOW = Date.UTC(2026, 9, 25, 12)

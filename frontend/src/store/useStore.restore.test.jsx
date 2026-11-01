@@ -2,14 +2,14 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn() }))
 // pushState reaches the toast through a lazy import of useUI (which imports this store) — the
 // tests only need to see that it was asked, not a rendered toast.
 const { toast } = vi.hoisted(() => ({ toast: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, hasData, restoredStateFor, useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { DEF, hasData, restoredStateFor, useStore } from './useStore.ts'
 
 const clone = value => JSON.parse(JSON.stringify(value))
 const routine = id => ({ id, name: id, ex: [] })

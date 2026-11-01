@@ -105,7 +105,7 @@ answers on instead, and a key only if it wants one.
 - **Use an API key** → paste it. It is encrypted into `./data/coach.json` and is never shown
   again.
 - **List models** asks the endpoint what it serves and turns the model field into a picker.
-  Each provider has a starting default (it is in `api/coach/core/providers.js`, and it is a
+  Each provider has a starting default (it is in `api/coach/core/providers.ts`, and it is a
   starting point, not a pin — names go stale, the list does not); the compatible endpoint has
   none, because it serves whatever you put behind it.
 - **Test the Coach** — a real round trip with no user data anywhere near it.
@@ -270,7 +270,7 @@ archive.
 
 ## What actually leaves your server
 
-`api/coach/payload.js` is built as an allowlist: every field is copied in **by name**, nothing
+`api/coach/payload.ts` is built as an allowlist: every field is copied in **by name**, nothing
 is spread and nothing is passed through, so a field added to the state blob next year cannot
 ride along by accident. The five categories it can send — the same list the consent screen
 renders from, so the screen cannot drift from the payload — are:
@@ -292,7 +292,7 @@ lists what goes there (the categories above plus whatever you type to the Coach)
 it goes straight from the phone with your key or through your openGym server to the provider its
 admin picked. "Not now" sends nothing. The intake's own consent screen names the same provider
 and list, so agreeing there counts as this yes and a first-timer is asked once. The answer is kept on that device, per provider and host
-(`frontend/src/lib/coach-consent.js`), so pointing the Coach somewhere else asks again; the Coach
+(`frontend/src/lib/coach-consent.ts`), so pointing the Coach somewhere else asks again; the Coach
 menu's **AI data sharing** (and Settings → AI Coach on the phone) lists what was allowed and takes
 it back. Switching on automatic reviews asks too, and withdrawing the server's provider switches
 them off. The demo, and a model on your own machine or network (localhost, private and Tailscale
@@ -325,7 +325,7 @@ pins them against the originals over a table of configs, so the copies cannot dr
 
 ## What comes back, and what it is allowed to do
 
-The prompt asks for a shape and the model usually obliges. `api/coach/validate.js` is where
+The prompt asks for a shape and the model usually obliges. `api/coach/validate.ts` is where
 "usually" stops mattering, and it — not the prompt — is the security boundary. Nothing reaches
 you that has not:
 
@@ -502,7 +502,7 @@ The App-Store build has no server of its own, so the Coach there is a choice mad
   server clamps to.
 
   Automatic reviews (weekly, or after every few workouts) run on the phone too, by the server's
-  rule (`api/coach/core/due.js`), but only while the app is open: there is no server to run them
+  rule (`api/coach/core/due.ts`), but only while the app is open: there is no server to run them
   and an app does not run JavaScript while it is closed. So a review that is due runs right after
   the workout that completes the count, or on the first open after the weekly slot, and says
   something only when it has a suggestion. Up to v1.4.2 nothing ran them on a phone at all.

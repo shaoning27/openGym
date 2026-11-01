@@ -8,15 +8,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const m = vi.hoisted(() => ({ folder: {}, listeners: new Set(), picked: null, toast: vi.fn(), pickFails: false }))
-vi.mock('../lib/mobile.js', () => ({
+vi.mock('../lib/mobile.ts', () => ({
   backupFolder: async () => m.folder,
   chooseBackupFolder: async () => { if (m.pickFails) throw new Error('nope'); if (!m.picked) return null; m.folder = m.picked; return m.folder },
   resetBackupFolder: async () => { m.folder = {}; return m.folder },
   onBackupFolderChange: fn => { m.listeners.add(fn); return () => m.listeners.delete(fn) },
 }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({ toast: m.toast }) } }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({ toast: m.toast }) } }))
 
-const { default: BackupFolderRow } = await import('./BackupFolderRow.jsx')
+const { default: BackupFolderRow } = await import('./BackupFolderRow.tsx')
 
 let host, root
 beforeEach(() => {
@@ -70,7 +70,7 @@ describe('BackupFolderRow', () => {
 // Android QA: after another folder was chosen, the Auto-backup row still said Documents/openGym.
 describe('the Auto-backup subtitle', () => {
   it('names the chosen folder, or the default', async () => {
-    const { autoBackupSubtitle } = await import('./BackupFolderRow.jsx')
+    const { autoBackupSubtitle } = await import('./BackupFolderRow.tsx')
     expect(autoBackupSubtitle({ uri: 'content://tree/Sync', label: 'SyncFolder' }, 14))
       .toBe('Saves a dated copy to “SyncFolder” after finishing a workout or editing a routine, and keeps the newest 14.')
     expect(autoBackupSubtitle({ uri: 'content://tree/x' }, 14))

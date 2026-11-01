@@ -2,13 +2,13 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import RestTimer from './RestTimer.jsx'
-import { useUI } from '../store/useUI.js'
-import { useStore } from '../store/useStore.js'
+import RestTimer from './RestTimer.tsx'
+import { useUI } from '../store/useUI.ts'
+import { useStore } from '../store/useStore.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
 
 let host, root, originalS
 

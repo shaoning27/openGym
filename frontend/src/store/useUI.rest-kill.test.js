@@ -5,19 +5,19 @@
 // one rather than adding a second. A paused rest is held again in the notification.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
 
-vi.mock('../lib/mobile.js', async importOriginal => ({ ...(await importOriginal()), MOBILE: true }))
-vi.mock('../lib/rest-alert.js', () => ({
+vi.mock('../lib/mobile.ts', async importOriginal => ({ ...(await importOriginal()), MOBILE: true }))
+vi.mock('../lib/rest-alert.ts', () => ({
   armRestAlert: vi.fn(() => Promise.resolve(true)),
   holdRestAlert: vi.fn(),
   disarmRestAlert: vi.fn(),
   bindNativeRest: vi.fn(),
 }))
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
 
-import { useUI, restoreRest, REST_KEY } from './useUI.js'
-import { useStore } from './useStore.js'
-import { armRestAlert, holdRestAlert } from '../lib/rest-alert.js'
+import { useUI, restoreRest, REST_KEY } from './useUI.ts'
+import { useStore } from './useStore.ts'
+import { armRestAlert, holdRestAlert } from '../lib/rest-alert.ts'
 
 let original
 beforeEach(() => {

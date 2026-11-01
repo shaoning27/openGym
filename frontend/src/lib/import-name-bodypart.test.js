@@ -2,7 +2,7 @@
 // column (Hevy). First match wins, so the order of the rules is the behaviour — reported on
 // Discord by rubik_97 with the three cases below.
 import { describe, expect, it } from 'vitest'
-import { bpFromName } from './import-csv.js'
+import { bpFromName } from './import-csv.ts'
 
 const bp = name => bpFromName(name.toLowerCase())
 

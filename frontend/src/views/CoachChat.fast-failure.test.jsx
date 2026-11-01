@@ -2,15 +2,15 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import CoachChat from './CoachChat.jsx'
-import { CONSENT_VERSION } from '../lib/coach.js'   // the consent a fixture grants is the current one, whatever its number
-import { requestPlan, settleAwaited } from '../lib/coach-api.js'
+import CoachChat from './CoachChat.tsx'
+import { CONSENT_VERSION } from '../lib/coach.ts'   // the consent a fixture grants is the current one, whatever its number
+import { requestPlan, settleAwaited } from '../lib/coach-api.ts'
 
 // A run that fails before the first status poll. A provider that refuses the connection fails
 // the job in milliseconds, so by the time the chat asks for the status the job is already gone
 // and the server's last outcome is `failed` / `provider`. The chat used to write a reply only
 // when it had seen the job running and then gone, so these runs ended with no reply at all —
-// three questions in a row, three silences. The real lib/coach-api.js runs here; only the HTTP
+// three questions in a row, three silences. The real lib/coach-api.ts runs here; only the HTTP
 // layer is faked, answering the way the server does.
 const mocks = vi.hoisted(() => {
   const state = { S: null, nav: vi.fn(), toast: vi.fn(), openSheet: vi.fn(), server: null, statusGate: null }
@@ -23,21 +23,21 @@ const mocks = vi.hoisted(() => {
   return state
 })
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector(mocks.storeSnapshot())
   useStore.getState = mocks.storeSnapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const useUI = selector => (selector ? selector(mocks.uiSnapshot()) : mocks.uiSnapshot())
   useUI.getState = mocks.uiSnapshot
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => mocks.nav }))
-vi.mock('../sheets.jsx', () => ({ startFlow: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../sheets.tsx', () => ({ startFlow: vi.fn(), confirmSheet: vi.fn() }))
 vi.mock('../coach.css', () => ({}))
 // The server: a start bumps the day's count and the run fails at once, before anyone polls.
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   IS_APPLE: false, IS_ANDROID: false, BIO: 'biometrics',
   api: vi.fn(async (path, opts) => {
     const srv = mocks.server

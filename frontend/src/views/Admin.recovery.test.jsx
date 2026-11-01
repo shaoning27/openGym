@@ -2,7 +2,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Admin from './Admin.jsx'
+import Admin from './Admin.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -10,28 +10,28 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
    admin; for an admin only when the viewer is the owner; never for the owner (whose way back is
    the server command) or oneself. Asks first, then shows the code exactly once, locked. */
 const mocks = vi.hoisted(() => ({ answers: {}, sheets: [], posts: [], confirm: vi.fn(), me: { id: 'adm', name: 'Admin', admin: true } }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: (path, init) => {
     if (init?.method === 'POST') mocks.posts.push({ path, body: JSON.parse(init.body) })
     const key = path.split('?')[0]
     return key in mocks.answers ? Promise.resolve(mocks.answers[key]) : Promise.reject(new Error('not found'))
   }
 }))
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ user: mocks.me, S: {} })
   const useStore = selector => selector ? selector(snap()) : snap()
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: () => {}, openSheet: (render, opts) => mocks.sheets.push({ render, opts }) })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {}, useLocation: () => ({ state: null }) }))
-vi.mock('../sheets.jsx', () => ({ confirmSheet: (...a) => mocks.confirm(...a) }))
-vi.mock('./AdminCoach.jsx', () => ({ default: () => null }))
+vi.mock('../sheets.tsx', () => ({ confirmSheet: (...a) => mocks.confirm(...a) }))
+vi.mock('./AdminCoach.tsx', () => ({ default: () => null }))
 
 const mounted = []
 function render(el) {

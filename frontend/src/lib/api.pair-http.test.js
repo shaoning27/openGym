@@ -12,7 +12,7 @@ vi.mock('@capacitor/core', () => ({
   registerPlugin: () => ({}),
 }))
 
-const { pairRedeem, looksLocal } = await import('./api.js')
+const { pairRedeem, looksLocal } = await import('./api.ts')
 
 afterEach(() => { vi.unstubAllGlobals(); h.native = true })
 const failed = () => Promise.reject(new TypeError('Failed to fetch'))

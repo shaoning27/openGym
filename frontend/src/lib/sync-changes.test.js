@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { countChanges, syncFingerprint } from './sync-changes.js'
+import { countChanges, syncFingerprint } from './sync-changes.ts'
 
 const workout = (id, d = '2026-09-01') => ({ id, d, start: 1, entries: [] })
 const state = (over = {}) => ({

@@ -2,8 +2,8 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Media, { Thumb } from './Media.jsx'
-import { createMediaStore, memoryBackend, _setMediaStore } from '../lib/media-store.js'
+import Media, { Thumb } from './Media.tsx'
+import { createMediaStore, memoryBackend, _setMediaStore } from '../lib/media-store.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -19,7 +19,7 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector(mocks.snapshot())
   useStore.getState = mocks.snapshot
   return { useStore }

@@ -2,7 +2,7 @@
 // RPE / RIR from the Apple Watch: the phone says which scale the profile logs, the watch's set
 // page offers it, and the rating rides along on the setDone event into the set.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { applyEvents, bindWatchActions, bindWatchAppActions, effortFrom, patchSetIn, watchExtras, _resetWatchSync } from './watch-sync.js'
+import { applyEvents, bindWatchActions, bindWatchAppActions, effortFrom, patchSetIn, watchExtras, _resetWatchSync } from './watch-sync.ts'
 
 beforeEach(() => { localStorage.clear(); _resetWatchSync() })
 afterEach(() => _resetWatchSync())

@@ -5,8 +5,8 @@ import { describe, it, expect } from 'vitest'
 import {
   fitCrc, fitTime, FIT_EPOCH_OFFSET, encodeFit, workoutFitMessages, workoutFit, fitFileName,
   fitCategory, cardioSport, CATEGORY, SPORT, SUB_SPORT, MSG,
-} from './fit-export.js'
-import { EXIDX } from './exercises.js'
+} from './fit-export.ts'
+import { EXIDX } from './exercises.ts'
 
 /* ---------------------------------------------------------------- decoder -- */
 

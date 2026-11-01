@@ -4,7 +4,7 @@
      field out, so nothing legitimate changes);
    - a file that got onto disk anyway is logged and skipped by the reminder tick, which runs
      outside the per-route try/catch, and the users after it still get their reminders.
-   Real server.js in a child. The tick runs every 10 s, so the second
+   Real server.ts in a child. The tick runs every 10 s, so the second
    test waits on the log rather than on a fixed sleep. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -19,7 +19,7 @@ import { boundPort } from './helpers.mjs';
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SECRET = crypto.randomBytes(32).toString('hex');
 
-// Same construction as server.js makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
+// Same construction as server.ts makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
 function mintSession(uid) {
   const payload = `${uid}:${Date.now() + 86400000}:0`;
   return payload + '.' + crypto.createHmac('sha256', SECRET).update(payload).digest('base64url');
@@ -35,7 +35,7 @@ async function startServer(t, subs = []) {
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-reminder-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: USERS, creds: [], subs, invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', REMINDER_TICK_MS: '300' }
   });
@@ -80,7 +80,7 @@ test('a non-array workouts on disk is logged and skipped by the reminder tick; t
 
   const routines = [{ id: 'r1', name: 'Full body', emoji: '💪', ex: [] }];
   const week = { 0: 'r1', 1: 'r1', 2: 'r1', 3: 'r1', 4: 'r1', 5: 'r1', 6: 'r1' };
-  // hh:mm exactly the way server.js userNow() derives it, so the reminder is "now" in UTC
+  // hh:mm exactly the way server.ts userNow() derives it, so the reminder is "now" in UTC
   const nowHHMM = () => {
     const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'UTC', hour12: false, hour: '2-digit', minute: '2-digit' }).formatToParts(new Date());
     const g = type => parts.find(p => p.type === type)?.value;
@@ -209,7 +209,7 @@ test('a disabled profile gets no reminder', async t => {
   db.users[0].disabled = true;
   fs.writeFileSync(path.join(h.dataDir, 'db.json'), JSON.stringify(db));
   fs.writeFileSync(path.join(h.dataDir, 'state-u_test_1.json'), goodState(late.hhmm));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: h.dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', REMINDER_TICK_MS: '300' }
   });

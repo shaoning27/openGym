@@ -3,10 +3,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { isoOf } from '../lib/format.js'
-import WeightRate, { rateGoalSheet } from './WeightRate.jsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { isoOf } from '../lib/format.ts'
+import WeightRate, { rateGoalSheet } from './WeightRate.tsx'
 
 const mounted = []
 function render(node) {

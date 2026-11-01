@@ -3,7 +3,7 @@
 // them sends the copy to Documents/openGym after all and leaves a note for Settings. With no
 // folder chosen nothing changes. The choice lives in a private file, never in the synced state.
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { todayISO } from './format.js'
+import { todayISO } from './format.ts'
 
 const h = vi.hoisted(() => ({ files: new Map(), plugin: null, calls: [], picked: null, held: true, refuse: false }))
 
@@ -35,7 +35,7 @@ vi.mock('@capacitor/core', () => ({
   },
 }))
 
-const mobile = await import('./mobile.js')
+const mobile = await import('./mobile.ts')
 const { writeAutoBackup, chooseBackupFolder, resetBackupFolder, backupFolder, onBackupFolderChange, BACKUP_FOLDER_FILE, AUTO_BACKUP_KEEP, _resetBackupFolder } = mobile
 
 const today = 'opengym-backup-' + todayISO() + '.json'

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
-import { bestWeightForEntry, metricModeForEntry, metricRowsForEntry } from '../lib/history.js'
+import { bestWeightForEntry, metricModeForEntry, metricRowsForEntry } from '../lib/history.ts'
 
-const source = readFileSync(new URL('./Stats.jsx', import.meta.url), 'utf8')
-const uiSource = readFileSync(new URL('../components/ui.jsx', import.meta.url), 'utf8')
+const source = readFileSync(new URL('./Stats.tsx', import.meta.url), 'utf8')
+const uiSource = readFileSync(new URL('../components/ui.tsx', import.meta.url), 'utf8')
 const cssSource = readFileSync(new URL('../index.css', import.meta.url), 'utf8')
 
 describe('Stats mixed-entry metric contract', () => {
@@ -18,7 +18,7 @@ describe('Stats mixed-entry metric contract', () => {
   })
 
   it('renders one clickable muscle exercise list rather than a duplicate non-clickable copy', () => {
-    expect((source.match(/muscleExercises\.length \? muscleExercises\.map\(row =>/g) || []).length).toBe(1)
+    expect((source.match(/muscleExercises\.length \? muscleExercises\.map\(\(?row(?:\?: any)?\)? =>/g) || []).length).toBe(1)
     // The handler must be one that exists: the previous `onExercise` was never defined and
     // every tap threw (QA C13), so the row opens the exercise history sheet instead.
     expect(source).toContain('{...tappable(() => exerciseHistorySheet(row.id))}')

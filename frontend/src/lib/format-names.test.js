@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { exerciseNameText } from './format.js'
-import { _setLangState } from './i18n-core.js'
+import { exerciseNameText } from './format.ts'
+import { _setLangState } from './i18n-core.ts'
 import de from '../exercise-names/de.js'
 import es from '../exercise-names/es.js'
 
@@ -31,7 +31,7 @@ describe('exerciseNameText', () => {
 // QA 1.3.9: the accent swatches' screen-reader names were the internal keys ("lime", "sky").
 describe('ACCENT_NAMES', () => {
   it('names every accent, in every language pack', async () => {
-    const { ACCENTS, ACCENT_NAMES } = await import('./format.js')
+    const { ACCENTS, ACCENT_NAMES } = await import('./format.ts')
     expect(Object.keys(ACCENT_NAMES).sort()).toEqual(Object.keys(ACCENTS).sort())
     const packs = import.meta.glob('../locales/*.js', { eager: true, import: 'default' })
     for (const [file, pack] of Object.entries(packs))

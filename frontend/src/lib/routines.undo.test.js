@@ -1,7 +1,7 @@
 // Undo for deleting a routine (Plan's swipe and minus): routineSnapshot takes everything
 // deleteRoutine is about to remove, restoreRoutine puts each pointer back where it was.
 import { describe, expect, it } from 'vitest'
-import { deleteRoutine, restoreRoutine, routineSnapshot } from './routines.js'
+import { deleteRoutine, restoreRoutine, routineSnapshot } from './routines.ts'
 
 const state = () => ({
   routines: [{ id: 'a', name: 'Push', exercises: [{ id: 'x1', sets: 3 }] }, { id: 'b', name: 'Pull' }, { id: 'c', name: 'Legs' }],

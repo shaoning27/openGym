@@ -1,19 +1,19 @@
 // @vitest-environment happy-dom
-// A Cloudflare Access token belongs to one server and is only sent there (lib/cf-access.js): the
+// A Cloudflare Access token belongs to one server and is only sent there (lib/cf-access.ts): the
 // sheet asks for that server's address beside the token, says where it goes, and a stored token
 // shows its own server rather than whatever address is being typed for a pairing.
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useUI } from '../store/useUI.js'
-import { _setLangState } from '../lib/i18n-core.js'
+import { useUI } from '../store/useUI.ts'
+import { _setLangState } from '../lib/i18n-core.ts'
 
 const cf = vi.hoisted(() => ({ stored: null, save: null }))
-vi.mock('../lib/cf-access.js', () => ({
+vi.mock('../lib/cf-access.ts', () => ({
   loadCfAccess: async () => cf.stored,
   saveCfAccess: (...a) => cf.save(...a)
 }))
-import { CfAccessSheet } from './MobileOnboarding.jsx'
+import { CfAccessSheet } from './MobileOnboarding.tsx'
 
 let root, host
 const type = (el, value) => act(() => {

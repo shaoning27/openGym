@@ -2,8 +2,8 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useUI } from './store/useUI.js'
-import { menuSheet } from './sheets.jsx'
+import { useUI } from './store/useUI.ts'
+import { menuSheet } from './sheets.tsx'
 
 // menuSheet's `sections` (v1.3.11): a long menu in groups with small headers; a group with
 // nothing left in it after the falsy items are dropped goes, header and all.

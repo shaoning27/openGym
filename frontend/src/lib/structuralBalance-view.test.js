@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { balanceStatusView } from './structuralBalance-view.js'
+import { balanceStatusView } from './structuralBalance-view.ts'
 
 describe('balanceStatusView', () => {
   it('maps every known status to a label and severity', () => {

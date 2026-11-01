@@ -1,10 +1,10 @@
 // Cardio speed in km/h or mph (Discord "miles per hour"): stored in km/h, shown and typed in
 // the profile's unit, and exact both ways for what a person types.
 import { afterEach, describe, it, expect } from 'vitest'
-import { KMH_PER_MPH, speedUnitOf, speedLabel, toSpeed, fromSpeed, fmtSpeed } from './speed.js'
-import { setLabel, exLine } from './history.js'
-import { planPrintHTML } from './plan-share.js'
-import { setWeightDecimals } from './format.js'
+import { KMH_PER_MPH, speedUnitOf, speedLabel, toSpeed, fromSpeed, fmtSpeed } from './speed.ts'
+import { setLabel, exLine } from './history.ts'
+import { planPrintHTML } from './plan-share.ts'
+import { setWeightDecimals } from './format.ts'
 
 const BIKE = '2138'   // stationary bike, cardio
 

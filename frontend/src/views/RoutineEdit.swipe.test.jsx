@@ -10,16 +10,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 const sheets = vi.hoisted(() => ({
   exConfigSheet: vi.fn(), exercisePicker: vi.fn(), glyphPicker: vi.fn(), confirmSheet: vi.fn(),
 }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../sheets.jsx', () => sheets)
-vi.mock('../components/Media.jsx', () => ({ Thumb: ({ ex }) => <span data-thumb={ex.id} /> }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => null }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../sheets.tsx', () => sheets)
+vi.mock('../components/Media.tsx', () => ({ Thumb: ({ ex }) => <span data-thumb={ex.id} /> }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => null }))
 
-import RoutineEdit, { ROUTINE_LONG_PRESS_MS, removeRoutineExercise } from './RoutineEdit.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { closeOpenRow } from '../lib/use-swipe-row.js'
+import RoutineEdit, { ROUTINE_LONG_PRESS_MS, removeRoutineExercise } from './RoutineEdit.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { closeOpenRow } from '../lib/use-swipe-row.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))

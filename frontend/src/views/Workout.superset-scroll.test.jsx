@@ -2,8 +2,8 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { parseHTML } from 'linkedom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
-import { effortPickerSheet } from '../sheets.jsx'
+import Workout from './Workout.tsx'
+import { effortPickerSheet } from '../sheets.tsx'
 
 // A menu's actions in order, whether it came as one list or in groups (menuSheet `sections`).
 const menuItemsOf = menu => (menu.sections ? menu.sections.flatMap(g => g.items || []) : menu.items || []).filter(Boolean)
@@ -11,7 +11,7 @@ const menuItemsOf = menu => (menu.sections ? menu.sections.flatMap(g => g.items 
 // In the Cards layout a superset is one card, and a tick that moves the marker to the partner
 // centres the partner's next set row. Rating the set instead (RIR or RPE, one picker) closes the
 // picker and ticks the set in the same tap, and the sheet's un-pin puts the page back where it
-// stood, now and a frame later (components/Modals.jsx): a scroll asked for in that same commit
+// stood, now and a frame later (components/Modals.tsx): a scroll asked for in that same commit
 // was undone a few ms later, every time, and the partner's row stayed below the fold. So the
 // card's scroll waits for the restore (afterScrollRestore), and reads the row when the wait is
 // over: the store clones the whole state on every write and the row refs are keyed by entry.
@@ -38,27 +38,27 @@ const mocks = vi.hoisted(() => {
   return state
 })
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector(mocks.storeSnapshot())
   useStore.getState = mocks.storeSnapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const useUI = selector => selector ? selector(mocks.uiSnapshot()) : mocks.uiSnapshot()
   useUI.getState = mocks.uiSnapshot
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   startFlow: vi.fn(), exercisePicker: vi.fn(), exConfigSheet: vi.fn(), exerciseDetailSheet: vi.fn(),
   finishWorkout: vi.fn(), finishWorkoutSheet: vi.fn(), exitWorkoutEdit: vi.fn(), workoutCompleteSheet: vi.fn(), confirmSheet: vi.fn(),
   swapActiveWorkoutExercise: vi.fn(), menuSheet: mocks.menuSheet, barWeightSheet: vi.fn(),
   exerciseNoteSheet: vi.fn(), sessionNoteSheet: vi.fn(), renameWorkoutSheet: vi.fn(),
   effortPickerSheet: vi.fn(), exerciseHistorySheet: vi.fn(), addRoutineToSessionSheet: vi.fn(),
 }))
-vi.mock('../components/Media.jsx', () => ({ default: () => null }))
-vi.mock('../components/Modals.jsx', () => ({ afterScrollRestore: mocks.afterScrollRestore, scrollRestorePending: mocks.scrollRestorePending }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../components/Media.tsx', () => ({ default: () => null }))
+vi.mock('../components/Modals.tsx', () => ({ afterScrollRestore: mocks.afterScrollRestore, scrollRestorePending: mocks.scrollRestorePending }))
+vi.mock('../lib/api.ts', () => ({
   api: vi.fn(() => Promise.resolve({})), IS_APPLE: false, IS_ANDROID: false, BIO: 'biometrics',
 }))
 
@@ -129,7 +129,7 @@ describe('the superset card after a rating', () => {
   // below the fold.
   const rowsAt = top => { dom.innerHeight = 659; dom.Element.prototype.getBoundingClientRect = () => ({ top, bottom: top + 44, left: 0, right: 390, width: 390, height: 44 }) }
   // The height the bars at the top (--sat, --conn) measure at. linkedom lays nothing out, so the
-  // element Workout.jsx sizes by them reports what the test says.
+  // element Workout.tsx sizes by them reports what the test says.
   const topBars = px => {
     Object.defineProperty(dom.HTMLElement.prototype, 'offsetHeight', {
       configurable: true, get() { return this.style?.height === 'calc(var(--sat) + var(--conn))' ? px : 0 },
@@ -143,7 +143,7 @@ describe('the superset card after a rating', () => {
     await press(container.querySelector('.setrow:not(.done) .effcell.is-empty'))
     const [pickedKind, , pick] = effortPickerSheet.mock.calls.at(-1)
     expect(pickedKind).toBe(kind)
-    // The picker closes in this same commit: Modals.jsx hands the page back later.
+    // The picker closes in this same commit: Modals.tsx hands the page back later.
     const queued = []
     mocks.afterScrollRestore.mockImplementationOnce(fn => { queued.push(fn); return () => {} })
     const rating = kind === 'rpe' ? 8 : 2

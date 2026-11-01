@@ -2,7 +2,7 @@
    credential record in place, so "no data remains" was not reachable from the dashboard. Delete
    removes the user, their credentials, their push subscriptions, their training history and any
    Coach credential — and refuses the two cases nothing in the UI could undo afterwards. Real
-   server.js in a child, same harness as server-admin-state.test.js. */
+   server.ts in a child, same harness as server-admin-state.test.js. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -36,7 +36,7 @@ async function startServer(t, { twoAdmins = false } = {}) {
     invites: [{ code: 'CODE1', usedBy: VICTIM, usedAt: new Date().toISOString() }],
   }));
   fs.writeFileSync(path.join(dataDir, `state-${VICTIM}.json`), JSON.stringify({ unit: 'kg', workouts: [], _rev: 3 }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' },
   });

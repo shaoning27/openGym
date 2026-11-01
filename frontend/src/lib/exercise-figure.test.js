@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { EXDB, EXALIAS } from './exercises-data.js'
-import { EXIDX, exOr, figureOf, imgSrc, gifSrc } from './exercises.js'
+import { EXIDX, exOr, figureOf, imgSrc, gifSrc } from './exercises.ts'
 
 // The male/female choice for the exercise drawings is a picture and nothing else: ids, history
 // and plans never change with it, on any device and in any app version.

@@ -12,24 +12,24 @@ const mocks = vi.hoisted(() => ({
   toast: null,
   status: {},
 }))
-vi.mock('./demo.js', () => ({ DEMO: false, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
-vi.mock('./mobile.js', () => ({ MOBILE: true, readJsonFile: async () => null, writeJsonFile: async () => {} }))
-vi.mock('./api.js', () => ({ api: vi.fn(async () => mocks.status) }))
-vi.mock('../store/useStore.js', () => ({ useStore: { getState: () => ({ S: { coach: { cadence: { everyWorkouts: 3 } } }, coachLocal: mocks.coachLocal }) } }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({ toast: mocks.toast }) } }))
-vi.mock('../components/CoachConsentSheet.jsx', () => ({ askAiConsent: vi.fn(async () => true) }))
-vi.mock('./coach-local.js', () => ({
+vi.mock('./demo.ts', () => ({ DEMO: false, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true, readJsonFile: async () => null, writeJsonFile: async () => {} }))
+vi.mock('./api.ts', () => ({ api: vi.fn(async () => mocks.status) }))
+vi.mock('../store/useStore.ts', () => ({ useStore: { getState: () => ({ S: { coach: { cadence: { everyWorkouts: 3 } } }, coachLocal: mocks.coachLocal }) } }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({ toast: mocks.toast }) } }))
+vi.mock('../components/CoachConsentSheet.tsx', () => ({ askAiConsent: vi.fn(async () => true) }))
+vi.mock('./coach-local.ts', () => ({
   setNotifier: vi.fn(fn => { mocks.notifier = fn }),
   localDisclosure: vi.fn(async () => mocks.disclosure),
   localScheduled: vi.fn(async () => ({ job: { id: 'local-1', trigger: 'scheduled' } })),
 }))
 
-const { askAiConsent } = await import('../components/CoachConsentSheet.jsx')
-const local = await import('./coach-local.js')
-const { api } = await import('./api.js')
-const { scheduledReview, scheduledNotice } = await import('./coach-api.js')
-const { allowAi, consentTarget, _resetAiConsent } = await import('./coach-consent.js')
-const { checkScheduledReview, mayBeDue, mayHaveNews } = await import('./coach-schedule.js')
+const { askAiConsent } = await import('../components/CoachConsentSheet.tsx')
+const local = await import('./coach-local.ts')
+const { api } = await import('./api.ts')
+const { scheduledReview, scheduledNotice } = await import('./coach-api.ts')
+const { allowAi, consentTarget, _resetAiConsent } = await import('./coach-consent.ts')
+const { checkScheduledReview, mayBeDue, mayHaveNews } = await import('./coach-schedule.ts')
 
 beforeEach(() => {
   vi.clearAllMocks()

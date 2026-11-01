@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { LANGS, DATE_LOCALES, DERIVED_LOCALES } from './i18n-core.js'
-import { matchLocale } from './default-lang.js'
+import { LANGS, DATE_LOCALES, DERIVED_LOCALES } from './i18n-core.ts'
+import { matchLocale } from './default-lang.ts'
 import sv from '../locales/sv.js'
 
 // Swedish (#721) came in as a pack plus two registry lines. A pack the registry forgets never

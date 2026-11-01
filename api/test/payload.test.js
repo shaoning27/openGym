@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { tempData, sampleState, D } from './helpers.mjs';
 
 tempData();
-const payload = await import('../coach/core/payload.js');
-const { handleFor, HANDLE_LENGTH } = await import('../coach/handle.js');
+const payload = await import('../coach/core/payload.ts');
+const { handleFor, HANDLE_LENGTH } = await import('../coach/handle.ts');
 
 test('the server handle is stable per uid, distinct across uids, and never the uid', () => {
   assert.equal(handleFor('uid-a'), handleFor('uid-a'));
@@ -284,8 +284,8 @@ test('a refine with no plan to refine is a fresh plan with a note, never refine.
 test('a note/refine is capped at MAX_NOTE_CHARS, not the old 1000-char literal (issue #267)', () => {
   // jobs.enqueue already truncates to the admin's configured maxMessageLen before this module
   // ever sees the string — this is the last-resort ceiling for anything that reaches build()
-  // without going through that path (coach-local.js's in-process pipeline). It has to be at
-  // least as generous as the admin's ceiling (coach/config.js clamps maxMessageLen to 4000), or
+  // without going through that path (coach-local.ts's in-process pipeline). It has to be at
+  // least as generous as the admin's ceiling (coach/config.ts clamps maxMessageLen to 4000), or
   // an admin who raised the limit would still see every note clipped back down here.
   assert.equal(payload.MAX_NOTE_CHARS, 4000);
   const S = sampleState();

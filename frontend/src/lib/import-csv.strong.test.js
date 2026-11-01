@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseWorkoutCSV, mergeImport } from './import-csv.js'
+import { parseWorkoutCSV, mergeImport } from './import-csv.ts'
 
 // Rows from a real Strong export (QA sample). Strong writes the workout's length in Duration
 // ("1h 5m", "52m") on every row and a set's own time in Seconds; the session note is

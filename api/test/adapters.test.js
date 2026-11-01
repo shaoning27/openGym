@@ -9,10 +9,10 @@ import assert from 'node:assert/strict';
 import { tempData } from './helpers.mjs';
 
 tempData();
-const { adapterFor, default: ADAPTERS } = await import('../coach/adapters/index.js');
-const { LOCKDOWN } = await import('../coach/adapters/claude.js');
-const { argvFor } = await import('../coach/adapters/codex.js');
-const cfg = await import('../coach/config.js');
+const { adapterFor, default: ADAPTERS } = await import('../coach/adapters/index.ts');
+const { LOCKDOWN } = await import('../coach/adapters/claude.ts');
+const { argvFor } = await import('../coach/adapters/codex.ts');
+const cfg = await import('../coach/config.ts');
 
 test('every provider the config offers has an adapter, and vice versa', () => {
   assert.deepEqual(Object.keys(ADAPTERS).sort(), Object.keys(cfg.PROVIDERS).sort());

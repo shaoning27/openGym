@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { variantFor, APK_VARIANT, VARIANT_NAMES } from './apk-variant.js'
+import { variantFor, APK_VARIANT, VARIANT_NAMES } from './apk-variant.ts'
 
 describe('apk-variant: which sideloaded APK this is', () => {
   it('takes the kind the release build names', () => {

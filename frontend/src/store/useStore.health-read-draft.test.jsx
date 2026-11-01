@@ -1,14 +1,14 @@
 // @vitest-environment happy-dom
-// v1.4.3 integration: health-read's merges (lib/health-read.js) run as producers of the store's
+// v1.4.3 integration: health-read's merges (lib/health-read.ts) run as producers of the store's
 // update(), which since perf-1015 hands them a copy-on-access draft instead of a full clone. The
 // health-read tests drive the merges with a stand-in `apply`; this one goes through the real
 // update(), whose test-mode check throws if the previous state was changed in place.
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn() }))
 
-import { useStore } from './useStore.js'
-import { mergeHeartRate, mergeWeighIns } from '../lib/health-read.js'
+import { useStore } from './useStore.ts'
+import { mergeHeartRate, mergeWeighIns } from '../lib/health-read.ts'
 
 const T0 = Date.UTC(2026, 9, 14, 17, 0, 0)
 const workout = () => ({

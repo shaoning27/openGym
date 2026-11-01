@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { verifyError, originHint, isMisconfigured } from '../verify-error.js';
+import { verifyError, originHint, isMisconfigured } from '../verify-error.ts';
 
 const cfg = { rpId: 'gym.example.com', origin: 'https://gym.example.com' };
 

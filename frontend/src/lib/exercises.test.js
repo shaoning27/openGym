@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { matchExercise, normalizeStr, byCategory } from './exercises.js'
-import { _setLangState } from './i18n-core.js'
+import { matchExercise, normalizeStr, byCategory } from './exercises.ts'
+import { _setLangState } from './i18n-core.ts'
 
 describe('normalizeStr', () => {
   it('handles null, undefined and empty strings', () => {
@@ -139,7 +139,7 @@ describe('the exercise dataset', () => {
 
 describe('search: the everyday version first', () => {
   it('"leg press" finds the 45° sled leg press before the Smith and one-leg versions', async () => {
-    const { EXDB, searchExercises } = await import('./exercises.js')
+    const { EXDB, searchExercises } = await import('./exercises.ts')
     expect(searchExercises(EXDB, 'leg press')[0].id).toBe('0739')
     expect(searchExercises(EXDB, 'smith leg press')[0].id).toBe('0760')
   })

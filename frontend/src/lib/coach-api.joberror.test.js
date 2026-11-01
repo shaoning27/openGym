@@ -2,10 +2,10 @@
  * when it comes to start it — the process cannot drop privileges — ends with errorClass
  * 'unprivileged'. JOB_ERRORS had no line for that class, so it fell back on the internal line
  * ("Something went wrong on the server."), which says nothing, while the same refusal at enqueue
- * already answers with words the operator can act on (api/coach/routes.js USER_ERROR). This pins
+ * already answers with words the operator can act on (api/coach/routes.ts USER_ERROR). This pins
  * the line, and that it reads the same as the enqueue refusal.
  *
- * coach-api.js pulls the store and the demo/local modules in; they are stubbed so importing it
+ * coach-api.ts pulls the store and the demo/local modules in; they are stubbed so importing it
  * needs no running app. jobErrorText on the server path (not a phone with its own key) is all
  * this file exercises.
  */
@@ -13,15 +13,15 @@ import { readFileSync } from 'node:fs'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({ MOBILE: false, coachLocal: null, toast: vi.fn() }))
-vi.mock('./demo.js', () => ({ DEMO: false, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
-vi.mock('./mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('./api.js', () => ({ api: vi.fn() }))
-vi.mock('./coach-demo.js', () => ({}))
-vi.mock('./coach-local.js', () => ({ setNotifier: vi.fn() }))
-vi.mock('../store/useStore.js', () => ({ useStore: { getState: () => ({ S: { unit: 'kg' }, coachLocal: mocks.coachLocal }) } }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({ toast: mocks.toast }) } }))
+vi.mock('./demo.ts', () => ({ DEMO: false, DEMO_SEEDED: 'gym_demo_seeded_v1', REPO: '' }))
+vi.mock('./mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('./api.ts', () => ({ api: vi.fn() }))
+vi.mock('./coach-demo.ts', () => ({}))
+vi.mock('./coach-local.ts', () => ({ setNotifier: vi.fn() }))
+vi.mock('../store/useStore.ts', () => ({ useStore: { getState: () => ({ S: { unit: 'kg' }, coachLocal: mocks.coachLocal }) } }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({ toast: mocks.toast }) } }))
 
-const { jobErrorText, JOB_ERRORS } = await import('./coach-api.js')
+const { jobErrorText, JOB_ERRORS } = await import('./coach-api.ts')
 
 beforeEach(() => { mocks.MOBILE = false; mocks.coachLocal = null })
 
@@ -35,8 +35,8 @@ describe('jobErrorText for a job refused at start for safety', () => {
     expect(jobErrorText('unprivileged', 'COACH_UID is not set')).toBe(JOB_ERRORS.unprivileged)
   })
 
-  it('says it in the same words the enqueue refusal answers with (api/coach/routes.js)', () => {
-    const routes = readFileSync(new URL('../../../api/coach/routes.js', import.meta.url), 'utf8')
+  it('says it in the same words the enqueue refusal answers with (api/coach/routes.ts)', () => {
+    const routes = readFileSync(new URL('../../../api/coach/routes.ts', import.meta.url), 'utf8')
     const atEnqueue = routes.match(/^\s*unprivileged: '([^']+)'/m)?.[1]
     expect(atEnqueue).toBeTruthy()
     expect(JOB_ERRORS.unprivileged.toLowerCase()).toBe(atEnqueue.toLowerCase() + '.')

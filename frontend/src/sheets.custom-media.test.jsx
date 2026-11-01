@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 // The photo, GIF or video of a custom exercise, and its link, in the create/edit form: a picked
-// file becomes a MediaRef in the draft (the ingest itself is lib/media-ingest.js, mocked here —
+// file becomes a MediaRef in the draft (the ingest itself is lib/media-ingest.ts, mocked here —
 // its parts have their own tests), Save writes the ref and the cleaned link, Remove takes the
 // ref off, a link that is not a web address stops the save, and an edit that leaves the media
 // alone keeps it.
@@ -9,15 +9,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
 
 const h = vi.hoisted(() => ({ ingest: null }))
-vi.mock('./lib/media-ingest.js', () => ({ ingestMediaFile: (...a) => h.ingest(...a) }))
+vi.mock('./lib/media-ingest.ts', () => ({ ingestMediaFile: (...a) => h.ingest(...a) }))
 
-import { registerCustom } from './lib/exercises.js'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { _setLangState } from './lib/i18n-core.js'
-import { bindUI } from './components/ui.jsx'
-import { createMediaStore, memoryBackend, _setMediaStore } from './lib/media-store.js'
-import { customExSheet } from './sheets.jsx'
+import { registerCustom } from './lib/exercises.ts'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { _setLangState } from './lib/i18n-core.ts'
+import { bindUI } from './components/ui.tsx'
+import { createMediaStore, memoryBackend, _setMediaStore } from './lib/media-store.ts'
+import { customExSheet } from './sheets.tsx'
 
 bindUI(useUI)
 

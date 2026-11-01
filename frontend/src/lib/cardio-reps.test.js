@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { EXIDX, isCardio } from './exercises.js'
-import { defaultConfig, modeOf } from './history.js'
+import { EXIDX, isCardio } from './exercises.ts'
+import { defaultConfig, modeOf } from './history.ts'
 
 // Issue #717, the rest of the family #678 started with: burpees, star jumps, tuck jumps and the
 // other jacks are counted, not run, so they start as sets x reps. Running, walking, rowing and high

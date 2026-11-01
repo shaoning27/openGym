@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from 'vitest'
-import { t, tn, _setLangState } from './i18n-core.js'
+import { t, tn, _setLangState } from './i18n-core.ts'
 import ru from '../locales/ru.js'
 import de from '../locales/de.js'
 import uk from '../locales/uk.js'
@@ -16,7 +16,7 @@ const tnKeys = () => {
   const keys = new Set()
   const re = /\btn\(\s*(['"`])((?:\\.|(?!\1).)*)\1\s*,\s*(['"`])((?:\\.|(?!\3).)*)\3/gs
   for (const f of walk(SRC)) {
-    if (!/\.(jsx?|mjs)$/.test(f) || /\.test\./.test(f) || /[\\/]locales[\\/]/.test(f)) continue
+    if (!/\.([jt]sx?|mjs)$/.test(f) || /\.test\./.test(f) || /[\\/]locales[\\/]/.test(f)) continue
     const s = readFileSync(f, 'utf8')
     let m
     while ((m = re.exec(s))) keys.add(m[4])

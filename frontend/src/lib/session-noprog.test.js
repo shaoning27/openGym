@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { sessionNoProg, setSessionNoProg, setEntryNoProg, joinSessionNoProg } from './session-noprog.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { entryExcluded, lastEntryFor } from './history.js'
+import { sessionNoProg, setSessionNoProg, setEntryNoProg, joinSessionNoProg } from './session-noprog.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { entryExcluded, lastEntryFor } from './history.ts'
 
 // "Don't count for progression" for the whole workout (Discord, asierlama: an injury day).
 const entry = (id, extra = {}) => ({ id, target: { sets: 1, reps: 5, weight: 60 }, sets: [{ w: 60, r: 5, done: true }], ...extra })

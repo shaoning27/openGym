@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { generate } from 'lean-qr'
-import { decodeImageData } from './scan-web.js'
+import { decodeImageData } from './scan-web.ts'
 
 // Round trip through the two libraries the browser path relies on: lean-qr draws a code (the
 // same renderer the card view uses), jsQR reads it back. Pixels are built by hand from

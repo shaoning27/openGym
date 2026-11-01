@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { moveRoutineEntry, moveSupersetUnit } from './history.js'
+import { moveRoutineEntry, moveSupersetUnit } from './history.ts'
 
 // #377: the routine editor's arrows move one exercise. Inside a superset it passes the next
 // member; at the edge it leaves the superset where it stands; a single exercise still jumps a

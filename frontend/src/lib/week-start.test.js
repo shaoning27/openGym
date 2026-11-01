@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest'
-import { MONDAY, SUNDAY, weekStartOf, weekOrder, weekDayOffset, startOfWeek, weekKey, isoOf } from './format.js'
-import { streakWeeks } from './history.js'
-import { muscleBalanceWindow } from './muscles.js'
-import { effortWeeks } from './effort.js'
+import { MONDAY, SUNDAY, weekStartOf, weekOrder, weekDayOffset, startOfWeek, weekKey, isoOf } from './format.ts'
+import { streakWeeks } from './history.ts'
+import { muscleBalanceWindow } from './muscles.ts'
+import { effortWeeks } from './effort.ts'
 
 // 2026-08-19 is a Wednesday. Its Monday-first week runs Mon 17th → Sun 23rd; its Sunday-first
 // week runs Sun 16th → Sat 22nd. Every case below is picked so the two disagree — a date that

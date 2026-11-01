@@ -26,7 +26,7 @@ beforeEach(async () => {
   h.files.clear(); h.stats.length = 0; h.platform = 'ios'
   vi.resetModules()
   vi.stubEnv('VITE_MOBILE', '1')
-  M = await import('./mobile.js')
+  M = await import('./mobile.ts')
 })
 
 const PAIRED = { mode: 'remote', base: 'https://gym.example', token: 'tok', user: { id: 'u1' } }

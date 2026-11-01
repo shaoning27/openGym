@@ -8,7 +8,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { MEDIA_CACHE } from './media-prefetch.js'
+import { MEDIA_CACHE } from './media-prefetch.ts'
 
 const SW = readFileSync(fileURLToPath(new URL('../../public/sw.js', import.meta.url)), 'utf8')
 const BUILD = 'opengym-rt-__BUILD__'

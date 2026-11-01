@@ -2,13 +2,13 @@
 // stamp), what the sync merge keeps of it, what the history editor does with it, and the places
 // that must never carry it (copy as text, a routine saved from the workout, a plan file).
 import { describe, expect, it } from 'vitest'
-import { addWorkoutMedia, removeWorkoutMedia, restoreWorkoutMedia } from './workout-media.js'
-import { WORKOUT_MEDIA_MAX, workoutMediaOf, referencedHashes, referencedFiles, stateMediaRefs } from './media-refs.js'
-import { mergeStates } from './sync-merge.js'
-import { editCompletedSession, saveWorkoutEdit } from './session-edit.js'
-import { workoutText } from './workout-text.js'
-import { saveSessionAsRoutine } from './session-routines.js'
-import { buildPlanBundle } from './plan-share.js'
+import { addWorkoutMedia, removeWorkoutMedia, restoreWorkoutMedia } from './workout-media.ts'
+import { WORKOUT_MEDIA_MAX, workoutMediaOf, referencedHashes, referencedFiles, stateMediaRefs } from './media-refs.ts'
+import { mergeStates } from './sync-merge.ts'
+import { editCompletedSession, saveWorkoutEdit } from './session-edit.ts'
+import { workoutText } from './workout-text.ts'
+import { saveSessionAsRoutine } from './session-routines.ts'
+import { buildPlanBundle } from './plan-share.ts'
 
 const H = n => String(n).repeat(64).slice(0, 64)
 const photo = (h, poster) => ({ kind: 'image', hash: h, mime: 'image/webp', size: 1000, width: 800, height: 600, ...(poster ? { poster: { hash: poster, mime: 'image/webp', size: 100, width: 480, height: 360 } } : {}), at: 1 })

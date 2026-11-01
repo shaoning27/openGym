@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { bodyweightAt, effectiveLoad, relativeSeries, BW_MAX_GAP_DAYS } from './relative-strength.js'
+import { bodyweightAt, effectiveLoad, relativeSeries, BW_MAX_GAP_DAYS } from './relative-strength.ts'
 
 const DAY = 86400000
 const LIFT = '0025'

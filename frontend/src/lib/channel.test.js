@@ -26,27 +26,27 @@ beforeEach(() => {
 
 describe('install channel', () => {
   it('the APK from GitHub updates itself', async () => {
-    const { getChannel, selfUpdates } = await import('./channel.js')
+    const { getChannel, selfUpdates } = await import('./channel.ts')
     expect(await getChannel()).toBe('sideload')
     expect(await selfUpdates()).toBe(true)
   })
 
   it('the Google Play build does not', async () => {
     h.answer = { channel: 'play' }
-    const { getChannel, selfUpdates } = await import('./channel.js')
+    const { getChannel, selfUpdates } = await import('./channel.ts')
     expect(await getChannel()).toBe('play')
     expect(await selfUpdates()).toBe(false)
   })
 
   it('an older APK without the plugin is a sideloaded one', async () => {
     h.fail = true
-    const { getChannel } = await import('./channel.js')
+    const { getChannel } = await import('./channel.ts')
     expect(await getChannel()).toBe('sideload')
   })
 
   it('the iPhone app is the App Store\'s', async () => {
     h.platform = 'ios'
-    const { getChannel, selfUpdates } = await import('./channel.js')
+    const { getChannel, selfUpdates } = await import('./channel.ts')
     expect(await getChannel()).toBe('appstore')
     expect(await selfUpdates()).toBe(false)
   })

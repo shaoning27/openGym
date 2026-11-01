@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { createMediaStore, memoryBackend, playType } from './media-store.js'
+import { createMediaStore, memoryBackend, playType } from './media-store.ts'
 
 const H1 = '1'.repeat(64)
 const H2 = '2'.repeat(64)

@@ -8,7 +8,7 @@
      list; with no heartbeat after it (an iOS home-screen app swiped away) the athlete is gone
      45 s after the mark, and at the 70 s expiry after the last heartbeat whatever the mark says.
 
-   Real server.js in a child, with its Date.now() driven by test/fake-clock.mjs over IPC, so each
+   Real server.ts in a child, with its Date.now() driven by test/fake-clock.mjs over IPC, so each
    step below happens at an exact server time. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -22,7 +22,7 @@ import { boundPort } from './helpers.mjs';
 
 const API = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SECRET = crypto.randomBytes(32).toString('hex');
-// Same construction as server.js makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
+// Same construction as server.ts makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
 const mintSession = uid => {
   const payload = `${uid}:${Date.now() + 86400000}:0`;
   return payload + '.' + crypto.createHmac('sha256', SECRET).update(payload).digest('base64url');
@@ -41,7 +41,7 @@ async function startServer(t) {
       { id: ATHLETE, name: 'Athlete', created: new Date().toISOString() }
     ], creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['--import', './test/fake-clock.mjs', 'server.js'], {
+  const child = spawn(process.execPath, ['--import', './test/fake-clock.mjs', 'server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });

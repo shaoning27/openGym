@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { stampPut } from '../sync-stamps.js';
+import { stampPut } from '../sync-stamps.ts';
 
 test('the API stamps built-in aliases independently per exercise, including a clear', () => {
   const before = { _ts: 10, exAliases: { a: ['Old'], b: ['Row'] }, edited: { 'exAliases.a': 10, 'exAliases.b': 10 } };

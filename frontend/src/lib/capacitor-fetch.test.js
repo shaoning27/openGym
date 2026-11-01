@@ -13,7 +13,7 @@ vi.mock('@capacitor/core', () => ({
   CapacitorHttp: { request: native.request }
 }))
 
-const { nativeFetch } = await import('./capacitor-fetch.js')
+const { nativeFetch } = await import('./capacitor-fetch.ts')
 
 describe('native Coach transport timeouts', () => {
   beforeEach(() => {

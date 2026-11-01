@@ -6,7 +6,7 @@
    Access-Control-Allow-Credentials) kept a hostile page from sending both. Now the exemption
    needs a Bearer that authenticates on its own: a valid session token, and no session cookie
    beside it. A Bearer that does not verify, with no cookie, is a caller who is not
-   signed in and gets the 401 before any handler runs. Real server.js in a child. */
+   signed in and gets the 401 before any handler runs. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -34,7 +34,7 @@ async function startServer(t) {
       { id: 'u_phone', name: 'Phone', created: new Date().toISOString() }
     ], creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'https://gym.test', RP_ID: 'gym.test' }
   });

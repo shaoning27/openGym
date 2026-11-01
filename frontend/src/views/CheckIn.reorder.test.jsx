@@ -6,17 +6,17 @@
 // mutated, and degenerate moves (in place, out of range, past the ends) are safe no-ops, so a
 // button at either end of the rail is simply inert.
 //
-// moveGymCard itself is pure, but importing CheckIn.jsx loads the store (which registers a
+// moveGymCard itself is pure, but importing CheckIn.tsx loads the store (which registers a
 // visibilitychange listener at module load) and the scanner/sheet modules, so the file runs under
 // happy-dom with those heavy imports stubbed. The function under test touches none of them.
 
 import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/scan.js', () => ({ scanCode: vi.fn(), importCodeFromImage: vi.fn() }))
-vi.mock('../components/CameraScan.jsx', () => ({ default: () => null }))
-vi.mock('../sheets.jsx', () => ({ confirmSheet: vi.fn() }))
+vi.mock('../lib/scan.ts', () => ({ scanCode: vi.fn(), importCodeFromImage: vi.fn() }))
+vi.mock('../components/CameraScan.tsx', () => ({ default: () => null }))
+vi.mock('../sheets.tsx', () => ({ confirmSheet: vi.fn() }))
 
-import { moveGymCard } from './CheckIn.jsx'
+import { moveGymCard } from './CheckIn.tsx'
 
 const cards = (...ids) => ids.map(id => ({ id, label: id.toUpperCase(), value: id, fmt: 'qrcode' }))
 const ids = list => list.map(c => c.id)

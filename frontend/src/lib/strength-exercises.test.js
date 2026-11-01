@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { strengthExerciseRows, strengthExerciseRowsForMuscle, primaryMuscleOf } from './strength-exercises.js'
-import { registerCustom } from './exercises.js'
+import { strengthExerciseRows, strengthExerciseRowsForMuscle, primaryMuscleOf } from './strength-exercises.ts'
+import { registerCustom } from './exercises.ts'
 
 const DAY = 86400000
 const NOW = Date.UTC(2026, 7, 8, 12) // 2026-08-08 12:00 UTC

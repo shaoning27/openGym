@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   LANGS, INSTR_LANGS, EXERCISE_NAME_LANGS, DATE_LOCALES, DERIVED_LOCALES,
   baseLang, derivePack, dateLocale, getLang, t, _setLangState, exerciseNameClass, exerciseNameFor, CASED_NAME_LANGS, RTL_LANGS
-} from './i18n-core.js'
+} from './i18n-core.ts'
 import { EXDB } from './exercises-data.js'
 import de from '../locales/de.js'
 

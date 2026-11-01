@@ -4,7 +4,7 @@
    server it was entered for — the pairing itself included — and on nothing else. */
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('./mobile.js', () => ({ MOBILE: true, loadRemoteFile: async () => null, saveRemoteFile: async () => {} }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true, loadRemoteFile: async () => null, saveRemoteFile: async () => {} }))
 const backing = new Map()
 vi.mock('@aparajita/capacitor-secure-storage', () => ({
   SecureStorage: {
@@ -14,9 +14,9 @@ vi.mock('@aparajita/capacitor-secure-storage', () => ({
   }
 }))
 
-import { api, pairRedeem, setRemoteAuth } from './api.js'
-import { accessHeaders, loadCfAccess, saveCfAccess } from './cf-access.js'
-import { forgetRemote } from './remote.js'
+import { api, pairRedeem, setRemoteAuth } from './api.ts'
+import { accessHeaders, loadCfAccess, saveCfAccess } from './cf-access.ts'
+import { forgetRemote } from './remote.ts'
 
 const ok = body => vi.fn(async () => new Response(JSON.stringify(body), { status: 200, headers: { 'content-type': 'application/json' } }))
 

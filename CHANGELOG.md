@@ -804,8 +804,8 @@ Thank you, all of you. This release is half yours.
   sync line at the top. A dot on Home still warns when sync is stuck.
 - **Durable writes**: every file the API keeps is flushed before it is renamed into place, and
   `./data/db.json.bak` holds a copy of the last good `db.json`. Back up `./data` as before.
-- If you build your own API image from a copy of the Dockerfile: it now also needs `queue.js`,
-  `nudge.js`, `nudge-copy.js`, `durable.js` and `sync-stamps.js`.
+- If you build your own API image from a copy of the Dockerfile: it now also needs `queue.ts`,
+  `nudge.ts`, `nudge-copy.js`, `durable.ts` and `sync-stamps.ts`.
 - `PASSWORD_LOGIN` is unchanged and still off by default.
 - `build-api-docs --check` runs in CI (#342).
 
@@ -1045,8 +1045,8 @@ sacgsxr, Agripa22, smsmy, Josevi, AlexanderVott, thedandano, horusglez and Vaibh
     open signup, lower `MEDIA_QUOTA_MB`. Keep the web container's `MEDIA_UPLOAD_MAX` above
     `MEDIA_VIDEO_MAX_MB`.
   - `DEFAULT_LANG` for the instance's default language.
-- The api image carries new files (`password.js`, `rate-limit.js`, `passkeys-store.js`,
-  `device-link.js`, `media.js`). If you build your own image with an explicit file list, add them.
+- The api image carries new files (`password.ts`, `rate-limit.ts`, `passkeys-store.ts`,
+  `device-link.ts`, `media.ts`). If you build your own image with an explicit file list, add them.
 - A reverse proxy with a short read timeout can cut off a slow video upload; photos are unaffected.
 
 **Known and not fixed**: counts in Russian, Ukrainian and Polish still use the English two-form
@@ -1994,7 +1994,7 @@ since the GitHub account went.
 ### Housekeeping
 
 - The self-hosting docs, `SECURITY.md` and `.env.example` cover the activity log, and the
-  `api/server.js` line references in `SECURITY.md` are accurate again.
+  `api/server.ts` line references in `SECURITY.md` are accurate again.
 - Every repository link in the README, the docs, the app and the website points at GitLab, and
   the website's live star/release numbers come from GitLab's API.
 
@@ -2282,9 +2282,9 @@ release is invisible to you.
 
 ### Under the hood
 
-- The pure half of `i18n.js` — the language state, the constants, the readers — moved into
-  `i18n-core.js`, so the helpers under `frontend/src/lib/` can be loaded by a plain Node process
-  and not only by Vite. `i18n.js` keeps the Vite-only parts (the locale-pack loader, the React
+- The pure half of `i18n.ts` — the language state, the constants, the readers — moved into
+  `i18n-core.ts`, so the helpers under `frontend/src/lib/` can be loaded by a plain Node process
+  and not only by Vite. `i18n.ts` keeps the Vite-only parts (the locale-pack loader, the React
   hook) and re-exports the rest, so nothing that imports it had to change.
 - The shared lib modules that only need `t` now take it from the core directly. A Vite-only
   import inside a shared module is invisible under vitest, which transforms it, and fatal to the

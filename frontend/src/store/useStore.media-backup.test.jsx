@@ -28,10 +28,10 @@ vi.mock('@capacitor/local-notifications', () => ({
 }))
 vi.mock('@capacitor/app', () => ({ App: { addListener: () => ({ remove() {} }) } }))
 vi.mock('@capacitor/core', () => ({ Capacitor: { getPlatform: () => 'android', isNativePlatform: () => true }, registerPlugin: () => ({}) }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
 
-import { DEF, useStore } from './useStore.js'
-import { addWorkoutMedia, removeWorkoutMedia } from '../lib/workout-media.js'
+import { DEF, useStore } from './useStore.ts'
+import { addWorkoutMedia, removeWorkoutMedia } from '../lib/workout-media.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const sleep = ms => new Promise(r => setTimeout(r, ms))

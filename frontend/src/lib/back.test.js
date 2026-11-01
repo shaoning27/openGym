@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { decideBack, makeBackHandler, EXIT_WINDOW } from './back.js'
+import { decideBack, makeBackHandler, EXIT_WINDOW } from './back.ts'
 
 // Back on Android has to serve three layers with one event: the sheet stack on top, the
 // page history under it, and — because a registered listener stops the plugin from ever

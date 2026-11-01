@@ -3,7 +3,7 @@
    used to put German descriptions under French. They are kept only for the language they were
    loaded for; the loader then loads the current language's own. */
 import { describe, expect, it } from 'vitest'
-import * as core from './i18n-core.js'
+import * as core from './i18n-core.ts'
 
 const ex = { id: '9999', st: [] }
 

@@ -14,10 +14,10 @@ media are licensed separately (NOTICE.md).
 ## Project layout
 
 ```
-frontend/   React 19 + Vite app (src/views, src/components, src/store, src/lib, src/sheets.jsx).
+frontend/   React 19 + Vite app (src/views, src/components, src/store, src/lib, src/sheets.tsx).
             android/ + ios/ are the Capacitor shells (docs/MOBILE.md); ios/ also holds the watch
             app (Watch, WatchCore, WatchWidgets), the widgets and the animation-pack downloader.
-api/        Backend: server.js (plain node:http) plus small testable modules beside it.
+api/        Backend: server.ts (plain node:http) plus small testable modules beside it.
             coach/ is the optional AI coach; coach/core/ is shared with the phone apps.
             openapi.yaml documents every route.
 web/        Multi-stage Dockerfile (builds frontend, adds catalogue/media, serves with nginx) and
@@ -59,7 +59,11 @@ cd frontend && npm run build
 cd frontend && npm run build:mobile   # VITE_MOBILE build + 180 px media from catalogue/media + cap sync
 ```
 
-There is no linter/formatter config and no TypeScript; match the existing style by hand.
+Business implementations use TS/TSX with strict compilation; explicit legacy dynamic types remain.
+Run `npm ci` at the repository root, then `npm run typecheck`; see
+`docs/TYPESCRIPT_MIGRATION.zh-CN.md`. Run `npm run check:migration` for the source/debt inventory.
+JS compatibility entries and data resource modules are intentionally retained.
+There is no linter/formatter config; match the existing style by hand.
 
 GitHub (`github.com/DuarteSantos8/openGym`) is the home of the project; `.github/workflows/mirror.yml`
 pushes `main` and `v*` tags to the GitLab mirror (fast-forward only, never push or merge there).
@@ -71,30 +75,30 @@ machine, never in CI (see "Exercise media" below and docs/APP_STORES.md).
 
 ### Frontend (`frontend/src`)
 
-- **`store/useStore.js`**: a single Zustand store holding the client-side app state (`S`),
+- **`store/useStore.ts`**: a single Zustand store holding the client-side app state (`S`),
   persisted to `localStorage` (`gym_state_v1`) and debounce-pushed to the server when signed in
-  (`pushState`, see `lib/api.js`). On the phones it is also mirrored to a file via `lib/mobile.js`
-  (`nativeSave`), since WebView storage can be evicted. `store/useUI.js` holds ephemeral UI state
+  (`pushState`, see `lib/api.ts`). On the phones it is also mirrored to a file via `lib/mobile.ts`
+  (`nativeSave`), since WebView storage can be evicted. `store/useUI.ts` holds ephemeral UI state
   (modals, active sheet, rest timer) separately from persisted data.
 - **`lib/`**: pure, framework-free helpers, each paired with a same-directory `*.test.js`. The
   domain logic lives here, most importantly:
-  - `progression.js`: the progression-rule engine (linear, Greyskull LP, double and triple
+  - `progression.ts`: the progression-rule engine (linear, Greyskull LP, double and triple
     progression, time-based). Rules implement a shared policy interface.
-  - `onerm.js`: estimated 1RM from logged sets (several formulas).
-  - `finish-workout.js`: reduces a completed session back into state (weights advance, PRs).
-  - `recovery.js` / `recovery-view.js`: the fatigue and muscle-recovery model.
-  - `workout-model.js`, `supersetFlow.js`: the in-session workout state machine.
-  - `sync-merge.js`: the field-by-field merge behind the 409 retry (see "Sync" below).
-  - `exercises.js` / `exercises-data.js`: the exercise library (5,632 catalogue exercises plus
+  - `onerm.ts`: estimated 1RM from logged sets (several formulas).
+  - `finish-workout.ts`: reduces a completed session back into state (weights advance, PRs).
+  - `recovery.ts` / `recovery-view.ts`: the fatigue and muscle-recovery model.
+  - `workout-model.ts`, `supersetFlow.ts`: the in-session workout state machine.
+  - `sync-merge.ts`: the field-by-field merge behind the 409 retry (see "Sync" below).
+  - `exercises.ts` / `exercises-data.js`: the exercise library (5,632 catalogue exercises plus
     user-defined ones). `exercises-data.js`, `instr/`, `exercise-names/` and `exercise-desc/` are
     generated from `catalogue/` by `scripts/catalogue/build.mjs`; never edit them by hand.
-  - `api.js`: the only place that talks to the backend (`fetch` wrapper, session flows).
-  - Native bridges: `mobile.js` (the `MOBILE` flag, file persistence, notifications),
-    `channel.js` (APK or store build), `watch-sync.js`, `widgets.js`, `health-sync.js`,
-    `anim-quality.js` / `anim-packs.js` (animation sizes in the store apps).
+  - `api.ts`: the only place that talks to the backend (`fetch` wrapper, session flows).
+  - Native bridges: `mobile.ts` (the `MOBILE` flag, file persistence, notifications),
+    `channel.ts` (APK or store build), `watch-sync.ts`, `widgets.ts`, `health-sync.ts`,
+    `anim-quality.ts` / `anim-packs.ts` (animation sizes in the store apps).
   - CONTRIBUTING.md is explicit: **anything that decides what you lift next, or reads a logged
     session back, is a pure helper here with a unit test beside it.**
-- **Body measurements (`lib/measurements.js`, `views/Measurements.jsx`)**: one check-in per day.
+- **Body measurements (`lib/measurements.ts`, `views/Measurements.tsx`)**: one check-in per day.
   Built-in circumferences and legacy custom fields store cm and follow the profile's cm/in
   display. Custom definitions may specify `unit: 'cm' | 'in' | '%' | 'kg' | 'lb' | 'none'`; that
   display choice stays fixed when the profile switches kg/lb. Custom values store canonical cm, kg
@@ -103,22 +107,22 @@ machine, never in CI (see "Exercise media" below and docs/APP_STORES.md).
   Once values exist, the unit selector permits cm/in or kg/lb conversions within the recorded
   type; a different type needs a new field. The body CSV names a custom column with its unit,
   "Muscle ratio (%)", and the importer reads those columns back (only from our own header).
-- **`views/`**: one file per screen, routed by `react-router-dom` from `App.jsx`.
-- **`sheets.jsx`**: the bottom sheets (exercise picker, exercise config, workout detail, plan
+- **`views/`**: one file per screen, routed by `react-router-dom` from `App.tsx`.
+- **`sheets.tsx`**: the bottom sheets (exercise picker, exercise config, workout detail, plan
   import...). It is large; a new sheet can go into `components/` as its own file.
 - **`components/`**: shared UI (charts, modals, timers, media).
-- **`locales/`**: one i18n pack per language, keyed by the English string (`lib/i18n.js`,
-  `i18n-core.js`). A new `t()` string goes into every pack; pt-BR inherits from pt and has a
+- **`locales/`**: one i18n pack per language, keyed by the English string (`lib/i18n.ts`,
+  `i18n-core.ts`). A new `t()` string goes into every pack; pt-BR inherits from pt and has a
   fingerprint test (`scripts/pt-br-inheritance-fingerprint.mjs`).
 
-### API (`api/server.js`)
+### API (`api/server.ts`)
 
 Plain `node:http`, no framework. Requests are dispatched through a `routes` object keyed by
 `'METHOD /path'` (e.g. `routes['GET /api/health']`); add an endpoint by adding a key and its entry
 in `openapi.yaml` (`openapi-routes.test.js` compares them). State is JSON under `DATA_DIR`:
 `db.json` (users, credentials, push subscriptions, invites) and `state-<uid>.json` per user,
-written temp-then-rename (`durable.js`). Custom-exercise photos and videos live in
-`DATA_DIR/uploads` (`media.js`). Auth is WebAuthn passkeys (`@simplewebauthn/server`), an optional
+written temp-then-rename (`durable.ts`). Custom-exercise photos and videos live in
+`DATA_DIR/uploads` (`media.ts`). Auth is WebAuthn passkeys (`@simplewebauthn/server`), an optional
 password, and a signed session cookie (HMAC with `DATA_DIR/secret`); paired phones get the same
 session as a bearer token. Optional pieces are gated by env vars: `ADMIN_UIDS`, `INVITE_ONLY`,
 `ALLOW_GUEST`, `PASSWORD_LOGIN`, `AUDIT_*`. Web Push (`web-push`, VAPID keys in `data/vapid.json`)
@@ -128,25 +132,25 @@ drives rest-timer and reminder notifications.
 
 Each profile is one document with a server revision. A device PUTs with the revision it last saw;
 if another device wrote in between, the server answers 409 with the current document and the
-client merges (`lib/sync-merge.js`) and retries. Every change carries its own stamp, per setting
+client merges (`lib/sync-merge.ts`) and retries. Every change carries its own stamp, per setting
 and per field, so the newest edit of each wins and deletions stay deleted.
 
 ### Code that exists twice on purpose
 
 The API image cannot import the frontend, so some rules are hand-copied. Change both sides
-together: `lib/sync-merge.js` and `api/sync-stamps.js` (parity test), `lib/glyphs.js` and
-`api/coach/core/glyphs.js` (parity test), `lib/nudge.js` and `api/nudge.js`, `lib/queue.js` and
-`api/queue.js` (mirrored test cases only, nothing compares the code). The other way round,
-`lib/coach-local.js` imports `api/coach/core/` directly so the phones run the same coach pipeline.
+together: `lib/sync-merge.ts` and `api/sync-stamps.ts` (parity test), `lib/glyphs.ts` and
+`api/coach/core/glyphs.ts` (parity test), `lib/nudge.ts` and `api/nudge.ts`, `lib/queue.ts` and
+`api/queue.ts` (mirrored test cases only, nothing compares the code). The other way round,
+`lib/coach-local.ts` imports `api/coach/core/` directly so the phones run the same coach pipeline.
 
 ### MCP server (`mcp/src`)
 
 Stdio MCP bridge (`@modelcontextprotocol/sdk`) that reads one user's data straight from
-`DATA_DIR`. `state.js` loads and derives the data, `tools.js` defines the read tools (zod schemas),
-`labels.js` maps keys to readable labels, `index.js` wires it together. The one write tool,
-`log_workout` (`write-tools.js`), never writes the file: it builds the workout with
-`frontend/src/lib/log-workout.js` and saves it with `PUT /api/data` over a paired-session token
-(`api-client.js`, `scripts/pair.mjs`), the way a device syncs. See `mcp/README.md`.
+`DATA_DIR`. `state.ts` loads and derives the data, `tools.ts` defines the read tools (zod schemas),
+`labels.ts` maps keys to readable labels, `index.ts` wires it together. The one write tool,
+`log_workout` (`write-tools.ts`), never writes the file: it builds the workout with
+`frontend/src/lib/log-workout.ts` and saves it with `PUT /api/data` over a paired-session token
+(`api-client.ts`, `scripts/pair.mjs`), the way a device syncs. See `mcp/README.md`.
 
 ### Passkeys and self-hosting constraints
 

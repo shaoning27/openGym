@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 // Plan → Schedule since v1.3.11: ONE "How you train: Fixed Week | Rotation" control (the same
-// switch and keys as Settings, lib/rotation.js chooseRotation / chooseFixedWeek). Fixed Week shows
+// switch and keys as Settings, lib/rotation.ts chooseRotation / chooseFixedWeek). Fixed Week shows
 // the weekdays; Rotation shows the loop (add, Edit to reorder and remove, Start the loop over),
 // with the weekdays that still hold a routine beside it. An externally written queue is read-only
 // until adopted, and a malformed one offers recovery.
@@ -19,23 +19,23 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => mocks.nav }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   dayAssignSheet: vi.fn(), starterPlanSheet: vi.fn(), menuSheet: vi.fn(), confirmSheet: vi.fn(),
   planHasRoutines: () => true, exportPlanFile: vi.fn(), printWholePlan: vi.fn(), importPlanFile: vi.fn(),
 }))
-vi.mock('../lib/mobile.js', () => ({ MOBILE: false }))
-vi.mock('../lib/demo.js', () => ({ DEMO: false }))
-vi.mock('../lib/coach.js', () => ({ coachAvailable: () => false }))
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: false }))
+vi.mock('../lib/demo.ts', () => ({ DEMO: false }))
+vi.mock('../lib/coach.ts', () => ({ coachAvailable: () => false }))
 
-import Plan from './Plan.jsx'
-import { menuSheet, confirmSheet } from '../sheets.jsx'
-import { todayISO, isoOf, fmtDate } from '../lib/format.js'
+import Plan from './Plan.tsx'
+import { menuSheet, confirmSheet } from '../sheets.tsx'
+import { todayISO, isoOf, fmtDate } from '../lib/format.ts'
 
 const routines = [
   { id: 'a', name: 'A', emoji: null, ex: [{ id: '0025' }] },

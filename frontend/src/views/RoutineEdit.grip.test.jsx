@@ -11,13 +11,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 const sheets = vi.hoisted(() => ({
   exConfigSheet: vi.fn(), exercisePicker: vi.fn(), glyphPicker: vi.fn(), confirmSheet: vi.fn(),
 }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})) }))
-vi.mock('../sheets.jsx', () => sheets)
-vi.mock('../components/Media.jsx', () => ({ Thumb: ({ ex }) => <span data-thumb={ex.id} /> }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => null }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})) }))
+vi.mock('../sheets.tsx', () => sheets)
+vi.mock('../components/Media.tsx', () => ({ Thumb: ({ ex }) => <span data-thumb={ex.id} /> }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => null }))
 
-import RoutineEdit, { ROUTINE_LONG_PRESS_MS } from './RoutineEdit.jsx'
-import { DEF, useStore } from '../store/useStore.js'
+import RoutineEdit, { ROUTINE_LONG_PRESS_MS } from './RoutineEdit.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))

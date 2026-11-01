@@ -39,7 +39,7 @@ buildNpmPackage rec {
 
     mkdir -p $out/bin
     makeWrapper ${nodejs_22}/bin/node $out/bin/opengym-mcp \
-      --add-flags "$out/lib/opengym-mcp/src/index.js"
+      --add-flags "$out/lib/opengym-mcp/src/index.ts"
     runHook postInstall
   '';
 

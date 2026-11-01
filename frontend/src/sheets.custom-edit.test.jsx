@@ -7,13 +7,13 @@ import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
 
-import { registerCustom } from './lib/exercises.js'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { _setLangState } from './lib/i18n-core.js'
-import { bindUI } from './components/ui.jsx'
-import { Thumb } from './components/Media.jsx'
-import { customExSheet, exerciseDetailSheet, exConfigSheet } from './sheets.jsx'
+import { registerCustom } from './lib/exercises.ts'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { _setLangState } from './lib/i18n-core.ts'
+import { bindUI } from './components/ui.tsx'
+import { Thumb } from './components/Media.tsx'
+import { customExSheet, exerciseDetailSheet, exConfigSheet } from './sheets.tsx'
 
 bindUI(useUI)
 

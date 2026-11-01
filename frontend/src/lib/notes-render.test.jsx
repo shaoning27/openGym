@@ -5,9 +5,9 @@
 import { describe, expect, it, beforeEach, afterEach } from 'vitest'
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
-import { useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { exerciseNoteSheet, setNoteSheet } from '../sheets.jsx'
+import { useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { exerciseNoteSheet, setNoteSheet } from '../sheets.tsx'
 
 const activeWith = entry => ({ id: 'w1', d: '2026-08-25', start: 1, routineId: 'r1', name: 'Push', entries: [entry] })
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { commitFor, shapeOffset, armedFor, axisOf, inEdgeZone, velocityOf, REVEAL, OPEN_MIN, EDGE, BAND } from './use-swipe-row.js'
+import { commitFor, shapeOffset, armedFor, axisOf, inEdgeZone, velocityOf, REVEAL, OPEN_MIN, EDGE, BAND } from './use-swipe-row.ts'
 
 // Offsets and velocities are logical (negative = toward the start of the line: left in English,
 // right in Arabic), so one table covers both directions; the component turns them into pixels.

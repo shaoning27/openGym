@@ -5,13 +5,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({ MOBILE: false, files: {} }))
-vi.mock('./mobile.js', () => ({
+vi.mock('./mobile.ts', () => ({
   get MOBILE() { return mocks.MOBILE },
   readJsonFile: async name => (name in mocks.files ? JSON.parse(mocks.files[name]) : null),
   writeJsonFile: async (name, data) => { mocks.files[name] = JSON.stringify(data) },
 }))
 
-const { isLocalHost, consentTarget, hasAiConsent, allowAi, withdrawAi, aiConsents, onAiConsentChange, _resetAiConsent } = await import('./coach-consent.js')
+const { isLocalHost, consentTarget, hasAiConsent, allowAi, withdrawAi, aiConsents, onAiConsentChange, _resetAiConsent } = await import('./coach-consent.ts')
 
 beforeEach(() => {
   mocks.MOBILE = false

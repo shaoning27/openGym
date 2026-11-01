@@ -1,24 +1,24 @@
-/* payload.js's own header comment says its duplicated reading rules are pinned against the
+/* payload.ts's own header comment says its duplicated reading rules are pinned against the
    frontend's originals so the copy cannot drift silently, but frontend/src/lib/coach-parity.test.js
    only ever imported three of the five: modeOf, isBw, isPerSide. isWarmupSet and readSession were
    pinned by nothing. This file closes that gap.
 
    It cannot live inside coach-parity.test.js itself: that file runs under vitest, and readSession
-   is not exported from payload.js (only isWarmupSet is), so the only way to observe it from
+   is not exported from payload.ts (only isWarmupSet is), so the only way to observe it from
    outside is through payload.build()'s aggregates, which needs a real DATA_DIR and the rest of the
    coach module graph — the same setup payload.test.js already uses under node:test. The frontend
-   imports below are safe under plain node: workout-model.js and progression.js have no Vite- or
+   imports below are safe under plain node: workout-model.ts and progression.ts have no Vite- or
    React-only syntax, the same reason mcp/'s own tests import frontend/src/lib directly. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { tempData, sampleState } from './helpers.mjs';
-import { isWarmupRow } from '../../frontend/src/lib/workout-model.js';
-import { readSession as frontendReadSession } from '../../frontend/src/lib/progression.js';
-import { NOTE_MAX as frontendNoteMax } from '../../frontend/src/lib/history.js';
+import { isWarmupRow } from '../../frontend/src/lib/workout-model.ts';
+import { readSession as frontendReadSession } from '../../frontend/src/lib/progression.ts';
+import { NOTE_MAX as frontendNoteMax } from '../../frontend/src/lib/history.ts';
 
 tempData();
-const payload = await import('../coach/core/payload.js');
-const { handleFor } = await import('../coach/handle.js');
+const payload = await import('../coach/core/payload.ts');
+const { handleFor } = await import('../coach/handle.ts');
 
 /* The payload bounds a session note at the app's own cap, so a note the app let the athlete write
    is never cut on its way to the model. */
@@ -66,9 +66,9 @@ test('readSession agrees with the frontend on an ordinary session', () => {
 });
 
 // Exact inputs: a session logged with a fourth set beyond the planned three, whose reps fall
-// short of the goal. frontend/src/lib/progression.js readSession grades only the first
+// short of the goal. frontend/src/lib/progression.ts readSession grades only the first
 // `target.sets` sets (issue #233: "a hard [extra set] taken short of the target reps reported
-// the whole session as missed") and calls this a hit. payload.js's copy graded every logged
+// the whole session as missed") and calls this a hit. payload.ts's copy graded every logged
 // set and called the same session a miss, so stallCount reported a stall the athlete never
 // had, and the Coach's review and proposal were built on it.
 test('readSession agrees with the frontend on a bonus set logged beyond the plan', () => {

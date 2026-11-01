@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { entryProgress, exerciseChips } from './exercise-chips.js'
+import { entryProgress, exerciseChips } from './exercise-chips.ts'
 
 const ex = (sets, extra = {}) => ({ id: 'x', sets: sets.map(done => ({ w: 60, r: 5, done })), ...extra })
 

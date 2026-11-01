@@ -4,14 +4,14 @@
 // must not take it away again, whichever copy the merge counts as newer, and it keeps its place
 // in the list and on its weekdays. An edit another device made meanwhile still wins its field.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { deleteRoutineWithUndo } from './Plan.jsx'
-import { mergeStates, stampChange } from '../lib/sync-merge.js'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { deleteRoutineWithUndo } from './Plan.tsx'
+import { mergeStates, stampChange } from '../lib/sync-merge.ts'
 
 vi.mock('react-router-dom', () => ({ useNavigate: () => vi.fn() }))
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
 
 const clone = value => JSON.parse(JSON.stringify(value))
 const routine = (id, name, ts) => ({ id, name, emoji: null, _ts: ts, ex: [{ id: '0025', sets: 3, reps: 5 }] })

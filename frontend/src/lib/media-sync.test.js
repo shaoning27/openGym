@@ -1,12 +1,12 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { createMediaSync } from './media-sync.js'
-import { createMediaStore, memoryBackend } from './media-store.js'
-import { sha256Hex } from './sha256.js'
-import { _resetMediaOwed, getMediaStatus } from './media-owed.js'
-import { jpeg, png } from './media-samples.test-util.js'
-import { installedApp, prefetchAllowed } from './media-prefetch.js'
-import { _setLangState } from './i18n-core.js'
+import { createMediaSync } from './media-sync.ts'
+import { createMediaStore, memoryBackend } from './media-store.ts'
+import { sha256Hex } from './sha256.ts'
+import { _resetMediaOwed, getMediaStatus } from './media-owed.ts'
+import { jpeg, png } from './media-samples.test-util.ts'
+import { installedApp, prefetchAllowed } from './media-prefetch.ts'
+import { _setLangState } from './i18n-core.ts'
 
 const MB = 1024 * 1024
 const hex = c => c.repeat(64)
@@ -398,7 +398,7 @@ describe('localMediaGc', () => {
   })
 })
 
-// lib/media-prefetch.js fetches the shipped catalogue's animations ahead only in the app installed
+// lib/media-prefetch.ts fetches the shipped catalogue's animations ahead only in the app installed
 // on the home screen (#281). That gate is the catalogue's alone: a custom exercise's own file has
 // no copy anywhere but this device and its server, so a browser tab still sends it, and still
 // makes the plan's files local, on any connection that is not metered.

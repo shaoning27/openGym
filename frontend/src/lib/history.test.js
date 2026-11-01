@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { nextTrainingDay, modeOf, isTimed, fmtSec, setLabel, defaultConfig, pickedExerciseConfig, buildSets, freestyleConfig, exLine, workoutVolume, bestWeightFor, bestWeightForEntry, completedRepsOf, metricRowsForEntry, effortOf, stepEffort, capEffort, isBw, isPerSide, sideReps, repStep, cascadeWeight, insertWarmupRow, makeWarmupAt, canBeWarmup, makeWorkAt, removeRowAt, removeLastSet, setSpanAt, workSetsDone, setsDone, setsDoneActive, setUnits, doneUnits, setUnitsTotal, pairAdjacent, unpairSuperset, supersetUnits, sessionSections, applyIntensifierPlan, pinnedNoteFor, exNoteFor, effectiveRoutineIds, effectiveRoutines, effectiveRoutineId, effectiveRoutine, lastEntryFor, entryExcluded, entryRoutineId, setsRepsOf } from './history.js'
-import { makeSideSet, setSideField, toggleSide, WEIGHT_ORIGIN_MANUAL } from './workout-model.js'
-import { EXDB } from './exercises.js'
-import { todayISO, isoOf } from './format.js'
+import { nextTrainingDay, modeOf, isTimed, fmtSec, setLabel, defaultConfig, pickedExerciseConfig, buildSets, freestyleConfig, exLine, workoutVolume, bestWeightFor, bestWeightForEntry, completedRepsOf, metricRowsForEntry, effortOf, stepEffort, capEffort, isBw, isPerSide, sideReps, repStep, cascadeWeight, insertWarmupRow, makeWarmupAt, canBeWarmup, makeWorkAt, removeRowAt, removeLastSet, setSpanAt, workSetsDone, setsDone, setsDoneActive, setUnits, doneUnits, setUnitsTotal, pairAdjacent, unpairSuperset, supersetUnits, sessionSections, applyIntensifierPlan, pinnedNoteFor, exNoteFor, effectiveRoutineIds, effectiveRoutines, effectiveRoutineId, effectiveRoutine, lastEntryFor, entryExcluded, entryRoutineId, setsRepsOf } from './history.ts'
+import { makeSideSet, setSideField, toggleSide, WEIGHT_ORIGIN_MANUAL } from './workout-model.ts'
+import { EXDB } from './exercises.ts'
+import { todayISO, isoOf } from './format.ts'
 
 // Real ids out of the shipped catalogue, so the body-part fallback is exercised for real.
 const CARDIO = EXDB.find(e => e.bp === 'cardio').id
@@ -1102,7 +1102,7 @@ describe('session row helpers', () => {
   })
 })
 
-// The importer writes `phase: 'warmup'` and no `warmup` boolean (import-csv.js), so anything
+// The importer writes `phase: 'warmup'` and no `warmup` boolean (import-csv.ts), so anything
 // reading the raw flag counts an imported warm-up as work. Read through the model instead.
 describe('warm-up rows identified by phase alone', () => {
   const imported = { w: 40, r: 10, done: true, phase: 'warmup' }
@@ -1173,7 +1173,7 @@ describe('nextTrainingDay', () => {
     expect(nextTrainingDay(off, TUE)).toMatchObject({ weekday: 5 })
   })
 
-  it('finds a coach week waiting on its start day (lib/queue.js)', () => {
+  it('finds a coach week waiting on its start day (lib/queue.ts)', () => {
     // effectiveRoutineIds defaults `today` to the clock, so this one case is pinned relative
     // to the real today: a queue that starts in three days is found three days out.
     const today = todayISO()
@@ -1330,7 +1330,7 @@ describe('effectiveRoutineIds / effectiveRoutines', () => {
   })
 })
 
-// ---- coach queue: the week's sessions in order, the first undone one is today's (lib/queue.js) ----
+// ---- coach queue: the week's sessions in order, the first undone one is today's (lib/queue.ts) ----
 describe('effectiveRoutineIds — coach queue', () => {
   const routines = [
     { id: 'd1', name: 'US W1 D1', ex: [{ id: '1' }] }, { id: 'd2', name: 'US W1 D2', ex: [{ id: '1' }] },
@@ -1381,7 +1381,7 @@ describe('effectiveRoutineIds — coach queue', () => {
     expect(effectiveRoutineIds(S({ queue: null, week: { 3: ['own'] } }), TODAY, TODAY)).toEqual(['own'])
   })
 
-  // ---- pins: an override naming a queue session re-dates it (lib/queue.js pinState) ----
+  // ---- pins: an override naming a queue session re-dates it (lib/queue.ts pinState) ----
   it('a session pinned to a later day is that day\'s, with the weekday\'s own routine riding along; today floats past it', () => {
     const s = S({ dayPlan: { '2026-09-11': 'd1' }, week: { 5: ['own'] } })
     expect(effectiveRoutineIds(s, '2026-09-11', TODAY)).toEqual(['d1', 'own'])

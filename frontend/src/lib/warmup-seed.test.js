@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildSets } from './history.js'
+import { buildSets } from './history.ts'
 
 // A session that logged warm-ups, the way finish-workout persists it: warm-up rows and work
 // rows in one `sets` array, all done.

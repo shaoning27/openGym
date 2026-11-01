@@ -1,17 +1,17 @@
 // @vitest-environment happy-dom
 // The long exercise lists — the Library, the add-exercise picker and the muscle explorer — load
 // their next page by themselves once the "Show more" button at their foot comes near the screen
-// (lib/use-auto-more.js). The button stays, and without IntersectionObserver it is the way on.
+// (lib/use-auto-more.ts). The button stays, and without IntersectionObserver it is the way on.
 // happy-dom has no IntersectionObserver, so a fake one stands in and is fired by hand.
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exercisePicker } from './sheets.jsx'
-import Library from './views/Library.jsx'
-import MuscleExplorer from './components/MuscleExplorer.jsx'
-import { BODYPARTS, EXDB } from './lib/exercises.js'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exercisePicker } from './sheets.tsx'
+import Library from './views/Library.tsx'
+import MuscleExplorer from './components/MuscleExplorer.tsx'
+import { BODYPARTS, EXDB } from './lib/exercises.ts'
 
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
 

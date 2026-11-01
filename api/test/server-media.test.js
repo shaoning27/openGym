@@ -1,4 +1,4 @@
-/* The media routes on a real server.js in a child process: sessions, CSRF, CORS, the throttle,
+/* The media routes on a real server.ts in a child process: sessions, CSRF, CORS, the throttle,
    the headers a stored file is served with, the config block, the PUT /api/data hook, admin
    delete, and what is left on disk after each refusal. Caps are lowered through the MEDIA_*
    variables where a test needs to cross one. media-receive.test.js and media-gc.test.js cover
@@ -42,7 +42,7 @@ async function start(t, env = {}) {
     ],
     creds: [], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN, RP_ID: 'localhost', MEDIA_MIN_FREE_MB: '1', ...env }
   });
@@ -434,7 +434,7 @@ test('boot removes the temp files of uploads the previous process was receiving'
   fs.mkdirSync(tmp, { recursive: true });
   fs.writeFileSync(path.join(tmp, 'half-an-upload'), 'x');
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET);
-  const child = spawn(process.execPath, ['server.js'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PORT: '0', DATA_DIR: dataDir } });
+  const child = spawn(process.execPath, ['server.ts'], { cwd: API, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PORT: '0', DATA_DIR: dataDir } });
   t.after(() => child.kill('SIGKILL'));
   await boundPort(child);
   assert.deepEqual(fs.readdirSync(tmp), []);
@@ -467,8 +467,8 @@ test('a trickled body is cut after the body deadline on every route but a signed
   assert.equal(r.status, 201, JSON.stringify(r.body));
 });
 
-test('server.js gives a slow upload half an hour, not node\'s default five minutes', () => {
-  const src = fs.readFileSync(path.join(API, 'server.js'), 'utf8');
+test('server.ts gives a slow upload half an hour, not node\'s default five minutes', () => {
+  const src = fs.readFileSync(path.join(API, 'server.ts'), 'utf8');
   const m = /^server\.requestTimeout\s*=\s*([\d_\s*]+);/m.exec(src);
   assert.ok(m, 'server.requestTimeout is set');
   const ms = m[1].split('*').reduce((a, x) => a * Number(x.replace(/[_\s]/g, '')), 1);

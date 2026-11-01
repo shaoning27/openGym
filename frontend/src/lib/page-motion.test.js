@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { pageMotion } from './page-motion.js'
+import { pageMotion } from './page-motion.ts'
 
 it('slides a settings page in from the right and its parent back in from the left', () => {
   expect(pageMotion('/settings', '/settings/workout', 'PUSH')).toBe('push')

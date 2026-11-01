@@ -9,7 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 // takes over a second here on its own and longer on a busy runner.
 vi.setConfig({ testTimeout: 15000 })
 import { createRoot } from 'react-dom/client'
-import MuscleExplorer from './MuscleExplorer.jsx'
+import MuscleExplorer from './MuscleExplorer.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -18,7 +18,7 @@ const mocks = vi.hoisted(() => {
   state.snapshot = () => ({ S: state.S, user: null, update: mut => { const next = structuredClone(state.S); mut(next); state.S = next } })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore }
@@ -123,8 +123,8 @@ describe('MuscleExplorer opened on a muscle', () => {
 // #669: the Add exercise picker's "By muscle" lost the Favourites chip its list view has.
 describe('MuscleExplorer Favourites chip', () => {
   it('lists the favourites that train the chosen muscle', async () => {
-    const { EXDB } = await import('../lib/exercises.js')
-    const { musclesOf } = await import('../lib/muscles.js')
+    const { EXDB } = await import('../lib/exercises.ts')
+    const { musclesOf } = await import('../lib/muscles.ts')
     const curl = EXDB.find(e => musclesOf(e).biceps === 1)
     const press = EXDB.find(e => !musclesOf(e).biceps && e.bp === 'chest')
     mocks.S.favEx = [curl.id, press.id]

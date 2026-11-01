@@ -2,7 +2,7 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { passkeyError, PasskeysRow, PasskeysSheet, DeviceLinkSheet, DeviceLinkRedeemSheet, PairSheet } from './Passkeys.jsx'
+import { passkeyError, PasskeysRow, PasskeysSheet, DeviceLinkSheet, DeviceLinkRedeemSheet, PairSheet } from './Passkeys.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -29,31 +29,31 @@ const mocks = vi.hoisted(() => {
   state.snapshot = () => ({ ...state.store, setUser: state.setUser, adoptProfile: state.adoptProfile })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   useStore.setState = patch => Object.assign(mocks.store, patch)
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: (render, opts) => { mocks.sheets.push({ render, opts }); return {} } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: (...a) => mocks.api(...a),
   webauthnOK: () => mocks.webauthn,
   passkeyAssertion: (...a) => mocks.passkeyAssertion(...a),
   createPasskey: (...a) => mocks.createPasskey(...a),
-  // PasswordAuth.jsx, for passwordError, imports these too.
+  // PasswordAuth.tsx, for passwordError, imports these too.
   passwordLogin: vi.fn(), passwordRegister: vi.fn(), passwordResetRedeem: vi.fn(),
 }))
-vi.mock('../lib/clipboard.js', () => ({ copyText: (...a) => mocks.copyText(...a) }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: mocks.askAddDeviceData }))
+vi.mock('../lib/clipboard.ts', () => ({ copyText: (...a) => mocks.copyText(...a) }))
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: mocks.askAddDeviceData }))
 // lean-qr loads on demand; what matters here is what the QR code carries.
-vi.mock('./QrCanvas.jsx', () => ({ default: ({ value }) => <canvas data-qr={value} /> }))
+vi.mock('./QrCanvas.tsx', () => ({ default: ({ value }) => <canvas data-qr={value} /> }))
 
 const fail = (status, data) => Object.assign(new Error(data?.error || 'HTTP ' + status), { status, data })
 const named = (name, e = new Error(name)) => Object.assign(e, { name })
@@ -171,7 +171,7 @@ describe('Settings: the passkey list', () => {
   })
 })
 
-/* Removing asks for the proof adding does (proveOwner in api/server.js), on the sheet that says
+/* Removing asks for the proof adding does (proveOwner in api/server.ts), on the sheet that says
    what removing means: the tap that confirms it is the proof, and the proof goes with the removal
    and nothing else. */
 describe('Settings: removing a passkey', () => {
@@ -401,7 +401,7 @@ describe('a code for another device, from the paired phone app', () => {
 })
 
 // Pairing the phone app: the code becomes a token the server keeps renewing, so it is minted only
-// after the same proof as a device link (api/server.js POST /api/pair/create).
+// after the same proof as a device link (api/server.ts POST /api/pair/create).
 describe('Settings: pairing the mobile app', () => {
   afterEach(() => { mocks.MOBILE = false })
   it('asks for the proof first, and only then shows the code', async () => {

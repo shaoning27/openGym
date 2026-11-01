@@ -1,11 +1,11 @@
 // log_workout against a stand-in for the api: a node:http server that answers /api/me and
-// /api/data the way api/server.js does, and records what it is sent. What the real server does
+// /api/data the way api/server.ts does, and records what it is sent. What the real server does
 // with the write is log-workout.e2e.test.js; the arithmetic is frontend/src/lib/log-workout.test.js.
 import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest'
 import http from 'node:http'
-import { logWorkout, WRITE_LIMIT, _resetWriteWindow } from '../src/write-tools.js'
-import { apiBase, apiConfig } from '../src/api-client.js'
-import { _seedStateForTests } from '../src/state.js'
+import { logWorkout, WRITE_LIMIT, _resetWriteWindow } from '../src/write-tools.ts'
+import { apiBase, apiConfig } from '../src/api-client.ts'
+import { _seedStateForTests } from '../src/state.ts'
 
 const TOKEN = 'tok.secret-value'
 const UID = 'u1'
@@ -293,7 +293,7 @@ describe('configuration', () => {
   })
 })
 
-// Last: seeding gives state.js a profile of its own for the rest of this file.
+// Last: seeding gives state.ts a profile of its own for the rest of this file.
 describe('the token has to belong to the profile being read', () => {
   test('a token for another profile is refused before anything is read or written', async () => {
     api = await stubApi(DOC(), { uid: 'someone-else' })

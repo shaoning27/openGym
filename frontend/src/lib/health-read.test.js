@@ -2,10 +2,10 @@
 // fills what is missing (the Apple Watch's own reading is never replaced), weigh-ins typed into
 // openGym always win, openGym's own records are never read back, nothing imported is written back.
 import { describe, expect, it } from 'vitest'
-import { isOwnRecord, mergeHeartRate, mergeWeighIns, lacksHeartRate } from './health-read.js'
-import { healthRecords, planSync } from './health-connect.js'
-import { mergeBodyweight, mergeStates, stampChange } from './sync-merge.js'
-import { logWeighIn } from './bodyweight.js'
+import { isOwnRecord, mergeHeartRate, mergeWeighIns, lacksHeartRate } from './health-read.ts'
+import { healthRecords, planSync } from './health-connect.ts'
+import { mergeBodyweight, mergeStates, stampChange } from './sync-merge.ts'
+import { logWeighIn } from './bodyweight.ts'
 
 const T0 = Date.UTC(2026, 9, 15, 17, 0, 0)
 const s = sec => T0 + sec * 1000

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { workoutsOn, backfillStart, backfillEnd, insertChronological, completeBackfill, markAllSetsDone, historyAsOf, sessionHistory } from './backfill.js'
+import { workoutsOn, backfillStart, backfillEnd, insertChronological, completeBackfill, markAllSetsDone, historyAsOf, sessionHistory } from './backfill.ts'
 
 const w = (id, d, start = 0) => ({ id, d, start })
 

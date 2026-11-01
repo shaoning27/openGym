@@ -13,13 +13,13 @@ Two new set "shapes" on top of the existing straight/warm-up model:
   bursts of extra reps, each preceded by a brief rest.
 
 Both are **planned on the exercise**, in the same config sheet used by the routine editor and by
-"add exercise" mid-workout (`ExConfig` in `sheets.jsx`) — not decided live during the workout.
+"add exercise" mid-workout (`ExConfig` in `sheets.tsx`) — not decided live during the workout.
 Planning it stamps every set of that exercise and pre-fills the actual drop/burst rows with
 real, already-editable numbers the moment the session starts. A straight (unplanned) set can
 still grow a drop/burst live via "+ Drop"/"+ Burst" — that path never went away, it just isn't
 the primary one anymore.
 
-## The set row (`frontend/src/lib/workout-model.js`)
+## The set row (`frontend/src/lib/workout-model.ts`)
 
 There was never a `type` enum on a set row before this — only `phase` (`'work'` / `'warmup'`,
 with a legacy `warmup: true` boolean as fallback). This adds a **second, orthogonal**
@@ -50,7 +50,7 @@ for the whole thing. Getting this backwards is exactly the bug this file's earli
 `r` held only the split's biggest chunk, so the row displayed a random-looking fraction of what
 was configured instead of the number that was actually typed in.
 
-Pure helpers in `workout-model.js`, mirroring the existing `phaseForSet`/`isWarmupRow` style:
+Pure helpers in `workout-model.ts`, mirroring the existing `phaseForSet`/`isWarmupRow` style:
 
 - `setType(set)`, `isDropSet(set)`, `isRestPauseSet(set)` — read the discriminator.
 - `dropsOf(set)` / `clustersOf(set)` — the extras array, or `[]` for anything else.
@@ -68,14 +68,14 @@ Pure helpers in `workout-model.js`, mirroring the existing `phaseForSet`/`isWarm
   planned rest-pause exercise configures directly: you say how many total reps you want out of
   the whole rest-pause portion, not how many separate rests.
 
-In `Workout.jsx`, `addBurstRow`/`removeCluster`/`setClusterField` all adjust the row's own `r` by
+In `Workout.tsx`, `addBurstRow`/`removeCluster`/`setClusterField` all adjust the row's own `r` by
 the same delta as whatever they just did to `clusters`, so the invariant (`r` == sum of every
 `clustersOf` entry) survives live edits too, not just the initial plan — including the case of
 tapping "+ Burst" cold on a plain straight set, where the set's original reps become the seed a
 running total grows from rather than a separately-standing "main" effort. `addDrop`/`removeDrop`
 on a drop-set row do **not** do this — a drop-set's main set stays independent on purpose.
 
-## Planning (`ExConfig` in `sheets.jsx`) → `cfg.intensifier`
+## Planning (`ExConfig` in `sheets.tsx`) → `cfg.intensifier`
 
 The exercise config sheet (routine editor and mid-workout "add exercise" both use it) has an
 "Intensifier" picker: None / Drop-set / Rest-pause. Selecting one adds `intensifier` to the saved
@@ -93,14 +93,14 @@ config:
 { intensifier: { type: 'restpause', totalReps: 12, restSec: 15 } }
 ```
 
-`applyIntensifierPlan(sets, cfg)` (`history.js`) applies that. It must run **after**
+`applyIntensifierPlan(sets, cfg)` (`history.ts`) applies that. It must run **after**
 `applyPrescription`: a drop-set's chain of drops is a percentage of each row's own `w`, so it has
 to use the final prescribed weight, not the pre-progression one `buildSets` started from — same
 reasoning for where the two rest-pause rows get their weight from. Both call sites chain it last:
 
 ```js
-applyIntensifierPlan(applyPrescription(buildSets(st, cfg), plan), cfg)   // beginWorkout, sheets.jsx
-applyIntensifierPlan(freestyle ? sets : applyPrescription(sets, plan), full)  // add-exercise, Workout.jsx
+applyIntensifierPlan(applyPrescription(buildSets(st, cfg), plan), cfg)   // beginWorkout, sheets.tsx
+applyIntensifierPlan(freestyle ? sets : applyPrescription(sets, plan), full)  // add-exercise, Workout.tsx
 ```
 
 `buildSets` itself knows nothing about intensifiers — it only builds the plain rows (for
@@ -113,12 +113,12 @@ rest-pause, `applyIntensifierPlan` discards all of them but the weight).
   usually well above that goal. In practice this means a rest-pause exercise will almost always
   read as "hit the goal" and progress — not obviously wrong, but not a deliberately designed
   comparison either.
-- `onerm.js`'s `estimate1RM` refuses anything past `REP_CAP` (12 reps) as "work capacity, not
+- `onerm.ts`'s `estimate1RM` refuses anything past `REP_CAP` (12 reps) as "work capacity, not
   strength" — a rest-pause row's `r` being the total means any rest-pause exercise with a total
   over 12 (most of them) never contributes a 1RM estimate or PR. Also not fixed — it falls out
   naturally from an existing, deliberate rule, not a new one, but worth knowing it applies here.
 
-## Guided workout UI (`Workout.jsx`)
+## Guided workout UI (`Workout.tsx`)
 
 Every non-warm-up reps-mode row renders its drops/clusters as **editable sub-rows** right under
 it (`.subrow`, reusing the same stepper look as the main row, just smaller) — not read-only chips
@@ -139,7 +139,7 @@ Iterating on this feature while an old workout is still active, or without re-sa
 already-configured exercise, replays stale pre-`totalReps` data. Discard the active workout and
 re-save the exercise's config after a schema change like this one.
 
-## Settings (`useStore.js` DEF, `Settings.jsx`)
+## Settings (`useStore.ts` DEF, `Settings.tsx`)
 
 `S.restPauseSec` (default 15) is the fallback rest used when "+ Burst" is tapped on a set with no
 planned rest-pause of its own. It's a real user-editable default now — **Settings → During a
@@ -148,31 +148,31 @@ A planned exercise's own `intensifier.restSec` always overrides this.
 
 ## Why most of the app didn't need to change
 
-1RM estimation (`onerm.js`) and the progression engine (`progression.js`) read a set row's own
+1RM estimation (`onerm.ts`) and the progression engine (`progression.ts`) read a set row's own
 `w`/`r`/`sec` directly, never anything nested — so a drop-set's main set, or a rest-pause row's
 own total, is automatically the only thing they see; `drops`/`clusters` never had to be taught to
 either of them. What *did* need a one-line hook, because they sum across a session rather than
 reading one row:
 
-- `workoutVolume` (`history.js`) — adds `extraVolumeOf(s)` on top of `w×r` per row. Drop-set
+- `workoutVolume` (`history.ts`) — adds `extraVolumeOf(s)` on top of `w×r` per row. Drop-set
   drops count; rest-pause clusters don't (see above — they're already inside the row's own `r`).
-- `sessionEffSets` (`recovery.js`) — same split: each drop-set drop counts as an extra
+- `sessionEffSets` (`recovery.ts`) — same split: each drop-set drop counts as an extra
   set at its own RIR weight against the 90-day anchor, and rest-pause is a no-op
   for the same double-counting reason.
-- `applyPrescription` (`progression.js`) — when a policy grows the set count (bodyweight double
+- `applyPrescription` (`progression.ts`) — when a policy grows the set count (bodyweight double
   progression, issue #33), the newly appended row keeps the seed's `type` (that's the exercise's
   plan) but never its already-logged `drops`/`clusters` (that's specific work the new row never
   actually did).
 
-`muscles.js`'s `loadOf` ("effective sets" for the muscle-balance map) is untouched on purpose: a
+`muscles.ts`'s `loadOf` ("effective sets" for the muscle-balance map) is untouched on purpose: a
 drop-set/rest-pause row still counts as one set there, same as today — that model was never
 weight-based to begin with.
 
 ## Persistence
 
-No backend or schema change was needed. `api/server.js` writes `state-<uid>.json` verbatim with
+No backend or schema change was needed. `api/server.ts` writes `state-<uid>.json` verbatim with
 no set-shape validation beyond "is an object". The MCP server (`mcp/src`) re-imports the same
-`workoutVolume`/`onerm.js`/`muscles.js` helpers from `frontend/src/lib` rather than duplicating
+`workoutVolume`/`onerm.ts`/`muscles.ts` helpers from `frontend/src/lib` rather than duplicating
 them, so its reported volume/1RM figures pick up the fix automatically too.
 
 ## i18n
@@ -192,17 +192,17 @@ All new strings are translated in `locales/es.js` (the other ten locales fall ba
 A third, independent mark: `failure: true` on a row (written only when on), for a set taken to
 failure. It is not a `type`, because a drop-set or a rest-pause set can be taken to failure too.
 
-- `isFailureSet(set)` / `toggleFailure(set)` in `workout-model.js`. A warm-up is never one, even
+- `isFailureSet(set)` / `toggleFailure(set)` in `workout-model.ts`. A warm-up is never one, even
   if it carries the key.
-- Effort: `effort.js rirOf` reads a failure set as RIR 0 when nothing was rated by hand, so the
-  effort stats, the "hard sets" filter and the fatigue model (`recovery.js resolveSetRir`, which
+- Effort: `effort.ts rirOf` reads a failure set as RIR 0 when nothing was rated by hand, so the
+  effort stats, the "hard sets" filter and the fatigue model (`recovery.ts resolveSetRir`, which
   calls `rirOf` first) all agree. A logged RIR/RPE wins.
 - Everything that reads `w`/`r` is unchanged: volume, records, 1RM and progression treat it as the
   work set it is.
 - Shown as an "F": on the set number in the workout (cards, list, compact), on the focus card, in
   `setLabel` (history, text export, the set menu, MCP labels) and on the finish summary.
 - Planned with `cfg.lastToFailure: true` ("Last set to failure" in `ExConfig`): `applyFailurePlan`
-  in `history.js`, run inside `applyIntensifierPlan`, marks the last work row (both halves of a
+  in `history.ts`, run inside `applyIntensifierPlan`, marks the last work row (both halves of a
   timed per-side pair) of a freshly built exercise. Choosing Greyskull in the sheet turns it on.
 - Imports: a Hevy or CSV "failure" set type becomes `failure: true`.
 

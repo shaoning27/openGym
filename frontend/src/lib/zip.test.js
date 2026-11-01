@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { zipStore, readZip, looksLikeZip, crc32, ZipError, MAX_ENTRIES, MAX_TOTAL } from './zip.js'
+import { zipStore, readZip, looksLikeZip, crc32, ZipError, MAX_ENTRIES, MAX_TOTAL } from './zip.ts'
 
 const text = async blob => new TextDecoder().decode(new Uint8Array(await blob.arrayBuffer()))
 const u8 = async blob => new Uint8Array(await blob.arrayBuffer())

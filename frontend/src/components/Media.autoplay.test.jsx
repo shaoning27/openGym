@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { describe, expect, it, vi } from 'vitest'
-import { autoplayClip, autoplayMuted } from './Media.jsx'
+import { autoplayClip, autoplayMuted } from './Media.tsx'
 
 // Android's WebView autoplays only a video that carries the muted *attribute*; React sets the
 // property alone, and the catalogue loops sat on their first frame in the phone app.

@@ -4,10 +4,10 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { logPastWorkoutSheet } from './sheets.jsx'
-import { todayISO } from './lib/format.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { logPastWorkoutSheet } from './sheets.tsx'
+import { todayISO } from './lib/format.ts'
 
 const mounted = []
 function type(el, value) {

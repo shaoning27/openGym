@@ -6,7 +6,7 @@
    in fact gone out.
 
    The subscription below has a private endpoint, so pushEndpointError prunes it without opening a
-   socket: no outbound network, and the prune is deterministic. Real server.js in a child. */
+   socket: no outbound network, and the prune is deterministic. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -36,7 +36,7 @@ async function startServer(t) {
     subs: [{ userId: 'u_test_1', endpoint: 'https://10.1.2.3/push/abc', keys: { p256dh: 'p', auth: 'a' }, created: new Date().toISOString() }]
   }));
   fs.writeFileSync(path.join(dataDir, 'state-u_test_1.json'), JSON.stringify({ _rev: 1, lang: 'en', workouts: [], routines: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     // AUDIT_LOG off and the reminder tick parked: the only write this test wants to fail is the prune's
     env: {

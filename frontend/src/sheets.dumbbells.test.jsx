@@ -1,12 +1,12 @@
 // @vitest-environment happy-dom
 // The dumbbell inventory sheet (Settings → Equipment → Dumbbells, issue #376) writes the list of
-// bells for the profile's unit, stamped, the way lib/dumbbells.js reads it.
+// bells for the profile's unit, stamped, the way lib/dumbbells.ts reads it.
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore, DEF } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { dumbbellInventorySheet } from './sheets.jsx'
+import { useStore, DEF } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { dumbbellInventorySheet } from './sheets.tsx'
 
 const mounted = []
 function mountTopSheet() {

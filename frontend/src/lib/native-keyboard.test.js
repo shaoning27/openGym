@@ -7,8 +7,8 @@
 // Android, iOS, a browser) nothing changes.
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
-import { nativeKeyboardHeight, visibleBottom, revealAboveKeyboard, startNativeKeyboard, NATIVE_KEYBOARD_EVENT } from './native-keyboard.js'
-import { sheetKeyboardInsets } from './use-sheet-keyboard.js'
+import { nativeKeyboardHeight, visibleBottom, revealAboveKeyboard, startNativeKeyboard, NATIVE_KEYBOARD_EVENT } from './native-keyboard.ts'
+import { sheetKeyboardInsets } from './use-sheet-keyboard.ts'
 
 const read = rel => readFileSync(new URL(rel, import.meta.url), 'utf8')
 const root = () => document.documentElement

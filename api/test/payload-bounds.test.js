@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import { tempData, sampleState, D } from './helpers.mjs';
 
 tempData();
-const payload = await import('../coach/core/payload.js');
+const payload = await import('../coach/core/payload.ts');
 
 const HUGE = 'x'.repeat(200_000);
 const hugeProfile = () => ({
@@ -111,7 +111,7 @@ test('names, the declined log and the meta codes are bounded too, since the stat
 // The server's limits are the screen's limits. If someone lengthens a field on the intake
 // screen, this says the payload would now cut what the person was allowed to type.
 test('the limits match the intake screen', () => {
-  const src = fs.readFileSync(new URL('../../frontend/src/views/CoachIntake.jsx', import.meta.url), 'utf8');
+  const src = fs.readFileSync(new URL('../../frontend/src/views/CoachIntake.tsx', import.meta.url), 'utf8');
   for (const [field, max] of Object.entries(payload.PROFILE_TEXT_MAX)) {
     const m = src.match(new RegExp('maxLength=\\{(\\d+)\\} value=\\{p\\.' + field + '\\}'));
     assert.ok(m, field + ' has a maxLength on the intake screen');

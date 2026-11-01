@@ -1,11 +1,11 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { restoredStateFor } from '../store/useStore.js'
-import { mergeStates } from './sync-merge.js'
-import { exportBackupZip, readBackupFile } from './backup-media.js'
-import { createMediaStore, memoryBackend } from './media-store.js'
-import { parsePlan, buildPlanBundle } from './plan-share.js'
-import { restSecFor } from './supersetFlow.js'
+import { restoredStateFor } from '../store/useStore.ts'
+import { mergeStates } from './sync-merge.ts'
+import { exportBackupZip, readBackupFile } from './backup-media.ts'
+import { createMediaStore, memoryBackend } from './media-store.ts'
+import { parsePlan, buildPlanBundle } from './plan-share.ts'
+import { restSecFor } from './supersetFlow.ts'
 
 /* DATA SAFETY for an exercise's own "No timer" (Discord lajawi): one optional `restOff: true` on a
    routine entry and a session target. Nothing existing changes meaning: a 0 or missing restSec

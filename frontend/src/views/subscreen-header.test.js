@@ -9,8 +9,8 @@ import { fileURLToPath } from 'node:url'
 const PAGES = ['Admin', 'History', 'CheckIn', 'Measurements', 'CoachSetup', 'Muscles', 'ProgressPhotos', 'StructuralBalance']
 
 const titleAfterBack = name => {
-  const src = readFileSync(fileURLToPath(new URL(`./${name}.jsx`, import.meta.url)), 'utf8')
-  const at = src.indexOf('<Icon name="chevronLeft" /></button>')
+  const src = readFileSync(fileURLToPath(new URL(`./${name}.tsx`, import.meta.url)), 'utf8')
+  const at = src.indexOf('<Icon name="chevronLeft"/></button>')
   expect(at, `${name} has a back chevron`).toBeGreaterThan(-1)
   return src.slice(at, src.indexOf('</h1>', at))
 }

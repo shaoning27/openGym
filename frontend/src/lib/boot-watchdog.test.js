@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { hideBoot } from './boot.js'
+import { hideBoot } from './boot.ts'
 
 const html = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../../index.html'), 'utf8')
 const inline = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map(m => m[1])
@@ -93,7 +93,7 @@ describe('boot watchdog', () => {
     expect(document.getElementById('boot')).toBeNull()
   })
 
-  it('leaves the message to lib/boot.js, which takes it away once a slow start gets there', () => {
+  it('leaves the message to lib/boot.ts, which takes it away once a slow start gets there', () => {
     vi.advanceTimersByTime(10000)
     expect(boot().className).toBe('fail')
     hideBoot()

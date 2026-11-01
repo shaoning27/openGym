@@ -2,13 +2,13 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, expect, it } from 'vitest'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { bindUI } from './components/ui.jsx'
-import { customExSheet, exerciseDetailSheet } from './sheets.jsx'
-import { CATALOGUE, registerCustom, searchExercises } from './lib/exercises.js'
-import { registerExerciseAliases } from './lib/exercise-aliases.js'
-import { _setLangState } from './lib/i18n-core.js'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { bindUI } from './components/ui.tsx'
+import { customExSheet, exerciseDetailSheet } from './sheets.tsx'
+import { CATALOGUE, registerCustom, searchExercises } from './lib/exercises.ts'
+import { registerExerciseAliases } from './lib/exercise-aliases.ts'
+import { _setLangState } from './lib/i18n-core.ts'
 
 bindUI(useUI)
 let root, host

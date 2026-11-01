@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { bootWait } from './boot.js'
+import { bootWait } from './boot.ts'
 
 it('lets the logo finish building before it goes', () => {
   expect(bootWait(100, false)).toBe(600)

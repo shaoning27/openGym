@@ -1,3 +1,3 @@
-// Kept as a module so existing imports keep working — the implementation now
-// lives in the shared control set.
-export { Stepper as default } from './ui.jsx'
+// Compatibility entry; business implementation is TypeScript.
+export * from './Stepper.tsx'
+export { default } from './Stepper.tsx'

@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { useStore, DEF } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { PhotoView, progressPhotosOf, AddPhotosSheet } from './ProgressPhotos.jsx'
-import { todayISO } from '../lib/format.js'
+import { useStore, DEF } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { PhotoView, progressPhotosOf, AddPhotosSheet } from './ProgressPhotos.tsx'
+import { todayISO } from '../lib/format.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

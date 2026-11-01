@@ -7,18 +7,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('react-router-dom', () => ({ useNavigate: () => vi.fn(), useParams: () => ({}) }))
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
-vi.mock('../components/Media.jsx', () => ({ Thumb: () => null }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => null }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
+vi.mock('../components/Media.tsx', () => ({ Thumb: () => null }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => null }))
 
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { deleteRoutineWithUndo, takeOutOfLoop } from './Plan.jsx'
-import { removeRoutineExercise } from './RoutineEdit.jsx'
-import { mergeStates, stampChange } from '../lib/sync-merge.js'
-import { saveRotation } from '../lib/rotation.js'
-import { stampPut } from '../../../api/sync-stamps.js'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { deleteRoutineWithUndo, takeOutOfLoop } from './Plan.tsx'
+import { removeRoutineExercise } from './RoutineEdit.tsx'
+import { mergeStates, stampChange } from '../lib/sync-merge.ts'
+import { saveRotation } from '../lib/rotation.ts'
+import { stampPut } from '../../../api/sync-stamps.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const S = () => useStore.getState().S
@@ -131,7 +131,7 @@ describe('Undo of a routine swiped out of the loop', () => {
 
 describe('Undo of a routine swiped away in Plan, with an older app (v1.3.9) on the account', () => {
   // v1.3.9's merge keeps a routine whole, the version with the later `_ts`, and stamps nothing
-  // but `_ts` (lib/sync-merge.js of v1.3.9).
+  // but `_ts` (lib/sync-merge.ts of v1.3.9).
   const v139Merge = (local, server) => {
     const n = (server._ts || 0) > (local._ts || 0) ? server : local, o = n === local ? server : local
     const out = clone(n)

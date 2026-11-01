@@ -2,13 +2,13 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Settings from './Settings.jsx'
+import Settings from './Settings.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 // #200: the Health Connect card. Only on the Android app, only where Health Connect is there or
 // can be installed, off until switched on, and turning it off asks what happens to what was
-// already written. lib/health-sync.js is mocked; its own tests cover the writing.
+// already written. lib/health-sync.ts is mocked; its own tests cover the writing.
 const mocks = vi.hoisted(() => {
   const state = { S: null, MOBILE: true, android: true, status: { status: 'available', granted: false }, health: { on: false, written: {}, error: null } }
   state.snapshot = () => ({
@@ -30,28 +30,28 @@ const mocks = vi.hoisted(() => {
   state.toast = vi.fn()
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, DEF: { reminder: { time: '17:30' } }, hasData: () => false }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: mocks.toast, openSheet: vi.fn() })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), webauthnOK: () => false, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), IS_ANDROID: false }))
-vi.mock('../lib/push.js', () => ({ pushSupported: () => false, enablePush: vi.fn(), disablePush: vi.fn(), sendTestPush: vi.fn() }))
-vi.mock('../lib/wakelock.js', () => ({ wakeLockSupported: () => false }))
-vi.mock('../lib/mobile.js', () => ({
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), webauthnOK: () => false, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), IS_ANDROID: false }))
+vi.mock('../lib/push.ts', () => ({ pushSupported: () => false, enablePush: vi.fn(), disablePush: vi.fn(), sendTestPush: vi.fn() }))
+vi.mock('../lib/wakelock.ts', () => ({ wakeLockSupported: () => false }))
+vi.mock('../lib/mobile.ts', () => ({
   get MOBILE() { return mocks.MOBILE },
   isAndroid: () => Promise.resolve(mocks.android),
   shareExport: vi.fn(), syncReminder: vi.fn(),
 }))
-vi.mock('../lib/update.js', () => ({ checkForUpdate: () => Promise.resolve({ hasUpdate: false }), downloadAndInstall: vi.fn() }))
-vi.mock('../lib/health-sync.js', () => ({
+vi.mock('../lib/update.ts', () => ({ checkForUpdate: () => Promise.resolve({ hasUpdate: false }), downloadAndInstall: vi.fn() }))
+vi.mock('../lib/health-sync.ts', () => ({
   healthStatus: () => Promise.resolve(mocks.status),
   loadHealth: () => Promise.resolve(mocks.health),
   enableHealth: (...a) => mocks.enableHealth(...a),
@@ -61,8 +61,8 @@ vi.mock('../lib/health-sync.js', () => ({
   enableRead: (...a) => mocks.enableRead(...a),
   disableRead: (...a) => mocks.disableRead(...a),
 }))
-vi.mock('./MobileOnboarding.jsx', () => ({ ConnectSheet: () => null }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('./MobileOnboarding.tsx', () => ({ ConnectSheet: () => null }))
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), confirmSheet: vi.fn(), importFromApp: vi.fn(),
   importFromHevy: vi.fn(), equipmentProfileSheet: vi.fn(), menuSheet: (...a) => mocks.menuSheet(...a),
 }))

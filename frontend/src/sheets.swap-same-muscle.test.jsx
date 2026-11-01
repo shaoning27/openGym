@@ -5,11 +5,11 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { EXDB } from './lib/exercises.js'
-import { exercisePicker, swapActiveWorkoutExercise } from './sheets.jsx'
-import { sameMuscleFirst } from './lib/similar-exercises.js'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { EXDB } from './lib/exercises.ts'
+import { exercisePicker, swapActiveWorkoutExercise } from './sheets.tsx'
+import { sameMuscleFirst } from './lib/similar-exercises.ts'
 
 const mounted = []
 function renderTop() {

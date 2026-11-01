@@ -1,12 +1,12 @@
 // @vitest-environment happy-dom
 // A machine's own weight stack (issue #688): the editor under Plate loading writes the weights a
-// machine really has for that exercise, stamped, the way lib/dumbbells.js stackOf reads them.
+// machine really has for that exercise, stamped, the way lib/dumbbells.ts stackOf reads them.
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore, DEF } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { barWeightSheet } from './sheets.jsx'
+import { useStore, DEF } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { barWeightSheet } from './sheets.tsx'
 
 const FLY = '0596'      // lever seated fly
 const SQUAT = '0043'    // barbell

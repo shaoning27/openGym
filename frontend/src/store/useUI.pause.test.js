@@ -3,13 +3,13 @@
 // the old time, and resuming books the push again for the new one. The timed hold is its own timer.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({ ok: true })) }))
 const { beep, chime } = vi.hoisted(() => ({ beep: vi.fn(), chime: vi.fn() }))
-vi.mock('../lib/sound.js', () => ({ beep, chime, vibrate: vi.fn(), alertBuzz: vi.fn() }))
+vi.mock('../lib/sound.ts', () => ({ beep, chime, vibrate: vi.fn(), alertBuzz: vi.fn() }))
 
-import { api } from '../lib/api.js'
-import { useUI } from './useUI.js'
-import { useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { useUI } from './useUI.ts'
+import { useStore } from './useStore.ts'
 
 const posts = path => api.mock.calls.filter(([p]) => p === path).map(([, o]) => JSON.parse(o.body))
 

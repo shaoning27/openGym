@@ -6,7 +6,7 @@ const m = vi.hoisted(() => ({
   active: true, appListeners: [], calls: [],
   installApk: null, downloadFile: null, deleteFile: null,
 }))
-vi.mock('./mobile.js', () => ({ MOBILE: true }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true }))
 vi.mock('@capacitor/core', () => ({ registerPlugin: () => ({ installApk: a => m.installApk(a) }) }))
 vi.mock('@capacitor/filesystem', () => ({
   Directory: { Cache: 'CACHE' },
@@ -24,7 +24,7 @@ vi.mock('@capacitor/app', () => ({
   },
 }))
 
-import { downloadAndInstall, whenInForeground, forgetDownloadedUpdate } from './update.js'
+import { downloadAndInstall, whenInForeground, forgetDownloadedUpdate } from './update.ts'
 
 const HASH = 'a'.repeat(64)
 const tick = async (n = 10) => { for (let i = 0; i < n; i++) await Promise.resolve() }

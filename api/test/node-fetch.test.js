@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import http from 'node:http';
 import { fetch as undiciFetch, Agent } from 'undici';
 
-const { fetchFor, dispatcherFor } = await import('../coach/node-fetch.js');
+const { fetchFor, dispatcherFor } = await import('../coach/node-fetch.ts');
 
 function slowServer(delayMs) {
   const server = http.createServer((req, res) => setTimeout(() => { res.setHeader('content-type', 'application/json'); res.end('{"ok":true}'); }, delayMs));

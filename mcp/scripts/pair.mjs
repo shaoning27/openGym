@@ -9,7 +9,7 @@
  * Pairing again gets a new one but does not end the old: to retire a token, sign out
  * everywhere. Only the token goes to stdout, so it can be piped or captured; everything else is
  * on stderr. */
-import { apiBase } from '../src/api-client.js'
+import { apiBase } from '../src/api-client.ts'
 
 const [url, code] = process.argv.slice(2)
 if (!url || !code) {

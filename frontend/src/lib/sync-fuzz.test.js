@@ -7,14 +7,14 @@
  * still held as added back, and a star set on a device that never saw an earlier unstar was lost.
  */
 import { describe, expect, it } from 'vitest'
-import * as M from './sync-merge.js'
-import * as U from './units.js'
-import { stampPut } from '../../../api/sync-stamps.js'
+import * as M from './sync-merge.ts'
+import * as U from './units.ts'
+import { stampPut } from '../../../api/sync-stamps.ts'
 
 const { mergeStates, stampWorkout, keepReset } = M
 const unitOps = []
 const clone = o => (o === undefined ? undefined : JSON.parse(JSON.stringify(o)))
-// What server.js sends a client: the stored document without the server's own notes.
+// What server.ts sends a client: the stored document without the server's own notes.
 const forClient = S => { const x = clone(S); if (x) { delete x._unstamped; delete x._prior } return x }
 const DEL = '__DELETED__'
 

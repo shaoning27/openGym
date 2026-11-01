@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest'
-import { nextOpenSet, workoutKeyAction } from './workout-keys.js'
-import { makeSideSet } from './workout-model.js'
+import { nextOpenSet, workoutKeyAction } from './workout-keys.ts'
+import { makeSideSet } from './workout-model.ts'
 
 const key = (k, extra = {}) => ({ key: k, target: document.body, ...extra })
 const el = html => {

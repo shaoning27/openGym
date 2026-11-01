@@ -2,7 +2,7 @@
    refused, however often the phone had been used. GET /api/me — which the phone asks on every
    start — now hands a bearer session past half its lifetime a fresh token. Revocation must
    survive that: the renewed token carries the account's session version, so "sign out
-   everywhere" ends it, and a token already revoked is never renewed. Real server.js in a child. */
+   everywhere" ends it, and a token already revoked is never renewed. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -18,7 +18,7 @@ const SECRET = crypto.randomBytes(32).toString('hex');
 const DAY = 86400000;
 const SESSION_DAYS = 10;
 
-// Same construction as server.js makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
+// Same construction as server.ts makeSession(): payload `uid:exp:sv`, HMAC-SHA256 over SECRET.
 function mint(uid, { daysLeft, sv = 0 }) {
   const payload = `${uid}:${Date.now() + daysLeft * DAY}:${sv}`;
   return payload + '.' + crypto.createHmac('sha256', SECRET).update(payload).digest('base64url');
@@ -39,7 +39,7 @@ async function startServer(t) {
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-renew-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: USERS, creds: [], subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', SESSION_DAYS: String(SESSION_DAYS) }
   });

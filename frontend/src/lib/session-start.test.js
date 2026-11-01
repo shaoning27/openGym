@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { buildSessionEntries, plannedConfigOf, builtOutOfProgression } from './session-start.js'
-import { readSession } from './progression.js'
-import { isWarmupRow } from './workout-model.js'
+import { buildSessionEntries, plannedConfigOf, builtOutOfProgression } from './session-start.ts'
+import { readSession } from './progression.ts'
+import { isWarmupRow } from './workout-model.ts'
 
 // The session builder used by the live start and by "log a past workout".
 describe('buildSessionEntries', () => {

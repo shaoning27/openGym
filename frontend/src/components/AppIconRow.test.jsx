@@ -5,14 +5,14 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { APP_ICON_VARIANTS } from '../lib/app-icon-variants.js'
+import { APP_ICON_VARIANTS } from '../lib/app-icon-variants.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const m = vi.hoisted(() => ({ state: { supported: true, name: 'default' }, later: false, fail: false, calls: [], asked: 0, toast: null }))
-vi.mock('../lib/mobile.js', () => ({ MOBILE: true }))
-vi.mock('../store/useUI.js', () => ({ useUI: { getState: () => ({ toast: m.toast }) } }))
-// Like the real proxy: `then` is a native call that never settles (lib/app-icon.js keeps it in an object).
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: true }))
+vi.mock('../store/useUI.ts', () => ({ useUI: { getState: () => ({ toast: m.toast }) } }))
+// Like the real proxy: `then` is a native call that never settles (lib/app-icon.ts keeps it in an object).
 vi.mock('@capacitor/core', () => ({
   registerPlugin: () => new Proxy({}, {
     get: (_, prop) => {
@@ -29,9 +29,9 @@ vi.mock('@capacitor/core', () => ({
   }),
 }))
 
-const { default: AppIconRow } = await import('./AppIconRow.jsx')
-const { _resetAppIconForTests } = await import('../lib/app-icon.js')
-const { searchSettings } = await import('../views/settings-pages.js')
+const { default: AppIconRow } = await import('./AppIconRow.tsx')
+const { _resetAppIconForTests } = await import('../lib/app-icon.ts')
+const { searchSettings } = await import('../views/settings-pages.ts')
 
 let host, root
 beforeEach(() => {

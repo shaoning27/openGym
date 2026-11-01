@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { isoOf } from './format.js'
-import { buildReminderNotifications } from './mobile.js'
+import { isoOf } from './format.ts'
+import { buildReminderNotifications } from './mobile.ts'
 
 const push = { id: 'push', name: 'Push' }
 const pull = { id: 'pull', name: 'Pull' }

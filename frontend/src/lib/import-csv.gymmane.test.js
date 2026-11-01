@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseWorkoutCSV } from './import-csv.js'
+import { parseWorkoutCSV } from './import-csv.ts'
 
 // Hand-written from the header GymMane's code writes (services/local_store.dart, read for #647);
 // no real export yet, so the values are made up and only the columns are theirs.

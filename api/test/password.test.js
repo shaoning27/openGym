@@ -5,7 +5,7 @@ import crypto from 'node:crypto';
 import {
   hashPassword, verifyPassword, needsRehash, passwordProblem, nameKey,
   makeResetCode, hashResetCode, resetCodeMatches
-} from '../password.js';
+} from '../password.ts';
 
 test('a hash is a versioned scrypt string with its own salt, and only the password verifies', async () => {
   const a = await hashPassword('correct horse battery');

@@ -1,12 +1,12 @@
 // @vitest-environment happy-dom
-import { LANGS, DERIVED_LOCALES } from './lib/i18n-core.js'
+import { LANGS, DERIVED_LOCALES } from './lib/i18n-core.ts'
 import { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { swapActiveWorkoutExercise } from './sheets.jsx'
-import { EXDB } from './lib/exercises.js'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
+import { swapActiveWorkoutExercise } from './sheets.tsx'
+import { EXDB } from './lib/exercises.ts'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
 
 const clone = value => JSON.parse(JSON.stringify(value))
 const ids = EXDB.slice(0, 3).map(exercise => exercise.id)

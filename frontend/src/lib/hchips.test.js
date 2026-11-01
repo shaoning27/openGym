@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { afterEach, describe, expect, it } from 'vitest'
-import { installChipDrag } from './hchips.js'
+import { installChipDrag } from './hchips.ts'
 
 // A real .chips element with overridable scroll geometry and a clamping scrollLeft.
 const mountStrip = ({ scrollWidth = 800, clientWidth = 300 } = {}) => {

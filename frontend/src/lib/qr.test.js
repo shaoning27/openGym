@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { normalizeFmt, canRenderFmt } from './qr.js'
+import { normalizeFmt, canRenderFmt } from './qr.ts'
 
 // The QR helpers decide which scanned/typed codes the check-in feature will store: it can read
 // many symbologies but only redraw QR, so canRenderFmt is the gate, and normalizeFmt is what

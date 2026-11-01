@@ -4,7 +4,7 @@ import {
   normalizeMeasurementEntry, normalizeMeasurementsState, measurementSeries,
   toMeasurementDisplay, fromMeasurementDisplay, measurementEntryHasValues,
   measurementUnit, measurementValue, customMeasurementUnits,
-} from './measurements.js'
+} from './measurements.ts'
 
 describe('body measurements', () => {
   it('creates a complete entry with nulls instead of ambiguous zeroes', () => {

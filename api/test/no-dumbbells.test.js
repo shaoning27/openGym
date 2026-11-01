@@ -6,9 +6,9 @@ import assert from 'node:assert/strict';
 import { tempData, sampleState } from './helpers.mjs';
 
 tempData();
-const payload = await import('../coach/core/payload.js');
-const { validatePlan } = await import('../coach/core/validate.js');
-const { handleFor } = await import('../coach/handle.js');
+const payload = await import('../coach/core/payload.ts');
+const { validatePlan } = await import('../coach/core/validate.ts');
+const { handleFor } = await import('../coach/handle.ts');
 
 const eqOf = id => (payload.LIBRARY.find(e => e.id === id) || {}).eq;
 const NONE = { none: { on: true, _ts: 1 } };

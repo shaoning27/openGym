@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 /* Body measurements, used the way a person uses them: choose the fields, log a check-in, see it,
  * correct it, delete it. Until this file the screen had no test at all (3.7 % of its lines run,
- * test report 2026-10-15) while lib/measurements.js was well covered, so a broken save button or
+ * test report 2026-10-15) while lib/measurements.ts was well covered, so a broken save button or
  * a cm/in mix-up on the form would have shipped green.
  */
 import React, { act } from 'react'
@@ -9,12 +9,12 @@ import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', async importOriginal => ({ ...(await importOriginal()), api: vi.fn(() => Promise.reject(new Error('offline'))), beacon: vi.fn() }))
+vi.mock('../lib/api.ts', async importOriginal => ({ ...(await importOriginal()), api: vi.fn(() => Promise.reject(new Error('offline'))), beacon: vi.fn() }))
 
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { todayISO } from '../lib/format.js'
-import Measurements, { measurementLogSheet } from './Measurements.jsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { todayISO } from '../lib/format.ts'
+import Measurements, { measurementLogSheet } from './Measurements.tsx'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const mounted = []

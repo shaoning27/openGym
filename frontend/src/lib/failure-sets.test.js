@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest'
-import { isFailureSet, toggleFailure, makeSideSet } from './workout-model.js'
-import { rirOf, effortSummary, effortHistogram, isHardSet, hasEffort } from './effort.js'
-import { resolveSetRir, anchorsByWorkout } from './recovery.js'
-import { setLabel, workoutVolume, applyFailurePlan, applyIntensifierPlan, copyRowAt, makeWarmupAt } from './history.js'
-import { buildSessionEntries } from './session-start.js'
-import { readSession, nextPrescription } from './progression.js'
-import { workoutText } from './workout-text.js'
-import { finishCompare } from './finish-compare.js'
-import { buildPlanBundle, parsePlan, planPrintHTML } from './plan-share.js'
+import { isFailureSet, toggleFailure, makeSideSet } from './workout-model.ts'
+import { rirOf, effortSummary, effortHistogram, isHardSet, hasEffort } from './effort.ts'
+import { resolveSetRir, anchorsByWorkout } from './recovery.ts'
+import { setLabel, workoutVolume, applyFailurePlan, applyIntensifierPlan, copyRowAt, makeWarmupAt } from './history.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { readSession, nextPrescription } from './progression.ts'
+import { workoutText } from './workout-text.ts'
+import { finishCompare } from './finish-compare.ts'
+import { buildPlanBundle, parsePlan, planPrintHTML } from './plan-share.ts'
 
 // Sets to failure (Discord request, roadmap v1.4.2 "a universal AMRAP / to failure flag"): an
 // optional `failure: true` on a row, and `lastToFailure: true` on a planned exercise.
@@ -166,12 +166,12 @@ describe('where set types show', () => {
 
 describe('imports keep a failure set', () => {
   it('from a CSV set type and from Hevy', async () => {
-    const { parseWorkoutCSV } = await import('./import-csv.js')
+    const { parseWorkoutCSV } = await import('./import-csv.ts')
     const csv = ['Date,Exercise,Weight,Reps,Set Type', '2026-08-08,Bench Press,80,5,normal', '2026-08-08,Bench Press,80,7,failure'].join('\n')
     const [plain, failed] = parseWorkoutCSV(csv, { unit: 'kg' }).workouts[0].entries[0].sets
     expect('failure' in plain).toBe(false)
     expect(failed.failure).toBe(true)
-    const { parseHevyWorkouts } = await import('./import-hevy.js')
+    const { parseHevyWorkouts } = await import('./import-hevy.ts')
     const workout = { id: 'h', title: 'Push', start_time: '2026-08-25T10:00:00+00:00', end_time: '2026-08-25T11:00:00+00:00', exercises: [
       { index: 0, title: 'Bench', exercise_template_id: '79D0BB3A', sets: [
         { index: 0, type: 'normal', weight_kg: 60, reps: 8 },

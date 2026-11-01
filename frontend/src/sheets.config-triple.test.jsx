@@ -2,11 +2,11 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { EXDB } from './lib/exercises.js'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exConfigSheet } from './sheets.jsx'
-import { bindUI } from './components/ui.jsx'
+import { EXDB } from './lib/exercises.ts'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exConfigSheet } from './sheets.tsx'
+import { bindUI } from './components/ui.tsx'
 
 // Triple progression (issue #179) on the exercise's settings: picked like any rule, with the set
 // ceiling next to the rep range.

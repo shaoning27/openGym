@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-// lib/sound.js keeps one AudioContext per page; each test gets a fresh module so that state
+// lib/sound.ts keeps one AudioContext per page; each test gets a fresh module so that state
 // does not leak. The fake context records what the real one would be asked to do.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -59,7 +59,7 @@ beforeEach(async () => {
   Object.defineProperty(navigator, 'audioSession', { value: session, configurable: true, writable: true })
   setDevice(IPHONE)
   vi.resetModules()
-  sound = await import('./sound.js')
+  sound = await import('./sound.ts')
 })
 afterEach(() => { vi.useRealTimers() })
 
@@ -269,7 +269,7 @@ describe('the chime at the end of a rest or a hold', () => {
     NoWaveCtx.prototype.createPeriodicWave = undefined
     window.AudioContext = NoWaveCtx
     vi.resetModules()
-    sound = await import('./sound.js')
+    sound = await import('./sound.ts')
     sound.chime(true)
     expect(ctx().oscs.map(o => o.type)).toEqual(['triangle', 'triangle', 'triangle'])
   })
@@ -455,7 +455,7 @@ describe('vibrate switch', () => {
 })
 
 // #375: the end of a rest or a hold, with "Vibrate when the phone is on silent" on in the Android
-// app, buzzes through the native alarm buzz App.jsx hands in; anything else is an ordinary buzz.
+// app, buzzes through the native alarm buzz App.tsx hands in; anything else is an ordinary buzz.
 describe('alertBuzz', () => {
   let calls
   const flush = async () => { for (let i = 0; i < 5; i++) await Promise.resolve() }

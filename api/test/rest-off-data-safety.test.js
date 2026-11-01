@@ -2,7 +2,7 @@
    survives PUT /api/data's stamping, also when an app from before it writes over it. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { stampPut } from '../sync-stamps.js';
+import { stampPut } from '../sync-stamps.ts';
 
 const old = () => ({
   _ts: 100, unit: 'kg',

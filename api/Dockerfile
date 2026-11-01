@@ -51,14 +51,14 @@ COPY package.json package-lock.json* ./
 # build host happened to be.
 RUN npm ci --omit=dev --omit=optional && npm cache clean --force
 
-# Every module server.js imports from the api root has to be named here: the image carries nothing
+# Every module server.ts imports from the api root has to be named here: the image carries nothing
 # else, and one that is missing only shows at boot, as ERR_MODULE_NOT_FOUND.
-COPY server.js push-messages.js nudge.js nudge-copy.js verify-error.js password.js rate-limit.js passkeys-store.js device-link.js media.js queue.js sync-stamps.js durable.js admin-socket.js recover.js ./
+COPY *.js *.ts ./
 COPY coach ./coach
 ENV NODE_ENV=production
 ENV PORT=3000
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "server.ts"]
 
 HEALTHCHECK --interval=5m \
             --timeout=5s \
@@ -89,7 +89,7 @@ VOLUME ["/coach-auth"]
 # ---------------------------------------------------------------------------------------------
 # Last, so that a plain `docker build ./api` keeps producing the runtime-free image.
 FROM base AS default
-# npm itself is only a build-time tool here: the server is started with `node server.js` and
+# npm itself is only a build-time tool here: the server is started with `node server.ts` and
 # nothing in it spawns npm. Its bundled dependency tree (tar, brace-expansion, ...) is where
 # every vulnerability the image scan ever reported lived — none of them was in a package the
 # app uses. Gone from the published image; the coach target keeps npm for the Codex CLI.

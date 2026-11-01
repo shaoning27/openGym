@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { buildCombinedEntries, deriveSessionName } from './session-merge.js'
-import { buildSessionEntries } from './session-start.js'
-import { buildCompletedWorkout } from './finish-workout.js'
-import { isWarmupRow } from './workout-model.js'
+import { buildCombinedEntries, deriveSessionName } from './session-merge.ts'
+import { buildSessionEntries } from './session-start.ts'
+import { buildCompletedWorkout } from './finish-workout.ts'
+import { isWarmupRow } from './workout-model.ts'
 
 const st = {
   unit: 'kg', workouts: [], exWeights: {},

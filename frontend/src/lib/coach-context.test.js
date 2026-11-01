@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { todayForCoach } from './coach-context.js'
+import { todayForCoach } from './coach-context.ts'
 
 const set = (w, r, done = true) => ({ w, r, done })
 const active = {

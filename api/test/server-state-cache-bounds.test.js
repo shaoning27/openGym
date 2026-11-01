@@ -37,7 +37,7 @@ async function startServer(t, env = {}) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users, creds: [], subs: [], invites: [] }));
   // Every filler needs a file of its own: a uid with no state file is never cached at all.
   for (const uid of FILLERS) fs.writeFileSync(path.join(dataDir, `state-${uid}.json`), JSON.stringify({ _rev: 1, workouts: [], routines: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', ...env }
   });

@@ -9,23 +9,23 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { DEF, useStore, restoredStateFor } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { EXIDX, exOr } from './lib/exercises.js'
-import { mergeStates } from './lib/sync-merge.js'
-import { todayISO } from './lib/format.js'
-import { beginWorkout, exerciseDetailSheet, exerciseHistorySheet, workoutDetailSheet, finishWorkout } from './sheets.jsx'
-import Home from './views/Home.jsx'
-import Plan from './views/Plan.jsx'
-import RoutineEdit from './views/RoutineEdit.jsx'
-import Workout from './views/Workout.jsx'
-import History from './views/History.jsx'
-import Stats from './views/Stats.jsx'
-import Library from './views/Library.jsx'
-import StructuralBalance from './views/StructuralBalance.jsx'
+import { DEF, useStore, restoredStateFor } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { EXIDX, exOr } from './lib/exercises.ts'
+import { mergeStates } from './lib/sync-merge.ts'
+import { todayISO } from './lib/format.ts'
+import { beginWorkout, exerciseDetailSheet, exerciseHistorySheet, workoutDetailSheet, finishWorkout } from './sheets.tsx'
+import Home from './views/Home.tsx'
+import Plan from './views/Plan.tsx'
+import RoutineEdit from './views/RoutineEdit.tsx'
+import Workout from './views/Workout.tsx'
+import History from './views/History.tsx'
+import Stats from './views/Stats.tsx'
+import Library from './views/Library.tsx'
+import StructuralBalance from './views/StructuralBalance.tsx'
 
-vi.mock('./lib/sound.js', () => ({ beep: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn(), restOver: vi.fn() }))
-vi.mock('./lib/api.js', async importOriginal => ({ ...(await importOriginal()), api: vi.fn(() => Promise.resolve({})), beacon: vi.fn() }))
+vi.mock('./lib/sound.ts', () => ({ beep: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn(), restOver: vi.fn() }))
+vi.mock('./lib/api.ts', async importOriginal => ({ ...(await importOriginal()), api: vi.fn(() => Promise.resolve({})), beacon: vi.fn() }))
 
 const clone = v => JSON.parse(JSON.stringify(v))
 // An id no catalogue of this build knows: v1.3.11 shipped this test with '4321', which v1.4.0 made a
@@ -152,7 +152,7 @@ describe('exercise ids this build does not know', () => {
     seed()
     const host = render(<Stats />)
     // Exercise progress opens on the known lift: an id with no name to show is left out of
-    // the picker (Stats.jsx exHist), not charted as a bare number.
+    // the picker (Stats.tsx exHist), not charted as a bare number.
     expect(host.textContent).toContain('Barbell Full Squat · 100 kg')
     expectKept(useStore.getState().S)
   })

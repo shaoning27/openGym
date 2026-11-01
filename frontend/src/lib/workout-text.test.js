@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { workoutText } from './workout-text.js'
-import { fmtDate } from './format.js'
-import { EXIDX } from './exercises.js'
-import { EXERCISE_NAME_LANGS, _setLangState, exerciseNameFor } from './i18n-core.js'
+import { workoutText } from './workout-text.ts'
+import { fmtDate } from './format.ts'
+import { EXIDX } from './exercises.ts'
+import { EXERCISE_NAME_LANGS, _setLangState, exerciseNameFor } from './i18n-core.ts'
 
 // Discord 'Improvement ideas': a past workout copied as plain text to paste anywhere.
 describe('workoutText', () => {
@@ -79,7 +79,7 @@ describe('workoutText in a combined session', () => {
   })
 })
 
-// Cardio speed in the profile's unit, as the detail sheet above the button shows it (lib/speed.js).
+// Cardio speed in the profile's unit, as the detail sheet above the button shows it (lib/speed.ts).
 describe('workoutText speed unit', () => {
   it('writes a run in mph when the profile shows mph, and in km/h by default', () => {
     const w = { d: '2026-09-03', start: 0, end: 0, name: 'Run', entries: [

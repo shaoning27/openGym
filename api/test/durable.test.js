@@ -1,5 +1,5 @@
 /* Every state, db.json and media write is flushed before its rename and the directory after it
-   (durable.js). Without the fsync the 200 went out while the rename sat in the page cache, and a
+   (durable.ts). Without the fsync the 200 went out while the rename sat in the page cache, and a
    host reset brought the previous file back: the device that had been told "saved" then took the
    older copy and deleted the workout locally too. (QA 2026-10-06: strace of a PUT showed no fsync.) */
 import { test } from 'node:test';
@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { atomicWrite } from '../durable.js';
+import { atomicWrite } from '../durable.ts';
 
 test('atomicWrite: bytes flushed, then the rename, then the directory', t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'durable-'));
@@ -25,9 +25,9 @@ test('atomicWrite: bytes flushed, then the rename, then the directory', t => {
   assert.equal(fs.statSync(file).mode & 0o777, 0o600);
 });
 
-test('server.js and media.js write through it', () => {
-  const server = fs.readFileSync(new URL('../server.js', import.meta.url), 'utf8');
-  assert.match(server, /function atomicWrite\(file, content, mode\) \{ durableWrite\(file, content, mode\); \}/);
-  const media = fs.readFileSync(new URL('../media.js', import.meta.url), 'utf8');
+test('server.ts and media.ts write through it', () => {
+  const server = fs.readFileSync(new URL('../server.ts', import.meta.url), 'utf8');
+  assert.match(server, /function atomicWrite\([^)]*\)\s*\{\s*durableWrite\(file,\s*content,\s*mode\);?\s*\}/);
+  const media = fs.readFileSync(new URL('../media.ts', import.meta.url), 'utf8');
   assert.match(media, /syncFile\(tmp\);[\s\S]*fs\.renameSync\(tmp, path\.join\(e\.dir/);
 });

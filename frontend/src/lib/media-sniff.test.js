@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { sniffKind, imageDims, inspectGif, cleanGif, inspectMp4, scrubMp4, inspectWebm } from './media-sniff.js'
-import { bytes, latin1, fill, jpeg, png, webpVp8, webpVp8l, webpVp8x, gif, gce, frame, appExt, comment, plainText, box, ftyp, mp4, webm } from './media-samples.test-util.js'
+import { sniffKind, imageDims, inspectGif, cleanGif, inspectMp4, scrubMp4, inspectWebm } from './media-sniff.ts'
+import { bytes, latin1, fill, jpeg, png, webpVp8, webpVp8l, webpVp8x, gif, gce, frame, appExt, comment, plainText, box, ftyp, mp4, webm } from './media-samples.test-util.ts'
 
 const has = (hay, needle) => {
   const n = latin1(needle)

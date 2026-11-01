@@ -1,7 +1,7 @@
 /* The routes anyone can call without a session (pairing, passkey sign-in and sign-up) used to
    answer a flood of junk with a 400 and an audit row each, never a 429: a few thousand requests
    pushed every other row out of the AUDIT_MAX-capped log in seconds. And a signed-in session could
-   mint pairing codes without limit, each one kept for five minutes. Real server.js in a child. */
+   mint pairing codes without limit, each one kept for five minutes. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -29,7 +29,7 @@ async function startServer(t) {
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({
     users: [{ id: 'u_test_1', name: 'One', created: new Date().toISOString() }], creds: [KEY.row('u_test_1')], subs: [], invites: []
   }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', AUDIT_LOG: '1' }
   });
@@ -53,7 +53,7 @@ async function startServer(t) {
 test('wrong pairing codes are all answered, but only a few of them reach the audit log', async t => {
   const h = await startServer(t);
   // Not paused: behind a proxy every visitor shares an address, and a 40-bit code that lives five
-  // minutes is not worth guessing (see the sign-in throttle in server.js).
+  // minutes is not worth guessing (see the sign-in throttle in server.ts).
   for (let i = 0; i < 30; i++) assert.equal((await h.post('/api/pair/redeem', { code: 'WRONG' + i })).status, 400);
   assert.equal(h.audit().filter(r => r.ev === 'auth.pair.fail').length, 10, 'ten a minute per address, not thirty');
 });

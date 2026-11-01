@@ -1,6 +1,6 @@
 // Labels the MCP tools hand to an LLM: they read a plan the way the app shows it.
 import { describe, test, expect } from 'vitest'
-import { exLine, policyName } from '../src/labels.js'
+import { exLine, policyName } from '../src/labels.ts'
 
 describe('labels', () => {
   test('triple progression has its name and reads its set range', () => {

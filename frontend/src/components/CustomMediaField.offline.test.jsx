@@ -9,18 +9,18 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 const h = vi.hoisted(() => ({ offline: true, toast: vi.fn() }))
-vi.mock('../lib/media-ingest.js', () => {
+vi.mock('../lib/media-ingest.ts', () => {
   if (h.offline) throw new TypeError('Failed to fetch dynamically imported module')
   return { ingestMediaFile: async () => ({ blobs: [], warnings: [], media: { kind: 'image', hash: 'h' } }) }
 })
-vi.mock('../lib/media-store.js', () => ({ mediaStore: { ready: async () => {}, persistent: true, put: async () => {} } }))
-vi.mock('../store/useUI.js', () => {
+vi.mock('../lib/media-store.ts', () => ({ mediaStore: { ready: async () => {}, persistent: true, put: async () => {} } }))
+vi.mock('../store/useUI.ts', () => {
   const useUI = sel => sel({ toast: h.toast })
   useUI.getState = () => ({ toast: h.toast })
   return { useUI }
 })
 
-const { useMediaPicker, mediaErrorText } = await import('./CustomMediaField.jsx')
+const { useMediaPicker, mediaErrorText } = await import('./CustomMediaField.tsx')
 
 let host, root, picker
 function Probe() { picker = useMediaPicker(); return null }

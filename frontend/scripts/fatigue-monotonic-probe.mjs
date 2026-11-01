@@ -1,4 +1,4 @@
-import { FATIGUE_SCAN_MS, fatigueOf } from '../src/lib/recovery.js'
+import { FATIGUE_SCAN_MS, fatigueOf } from '../src/lib/recovery.ts'
 
 const HOUR = 60 * 60 * 1000
 const DAY = 24 * HOUR

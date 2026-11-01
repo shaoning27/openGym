@@ -4,8 +4,8 @@
  * installed app fetches them ahead, when the connection is one to spend them on, and fetching
  * only what the worker's cache is missing. */
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { planMediaUrls, prefetchAllowed, prefetchMedia, startMediaPrefetch, installedApp, MEDIA_CACHE, PREFETCH_DELAY_MS } from './media-prefetch.js'
-import { EXIDX, imgSrc, gifSrc } from './exercises.js'
+import { planMediaUrls, prefetchAllowed, prefetchMedia, startMediaPrefetch, installedApp, MEDIA_CACHE, PREFETCH_DELAY_MS } from './media-prefetch.ts'
+import { EXIDX, imgSrc, gifSrc } from './exercises.ts'
 
 const BASE = 'https://gym.test/app/'
 const abs = src => new URL(src, BASE).href
@@ -39,7 +39,7 @@ describe('planMediaUrls', () => {
     vi.stubEnv('VITE_IMG_BASE', 'https://cdn.test/images/')
     vi.stubEnv('VITE_GIF_BASE', 'https://cdn.test/videos/')
     try {
-      const fresh = await import('./media-prefetch.js')
+      const fresh = await import('./media-prefetch.ts')
       expect(fresh.planMediaUrls({ routines: [{ ex: [{ id: bench.id }] }] }, BASE)).toEqual([])
     } finally { vi.unstubAllEnvs(); vi.resetModules() }
   })

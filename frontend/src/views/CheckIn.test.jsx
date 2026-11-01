@@ -40,13 +40,13 @@ const update = vi.fn((mut, push = true) => {
   mocks.writes.push({ push })
 })
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const snap = () => ({ S: mocks.S, update })
   const useStore = selector => selector ? selector(snap()) : snap()
   useStore.getState = snap
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({
     toast: (...a) => mocks.toast(...a),
     openSheet: render => { mocks.sheets.push(render); return { id: 's', close: () => {}, lock: () => {} } },
@@ -56,20 +56,20 @@ vi.mock('../store/useUI.js', () => {
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => mocks.nav }))
-vi.mock('../sheets.jsx', () => ({ confirmSheet: (...a) => mocks.confirmSheet(...a) }))
-vi.mock('../lib/scan.js', () => ({
+vi.mock('../sheets.tsx', () => ({ confirmSheet: (...a) => mocks.confirmSheet(...a) }))
+vi.mock('../lib/scan.ts', () => ({
   scanCode: (...a) => mocks.scanCode(...a),
   importCodeFromImage: (...a) => mocks.importCodeFromImage(...a),
 }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
 // The browser camera sheet is a device surface; capture its props so a test can answer as the
 // camera would. It renders nothing.
-vi.mock('../components/CameraScan.jsx', () => ({ default: props => { mocks.camera = props; return null } }))
+vi.mock('../components/CameraScan.tsx', () => ({ default: props => { mocks.camera = props; return null } }))
 // lean-qr loads through a dynamic import and draws to a real canvas. The value it is asked to
 // draw is the part that matters here, so the stub simply reflects it back into the DOM.
-vi.mock('../components/QrCanvas.jsx', () => ({ default: ({ value }) => <i data-qr={value} /> }))
+vi.mock('../components/QrCanvas.tsx', () => ({ default: ({ value }) => <i data-qr={value} /> }))
 
-import CheckIn, { openAddCard, openEditCard } from './CheckIn.jsx'
+import CheckIn, { openAddCard, openEditCard } from './CheckIn.tsx'
 
 /* ------------------------------- harness ------------------------------- */
 

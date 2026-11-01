@@ -3,11 +3,11 @@ import {
   PYRAMID_MAX, MAX_PYRAMID_SETS, isPyramid, normalizePyramid, pyramidFromFlat,
   flatFromPyramid, pyramidLabel, pyramidTargetAt, PYRAMID_PRESETS, normalizePyramidRest, pyramidRestFor,
   normalizePyramidWeight, pyramidWeightAt, maxRecordAt, maxRepsSeries,
-} from './pyramid.js'
-import { buildSets, setsRepsOf } from './history.js'
-import { policyFor } from './progression.js'
-import { buildPlanBundle, parsePlan } from './plan-share.js'
-import { convertWeight } from './units.js'
+} from './pyramid.ts'
+import { buildSets, setsRepsOf } from './history.ts'
+import { policyFor } from './progression.ts'
+import { buildPlanBundle, parsePlan } from './plan-share.ts'
+import { convertWeight } from './units.ts'
 
 // Pyramid sets (CONTEXT.md): one rep target per set, in order, a set's target being a number or
 // "max". No load is prescribed and the exercise is never progressed automatically.

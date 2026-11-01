@@ -5,13 +5,13 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from '../store/useStore.js'
-import { starterPlanSheet } from '../sheets.jsx'
-import Home from './Home.jsx'
-import Plan from './Plan.jsx'
+import { useStore } from '../store/useStore.ts'
+import { starterPlanSheet } from '../sheets.tsx'
+import Home from './Home.tsx'
+import Plan from './Plan.tsx'
 
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), bwSheet: vi.fn(), goalSheet: vi.fn(), dayOverrideSheet: vi.fn(),
   calendarSheet: vi.fn(), startFlow: vi.fn(), bwDeltaColor: () => '', weighInsSheet: vi.fn(),
   dayAssignSheet: vi.fn(), planToolsSheet: vi.fn(),

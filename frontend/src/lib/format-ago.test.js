@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { fmtAgo, fmtDaysAgo, changeCount, setsWorkCount, fmtDur, fmtDate } from './format.js'
-import { _setLangState } from './i18n-core.js'
+import { fmtAgo, fmtDaysAgo, changeCount, setsWorkCount, fmtDur, fmtDate } from './format.ts'
+import { _setLangState } from './i18n-core.ts'
 import ar from '../locales/ar.js'
 import uk from '../locales/uk.js'
 

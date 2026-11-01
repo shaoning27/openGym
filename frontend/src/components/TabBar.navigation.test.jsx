@@ -3,8 +3,8 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import TabBar from './TabBar.jsx'
-import { DEF, useStore } from '../store/useStore.js'
+import TabBar from './TabBar.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

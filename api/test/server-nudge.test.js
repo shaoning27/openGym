@@ -1,4 +1,4 @@
-/* The missed-workout nudge, end to end through the real reminder tick (server.js in a child,
+/* The missed-workout nudge, end to end through the real reminder tick (server.ts in a child,
    REMINDER_TICK_MS shortened). The nudge is owed from 20:00 to 21:30 on the user's clock, so
    instead of faking the time each test picks the zone where it is 20:xx right now — which also
    makes every test a timezone test: the server's own clock is never 20:xx by assumption.
@@ -28,7 +28,7 @@ async function startServer(t, subs = [sub]) {
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-nudge-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), SECRET, { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: USERS, creds: [], subs, invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost', REMINDER_TICK_MS: '200' }
   });

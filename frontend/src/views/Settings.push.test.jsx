@@ -2,8 +2,8 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Settings from './Settings.jsx'
-import { syncPushSubscription } from '../lib/push.js'
+import Settings from './Settings.tsx'
+import { syncPushSubscription } from '../lib/push.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -22,34 +22,34 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, DEF: { reminder: { time: '17:30' } }, hasData: () => false }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: mocks.toast, openSheet: vi.fn() })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: vi.fn(() => new Promise(() => {})), webauthnOK: () => false, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), IS_ANDROID: false,
 }))
-// The switch is what this file is about, so push.js is a supported browser whose sync with the
+// The switch is what this file is about, so push.ts is a supported browser whose sync with the
 // server each test decides.
-vi.mock('../lib/push.js', () => ({
+vi.mock('../lib/push.ts', () => ({
   pushSupported: () => true,
   enablePush: vi.fn(async () => {}),
   disablePush: vi.fn(async () => {}),
   sendTestPush: vi.fn(),
   syncPushSubscription: vi.fn(async () => true),
 }))
-vi.mock('../lib/wakelock.js', () => ({ wakeLockSupported: () => false }))
-vi.mock('../lib/mobile.js', () => ({ MOBILE: false, isAndroid: () => Promise.resolve(false), shareExport: vi.fn(), syncReminder: vi.fn() }))
-vi.mock('./MobileOnboarding.jsx', () => ({ ConnectSheet: () => null }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../lib/wakelock.ts', () => ({ wakeLockSupported: () => false }))
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: false, isAndroid: () => Promise.resolve(false), shareExport: vi.fn(), syncReminder: vi.fn() }))
+vi.mock('./MobileOnboarding.tsx', () => ({ ConnectSheet: () => null }))
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), confirmSheet: vi.fn(), importFromApp: vi.fn(),
   importFromHevy: vi.fn(), equipmentProfileSheet: vi.fn(),
 }))
@@ -78,7 +78,7 @@ const switchIn = row => row.querySelector('[role="switch"]') || row.querySelecto
 
 // What the switch reads when Settings opens. "On" is the server holding this browser's
 // subscription; when the server cannot be asked, the browser's own side stands in. A server that
-// refused the subscription, a fresh one included (lib/push.js register), has answered, and the
+// refused the subscription, a fresh one included (lib/push.ts register), has answered, and the
 // browser's side must not turn that into "on".
 describe('Settings — what the Notifications switch shows when it opens', () => {
   const switchState = () => switchIn(rowTitled('Push notifications')).getAttribute('aria-checked')

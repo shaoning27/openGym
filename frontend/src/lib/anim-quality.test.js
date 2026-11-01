@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest'
 import {
   PACK_QUALITIES, BUILTIN_PX, packQualities, packId, parsePackId, autoPx, readChoice, wantedQuality,
   packDrawingId, clipSources, wantedPack,
-} from './anim-quality.js'
+} from './anim-quality.ts'
 import { EXDB } from './exercises-data.js'
 
-/* Which file an exercise animation is drawn from in the store apps (lib/anim-quality.js). Only
+/* Which file an exercise animation is drawn from in the store apps (lib/anim-quality.ts). Only
    names are looked at here: no media file is ever opened. */
 const male = { id: '0001', gif: '0001.mp4', img: '0001.webp', fv: '2476' }        // drawn on both figures
 const female = { id: '9001', gif: '9001.mp4', img: '9001.webp', mv: '9002' }      // a female exercise with a male twin
@@ -55,8 +55,8 @@ describe('packDrawingId', () => {
     expect(packDrawingId(once, 'female')).toBe('5965')
     expect(packDrawingId(once, 'male')).toBe('5965')
   })
-  it('agrees with lib/exercises.js gifSrc for every catalogue exercise', async () => {
-    const { gifSrc } = await import('./exercises.js')
+  it('agrees with lib/exercises.ts gifSrc for every catalogue exercise', async () => {
+    const { gifSrc } = await import('./exercises.ts')
     for (const ex of EXDB) {
       for (const fig of ['male', 'female']) {
         expect(gifSrc(ex, fig).split('/').pop().replace(/\.(mp4|webp)$/, ''), ex.id + ' ' + fig).toBe(packDrawingId(ex, fig))

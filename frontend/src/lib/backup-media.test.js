@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
-import { exportBackupZip, readBackupFile, backupImportError, storeBackupMedia, sanitizeCustomMedia, BACKUP_JSON } from './backup-media.js'
-import { createMediaStore, memoryBackend } from './media-store.js'
-import { zipStore, readZip } from './zip.js'
-import { sha256Hex } from './sha256.js'
-import { jpeg, png, mp4 } from './media-samples.test-util.js'
-import { workoutMediaOf } from './media-refs.js'
+import { exportBackupZip, readBackupFile, backupImportError, storeBackupMedia, sanitizeCustomMedia, BACKUP_JSON } from './backup-media.ts'
+import { createMediaStore, memoryBackend } from './media-store.ts'
+import { zipStore, readZip } from './zip.ts'
+import { sha256Hex } from './sha256.ts'
+import { jpeg, png, mp4 } from './media-samples.test-util.ts'
+import { workoutMediaOf } from './media-refs.ts'
 
 const refFor = async (bytes, mime, kind = 'image') => ({ kind, hash: await sha256Hex(bytes), mime, size: bytes.length, width: 4, height: 3, at: 1 })
 const stateWith = customEx => ({ unit: 'kg', workouts: [], routines: [], bodyweight: [], customEx })

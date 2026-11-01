@@ -2,10 +2,10 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { todayISO } from './lib/format.js'
-import { calendarSheet } from './sheets.jsx'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { todayISO } from './lib/format.ts'
+import { calendarSheet } from './sheets.tsx'
 
 const mounted = []
 

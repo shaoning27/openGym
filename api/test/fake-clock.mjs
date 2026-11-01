@@ -1,5 +1,5 @@
-/* A clock the test drives, for a server.js spawned in a child. Load it ahead of the server with
- * `node --import ./test/fake-clock.mjs server.js` and an 'ipc' entry in stdio.
+/* A clock the test drives, for a server.ts spawned in a child. Load it ahead of the server with
+ * `node --import ./test/fake-clock.mjs server.ts` and an 'ipc' entry in stdio.
  *
  * Date.now() is the real clock until the parent sends { now: <ms> }; from then on it returns that
  * value and stands still until the next one. Every message is answered with { now } once it has

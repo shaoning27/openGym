@@ -1,0 +1,1758 @@
+{
+  "standard": "Full TS/TSX language migration; explicit legacy dynamic types remain.",
+  "implementations": [
+    "api/admin-socket.ts",
+    "api/coach/adapters/claude.ts",
+    "api/coach/adapters/codex.ts",
+    "api/coach/adapters/index.ts",
+    "api/coach/adapters/spawn.ts",
+    "api/coach/cadence.ts",
+    "api/coach/cohort.ts",
+    "api/coach/config.ts",
+    "api/coach/core/adapters/anthropic.ts",
+    "api/coach/core/adapters/compatible.ts",
+    "api/coach/core/adapters/gemini.ts",
+    "api/coach/core/adapters/http.ts",
+    "api/coach/core/adapters/openai.ts",
+    "api/coach/core/categories.ts",
+    "api/coach/core/due.ts",
+    "api/coach/core/glyphs.ts",
+    "api/coach/core/library.ts",
+    "api/coach/core/parse.ts",
+    "api/coach/core/payload.ts",
+    "api/coach/core/pending.ts",
+    "api/coach/core/pipeline.ts",
+    "api/coach/core/plan-hash.ts",
+    "api/coach/core/prompt.ts",
+    "api/coach/core/providers.ts",
+    "api/coach/core/refine-changes.ts",
+    "api/coach/core/schemas.ts",
+    "api/coach/core/system-prompt.ts",
+    "api/coach/core/validate.ts",
+    "api/coach/handle.ts",
+    "api/coach/jobs.ts",
+    "api/coach/node-fetch.ts",
+    "api/coach/routes.ts",
+    "api/coach/warmup.ts",
+    "api/device-link.ts",
+    "api/durable.ts",
+    "api/media.ts",
+    "api/nudge.ts",
+    "api/passkeys-store.ts",
+    "api/password.ts",
+    "api/push-messages.ts",
+    "api/queue.ts",
+    "api/rate-limit.ts",
+    "api/recover.ts",
+    "api/server.ts",
+    "api/sync-stamps.ts",
+    "api/types/http.ts",
+    "api/verify-error.ts",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Animations.tsx",
+    "frontend/src/components/AppIconRow.tsx",
+    "frontend/src/components/BackupFolderRow.tsx",
+    "frontend/src/components/BodyMap.tsx",
+    "frontend/src/components/CameraScan.tsx",
+    "frontend/src/components/ChatInput.tsx",
+    "frontend/src/components/CoachConsentSheet.tsx",
+    "frontend/src/components/CsvExportSheet.tsx",
+    "frontend/src/components/CustomMedia.tsx",
+    "frontend/src/components/CustomMediaField.tsx",
+    "frontend/src/components/DeleteAccount.tsx",
+    "frontend/src/components/DurationWheel.tsx",
+    "frontend/src/components/Elapsed.tsx",
+    "frontend/src/components/ErrorBoundary.tsx",
+    "frontend/src/components/ExerciseAliases.tsx",
+    "frontend/src/components/ExerciseViewToggle.tsx",
+    "frontend/src/components/Heatmap.tsx",
+    "frontend/src/components/Icon.tsx",
+    "frontend/src/components/LineChart.tsx",
+    "frontend/src/components/LostAccess.tsx",
+    "frontend/src/components/Media.tsx",
+    "frontend/src/components/MiniBodyMap.tsx",
+    "frontend/src/components/Modals.tsx",
+    "frontend/src/components/MuscleExplorer.tsx",
+    "frontend/src/components/Passkeys.tsx",
+    "frontend/src/components/PasswordAuth.tsx",
+    "frontend/src/components/QrCanvas.tsx",
+    "frontend/src/components/QueueRow.tsx",
+    "frontend/src/components/ReportSheet.tsx",
+    "frontend/src/components/RestTimer.tsx",
+    "frontend/src/components/Seasonal.tsx",
+    "frontend/src/components/ServerSync.tsx",
+    "frontend/src/components/SessionMuscles.tsx",
+    "frontend/src/components/Stepper.tsx",
+    "frontend/src/components/SwipeCards.tsx",
+    "frontend/src/components/SwipeRow.tsx",
+    "frontend/src/components/SyncBanner.tsx",
+    "frontend/src/components/TabBar.tsx",
+    "frontend/src/components/TimerFlash.tsx",
+    "frontend/src/components/Toast.tsx",
+    "frontend/src/components/WeightRate.tsx",
+    "frontend/src/components/WorkoutChips.tsx",
+    "frontend/src/components/WorkoutMedia.tsx",
+    "frontend/src/components/WorkoutScrollAnchor.tsx",
+    "frontend/src/components/WorkoutSettingsSheet.tsx",
+    "frontend/src/components/WorkoutThumb.tsx",
+    "frontend/src/components/ui.tsx",
+    "frontend/src/lib/accent.ts",
+    "frontend/src/lib/active-exercise-swap.ts",
+    "frontend/src/lib/active-workout-order.ts",
+    "frontend/src/lib/anim-packs.ts",
+    "frontend/src/lib/anim-quality.ts",
+    "frontend/src/lib/api.ts",
+    "frontend/src/lib/apk-variant.ts",
+    "frontend/src/lib/app-base.ts",
+    "frontend/src/lib/app-icon-variants.ts",
+    "frontend/src/lib/app-icon.ts",
+    "frontend/src/lib/audit.ts",
+    "frontend/src/lib/back.ts",
+    "frontend/src/lib/backfill.ts",
+    "frontend/src/lib/backoff.ts",
+    "frontend/src/lib/backup-media.ts",
+    "frontend/src/lib/bar.ts",
+    "frontend/src/lib/bodyweight.ts",
+    "frontend/src/lib/boot.ts",
+    "frontend/src/lib/capacitor-fetch.ts",
+    "frontend/src/lib/cf-access.ts",
+    "frontend/src/lib/channel.ts",
+    "frontend/src/lib/clipboard.ts",
+    "frontend/src/lib/coach-api.ts",
+    "frontend/src/lib/coach-consent.ts",
+    "frontend/src/lib/coach-context.ts",
+    "frontend/src/lib/coach-demo.ts",
+    "frontend/src/lib/coach-device.ts",
+    "frontend/src/lib/coach-insights.ts",
+    "frontend/src/lib/coach-local.ts",
+    "frontend/src/lib/coach-schedule.ts",
+    "frontend/src/lib/coach-secrets.ts",
+    "frontend/src/lib/coach.ts",
+    "frontend/src/lib/day-notes.ts",
+    "frontend/src/lib/day-photos.ts",
+    "frontend/src/lib/default-lang.ts",
+    "frontend/src/lib/demo.ts",
+    "frontend/src/lib/demoSeed.ts",
+    "frontend/src/lib/device-auth.ts",
+    "frontend/src/lib/device-link.ts",
+    "frontend/src/lib/dumbbells.ts",
+    "frontend/src/lib/duration.ts",
+    "frontend/src/lib/edge-swipe-back.ts",
+    "frontend/src/lib/effort.ts",
+    "frontend/src/lib/equipment.ts",
+    "frontend/src/lib/exercise-aliases.ts",
+    "frontend/src/lib/exercise-chips.ts",
+    "frontend/src/lib/exercise-history.ts",
+    "frontend/src/lib/exercise-muscle-batch-1.ts",
+    "frontend/src/lib/exercise-muscle-batch-2.ts",
+    "frontend/src/lib/exercises.ts",
+    "frontend/src/lib/exif-date.ts",
+    "frontend/src/lib/export-csv.ts",
+    "frontend/src/lib/favourites.ts",
+    "frontend/src/lib/finish-compare.ts",
+    "frontend/src/lib/finish-workout.ts",
+    "frontend/src/lib/fit-export.ts",
+    "frontend/src/lib/format.ts",
+    "frontend/src/lib/glyphs.ts",
+    "frontend/src/lib/guest.ts",
+    "frontend/src/lib/gym-reminder.ts",
+    "frontend/src/lib/hchips.ts",
+    "frontend/src/lib/health-connect.ts",
+    "frontend/src/lib/health-read.ts",
+    "frontend/src/lib/health-sync.ts",
+    "frontend/src/lib/heart-rate.ts",
+    "frontend/src/lib/history.ts",
+    "frontend/src/lib/i18n-core.ts",
+    "frontend/src/lib/i18n.ts",
+    "frontend/src/lib/import-csv.ts",
+    "frontend/src/lib/import-hevy.ts",
+    "frontend/src/lib/incline.ts",
+    "frontend/src/lib/live-activity.ts",
+    "frontend/src/lib/log-workout.ts",
+    "frontend/src/lib/measurements.ts",
+    "frontend/src/lib/media-ingest.ts",
+    "frontend/src/lib/media-limits.ts",
+    "frontend/src/lib/media-owed.ts",
+    "frontend/src/lib/media-prefetch.ts",
+    "frontend/src/lib/media-refs.ts",
+    "frontend/src/lib/media-samples.test-util.ts",
+    "frontend/src/lib/media-sniff.ts",
+    "frontend/src/lib/media-store-fs.ts",
+    "frontend/src/lib/media-store-idb.ts",
+    "frontend/src/lib/media-store.ts",
+    "frontend/src/lib/media-sync.ts",
+    "frontend/src/lib/mobile.ts",
+    "frontend/src/lib/muscles.ts",
+    "frontend/src/lib/native-keyboard.ts",
+    "frontend/src/lib/nav.ts",
+    "frontend/src/lib/nudge-check.ts",
+    "frontend/src/lib/nudge.ts",
+    "frontend/src/lib/onboarding-perms.ts",
+    "frontend/src/lib/onerm.ts",
+    "frontend/src/lib/page-motion.ts",
+    "frontend/src/lib/per-set.ts",
+    "frontend/src/lib/plan-share.ts",
+    "frontend/src/lib/plates.ts",
+    "frontend/src/lib/platform-now.ts",
+    "frontend/src/lib/print-doc.ts",
+    "frontend/src/lib/progression-copy.ts",
+    "frontend/src/lib/progression.ts",
+    "frontend/src/lib/push.ts",
+    "frontend/src/lib/pyramid.ts",
+    "frontend/src/lib/qr.ts",
+    "frontend/src/lib/queue.ts",
+    "frontend/src/lib/recovery-view.ts",
+    "frontend/src/lib/recovery.ts",
+    "frontend/src/lib/relative-strength.ts",
+    "frontend/src/lib/remote.ts",
+    "frontend/src/lib/rep-range.ts",
+    "frontend/src/lib/report-print.ts",
+    "frontend/src/lib/report.ts",
+    "frontend/src/lib/rest-alert.ts",
+    "frontend/src/lib/rest-sounds.ts",
+    "frontend/src/lib/rotation.ts",
+    "frontend/src/lib/routine-backups.ts",
+    "frontend/src/lib/routines.ts",
+    "frontend/src/lib/scan-web.ts",
+    "frontend/src/lib/scan.ts",
+    "frontend/src/lib/seasonal.ts",
+    "frontend/src/lib/session-edit.ts",
+    "frontend/src/lib/session-merge.ts",
+    "frontend/src/lib/session-noprog.ts",
+    "frontend/src/lib/session-repeat.ts",
+    "frontend/src/lib/session-routines.ts",
+    "frontend/src/lib/session-start.ts",
+    "frontend/src/lib/sha256.ts",
+    "frontend/src/lib/similar-exercises.ts",
+    "frontend/src/lib/sound.ts",
+    "frontend/src/lib/speed.ts",
+    "frontend/src/lib/starter.ts",
+    "frontend/src/lib/state-json.ts",
+    "frontend/src/lib/strength-exercises.ts",
+    "frontend/src/lib/structuralBalance-view.ts",
+    "frontend/src/lib/structuralBalance.ts",
+    "frontend/src/lib/structuralBalanceTemplates.ts",
+    "frontend/src/lib/superset-meta.ts",
+    "frontend/src/lib/supersetFlow.ts",
+    "frontend/src/lib/sync-changes.ts",
+    "frontend/src/lib/sync-legacy.ts",
+    "frontend/src/lib/sync-merge.ts",
+    "frontend/src/lib/system-bars.ts",
+    "frontend/src/lib/units.ts",
+    "frontend/src/lib/update.ts",
+    "frontend/src/lib/use-auto-more.ts",
+    "frontend/src/lib/use-coach-gate.ts",
+    "frontend/src/lib/use-list-reorder.ts",
+    "frontend/src/lib/use-sheet-keyboard.ts",
+    "frontend/src/lib/use-swipe-row.ts",
+    "frontend/src/lib/viewport-guard.ts",
+    "frontend/src/lib/wakelock.ts",
+    "frontend/src/lib/watch-settings.ts",
+    "frontend/src/lib/watch-sync.ts",
+    "frontend/src/lib/widgets.ts",
+    "frontend/src/lib/workout-card.ts",
+    "frontend/src/lib/workout-controls.ts",
+    "frontend/src/lib/workout-date.ts",
+    "frontend/src/lib/workout-keys.ts",
+    "frontend/src/lib/workout-media.ts",
+    "frontend/src/lib/workout-model.ts",
+    "frontend/src/lib/workout-text.ts",
+    "frontend/src/lib/zip.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/seasonal/halloween.tsx",
+    "frontend/src/service-worker.ts",
+    "frontend/src/sheets.tsx",
+    "frontend/src/store/useStore.ts",
+    "frontend/src/store/useUI.ts",
+    "frontend/src/test-setup.ts",
+    "frontend/src/types/training.ts",
+    "frontend/src/views/Admin.tsx",
+    "frontend/src/views/AdminCoach.tsx",
+    "frontend/src/views/CheckIn.tsx",
+    "frontend/src/views/CoachChat.tsx",
+    "frontend/src/views/CoachIntake.tsx",
+    "frontend/src/views/CoachSetup.tsx",
+    "frontend/src/views/FocusView.tsx",
+    "frontend/src/views/GymReminder.tsx",
+    "frontend/src/views/History.tsx",
+    "frontend/src/views/Home.tsx",
+    "frontend/src/views/Library.tsx",
+    "frontend/src/views/Login.tsx",
+    "frontend/src/views/Measurements.tsx",
+    "frontend/src/views/MobileOnboarding.tsx",
+    "frontend/src/views/Muscles.tsx",
+    "frontend/src/views/PermissionSteps.tsx",
+    "frontend/src/views/Plan.tsx",
+    "frontend/src/views/ProgressPhotos.tsx",
+    "frontend/src/views/RoutineEdit.tsx",
+    "frontend/src/views/Settings.tsx",
+    "frontend/src/views/Stats.tsx",
+    "frontend/src/views/StructuralBalance.tsx",
+    "frontend/src/views/WatchSettings.tsx",
+    "frontend/src/views/Workout.tsx",
+    "frontend/src/views/settings-pages.ts",
+    "mcp/src/api-client.ts",
+    "mcp/src/index.ts",
+    "mcp/src/labels.ts",
+    "mcp/src/state.ts",
+    "mcp/src/tools.ts",
+    "mcp/src/types.ts",
+    "mcp/src/write-tools.ts"
+  ],
+  "compatibilityEntries": [
+    "api/admin-socket.js",
+    "api/coach/adapters/claude.js",
+    "api/coach/adapters/codex.js",
+    "api/coach/adapters/index.js",
+    "api/coach/adapters/spawn.js",
+    "api/coach/cadence.js",
+    "api/coach/cohort.js",
+    "api/coach/config.js",
+    "api/coach/core/adapters/anthropic.js",
+    "api/coach/core/adapters/compatible.js",
+    "api/coach/core/adapters/gemini.js",
+    "api/coach/core/adapters/http.js",
+    "api/coach/core/adapters/openai.js",
+    "api/coach/core/categories.js",
+    "api/coach/core/due.js",
+    "api/coach/core/glyphs.js",
+    "api/coach/core/library.js",
+    "api/coach/core/parse.js",
+    "api/coach/core/payload.js",
+    "api/coach/core/pending.js",
+    "api/coach/core/pipeline.js",
+    "api/coach/core/plan-hash.js",
+    "api/coach/core/prompt.js",
+    "api/coach/core/providers.js",
+    "api/coach/core/refine-changes.js",
+    "api/coach/core/schemas.js",
+    "api/coach/core/system-prompt.js",
+    "api/coach/core/validate.js",
+    "api/coach/handle.js",
+    "api/coach/jobs.js",
+    "api/coach/node-fetch.js",
+    "api/coach/routes.js",
+    "api/coach/warmup.js",
+    "api/device-link.js",
+    "api/durable.js",
+    "api/media.js",
+    "api/nudge.js",
+    "api/passkeys-store.js",
+    "api/password.js",
+    "api/push-messages.js",
+    "api/queue.js",
+    "api/rate-limit.js",
+    "api/recover.js",
+    "api/server.js",
+    "api/sync-stamps.js",
+    "api/verify-error.js",
+    "frontend/src/App.jsx",
+    "frontend/src/components/Animations.jsx",
+    "frontend/src/components/AppIconRow.jsx",
+    "frontend/src/components/BackupFolderRow.jsx",
+    "frontend/src/components/BodyMap.jsx",
+    "frontend/src/components/CameraScan.jsx",
+    "frontend/src/components/ChatInput.jsx",
+    "frontend/src/components/CoachConsentSheet.jsx",
+    "frontend/src/components/CsvExportSheet.jsx",
+    "frontend/src/components/CustomMedia.jsx",
+    "frontend/src/components/CustomMediaField.jsx",
+    "frontend/src/components/DeleteAccount.jsx",
+    "frontend/src/components/DurationWheel.jsx",
+    "frontend/src/components/Elapsed.jsx",
+    "frontend/src/components/ErrorBoundary.jsx",
+    "frontend/src/components/ExerciseAliases.jsx",
+    "frontend/src/components/ExerciseViewToggle.jsx",
+    "frontend/src/components/Heatmap.jsx",
+    "frontend/src/components/Icon.jsx",
+    "frontend/src/components/LineChart.jsx",
+    "frontend/src/components/LostAccess.jsx",
+    "frontend/src/components/Media.jsx",
+    "frontend/src/components/MiniBodyMap.jsx",
+    "frontend/src/components/Modals.jsx",
+    "frontend/src/components/MuscleExplorer.jsx",
+    "frontend/src/components/Passkeys.jsx",
+    "frontend/src/components/PasswordAuth.jsx",
+    "frontend/src/components/QrCanvas.jsx",
+    "frontend/src/components/QueueRow.jsx",
+    "frontend/src/components/ReportSheet.jsx",
+    "frontend/src/components/RestTimer.jsx",
+    "frontend/src/components/Seasonal.jsx",
+    "frontend/src/components/ServerSync.jsx",
+    "frontend/src/components/SessionMuscles.jsx",
+    "frontend/src/components/Stepper.jsx",
+    "frontend/src/components/SwipeCards.jsx",
+    "frontend/src/components/SwipeRow.jsx",
+    "frontend/src/components/SyncBanner.jsx",
+    "frontend/src/components/TabBar.jsx",
+    "frontend/src/components/TimerFlash.jsx",
+    "frontend/src/components/Toast.jsx",
+    "frontend/src/components/WeightRate.jsx",
+    "frontend/src/components/WorkoutChips.jsx",
+    "frontend/src/components/WorkoutMedia.jsx",
+    "frontend/src/components/WorkoutScrollAnchor.jsx",
+    "frontend/src/components/WorkoutSettingsSheet.jsx",
+    "frontend/src/components/WorkoutThumb.jsx",
+    "frontend/src/components/ui.jsx",
+    "frontend/src/lib/accent.js",
+    "frontend/src/lib/active-exercise-swap.js",
+    "frontend/src/lib/active-workout-order.js",
+    "frontend/src/lib/anim-packs.js",
+    "frontend/src/lib/anim-quality.js",
+    "frontend/src/lib/api.js",
+    "frontend/src/lib/apk-variant.js",
+    "frontend/src/lib/app-base.js",
+    "frontend/src/lib/app-icon-variants.js",
+    "frontend/src/lib/app-icon.js",
+    "frontend/src/lib/audit.js",
+    "frontend/src/lib/back.js",
+    "frontend/src/lib/backfill.js",
+    "frontend/src/lib/backoff.js",
+    "frontend/src/lib/backup-media.js",
+    "frontend/src/lib/bar.js",
+    "frontend/src/lib/bodyweight.js",
+    "frontend/src/lib/boot.js",
+    "frontend/src/lib/capacitor-fetch.js",
+    "frontend/src/lib/cf-access.js",
+    "frontend/src/lib/channel.js",
+    "frontend/src/lib/clipboard.js",
+    "frontend/src/lib/coach-api.js",
+    "frontend/src/lib/coach-consent.js",
+    "frontend/src/lib/coach-context.js",
+    "frontend/src/lib/coach-demo.js",
+    "frontend/src/lib/coach-device.js",
+    "frontend/src/lib/coach-insights.js",
+    "frontend/src/lib/coach-local.js",
+    "frontend/src/lib/coach-schedule.js",
+    "frontend/src/lib/coach-secrets.js",
+    "frontend/src/lib/coach.js",
+    "frontend/src/lib/day-notes.js",
+    "frontend/src/lib/day-photos.js",
+    "frontend/src/lib/default-lang.js",
+    "frontend/src/lib/demo.js",
+    "frontend/src/lib/demoSeed.js",
+    "frontend/src/lib/device-auth.js",
+    "frontend/src/lib/device-link.js",
+    "frontend/src/lib/dumbbells.js",
+    "frontend/src/lib/duration.js",
+    "frontend/src/lib/edge-swipe-back.js",
+    "frontend/src/lib/effort.js",
+    "frontend/src/lib/equipment.js",
+    "frontend/src/lib/exercise-aliases.js",
+    "frontend/src/lib/exercise-chips.js",
+    "frontend/src/lib/exercise-history.js",
+    "frontend/src/lib/exercise-muscle-batch-1.js",
+    "frontend/src/lib/exercise-muscle-batch-2.js",
+    "frontend/src/lib/exercises.js",
+    "frontend/src/lib/exif-date.js",
+    "frontend/src/lib/export-csv.js",
+    "frontend/src/lib/favourites.js",
+    "frontend/src/lib/finish-compare.js",
+    "frontend/src/lib/finish-workout.js",
+    "frontend/src/lib/fit-export.js",
+    "frontend/src/lib/format.js",
+    "frontend/src/lib/glyphs.js",
+    "frontend/src/lib/guest.js",
+    "frontend/src/lib/gym-reminder.js",
+    "frontend/src/lib/hchips.js",
+    "frontend/src/lib/health-connect.js",
+    "frontend/src/lib/health-read.js",
+    "frontend/src/lib/health-sync.js",
+    "frontend/src/lib/heart-rate.js",
+    "frontend/src/lib/history.js",
+    "frontend/src/lib/i18n-core.js",
+    "frontend/src/lib/i18n.js",
+    "frontend/src/lib/import-csv.js",
+    "frontend/src/lib/import-hevy.js",
+    "frontend/src/lib/incline.js",
+    "frontend/src/lib/live-activity.js",
+    "frontend/src/lib/log-workout.js",
+    "frontend/src/lib/measurements.js",
+    "frontend/src/lib/media-ingest.js",
+    "frontend/src/lib/media-limits.js",
+    "frontend/src/lib/media-owed.js",
+    "frontend/src/lib/media-prefetch.js",
+    "frontend/src/lib/media-refs.js",
+    "frontend/src/lib/media-samples.test-util.js",
+    "frontend/src/lib/media-sniff.js",
+    "frontend/src/lib/media-store-fs.js",
+    "frontend/src/lib/media-store-idb.js",
+    "frontend/src/lib/media-store.js",
+    "frontend/src/lib/media-sync.js",
+    "frontend/src/lib/mobile.js",
+    "frontend/src/lib/muscles.js",
+    "frontend/src/lib/native-keyboard.js",
+    "frontend/src/lib/nav.js",
+    "frontend/src/lib/nudge-check.js",
+    "frontend/src/lib/nudge.js",
+    "frontend/src/lib/onboarding-perms.js",
+    "frontend/src/lib/onerm.js",
+    "frontend/src/lib/page-motion.js",
+    "frontend/src/lib/per-set.js",
+    "frontend/src/lib/plan-share.js",
+    "frontend/src/lib/plates.js",
+    "frontend/src/lib/platform-now.js",
+    "frontend/src/lib/print-doc.js",
+    "frontend/src/lib/progression-copy.js",
+    "frontend/src/lib/progression.js",
+    "frontend/src/lib/push.js",
+    "frontend/src/lib/pyramid.js",
+    "frontend/src/lib/qr.js",
+    "frontend/src/lib/queue.js",
+    "frontend/src/lib/recovery-view.js",
+    "frontend/src/lib/recovery.js",
+    "frontend/src/lib/relative-strength.js",
+    "frontend/src/lib/remote.js",
+    "frontend/src/lib/rep-range.js",
+    "frontend/src/lib/report-print.js",
+    "frontend/src/lib/report.js",
+    "frontend/src/lib/rest-alert.js",
+    "frontend/src/lib/rest-sounds.js",
+    "frontend/src/lib/rotation.js",
+    "frontend/src/lib/routine-backups.js",
+    "frontend/src/lib/routines.js",
+    "frontend/src/lib/scan-web.js",
+    "frontend/src/lib/scan.js",
+    "frontend/src/lib/seasonal.js",
+    "frontend/src/lib/session-edit.js",
+    "frontend/src/lib/session-merge.js",
+    "frontend/src/lib/session-noprog.js",
+    "frontend/src/lib/session-repeat.js",
+    "frontend/src/lib/session-routines.js",
+    "frontend/src/lib/session-start.js",
+    "frontend/src/lib/sha256.js",
+    "frontend/src/lib/similar-exercises.js",
+    "frontend/src/lib/sound.js",
+    "frontend/src/lib/speed.js",
+    "frontend/src/lib/starter.js",
+    "frontend/src/lib/state-json.js",
+    "frontend/src/lib/strength-exercises.js",
+    "frontend/src/lib/structuralBalance-view.js",
+    "frontend/src/lib/structuralBalance.js",
+    "frontend/src/lib/structuralBalanceTemplates.js",
+    "frontend/src/lib/superset-meta.js",
+    "frontend/src/lib/supersetFlow.js",
+    "frontend/src/lib/sync-changes.js",
+    "frontend/src/lib/sync-legacy.js",
+    "frontend/src/lib/sync-merge.js",
+    "frontend/src/lib/system-bars.js",
+    "frontend/src/lib/units.js",
+    "frontend/src/lib/update.js",
+    "frontend/src/lib/use-auto-more.js",
+    "frontend/src/lib/use-coach-gate.js",
+    "frontend/src/lib/use-list-reorder.js",
+    "frontend/src/lib/use-sheet-keyboard.js",
+    "frontend/src/lib/use-swipe-row.js",
+    "frontend/src/lib/viewport-guard.js",
+    "frontend/src/lib/wakelock.js",
+    "frontend/src/lib/watch-settings.js",
+    "frontend/src/lib/watch-sync.js",
+    "frontend/src/lib/widgets.js",
+    "frontend/src/lib/workout-card.js",
+    "frontend/src/lib/workout-controls.js",
+    "frontend/src/lib/workout-date.js",
+    "frontend/src/lib/workout-keys.js",
+    "frontend/src/lib/workout-media.js",
+    "frontend/src/lib/workout-model.js",
+    "frontend/src/lib/workout-text.js",
+    "frontend/src/lib/zip.js",
+    "frontend/src/main.jsx",
+    "frontend/src/seasonal/halloween.jsx",
+    "frontend/src/sheets.jsx",
+    "frontend/src/store/useStore.js",
+    "frontend/src/store/useUI.js",
+    "frontend/src/test-setup.js",
+    "frontend/src/views/Admin.jsx",
+    "frontend/src/views/AdminCoach.jsx",
+    "frontend/src/views/CheckIn.jsx",
+    "frontend/src/views/CoachChat.jsx",
+    "frontend/src/views/CoachIntake.jsx",
+    "frontend/src/views/CoachSetup.jsx",
+    "frontend/src/views/FocusView.jsx",
+    "frontend/src/views/GymReminder.jsx",
+    "frontend/src/views/History.jsx",
+    "frontend/src/views/Home.jsx",
+    "frontend/src/views/Library.jsx",
+    "frontend/src/views/Login.jsx",
+    "frontend/src/views/Measurements.jsx",
+    "frontend/src/views/MobileOnboarding.jsx",
+    "frontend/src/views/Muscles.jsx",
+    "frontend/src/views/PermissionSteps.jsx",
+    "frontend/src/views/Plan.jsx",
+    "frontend/src/views/ProgressPhotos.jsx",
+    "frontend/src/views/RoutineEdit.jsx",
+    "frontend/src/views/Settings.jsx",
+    "frontend/src/views/Stats.jsx",
+    "frontend/src/views/StructuralBalance.jsx",
+    "frontend/src/views/WatchSettings.jsx",
+    "frontend/src/views/Workout.jsx",
+    "frontend/src/views/settings-pages.js",
+    "mcp/src/api-client.js",
+    "mcp/src/index.js",
+    "mcp/src/labels.js",
+    "mcp/src/state.js",
+    "mcp/src/tools.js",
+    "mcp/src/write-tools.js"
+  ],
+  "resourceModules": [
+    "api/coach/core/library-data.js",
+    "api/coach/core/prompts.js",
+    "api/nudge-copy.js",
+    "frontend/src/exercise-desc/de.js",
+    "frontend/src/exercise-desc/en.js",
+    "frontend/src/exercise-names/ar.js",
+    "frontend/src/exercise-names/bn.js",
+    "frontend/src/exercise-names/de.js",
+    "frontend/src/exercise-names/es.js",
+    "frontend/src/exercise-names/fr.js",
+    "frontend/src/exercise-names/hi.js",
+    "frontend/src/exercise-names/hu.js",
+    "frontend/src/exercise-names/it.js",
+    "frontend/src/exercise-names/ko.js",
+    "frontend/src/exercise-names/pl.js",
+    "frontend/src/exercise-names/pt-BR.js",
+    "frontend/src/exercise-names/ru.js",
+    "frontend/src/exercise-names/th.js",
+    "frontend/src/exercise-names/tr.js",
+    "frontend/src/exercise-names/uk.js",
+    "frontend/src/exercise-names/zh-TW.js",
+    "frontend/src/exercise-names/zh.js",
+    "frontend/src/instr/ar.js",
+    "frontend/src/instr/de.js",
+    "frontend/src/instr/en.js",
+    "frontend/src/instr/es.js",
+    "frontend/src/instr/fr.js",
+    "frontend/src/instr/hi.js",
+    "frontend/src/instr/hu.js",
+    "frontend/src/instr/it.js",
+    "frontend/src/instr/ko.js",
+    "frontend/src/instr/pl.js",
+    "frontend/src/instr/pt-BR.js",
+    "frontend/src/instr/ru.js",
+    "frontend/src/instr/tr.js",
+    "frontend/src/instr/zh-TW.js",
+    "frontend/src/instr/zh.js",
+    "frontend/src/lib/body-paths.js",
+    "frontend/src/lib/catalogue-langs.js",
+    "frontend/src/lib/exercises-data.js",
+    "frontend/src/lib/hevy-id-map.js",
+    "frontend/src/locales/ar.js",
+    "frontend/src/locales/bn.js",
+    "frontend/src/locales/de.js",
+    "frontend/src/locales/es.js",
+    "frontend/src/locales/fr.js",
+    "frontend/src/locales/hi.js",
+    "frontend/src/locales/hu.js",
+    "frontend/src/locales/it.js",
+    "frontend/src/locales/ko.js",
+    "frontend/src/locales/pl.js",
+    "frontend/src/locales/pt-BR.js",
+    "frontend/src/locales/pt.js",
+    "frontend/src/locales/ru.js",
+    "frontend/src/locales/sv.js",
+    "frontend/src/locales/th.js",
+    "frontend/src/locales/tr.js",
+    "frontend/src/locales/uk.js",
+    "frontend/src/locales/zh-TW.js",
+    "frontend/src/locales/zh.js"
+  ],
+  "explicitDynamicTypes": 22233,
+  "debt": [
+    {
+      "file": "frontend/src/sheets.tsx",
+      "explicitDynamicTypes": 1432
+    },
+    {
+      "file": "api/server.ts",
+      "explicitDynamicTypes": 935
+    },
+    {
+      "file": "frontend/src/views/Workout.tsx",
+      "explicitDynamicTypes": 927
+    },
+    {
+      "file": "frontend/src/lib/history.ts",
+      "explicitDynamicTypes": 553
+    },
+    {
+      "file": "frontend/src/store/useStore.ts",
+      "explicitDynamicTypes": 513
+    },
+    {
+      "file": "frontend/src/lib/sync-merge.ts",
+      "explicitDynamicTypes": 477
+    },
+    {
+      "file": "frontend/src/views/Settings.tsx",
+      "explicitDynamicTypes": 434
+    },
+    {
+      "file": "frontend/src/lib/import-csv.ts",
+      "explicitDynamicTypes": 388
+    },
+    {
+      "file": "frontend/src/views/Stats.tsx",
+      "explicitDynamicTypes": 326
+    },
+    {
+      "file": "frontend/src/lib/progression.ts",
+      "explicitDynamicTypes": 291
+    },
+    {
+      "file": "frontend/src/lib/report-print.ts",
+      "explicitDynamicTypes": 287
+    },
+    {
+      "file": "frontend/src/lib/exercises.ts",
+      "explicitDynamicTypes": 284
+    },
+    {
+      "file": "frontend/src/views/RoutineEdit.tsx",
+      "explicitDynamicTypes": 278
+    },
+    {
+      "file": "api/sync-stamps.ts",
+      "explicitDynamicTypes": 277
+    },
+    {
+      "file": "api/media.ts",
+      "explicitDynamicTypes": 268
+    },
+    {
+      "file": "api/coach/core/payload.ts",
+      "explicitDynamicTypes": 258
+    },
+    {
+      "file": "frontend/src/views/CoachChat.tsx",
+      "explicitDynamicTypes": 244
+    },
+    {
+      "file": "frontend/src/lib/coach.ts",
+      "explicitDynamicTypes": 242
+    },
+    {
+      "file": "frontend/src/lib/media-sniff.ts",
+      "explicitDynamicTypes": 239
+    },
+    {
+      "file": "frontend/src/lib/watch-sync.ts",
+      "explicitDynamicTypes": 225
+    },
+    {
+      "file": "frontend/src/lib/plan-share.ts",
+      "explicitDynamicTypes": 195
+    },
+    {
+      "file": "frontend/src/lib/recovery.ts",
+      "explicitDynamicTypes": 195
+    },
+    {
+      "file": "frontend/src/lib/import-hevy.ts",
+      "explicitDynamicTypes": 191
+    },
+    {
+      "file": "mcp/src/tools.ts",
+      "explicitDynamicTypes": 188
+    },
+    {
+      "file": "api/coach/core/validate.ts",
+      "explicitDynamicTypes": 180
+    },
+    {
+      "file": "frontend/src/views/Plan.tsx",
+      "explicitDynamicTypes": 173
+    },
+    {
+      "file": "frontend/src/lib/workout-model.ts",
+      "explicitDynamicTypes": 172
+    },
+    {
+      "file": "frontend/src/lib/media-sync.ts",
+      "explicitDynamicTypes": 171
+    },
+    {
+      "file": "frontend/src/lib/dumbbells.ts",
+      "explicitDynamicTypes": 169
+    },
+    {
+      "file": "frontend/src/lib/mobile.ts",
+      "explicitDynamicTypes": 169
+    },
+    {
+      "file": "frontend/src/lib/api.ts",
+      "explicitDynamicTypes": 166
+    },
+    {
+      "file": "frontend/src/lib/muscles.ts",
+      "explicitDynamicTypes": 158
+    },
+    {
+      "file": "frontend/src/lib/rotation.ts",
+      "explicitDynamicTypes": 158
+    },
+    {
+      "file": "frontend/src/store/useUI.ts",
+      "explicitDynamicTypes": 156
+    },
+    {
+      "file": "frontend/src/lib/fit-export.ts",
+      "explicitDynamicTypes": 153
+    },
+    {
+      "file": "frontend/src/views/FocusView.tsx",
+      "explicitDynamicTypes": 150
+    },
+    {
+      "file": "frontend/src/components/PasswordAuth.tsx",
+      "explicitDynamicTypes": 149
+    },
+    {
+      "file": "frontend/src/components/ui.tsx",
+      "explicitDynamicTypes": 143
+    },
+    {
+      "file": "frontend/src/lib/workout-card.ts",
+      "explicitDynamicTypes": 143
+    },
+    {
+      "file": "frontend/src/lib/report.ts",
+      "explicitDynamicTypes": 137
+    },
+    {
+      "file": "frontend/src/lib/log-workout.ts",
+      "explicitDynamicTypes": 132
+    },
+    {
+      "file": "frontend/src/lib/measurements.ts",
+      "explicitDynamicTypes": 128
+    },
+    {
+      "file": "frontend/src/lib/health-sync.ts",
+      "explicitDynamicTypes": 127
+    },
+    {
+      "file": "frontend/src/lib/plates.ts",
+      "explicitDynamicTypes": 126
+    },
+    {
+      "file": "frontend/src/views/Measurements.tsx",
+      "explicitDynamicTypes": 124
+    },
+    {
+      "file": "frontend/src/views/Admin.tsx",
+      "explicitDynamicTypes": 123
+    },
+    {
+      "file": "frontend/src/components/Passkeys.tsx",
+      "explicitDynamicTypes": 122
+    },
+    {
+      "file": "frontend/src/lib/use-swipe-row.ts",
+      "explicitDynamicTypes": 121
+    },
+    {
+      "file": "api/coach/jobs.ts",
+      "explicitDynamicTypes": 118
+    },
+    {
+      "file": "frontend/src/views/AdminCoach.tsx",
+      "explicitDynamicTypes": 118
+    },
+    {
+      "file": "frontend/src/lib/structuralBalance.ts",
+      "explicitDynamicTypes": 116
+    },
+    {
+      "file": "api/coach/core/adapters/http.ts",
+      "explicitDynamicTypes": 115
+    },
+    {
+      "file": "frontend/src/views/ProgressPhotos.tsx",
+      "explicitDynamicTypes": 115
+    },
+    {
+      "file": "frontend/src/lib/live-activity.ts",
+      "explicitDynamicTypes": 114
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "explicitDynamicTypes": 110
+    },
+    {
+      "file": "frontend/src/service-worker.ts",
+      "explicitDynamicTypes": 110
+    },
+    {
+      "file": "frontend/src/lib/media-ingest.ts",
+      "explicitDynamicTypes": 109
+    },
+    {
+      "file": "api/coach/routes.ts",
+      "explicitDynamicTypes": 108
+    },
+    {
+      "file": "frontend/src/views/GymReminder.tsx",
+      "explicitDynamicTypes": 108
+    },
+    {
+      "file": "frontend/src/lib/media-samples.test-util.ts",
+      "explicitDynamicTypes": 106
+    },
+    {
+      "file": "frontend/src/lib/coach-demo.ts",
+      "explicitDynamicTypes": 105
+    },
+    {
+      "file": "frontend/src/lib/gym-reminder.ts",
+      "explicitDynamicTypes": 104
+    },
+    {
+      "file": "frontend/src/lib/onerm.ts",
+      "explicitDynamicTypes": 103
+    },
+    {
+      "file": "frontend/src/lib/format.ts",
+      "explicitDynamicTypes": 102
+    },
+    {
+      "file": "frontend/src/components/DurationWheel.tsx",
+      "explicitDynamicTypes": 101
+    },
+    {
+      "file": "api/coach/config.ts",
+      "explicitDynamicTypes": 100
+    },
+    {
+      "file": "frontend/src/lib/accent.ts",
+      "explicitDynamicTypes": 99
+    },
+    {
+      "file": "frontend/src/lib/queue.ts",
+      "explicitDynamicTypes": 96
+    },
+    {
+      "file": "frontend/src/components/CustomMedia.tsx",
+      "explicitDynamicTypes": 95
+    },
+    {
+      "file": "frontend/src/lib/coach-local.ts",
+      "explicitDynamicTypes": 95
+    },
+    {
+      "file": "frontend/src/lib/export-csv.ts",
+      "explicitDynamicTypes": 93
+    },
+    {
+      "file": "frontend/src/components/ServerSync.tsx",
+      "explicitDynamicTypes": 92
+    },
+    {
+      "file": "frontend/src/lib/anim-packs.ts",
+      "explicitDynamicTypes": 91
+    },
+    {
+      "file": "frontend/src/views/CoachIntake.tsx",
+      "explicitDynamicTypes": 91
+    },
+    {
+      "file": "frontend/src/components/LineChart.tsx",
+      "explicitDynamicTypes": 89
+    },
+    {
+      "file": "frontend/src/lib/effort.ts",
+      "explicitDynamicTypes": 89
+    },
+    {
+      "file": "frontend/src/lib/session-edit.ts",
+      "explicitDynamicTypes": 89
+    },
+    {
+      "file": "frontend/src/lib/media-store.ts",
+      "explicitDynamicTypes": 86
+    },
+    {
+      "file": "api/password.ts",
+      "explicitDynamicTypes": 83
+    },
+    {
+      "file": "frontend/src/lib/routines.ts",
+      "explicitDynamicTypes": 83
+    },
+    {
+      "file": "frontend/src/lib/coach-api.ts",
+      "explicitDynamicTypes": 81
+    },
+    {
+      "file": "frontend/src/lib/supersetFlow.ts",
+      "explicitDynamicTypes": 81
+    },
+    {
+      "file": "frontend/src/lib/demoSeed.ts",
+      "explicitDynamicTypes": 80
+    },
+    {
+      "file": "frontend/src/lib/i18n-core.ts",
+      "explicitDynamicTypes": 80
+    },
+    {
+      "file": "api/coach/cohort.ts",
+      "explicitDynamicTypes": 79
+    },
+    {
+      "file": "frontend/src/views/settings-pages.ts",
+      "explicitDynamicTypes": 79
+    },
+    {
+      "file": "frontend/src/components/SwipeCards.tsx",
+      "explicitDynamicTypes": 78
+    },
+    {
+      "file": "frontend/src/lib/session-routines.ts",
+      "explicitDynamicTypes": 78
+    },
+    {
+      "file": "frontend/src/seasonal/halloween.tsx",
+      "explicitDynamicTypes": 78
+    },
+    {
+      "file": "frontend/src/lib/coach-insights.ts",
+      "explicitDynamicTypes": 77
+    },
+    {
+      "file": "frontend/src/lib/edge-swipe-back.ts",
+      "explicitDynamicTypes": 77
+    },
+    {
+      "file": "frontend/src/lib/starter.ts",
+      "explicitDynamicTypes": 77
+    },
+    {
+      "file": "frontend/src/lib/health-connect.ts",
+      "explicitDynamicTypes": 76
+    },
+    {
+      "file": "frontend/src/components/Modals.tsx",
+      "explicitDynamicTypes": 75
+    },
+    {
+      "file": "frontend/src/lib/zip.ts",
+      "explicitDynamicTypes": 75
+    },
+    {
+      "file": "frontend/src/lib/widgets.ts",
+      "explicitDynamicTypes": 73
+    },
+    {
+      "file": "frontend/src/views/CoachSetup.tsx",
+      "explicitDynamicTypes": 72
+    },
+    {
+      "file": "frontend/src/lib/heart-rate.ts",
+      "explicitDynamicTypes": 70
+    },
+    {
+      "file": "frontend/src/views/CheckIn.tsx",
+      "explicitDynamicTypes": 69
+    },
+    {
+      "file": "frontend/src/lib/media-store-fs.ts",
+      "explicitDynamicTypes": 68
+    },
+    {
+      "file": "frontend/src/components/WorkoutMedia.tsx",
+      "explicitDynamicTypes": 66
+    },
+    {
+      "file": "frontend/src/lib/sound.ts",
+      "explicitDynamicTypes": 63
+    },
+    {
+      "file": "frontend/src/lib/workout-date.ts",
+      "explicitDynamicTypes": 63
+    },
+    {
+      "file": "api/coach/core/library.ts",
+      "explicitDynamicTypes": 59
+    },
+    {
+      "file": "api/queue.ts",
+      "explicitDynamicTypes": 59
+    },
+    {
+      "file": "frontend/src/lib/exercise-history.ts",
+      "explicitDynamicTypes": 58
+    },
+    {
+      "file": "frontend/src/lib/media-refs.ts",
+      "explicitDynamicTypes": 58
+    },
+    {
+      "file": "frontend/src/lib/strength-exercises.ts",
+      "explicitDynamicTypes": 58
+    },
+    {
+      "file": "mcp/src/write-tools.ts",
+      "explicitDynamicTypes": 57
+    },
+    {
+      "file": "frontend/src/lib/update.ts",
+      "explicitDynamicTypes": 56
+    },
+    {
+      "file": "frontend/src/components/Animations.tsx",
+      "explicitDynamicTypes": 54
+    },
+    {
+      "file": "frontend/src/components/Media.tsx",
+      "explicitDynamicTypes": 54
+    },
+    {
+      "file": "frontend/src/lib/units.ts",
+      "explicitDynamicTypes": 54
+    },
+    {
+      "file": "frontend/src/views/Home.tsx",
+      "explicitDynamicTypes": 53
+    },
+    {
+      "file": "frontend/src/lib/pyramid.ts",
+      "explicitDynamicTypes": 52
+    },
+    {
+      "file": "frontend/src/lib/rest-alert.ts",
+      "explicitDynamicTypes": 51
+    },
+    {
+      "file": "frontend/src/lib/sha256.ts",
+      "explicitDynamicTypes": 50
+    },
+    {
+      "file": "frontend/src/lib/backfill.ts",
+      "explicitDynamicTypes": 49
+    },
+    {
+      "file": "frontend/src/lib/media-prefetch.ts",
+      "explicitDynamicTypes": 49
+    },
+    {
+      "file": "api/nudge.ts",
+      "explicitDynamicTypes": 47
+    },
+    {
+      "file": "frontend/src/components/Heatmap.tsx",
+      "explicitDynamicTypes": 47
+    },
+    {
+      "file": "frontend/src/lib/seasonal.ts",
+      "explicitDynamicTypes": 46
+    },
+    {
+      "file": "frontend/src/components/MuscleExplorer.tsx",
+      "explicitDynamicTypes": 45
+    },
+    {
+      "file": "frontend/src/lib/active-workout-order.ts",
+      "explicitDynamicTypes": 44
+    },
+    {
+      "file": "frontend/src/components/SyncBanner.tsx",
+      "explicitDynamicTypes": 43
+    },
+    {
+      "file": "frontend/src/lib/media-store-idb.ts",
+      "explicitDynamicTypes": 43
+    },
+    {
+      "file": "frontend/src/views/Library.tsx",
+      "explicitDynamicTypes": 43
+    },
+    {
+      "file": "frontend/src/views/MobileOnboarding.tsx",
+      "explicitDynamicTypes": 43
+    },
+    {
+      "file": "frontend/src/lib/bar.ts",
+      "explicitDynamicTypes": 42
+    },
+    {
+      "file": "frontend/src/lib/finish-compare.ts",
+      "explicitDynamicTypes": 42
+    },
+    {
+      "file": "frontend/src/lib/push.ts",
+      "explicitDynamicTypes": 42
+    },
+    {
+      "file": "frontend/src/lib/day-photos.ts",
+      "explicitDynamicTypes": 41
+    },
+    {
+      "file": "frontend/src/lib/nudge.ts",
+      "explicitDynamicTypes": 40
+    },
+    {
+      "file": "frontend/src/lib/print-doc.ts",
+      "explicitDynamicTypes": 39
+    },
+    {
+      "file": "frontend/src/lib/session-start.ts",
+      "explicitDynamicTypes": 39
+    },
+    {
+      "file": "frontend/src/lib/use-list-reorder.ts",
+      "explicitDynamicTypes": 39
+    },
+    {
+      "file": "api/rate-limit.ts",
+      "explicitDynamicTypes": 38
+    },
+    {
+      "file": "frontend/src/lib/health-read.ts",
+      "explicitDynamicTypes": 38
+    },
+    {
+      "file": "frontend/src/lib/relative-strength.ts",
+      "explicitDynamicTypes": 38
+    },
+    {
+      "file": "frontend/src/lib/sync-legacy.ts",
+      "explicitDynamicTypes": 38
+    },
+    {
+      "file": "frontend/src/components/RestTimer.tsx",
+      "explicitDynamicTypes": 37
+    },
+    {
+      "file": "frontend/src/lib/anim-quality.ts",
+      "explicitDynamicTypes": 36
+    },
+    {
+      "file": "frontend/src/lib/backup-media.ts",
+      "explicitDynamicTypes": 36
+    },
+    {
+      "file": "frontend/src/components/CustomMediaField.tsx",
+      "explicitDynamicTypes": 35
+    },
+    {
+      "file": "frontend/src/lib/use-sheet-keyboard.ts",
+      "explicitDynamicTypes": 35
+    },
+    {
+      "file": "frontend/src/lib/workout-media.ts",
+      "explicitDynamicTypes": 34
+    },
+    {
+      "file": "frontend/src/components/SessionMuscles.tsx",
+      "explicitDynamicTypes": 33
+    },
+    {
+      "file": "frontend/src/lib/exif-date.ts",
+      "explicitDynamicTypes": 33
+    },
+    {
+      "file": "frontend/src/lib/native-keyboard.ts",
+      "explicitDynamicTypes": 33
+    },
+    {
+      "file": "frontend/src/lib/per-set.ts",
+      "explicitDynamicTypes": 33
+    },
+    {
+      "file": "frontend/src/views/StructuralBalance.tsx",
+      "explicitDynamicTypes": 33
+    },
+    {
+      "file": "mcp/src/state.ts",
+      "explicitDynamicTypes": 33
+    },
+    {
+      "file": "api/coach/core/due.ts",
+      "explicitDynamicTypes": 32
+    },
+    {
+      "file": "frontend/src/lib/i18n.ts",
+      "explicitDynamicTypes": 32
+    },
+    {
+      "file": "frontend/src/lib/viewport-guard.ts",
+      "explicitDynamicTypes": 32
+    },
+    {
+      "file": "api/admin-socket.ts",
+      "explicitDynamicTypes": 31
+    },
+    {
+      "file": "frontend/src/components/DeleteAccount.tsx",
+      "explicitDynamicTypes": 31
+    },
+    {
+      "file": "frontend/src/lib/coach-consent.ts",
+      "explicitDynamicTypes": 31
+    },
+    {
+      "file": "frontend/src/lib/finish-workout.ts",
+      "explicitDynamicTypes": 31
+    },
+    {
+      "file": "frontend/src/lib/watch-settings.ts",
+      "explicitDynamicTypes": 31
+    },
+    {
+      "file": "api/coach/adapters/spawn.ts",
+      "explicitDynamicTypes": 30
+    },
+    {
+      "file": "frontend/src/components/WorkoutSettingsSheet.tsx",
+      "explicitDynamicTypes": 30
+    },
+    {
+      "file": "api/coach/core/adapters/openai.ts",
+      "explicitDynamicTypes": 29
+    },
+    {
+      "file": "frontend/src/components/WeightRate.tsx",
+      "explicitDynamicTypes": 29
+    },
+    {
+      "file": "frontend/src/lib/equipment.ts",
+      "explicitDynamicTypes": 29
+    },
+    {
+      "file": "frontend/src/views/History.tsx",
+      "explicitDynamicTypes": 29
+    },
+    {
+      "file": "frontend/src/views/Login.tsx",
+      "explicitDynamicTypes": 29
+    },
+    {
+      "file": "frontend/src/lib/backoff.ts",
+      "explicitDynamicTypes": 28
+    },
+    {
+      "file": "frontend/src/lib/day-notes.ts",
+      "explicitDynamicTypes": 28
+    },
+    {
+      "file": "frontend/src/components/CoachConsentSheet.tsx",
+      "explicitDynamicTypes": 27
+    },
+    {
+      "file": "frontend/src/components/WorkoutScrollAnchor.tsx",
+      "explicitDynamicTypes": 27
+    },
+    {
+      "file": "frontend/src/lib/favourites.ts",
+      "explicitDynamicTypes": 27
+    },
+    {
+      "file": "frontend/src/lib/nudge-check.ts",
+      "explicitDynamicTypes": 27
+    },
+    {
+      "file": "frontend/src/lib/scan.ts",
+      "explicitDynamicTypes": 27
+    },
+    {
+      "file": "frontend/src/lib/session-repeat.ts",
+      "explicitDynamicTypes": 27
+    },
+    {
+      "file": "frontend/src/views/WatchSettings.tsx",
+      "explicitDynamicTypes": 27
+    },
+    {
+      "file": "api/push-messages.ts",
+      "explicitDynamicTypes": 26
+    },
+    {
+      "file": "frontend/src/lib/coach-secrets.ts",
+      "explicitDynamicTypes": 26
+    },
+    {
+      "file": "api/coach/core/providers.ts",
+      "explicitDynamicTypes": 25
+    },
+    {
+      "file": "frontend/src/components/CsvExportSheet.tsx",
+      "explicitDynamicTypes": 25
+    },
+    {
+      "file": "frontend/src/lib/duration.ts",
+      "explicitDynamicTypes": 25
+    },
+    {
+      "file": "frontend/src/lib/scan-web.ts",
+      "explicitDynamicTypes": 25
+    },
+    {
+      "file": "api/coach/core/refine-changes.ts",
+      "explicitDynamicTypes": 24
+    },
+    {
+      "file": "frontend/src/lib/exercise-muscle-batch-1.ts",
+      "explicitDynamicTypes": 24
+    },
+    {
+      "file": "frontend/src/lib/sync-changes.ts",
+      "explicitDynamicTypes": 24
+    },
+    {
+      "file": "api/coach/core/adapters/gemini.ts",
+      "explicitDynamicTypes": 23
+    },
+    {
+      "file": "api/coach/adapters/claude.ts",
+      "explicitDynamicTypes": 21
+    },
+    {
+      "file": "frontend/src/components/BodyMap.tsx",
+      "explicitDynamicTypes": 21
+    },
+    {
+      "file": "frontend/src/components/TabBar.tsx",
+      "explicitDynamicTypes": 21
+    },
+    {
+      "file": "frontend/src/lib/hchips.ts",
+      "explicitDynamicTypes": 21
+    },
+    {
+      "file": "api/coach/core/pipeline.ts",
+      "explicitDynamicTypes": 20
+    },
+    {
+      "file": "frontend/src/lib/coach-device.ts",
+      "explicitDynamicTypes": 20
+    },
+    {
+      "file": "frontend/src/lib/media-owed.ts",
+      "explicitDynamicTypes": 20
+    },
+    {
+      "file": "frontend/src/lib/nav.ts",
+      "explicitDynamicTypes": 20
+    },
+    {
+      "file": "frontend/src/components/ExerciseAliases.tsx",
+      "explicitDynamicTypes": 19
+    },
+    {
+      "file": "frontend/src/components/Seasonal.tsx",
+      "explicitDynamicTypes": 19
+    },
+    {
+      "file": "frontend/src/lib/audit.ts",
+      "explicitDynamicTypes": 19
+    },
+    {
+      "file": "frontend/src/lib/workout-keys.ts",
+      "explicitDynamicTypes": 19
+    },
+    {
+      "file": "frontend/src/components/ChatInput.tsx",
+      "explicitDynamicTypes": 18
+    },
+    {
+      "file": "frontend/src/lib/coach-schedule.ts",
+      "explicitDynamicTypes": 18
+    },
+    {
+      "file": "frontend/src/lib/default-lang.ts",
+      "explicitDynamicTypes": 18
+    },
+    {
+      "file": "frontend/src/lib/superset-meta.ts",
+      "explicitDynamicTypes": 18
+    },
+    {
+      "file": "frontend/src/lib/exercise-chips.ts",
+      "explicitDynamicTypes": 17
+    },
+    {
+      "file": "frontend/src/lib/media-limits.ts",
+      "explicitDynamicTypes": 17
+    },
+    {
+      "file": "frontend/src/lib/routine-backups.ts",
+      "explicitDynamicTypes": 17
+    },
+    {
+      "file": "mcp/src/labels.ts",
+      "explicitDynamicTypes": 17
+    },
+    {
+      "file": "api/coach/core/prompt.ts",
+      "explicitDynamicTypes": 16
+    },
+    {
+      "file": "frontend/src/lib/back.ts",
+      "explicitDynamicTypes": 16
+    },
+    {
+      "file": "frontend/src/lib/exercise-aliases.ts",
+      "explicitDynamicTypes": 16
+    },
+    {
+      "file": "frontend/src/components/BackupFolderRow.tsx",
+      "explicitDynamicTypes": 15
+    },
+    {
+      "file": "frontend/src/components/CameraScan.tsx",
+      "explicitDynamicTypes": 15
+    },
+    {
+      "file": "frontend/src/components/ReportSheet.tsx",
+      "explicitDynamicTypes": 15
+    },
+    {
+      "file": "frontend/src/lib/cf-access.ts",
+      "explicitDynamicTypes": 15
+    },
+    {
+      "file": "frontend/src/lib/workout-text.ts",
+      "explicitDynamicTypes": 15
+    },
+    {
+      "file": "api/coach/warmup.ts",
+      "explicitDynamicTypes": 14
+    },
+    {
+      "file": "frontend/src/lib/capacitor-fetch.ts",
+      "explicitDynamicTypes": 14
+    },
+    {
+      "file": "frontend/src/lib/onboarding-perms.ts",
+      "explicitDynamicTypes": 14
+    },
+    {
+      "file": "frontend/src/lib/session-noprog.ts",
+      "explicitDynamicTypes": 14
+    },
+    {
+      "file": "frontend/src/components/QueueRow.tsx",
+      "explicitDynamicTypes": 13
+    },
+    {
+      "file": "frontend/src/lib/incline.ts",
+      "explicitDynamicTypes": 13
+    },
+    {
+      "file": "frontend/src/lib/qr.ts",
+      "explicitDynamicTypes": 13
+    },
+    {
+      "file": "frontend/src/lib/recovery-view.ts",
+      "explicitDynamicTypes": 13
+    },
+    {
+      "file": "api/coach/cadence.ts",
+      "explicitDynamicTypes": 12
+    },
+    {
+      "file": "frontend/src/components/WorkoutChips.tsx",
+      "explicitDynamicTypes": 12
+    },
+    {
+      "file": "frontend/src/lib/active-exercise-swap.ts",
+      "explicitDynamicTypes": 12
+    },
+    {
+      "file": "frontend/src/lib/session-merge.ts",
+      "explicitDynamicTypes": 12
+    },
+    {
+      "file": "frontend/src/lib/speed.ts",
+      "explicitDynamicTypes": 12
+    },
+    {
+      "file": "frontend/src/lib/use-coach-gate.ts",
+      "explicitDynamicTypes": 12
+    },
+    {
+      "file": "api/coach/core/adapters/anthropic.ts",
+      "explicitDynamicTypes": 11
+    },
+    {
+      "file": "frontend/src/components/AppIconRow.tsx",
+      "explicitDynamicTypes": 11
+    },
+    {
+      "file": "frontend/src/lib/boot.ts",
+      "explicitDynamicTypes": 11
+    },
+    {
+      "file": "frontend/src/lib/remote.ts",
+      "explicitDynamicTypes": 11
+    },
+    {
+      "file": "frontend/src/components/SwipeRow.tsx",
+      "explicitDynamicTypes": 10
+    },
+    {
+      "file": "frontend/src/lib/glyphs.ts",
+      "explicitDynamicTypes": 10
+    },
+    {
+      "file": "frontend/src/lib/system-bars.ts",
+      "explicitDynamicTypes": 10
+    },
+    {
+      "file": "frontend/src/views/PermissionSteps.tsx",
+      "explicitDynamicTypes": 10
+    },
+    {
+      "file": "api/coach/adapters/codex.ts",
+      "explicitDynamicTypes": 9
+    },
+    {
+      "file": "api/coach/core/plan-hash.ts",
+      "explicitDynamicTypes": 9
+    },
+    {
+      "file": "api/coach/core/schemas.ts",
+      "explicitDynamicTypes": 9
+    },
+    {
+      "file": "frontend/src/components/TimerFlash.tsx",
+      "explicitDynamicTypes": 9
+    },
+    {
+      "file": "frontend/src/lib/device-link.ts",
+      "explicitDynamicTypes": 9
+    },
+    {
+      "file": "frontend/src/lib/similar-exercises.ts",
+      "explicitDynamicTypes": 9
+    },
+    {
+      "file": "frontend/src/lib/wakelock.ts",
+      "explicitDynamicTypes": 9
+    },
+    {
+      "file": "api/coach/core/glyphs.ts",
+      "explicitDynamicTypes": 8
+    },
+    {
+      "file": "api/coach/node-fetch.ts",
+      "explicitDynamicTypes": 8
+    },
+    {
+      "file": "frontend/src/lib/app-icon.ts",
+      "explicitDynamicTypes": 8
+    },
+    {
+      "file": "mcp/src/index.ts",
+      "explicitDynamicTypes": 8
+    },
+    {
+      "file": "api/coach/adapters/index.ts",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "api/coach/core/parse.ts",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "api/recover.ts",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "frontend/src/components/Toast.tsx",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "frontend/src/lib/coach-context.ts",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "frontend/src/lib/device-auth.ts",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "frontend/src/lib/rest-sounds.ts",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "frontend/src/lib/state-json.ts",
+      "explicitDynamicTypes": 7
+    },
+    {
+      "file": "frontend/src/lib/structuralBalanceTemplates.ts",
+      "explicitDynamicTypes": 6
+    },
+    {
+      "file": "frontend/src/lib/use-auto-more.ts",
+      "explicitDynamicTypes": 6
+    },
+    {
+      "file": "frontend/src/views/Muscles.tsx",
+      "explicitDynamicTypes": 6
+    },
+    {
+      "file": "frontend/src/components/ExerciseViewToggle.tsx",
+      "explicitDynamicTypes": 5
+    },
+    {
+      "file": "frontend/src/components/LostAccess.tsx",
+      "explicitDynamicTypes": 5
+    },
+    {
+      "file": "api/coach/handle.ts",
+      "explicitDynamicTypes": 4
+    },
+    {
+      "file": "frontend/src/components/MiniBodyMap.tsx",
+      "explicitDynamicTypes": 4
+    },
+    {
+      "file": "frontend/src/lib/app-base.ts",
+      "explicitDynamicTypes": 4
+    },
+    {
+      "file": "frontend/src/lib/channel.ts",
+      "explicitDynamicTypes": 4
+    },
+    {
+      "file": "frontend/src/test-setup.ts",
+      "explicitDynamicTypes": 4
+    },
+    {
+      "file": "frontend/src/components/WorkoutThumb.tsx",
+      "explicitDynamicTypes": 3
+    },
+    {
+      "file": "frontend/src/lib/app-icon-variants.ts",
+      "explicitDynamicTypes": 3
+    },
+    {
+      "file": "api/coach/core/pending.ts",
+      "explicitDynamicTypes": 2
+    },
+    {
+      "file": "frontend/src/main.tsx",
+      "explicitDynamicTypes": 2
+    },
+    {
+      "file": "api/coach/core/adapters/compatible.ts",
+      "explicitDynamicTypes": 1
+    },
+    {
+      "file": "api/coach/core/categories.ts",
+      "explicitDynamicTypes": 1
+    },
+    {
+      "file": "api/coach/core/system-prompt.ts",
+      "explicitDynamicTypes": 1
+    },
+    {
+      "file": "frontend/src/lib/exercise-muscle-batch-2.ts",
+      "explicitDynamicTypes": 1
+    },
+    {
+      "file": "frontend/src/lib/platform-now.ts",
+      "explicitDynamicTypes": 1
+    }
+  ]
+}

@@ -4,18 +4,18 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import Stats from './Stats.jsx'
+import Stats from './Stats.tsx'
 
 const mocks = vi.hoisted(() => ({ S: null }))
-vi.mock('../store/useStore.js', () => ({ useStore: selector => selector({ S: mocks.S }) }))
+vi.mock('../store/useStore.ts', () => ({ useStore: selector => selector({ S: mocks.S }) }))
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   bwSheet: () => {}, goalSheet: () => {}, calendarSheet: () => {}, workoutDetailSheet: () => {}, exerciseHistorySheet: () => {},
   WorkoutRow: () => null, bwDeltaColor: () => 'inherit',
 }))
-vi.mock('../components/LineChart.jsx', () => ({ default: () => null }))
-vi.mock('../components/Heatmap.jsx', () => ({ default: () => null }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => null, BodyMapLegend: () => null }))
+vi.mock('../components/LineChart.tsx', () => ({ default: () => null }))
+vi.mock('../components/Heatmap.tsx', () => ({ default: () => null }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => null, BodyMapLegend: () => null }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const BENCH = '0025'

@@ -17,29 +17,29 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, hasData: () => false }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: vi.fn(), openSheet: render => { mocks.sheets.push(render); return {} } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   webauthnOK: () => mocks.webauthn, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), BIO: 'your fingerprint', bio: () => 'your fingerprint',
   api: vi.fn(), passkeyAssertion: vi.fn(), passwordLogin: vi.fn(), passwordRegister: vi.fn(), passwordResetRedeem: vi.fn(),
   createPasskey: vi.fn(),
 }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE }, nativePlatform: async () => null, isAndroid: async () => false }))
-vi.mock('../components/Passkeys.jsx', () => ({ openDeviceLinkRedeem: vi.fn(() => { mocks.redeem = true }) }))
-vi.mock('../lib/demo.js', () => ({ DEMO: false, REPO: 'https://example.invalid' }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE }, nativePlatform: async () => null, isAndroid: async () => false }))
+vi.mock('../components/Passkeys.tsx', () => ({ openDeviceLinkRedeem: vi.fn(() => { mocks.redeem = true }) }))
+vi.mock('../lib/demo.ts', () => ({ DEMO: false, REPO: 'https://example.invalid' }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: vi.fn(), confirmSheet: vi.fn() }))
 
-const { default: Login } = await import('./Login.jsx')
-const { LostAccessSheet } = await import('../components/LostAccess.jsx')
+const { default: Login } = await import('./Login.tsx')
+const { LostAccessSheet } = await import('../components/LostAccess.tsx')
 
 const mounted = []
 function mount(el) {

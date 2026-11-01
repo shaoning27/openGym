@@ -6,13 +6,13 @@
    pulled; coming back to the tab pulls. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn() }))
 const { toast } = vi.hoisted(() => ({ toast: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
-import { editCompletedSession } from '../lib/session-edit.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
+import { editCompletedSession } from '../lib/session-edit.ts'
 
 const clone = value => JSON.parse(JSON.stringify(value))
 const routine = id => ({ id, name: id, ex: [] })
@@ -327,10 +327,10 @@ describe('ordering', () => {
   })
 })
 
-/* A workout edited after it was logged (lib/session-edit.js), on its way between devices. The
+/* A workout edited after it was logged (lib/session-edit.ts), on its way between devices. The
    edit is an ordinary change of the copy — owed, pushed, merged on a 409 — and carries the time
    of the edit, so the merge keeps it over the old version by id, whichever copy is newer as a
-   whole (lib/sync-merge.js). */
+   whole (lib/sync-merge.ts). */
 describe('an edited workout between devices', () => {
   const lift = w => ({ id: 'sq', target: { mode: 'reps' }, sets: [{ w, r: 5, done: true }] })
   const logged = (w = 40) => ({ ...workout('w1'), end: 2, entries: [lift(w)], prs: [] })

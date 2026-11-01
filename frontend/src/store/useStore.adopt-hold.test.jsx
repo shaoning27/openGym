@@ -9,7 +9,7 @@
    Now nothing syncs between the pairing and the answer, the answer is applied to the server's
    copy as it is when the question closes, and a start with the question still open asks it again.
 
-   Real modules: store/useStore.js, lib/api.js, lib/remote.js, lib/mobile.js. Mocked: the Capacitor
+   Real modules: store/useStore.ts, lib/api.ts, lib/remote.ts, lib/mobile.js. Mocked: the Capacitor
    plugins (an in-memory Directory.Data), the question sheet, and fetch, which plays the server. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -35,9 +35,9 @@ vi.mock('@capacitor/local-notifications', () => ({
 }))
 vi.mock('@capacitor/app', () => ({ App: { addListener: () => ({ remove() {} }) } }))
 vi.mock('@capacitor/core', () => ({ Capacitor: { getPlatform: () => 'android', isNativePlatform: () => true }, registerPlugin: () => ({}) }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: () => {} }) } }))
 // The question a resumed adoption asks (useStore resumeAdoption): the sign-in's own sheet.
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: extras => h.ask(extras) }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: extras => h.ask(extras) }))
 
 const BASE = 'https://gym.example.com'
 const USER = { id: 'u1', name: 'andi' }
@@ -92,7 +92,7 @@ const TWELVE = Array.from({ length: 12 }, (_, i) => workout('s' + i, `2026-09-${
 const SERVER = { _ts: 1000, _rev: 5, unit: 'kg', workouts: TWELVE, routines: [], bodyweight: [] }
 // At collection, not in a hook: the cold transform of the store's imports (the 1 MB exercise
 // table among them) takes seconds, and under a parallel run it went past the hook's timeout.
-const { DEF } = await import('./useStore.js')
+const { DEF } = await import('./useStore.ts')
 function localPhone() {
   h.files.clear()
   localStorage.clear()
@@ -106,7 +106,7 @@ function localPhone() {
 let stores = []
 async function freshStore() {
   vi.resetModules()
-  const { useStore } = await import('./useStore.js')
+  const { useStore } = await import('./useStore.ts')
   stores.push(useStore)
   return useStore
 }

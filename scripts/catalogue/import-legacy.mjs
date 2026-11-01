@@ -16,8 +16,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const SRC = path.join(ROOT, 'frontend/src')
 const OUT = path.join(ROOT, 'catalogue')
 
-const { EXDB, CATALOGUE } = await import(pathToFileURL(path.join(SRC, 'lib/exercises.js')))
-const { exerciseMuscleMetadataFor } = await import(pathToFileURL(path.join(SRC, 'lib/exercise-muscle-batch-1.js')))
+const { EXDB, CATALOGUE } = await import(pathToFileURL(path.join(SRC, 'lib/exercises.ts')))
+const { exerciseMuscleMetadataFor } = await import(pathToFileURL(path.join(SRC, 'lib/exercise-muscle-batch-1.ts')))
 
 const packs = async dir => {
   const out = {}

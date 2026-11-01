@@ -7,18 +7,18 @@
 // the two failures on "Save" that issue #42 was about — the settings write and the secure-store
 // write, which the screen deliberately does in that order.
 //
-// coach-local.js is mocked here only so the DYNAMIC import inside prepare()/turnOff() resolves
-// without a network stack. providers.js, categories.js and coach.js are the real ones, so the
+// coach-local.ts is mocked here only so the DYNAMIC import inside prepare()/turnOff() resolves
+// without a network stack. providers.ts, categories.ts and coach.ts are the real ones, so the
 // provider table, the validator and the category copy are exactly what ships.
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import CoachSetup from './CoachSetup.jsx'
-import { getApiKey, setApiKey, clearApiKey } from '../lib/coach-secrets.js'
-import { localModels, localForget } from '../lib/coach-local.js'
-import { CATEGORY_TEXT } from '../lib/coach.js'
-import { HTTP_PROVIDERS } from '../../../api/coach/core/providers.js'
-import { DATA_CATEGORIES } from '../../../api/coach/core/categories.js'
+import CoachSetup from './CoachSetup.tsx'
+import { getApiKey, setApiKey, clearApiKey } from '../lib/coach-secrets.ts'
+import { localModels, localForget } from '../lib/coach-local.ts'
+import { CATEGORY_TEXT } from '../lib/coach.ts'
+import { HTTP_PROVIDERS } from '../../../api/coach/core/providers.ts'
+import { DATA_CATEGORIES } from '../../../api/coach/core/categories.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -34,12 +34,12 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: (...a) => mocks.openSheet(...a) })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
@@ -47,17 +47,17 @@ vi.mock('../store/useUI.js', () => {
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => mocks.nav }))
 // A getter, so one test can be the web build and the rest the phone.
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.mobile } }))
-vi.mock('../lib/coach-secrets.js', () => ({
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.mobile } }))
+vi.mock('../lib/coach-secrets.ts', () => ({
   getApiKey: vi.fn(() => Promise.resolve(null)),
   setApiKey: vi.fn(() => Promise.resolve()),
   clearApiKey: vi.fn(() => Promise.resolve()),
 }))
-vi.mock('../lib/coach-local.js', () => ({
+vi.mock('../lib/coach-local.ts', () => ({
   localModels: vi.fn(() => Promise.resolve({ ok: true, models: [] })),
   localForget: vi.fn(() => Promise.resolve({ ok: true })),
 }))
-vi.mock('./MobileOnboarding.jsx', () => ({ ConnectSheet: () => <div className="connect-sheet" /> }))
+vi.mock('./MobileOnboarding.tsx', () => ({ ConnectSheet: () => <div className="connect-sheet" /> }))
 
 let host, root
 beforeEach(() => {
@@ -371,7 +371,7 @@ describe('CoachSetup — saving', () => {
     expect(mocks.nav).not.toHaveBeenCalled()
   })
 
-  // DEFECT (fixed in CoachSetup.jsx, see the report): "List models" validates the endpoint and
+  // DEFECT (fixed in CoachSetup.tsx, see the report): "List models" validates the endpoint and
   // "Save" did not. Editing the field after a successful listing — the one order in which the
   // two disagree — saved `baseUrl: null`, said "The Coach is on" and left for the conversation
   // with the phone pointed at nothing.

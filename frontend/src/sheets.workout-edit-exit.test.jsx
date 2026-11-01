@@ -4,12 +4,12 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exitWorkoutEdit, saveWorkoutEdits } from './sheets.jsx'
-import { setNav } from './lib/nav.js'
-import { EXDB } from './lib/exercises.js'
-import { editCompletedSession } from './lib/session-edit.js'
+import { useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exitWorkoutEdit, saveWorkoutEdits } from './sheets.tsx'
+import { setNav } from './lib/nav.ts'
+import { EXDB } from './lib/exercises.ts'
+import { editCompletedSession } from './lib/session-edit.ts'
 
 const mounted = []
 const [A] = EXDB.filter(e => e.bp !== 'cardio').slice(0, 1).map(e => e.id)

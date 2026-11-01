@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { idbBackend } from './media-store-idb.js'
+import { idbBackend } from './media-store-idb.ts'
 
 /* Just enough IndexedDB for the backend: one database, one object store keyed by `hash`, requests
    that answer on the next tick and transactions that complete after their last request. Values

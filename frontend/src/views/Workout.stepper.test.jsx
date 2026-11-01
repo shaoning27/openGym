@@ -2,7 +2,7 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { parseHTML } from 'linkedom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
+import Workout from './Workout.tsx'
 
 // This suite pins down the superset stepper regression: one tap on a +/- button must move the
 // value by exactly one step. The bug was a stale closure — in a superset both ExerciseBlock
@@ -41,18 +41,18 @@ const mocks = vi.hoisted(() => {
   return state
 })
 
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector(mocks.storeSnapshot())
   useStore.getState = mocks.storeSnapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const useUI = selector => selector ? selector(mocks.uiSnapshot()) : mocks.uiSnapshot()
   useUI.getState = mocks.uiSnapshot
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   startFlow: vi.fn(),
   exercisePicker: vi.fn(),
   exConfigSheet: vi.fn(),
@@ -67,8 +67,8 @@ vi.mock('../sheets.jsx', () => ({
   sessionNoteSheet: vi.fn(),
   renameWorkoutSheet: vi.fn(),
 }))
-vi.mock('../components/Media.jsx', () => ({ default: () => null }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../components/Media.tsx', () => ({ default: () => null }))
+vi.mock('../lib/api.ts', () => ({
   api: vi.fn(() => Promise.resolve({})),
   IS_APPLE: false, IS_ANDROID: false, BIO: 'biometrics',
 }))

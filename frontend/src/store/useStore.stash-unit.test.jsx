@@ -5,11 +5,11 @@
    100 lb, and finishing it logged the wrong weights. (QA 2026-10-06.) */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast: vi.fn(), stopRest: vi.fn(), abandonWork: vi.fn() }) } }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast: vi.fn(), stopRest: vi.fn(), abandonWork: vi.fn() }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
 
 const clone = v => JSON.parse(JSON.stringify(v))
 const active = { id: 'run1', d: '2026-10-06', start: 1, name: 'Push', entries: [{ id: '0025', sets: [{ w: 100, r: 5, done: true }, { w: 100, r: 5, done: false }] }] }

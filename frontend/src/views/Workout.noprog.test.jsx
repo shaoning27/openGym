@@ -6,18 +6,18 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { buildCompletedWorkout } from '../lib/finish-workout.js'
-import { nextPrescription } from '../lib/progression.js'
-import { lastEntryFor } from '../lib/history.js'
-import { buildSessionEntries } from '../lib/session-start.js'
-import { swapActiveWorkoutExercise } from '../sheets.jsx'
-import { EXDB } from '../lib/exercises.js'
+import Workout from './Workout.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { buildCompletedWorkout } from '../lib/finish-workout.ts'
+import { nextPrescription } from '../lib/progression.ts'
+import { lastEntryFor } from '../lib/history.ts'
+import { buildSessionEntries } from '../lib/session-start.ts'
+import { swapActiveWorkoutExercise } from '../sheets.tsx'
+import { EXDB } from '../lib/exercises.ts'
 
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), appBase: () => '/' }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { armRestAlert, buildRestAlert, disarmRestAlert, REST_ALERT_ID, REST_CHANNEL_ID, REST_QUIET_CHANNEL_ID } from './rest-alert.js'
+import { armRestAlert, buildRestAlert, disarmRestAlert, REST_ALERT_ID, REST_CHANNEL_ID, REST_QUIET_CHANNEL_ID } from './rest-alert.ts'
 
 describe('buildRestAlert', () => {
   const now = 1_700_000_000_000

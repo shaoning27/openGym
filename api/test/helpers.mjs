@@ -1,6 +1,6 @@
 /* Shared scaffolding for the api tests.
  *
- * Every module under coach/ resolves DATA_DIR at import time (the same way server.js does),
+ * Every module under coach/ resolves DATA_DIR at import time (the same way server.ts does),
  * so a test that wants its own data directory has to set the variable before the first
  * import. Hence dynamic imports everywhere below, and one helper that does it in the right
  * order. node:test runs each file in its own process, so one directory per file is enough.
@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-/* The port a spawned server.js actually bound.
+/* The port a spawned server.ts actually bound.
  *
  * Never pick one for it. Opening a listener on 0, reading the port, closing it and handing the
  * number to a child that binds it a process start later leaves a window the kernel re-issues
@@ -127,7 +127,7 @@ export function softPasskey(ORIGIN = 'http://localhost:8080') {
   return {
     id,
     row: (userId, extra = {}) => ({ id, userId, publicKey: cose.toString('base64url'), counter: 0, transports: ['internal'], ...extra }),
-    // What navigator.credentials.create() hands back, serialised the way lib/api.js does.
+    // What navigator.credentials.create() hands back, serialised the way lib/api.ts does.
     attestation(challenge, { origin = ORIGIN } = {}) {
       const clientDataJSON = Buffer.from(JSON.stringify({ type: 'webauthn.create', challenge, origin, crossOrigin: false }));
       const len = Buffer.from([raw.length >> 8, raw.length & 255]);

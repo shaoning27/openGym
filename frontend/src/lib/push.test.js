@@ -7,7 +7,7 @@ const calls = []
 // api() throws one (message and status). Empty: { ok: true }.
 const subscribeAnswers = []
 const refusal = (status, message) => Object.assign(new Error(message), { status })
-vi.mock('./api.js', () => ({
+vi.mock('./api.ts', () => ({
   api: vi.fn(async (path, opts) => {
     calls.push([path, opts?.method || 'GET', opts?.body ? JSON.parse(opts.body) : null])
     if (path === '/api/push/public-key') return { key: KEY }
@@ -68,7 +68,7 @@ beforeEach(() => {
 
 describe('deviceId', () => {
   it('makes one token per browser and keeps it', async () => {
-    const { deviceId } = await import('./push.js')
+    const { deviceId } = await import('./push.ts')
     const a = deviceId()
     expect(a).toMatch(/^[A-Za-z0-9_-]{8,64}$/)
     expect(deviceId()).toBe(a)
@@ -76,20 +76,20 @@ describe('deviceId', () => {
   })
 
   it('keeps a stored id of the shape the server accepts', async () => {
-    const { deviceId } = await import('./push.js')
+    const { deviceId } = await import('./push.ts')
     localStorage.setItem('gym_device', 'dev_aaaaaaaa')
     expect(deviceId()).toBe('dev_aaaaaaaa')
   })
 })
 
-// A server that applies the writes the way api/server.js does: the endpoint is stored from the
+// A server that applies the writes the way api/server.ts does: the endpoint is stored from the
 // first POST on, under the device id sent if it has the shape deviceIdOf accepts, and under none
 // otherwise. Whatever state a boot starts from, the second boot must find nothing to write.
 describe('against a server that applies the writes, the second boot writes nothing', () => {
   const serverKeeps = v => (typeof v === 'string' && /^[A-Za-z0-9_-]{8,64}$/.test(v) ? v : null)
   const bootTwice = async () => {
-    const { syncPushSubscription } = await import('./push.js')
-    const { api } = await import('./api.js')
+    const { syncPushSubscription } = await import('./push.ts')
+    const { api } = await import('./api.ts')
     const real = api.getMockImplementation()
     api.mockImplementation(async (path, opts) => {
       const answer = await real(path, opts)
@@ -117,7 +117,7 @@ describe('against a server that applies the writes, the second boot writes nothi
   // A hand-set id the server refuses was sent as it was, the row kept no id, and every boot sent
   // it again. It is replaced by one the server keeps, once, and that one is kept after.
   it.each([['bad!'], ['short77'], ['a'.repeat(65)], ['abc.defghijk']])('a stored id the server refuses (%s) is replaced once, and the sync settles', async stored => {
-    const { deviceId } = await import('./push.js')
+    const { deviceId } = await import('./push.ts')
     localStorage.setItem('gym_device', stored)
     sub = makeSub(KEY)
     serverDevice = null
@@ -132,7 +132,7 @@ describe('against a server that applies the writes, the second boot writes nothi
 
 describe('syncPushSubscription', () => {
   it('does nothing without permission or without a subscription', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     Notification.permission = 'default'
     expect(await syncPushSubscription()).toBe(false)
     Notification.permission = 'granted'
@@ -141,7 +141,7 @@ describe('syncPushSubscription', () => {
   })
 
   it('asks the server and does not write when it already holds the endpoint under this browser\'s device id', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     sub = makeSub(KEY)
     expect(await syncPushSubscription()).toBe(true)
     expect(calls.map(c => c[1] + ' ' + c[0].split('?')[0])).toEqual(['GET /api/push/public-key', 'GET /api/push/status'])
@@ -151,7 +151,7 @@ describe('syncPushSubscription', () => {
   // was never written again: the server could not tell this browser's rest-timer alert from the
   // account's and sent it to every device.
   it('sends the same subscription again, with the device id, when the server holds it under none', async () => {
-    const { syncPushSubscription, deviceId } = await import('./push.js')
+    const { syncPushSubscription, deviceId } = await import('./push.ts')
     sub = makeSub(KEY)
     serverDevice = null
     expect(await syncPushSubscription()).toBe(true)
@@ -162,7 +162,7 @@ describe('syncPushSubscription', () => {
   })
 
   it('and when the server holds it under another device id', async () => {
-    const { syncPushSubscription, deviceId } = await import('./push.js')
+    const { syncPushSubscription, deviceId } = await import('./push.ts')
     sub = makeSub(KEY)
     serverDevice = 'someoneelse01'
     expect(await syncPushSubscription()).toBe(true)
@@ -172,7 +172,7 @@ describe('syncPushSubscription', () => {
   })
 
   it('does not write when an older api answers without a device id at all', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     sub = makeSub(KEY)
     serverDevice = undefined
     expect(await syncPushSubscription()).toBe(true)
@@ -180,7 +180,7 @@ describe('syncPushSubscription', () => {
   })
 
   it('does not write where this browser has no device id to give (storage refused)', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     sub = makeSub(KEY)
     serverDevice = null
     const real = Object.getOwnPropertyDescriptor(window, 'localStorage')
@@ -194,7 +194,7 @@ describe('syncPushSubscription', () => {
   })
 
   it('re-registers a subscription the server lost, with the device id', async () => {
-    const { syncPushSubscription, deviceId } = await import('./push.js')
+    const { syncPushSubscription, deviceId } = await import('./push.ts')
     sub = makeSub(KEY)
     serverHas = false
     expect(await syncPushSubscription()).toBe(true)
@@ -204,7 +204,7 @@ describe('syncPushSubscription', () => {
   })
 
   it('replaces a subscription made against a key the server no longer has', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     const old = makeSub('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
     sub = old
     expect(await syncPushSubscription()).toBe(true)
@@ -226,26 +226,26 @@ describe('the device id the worker re-registers with', () => {
   afterEach(() => { delete globalThis.caches })
 
   it('is left for the worker when the browser holds a subscription at boot', async () => {
-    const { syncPushSubscription, deviceId } = await import('./push.js')
+    const { syncPushSubscription, deviceId } = await import('./push.ts')
     sub = makeSub(KEY)
     expect(await syncPushSubscription()).toBe(true)
     expect(stored).toEqual([['opengym-device', '/opengym-device-id', deviceId()]])
   })
 
   it('and when the switch is turned on', async () => {
-    const { enablePush, deviceId } = await import('./push.js')
+    const { enablePush, deviceId } = await import('./push.ts')
     await enablePush()
     expect(stored).toEqual([['opengym-device', '/opengym-device-id', deviceId()]])
   })
 
   it('is not left where the browser holds no subscription', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     expect(await syncPushSubscription()).toBe(false)
     expect(stored).toEqual([])
   })
 
   it('a Cache API that refuses (private mode) changes nothing else', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     globalThis.caches = { open: async () => { throw new DOMException('denied', 'SecurityError') } }
     sub = makeSub(KEY)
     serverHas = false
@@ -262,7 +262,7 @@ describe('a subscription the server has under another account', () => {
   const conflict = () => refusal(409, 'this subscription belongs to another account')
 
   it('is replaced by a fresh one, which is sent once more', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     const old = makeSub(KEY)
     sub = old
     serverHas = false
@@ -277,7 +277,7 @@ describe('a subscription the server has under another account', () => {
   })
 
   it('turning the switch on goes the same way', async () => {
-    const { enablePush } = await import('./push.js')
+    const { enablePush } = await import('./push.ts')
     sub = makeSub(KEY)                                        // subscribe() hands back the one it has
     reg.pushManager.subscribe.mockImplementationOnce(async () => sub)
     subscribeAnswers.push(conflict())
@@ -287,7 +287,7 @@ describe('a subscription the server has under another account', () => {
   })
 
   it('a fresh one refused as well is dropped, and the caller gets the server\'s words and `refused`', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     sub = makeSub(KEY)
     serverHas = false
     subscribeAnswers.push(conflict(), refusal(400, 'push endpoint not allowed'))
@@ -299,7 +299,7 @@ describe('a subscription the server has under another account', () => {
   })
 
   it('a retry that never reaches the server is not the server refusing, and leaves nothing behind', async () => {
-    const { enablePush } = await import('./push.js')
+    const { enablePush } = await import('./push.ts')
     subscribeAnswers.push(conflict(), new TypeError('Failed to fetch'))
     const e = await enablePush().catch(x => x)
     expect(e).toBeInstanceOf(TypeError)
@@ -309,7 +309,7 @@ describe('a subscription the server has under another account', () => {
   })
 
   it('any other failure is not retried and is thrown as it was', async () => {
-    const { syncPushSubscription } = await import('./push.js')
+    const { syncPushSubscription } = await import('./push.ts')
     const old = makeSub(KEY)
     sub = old
     serverHas = false
@@ -325,7 +325,7 @@ describe('a subscription the server has under another account', () => {
 
 describe('pushSupported', () => {
   it('needs the service worker, PushManager, Notification and an https origin', async () => {
-    const { pushSupported } = await import('./push.js')
+    const { pushSupported } = await import('./push.ts')
     expect(pushSupported()).toBe(true)
     expect(location.protocol).toBe('https:')
   })

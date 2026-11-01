@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { workoutCardModel, layoutWorkoutCard, wrapText, parseColor, mixColor, mapColors, viewAspect, MAX_RECORDS, CARD_WIDTH } from './workout-card.js'
-import { fmtDate } from './format.js'
+import { workoutCardModel, layoutWorkoutCard, wrapText, parseColor, mixColor, mapColors, viewAspect, MAX_RECORDS, CARD_WIDTH } from './workout-card.ts'
+import { fmtDate } from './format.ts'
 
 // #453: a finished workout shared as a picture. A fake measure stands in for the canvas — every
 // character is half its font size wide — so the layout can be checked without one.

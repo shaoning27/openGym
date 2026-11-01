@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
    exercise id, twins drawn on both figures, a female exercise with a male twin, custom exercises
    with and without a photo, one deleted on another device, an id no catalogue knows). The quality
    choice lives in this device's localStorage under one key and nowhere else. */
-vi.mock('./mobile.js', () => ({ MOBILE: true }))
+vi.mock('./mobile.ts', () => ({ MOBILE: true }))
 vi.mock('@capacitor/core', () => {
   const impl = {
     available: async () => ({ available: true }),
@@ -23,9 +23,9 @@ vi.mock('@capacitor/core', () => {
 })
 
 import FIXTURE from './fixtures/anim-safety-state.json' with { type: 'json' }
-import { EXIDX, exOr, isCustomEx, registerCustom, gifSrc, imgSrc, figureOf, canonicalExId } from './exercises.js'
-import { PACK_QUALITIES, packId, clipSources, packDrawingId } from './anim-quality.js'
-import * as packs from './anim-packs.js'
+import { EXIDX, exOr, isCustomEx, registerCustom, gifSrc, imgSrc, figureOf, canonicalExId } from './exercises.ts'
+import { PACK_QUALITIES, packId, clipSources, packDrawingId } from './anim-quality.ts'
+import * as packs from './anim-packs.ts'
 
 const CHOICES = ['auto', 'still', 'builtin', ...PACK_QUALITIES]
 const FIGS = ['male', 'female']
@@ -45,7 +45,7 @@ export function referencedIds(S) {
   return [...ids]
 }
 
-/** What the media for one id is, at one choice and figure: the same split Media.jsx makes. */
+/** What the media for one id is, at one choice and figure: the same split Media.tsx makes. */
 function pictureFor(id, { choice, figure, installed }) {
   const ex = exOr(id)
   if (isCustomEx(ex)) return { kind: 'custom', ex }
@@ -71,7 +71,7 @@ export function assertEveryPictureResolves(S) {
           expect(src.endsWith('/' + packDrawingId(p.ex, figure) + '.webp'), where).toBe(true)
         }
       } else if (p.kind === 'custom') {
-        // Custom media keep their own path (components/CustomMedia.jsx): never a pack, never the catalogue's.
+        // Custom media keep their own path (components/CustomMedia.tsx): never a pack, never the catalogue's.
         expect(p.ex.custom === true || S.customEx.some(c => c.id === id), where).toBe(true)
       } else {
         expect(p.ex.missing, where).toBe(true)

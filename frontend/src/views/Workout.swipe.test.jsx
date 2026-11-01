@@ -3,17 +3,17 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout, { deleteActiveSet, undoDeleteSet, copyActiveSet, removeActiveExercise, _resetHintQuiet, HINT_QUIET_MS } from './Workout.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { closeOpenRow } from '../lib/use-swipe-row.js'
+import Workout, { deleteActiveSet, undoDeleteSet, copyActiveSet, removeActiveExercise, _resetHintQuiet, HINT_QUIET_MS } from './Workout.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { closeOpenRow } from '../lib/use-swipe-row.ts'
 
 // Swipe on sets (v1.3.11): swipe toward the start removes a set with an Undo, toward the end
 // copies it. These cover the store paths the swipe, the set menu and the Undo share, the guards
 // (last set, timers), and the gesture on a real rendered row.
 
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(), appBase: () => '/' }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))

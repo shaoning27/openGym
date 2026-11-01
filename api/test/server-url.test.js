@@ -1,7 +1,7 @@
 /* A request target that does not parse as a URL (`//`, `//api%2Fhealth`) must get a 400 from the
    listener and leave the process running — the parse sits before the per-route try/catch, so a
    throw there is an unhandled rejection and a dead api container. Raw sockets, because
-   fetch() refuses to send such targets in the first place. Real server.js in a child. */
+   fetch() refuses to send such targets in the first place. Real server.ts in a child. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -19,7 +19,7 @@ async function startServer(t) {
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gym-url-'));
   fs.writeFileSync(path.join(dataDir, 'secret'), crypto.randomBytes(32).toString('hex'), { mode: 0o600 });
   fs.writeFileSync(path.join(dataDir, 'db.json'), JSON.stringify({ users: [], creds: [], subs: [], invites: [] }));
-  const child = spawn(process.execPath, ['server.js'], {
+  const child = spawn(process.execPath, ['server.ts'], {
     cwd: API, stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ORIGIN: 'http://localhost:8080', RP_ID: 'localhost' }
   });

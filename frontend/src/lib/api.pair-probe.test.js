@@ -3,7 +3,7 @@
 // and for a reverse proxy that answered the CORS preflight itself and kept the app out. A
 // no-cors probe of /api/health tells the two apart, and the message says which.
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { pairRedeem } from './api.js'
+import { pairRedeem } from './api.ts'
 
 afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers() })
 

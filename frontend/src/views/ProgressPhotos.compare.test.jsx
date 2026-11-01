@@ -2,8 +2,8 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it } from 'vitest'
-import { useUI } from '../store/useUI.js'
-import { openProgressCompare } from './ProgressPhotos.jsx'
+import { useUI } from '../store/useUI.ts'
+import { openProgressCompare } from './ProgressPhotos.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

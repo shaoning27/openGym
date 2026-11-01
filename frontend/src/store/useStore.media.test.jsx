@@ -4,18 +4,18 @@
    change that has not: a sign-out refuses while any are waiting, going ahead anyway keeps them in
    the stash with the state (and their files on this device), a different account signing in
    keeps them aside for the previous one, and the attempt before a sign-out includes them. The
-   local media store is the in-memory one; lib/media-sync.js is not started, so settle() only
+   local media store is the in-memory one; lib/media-sync.ts is not started, so settle() only
    reads what is pending — except in the test that registers a runner of its own. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
 const { toast } = vi.hoisted(() => ({ toast: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast }) } }))
 
-import { api } from '../lib/api.js'
-import { createMediaStore, memoryBackend, _setMediaStore } from '../lib/media-store.js'
-import { _resetMediaOwed, registerMediaRunner } from '../lib/media-owed.js'
-import { DEF, useStore } from './useStore.js'
+import { api } from '../lib/api.ts'
+import { createMediaStore, memoryBackend, _setMediaStore } from '../lib/media-store.ts'
+import { _resetMediaOwed, registerMediaRunner } from '../lib/media-owed.ts'
+import { DEF, useStore } from './useStore.ts'
 
 const clone = value => JSON.parse(JSON.stringify(value))
 const USER = { id: 'user-1', name: 'One' }

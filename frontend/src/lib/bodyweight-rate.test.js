@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { weightRate, rateCorridor, rateStatus } from './bodyweight.js'
-import { convertStateUnit } from './units.js'
+import { weightRate, rateCorridor, rateStatus } from './bodyweight.ts'
+import { convertStateUnit } from './units.ts'
 
 // #759: the weekly rate of change over the last three weeks, and a corridor to hold it against.
 const NOW = new Date('2026-10-21T09:00:00').getTime()

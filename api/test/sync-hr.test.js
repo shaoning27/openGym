@@ -1,10 +1,10 @@
-// Heart rate per set from the Apple Watch (frontend lib/heart-rate.js): optional `hr` / `restHr` on
-// a logged set. The server's PUT /api/data merge (sync-stamps.js stampPut) must carry them along
+// Heart rate per set from the Apple Watch (frontend lib/heart-rate.ts): optional `hr` / `restHr` on
+// a logged set. The server's PUT /api/data merge (sync-stamps.ts stampPut) must carry them along
 // for every kind of writer: the app that wrote them, an older app that read them and sends the
 // document back without knowing them, an API client. And a document without them is unchanged.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { stampPut } from '../sync-stamps.js';
+import { stampPut } from '../sync-stamps.ts';
 
 const clone = v => JSON.parse(JSON.stringify(v));
 const doc = sets => ({ _ts: 10, unit: 'kg', workouts: [{ id: 'w1', d: '2026-10-10', _ts: 5, entries: [{ id: '0025', sets }] }], routines: [] });

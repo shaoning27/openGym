@@ -97,6 +97,7 @@ jobs:
               - 'api/Dockerfile'
               - 'api/package*.json'
               - 'api/*.js'
+              - 'api/*.ts'
               - 'api/coach/**'
               - 'web/**'
               - 'frontend/package*.json'

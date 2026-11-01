@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-// The Start button in the tab bar (components/TabBar.jsx) and Home's today row both go straight
+// The Start button in the tab bar (components/TabBar.tsx) and Home's today row both go straight
 // into today's planned session the moment there is one, and only fall through to the Start
 // screen when nothing is planned. So on any day with a routine, a freestyle session and the
 // "Other routines" list are unreachable — the only other way in, "Choose a different workout"
@@ -7,13 +7,13 @@
 import React, { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { useStore } from '../store/useStore.js'
-import { startFlow } from '../sheets.jsx'
-import Home from './Home.jsx'
+import { useStore } from '../store/useStore.ts'
+import { startFlow } from '../sheets.tsx'
+import Home from './Home.tsx'
 
 const nav = vi.fn()
 vi.mock('react-router-dom', () => ({ useNavigate: () => nav }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), bwSheet: vi.fn(), goalSheet: vi.fn(), dayOverrideSheet: vi.fn(),
   calendarSheet: vi.fn(), startFlow: vi.fn(), bwDeltaColor: () => '', weighInsSheet: vi.fn(),
 }))

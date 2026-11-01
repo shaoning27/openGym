@@ -1,7 +1,7 @@
 import { afterEach, expect, it } from 'vitest'
-import { CATALOGUE, EXDB, EXIDX, registerCustom } from './exercises.js'
-import { OLYMPIC_LIFT_METADATA } from './exercise-muscle-batch-1.js'
-import { musclesOf, MUSCLES } from './muscles.js'
+import { CATALOGUE, EXDB, EXIDX, registerCustom } from './exercises.ts'
+import { OLYMPIC_LIFT_METADATA } from './exercise-muscle-batch-1.ts'
+import { musclesOf, MUSCLES } from './muscles.ts'
 
 afterEach(() => registerCustom([]))
 

@@ -2,15 +2,15 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import App from './App.jsx'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
+import App from './App.tsx'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
 
-vi.mock('./lib/sound.js', () => ({
+vi.mock('./lib/sound.ts', () => ({
   setPlayOnSilent: vi.fn(), setVibrate: vi.fn(), setAlarmBuzzer: vi.fn(),
   beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn(),
 }))
-vi.mock('./lib/api.js', async importOriginal => ({
+vi.mock('./lib/api.ts', async importOriginal => ({
   ...await importOriginal(), api: vi.fn(() => Promise.resolve({})), beacon: vi.fn(),
 }))
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

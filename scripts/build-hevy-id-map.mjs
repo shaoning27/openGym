@@ -16,8 +16,8 @@
 import { writeFileSync, readFileSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { matchExercise } from '../frontend/src/lib/import-csv.js'
-import { EXIDX } from '../frontend/src/lib/exercises.js'
+import { matchExercise } from '../frontend/src/lib/import-csv.ts'
+import { EXIDX } from '../frontend/src/lib/exercises.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = join(ROOT, 'frontend/src/lib/hevy-id-map.js')

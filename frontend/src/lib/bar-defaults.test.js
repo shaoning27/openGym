@@ -2,12 +2,12 @@
    profile, S.barDefaults[unit][eq]. Precedence everywhere a bar weight is read: the exercise's own
    barWeights entry (0 = no bar), then your bar for the type, then the built-in default. */
 import { describe, expect, it } from 'vitest'
-import { barWeightFor, barTypeWeight, ownBarDefault, withBarDefault, withStandardBars, plateSplit } from './bar.js'
-import { baseWeightFor, rowLoad, dropGrid } from './plates.js'
-import { barFloor } from './history.js'
-import { convertStateUnit } from './units.js'
-import { mergeStates, stampChange, stampEdits, stampRestore } from './sync-merge.js'
-import * as Server from '../../../api/sync-stamps.js'
+import { barWeightFor, barTypeWeight, ownBarDefault, withBarDefault, withStandardBars, plateSplit } from './bar.ts'
+import { baseWeightFor, rowLoad, dropGrid } from './plates.ts'
+import { barFloor } from './history.ts'
+import { convertStateUnit } from './units.ts'
+import { mergeStates, stampChange, stampEdits, stampRestore } from './sync-merge.ts'
+import * as Server from '../../../api/sync-stamps.ts'
 import { EXDB } from './exercises-data.js'
 
 const idOf = eq => EXDB.find(e => e.eq === eq).id

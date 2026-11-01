@@ -1,18 +1,18 @@
 // @vitest-environment happy-dom
 // The end of a hold, against the real store and work timer: it sounds once. The chime and its
-// buzz pattern belong to the timer (store/useUI.js); the set it ticks adds neither its own beep,
+// buzz pattern belong to the timer (store/useUI.ts); the set it ticks adds neither its own beep,
 // which clipped the chime's first note, nor its short buzz, which cut the pattern off.
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
-import { beep, chime, vibrate, alertBuzz } from '../lib/sound.js'
+import Workout from './Workout.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
+import { beep, chime, vibrate, alertBuzz } from '../lib/sound.ts'
 
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})), appBase: () => '/' }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), chime: vi.fn(), vibrate: vi.fn(), alertBuzz: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})), appBase: () => '/' }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))

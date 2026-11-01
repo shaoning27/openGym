@@ -10,16 +10,16 @@
    buildCompletedWorkout), and every sync goes through the store. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(), setRemoteAuth: vi.fn() }))
 const { toast } = vi.hoisted(() => ({ toast: vi.fn() }))
-vi.mock('./useUI.js', () => ({ useUI: { getState: () => ({ toast }) } }))
+vi.mock('./useUI.ts', () => ({ useUI: { getState: () => ({ toast }) } }))
 
-import { api } from '../lib/api.js'
-import { DEF, useStore } from './useStore.js'
-import { buildCombinedEntries } from '../lib/session-merge.js'
-import { buildCompletedWorkout } from '../lib/finish-workout.js'
-import { convertWeight } from '../lib/units.js'
-import { isWarmupRow } from '../lib/workout-model.js'
+import { api } from '../lib/api.ts'
+import { DEF, useStore } from './useStore.ts'
+import { buildCombinedEntries } from '../lib/session-merge.ts'
+import { buildCompletedWorkout } from '../lib/finish-workout.ts'
+import { convertWeight } from '../lib/units.ts'
+import { isWarmupRow } from '../lib/workout-model.ts'
 
 const BENCH = '0025'   // barbell bench press — loaded, 2.5 kg step
 const PLAN_CHANGED = 'Plan changed, so starting from your new target.'

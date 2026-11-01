@@ -1,5 +1,5 @@
 // Android's cloud backup (Auto Backup) skips an app's whole backup once it passes 25 MB. The
-// local copies of the photos and videos of custom exercises (lib/media-store-fs.js, the files
+// local copies of the photos and videos of custom exercises (lib/media-store-fs.ts, the files
 // directory's opengym-media/) would take the state mirror down with them, so both rule files
 // leave that folder out of the cloud backup — and the manifest has to point at them, or neither
 // applies. A device-to-device transfer keeps it. The pairing (opengym-remote.json, the session
@@ -59,12 +59,12 @@ describe('Android backup rules', () => {
 })
 
 // The backup-folder plugin deletes and writes only the app's own dated copies (#161): the native
-// rule has to be the same one lib/mobile.js names them by, or a prune would miss its own files.
+// rule has to be the same one lib/mobile.ts names them by, or a prune would miss its own files.
 describe('BackupFolderPlugin', () => {
   const src = readFileSync(new URL('../../android/app/src/main/java/ch/duartesantos/opengym/BackupFolderPlugin.java', import.meta.url), 'utf8')
-  it('names the same backup files as lib/mobile.js, and checks the folder grant before writing or pruning', () => {
+  it('names the same backup files as lib/mobile.ts, and checks the folder grant before writing or pruning', () => {
     const java = /BACKUP_NAME = Pattern\.compile\("(.+)"\);/.exec(src)[1].replace(/\\\\/g, '\\')
-    const js = /const AUTO_BACKUP_NAME = \/(.+)\//.exec(readFileSync(new URL('./mobile.js', import.meta.url), 'utf8'))[1]
+    const js = /const AUTO_BACKUP_NAME(?:: any)? = \/(.+)\//.exec(readFileSync(new URL('./mobile.ts', import.meta.url), 'utf8'))[1]
     expect('^' + java + '$').toBe(js)
     for (const m of ['write', 'prune']) {
       const body = src.slice(src.indexOf(`public void ${m}(`), src.indexOf('io.execute', src.indexOf(`public void ${m}(`)))

@@ -8,11 +8,11 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRoot } from 'react-dom/client'
-import { DEF, useStore } from './store/useStore.js'
-import { useUI } from './store/useUI.js'
-import { exercisePicker } from './sheets.jsx'
-import Library from './views/Library.jsx'
-import Muscles from './views/Muscles.jsx'
+import { DEF, useStore } from './store/useStore.ts'
+import { useUI } from './store/useUI.ts'
+import { exercisePicker } from './sheets.tsx'
+import Library from './views/Library.tsx'
+import Muscles from './views/Muscles.tsx'
 
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {}, useLocation: () => ({ pathname: '/muscles', state: null }), useSearchParams: () => [new URLSearchParams()] }))
 

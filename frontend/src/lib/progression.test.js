@@ -3,9 +3,9 @@ import {
   readSession, sessionsFor, stallCount, nextPrescription, applyPrescription, plannedOf, planChanged,
   policyFor, defaultIncrement, weightIncrement, epley1RM, deloadTarget1RM,
   deloadFactorOf, DELOAD_FACTOR, POLICIES_FOR, DELOAD_AFTER, MAX_BW_SETS
-} from './progression.js'
-import { entryExcluded } from './history.js'
-import { EXDB, isAssisted } from './exercises.js'
+} from './progression.ts'
+import { entryExcluded } from './history.ts'
+import { EXDB, isAssisted } from './exercises.ts'
 
 // A plainly loaded lift: more weight is harder. The first match used to be `assisted chest dip`,
 // whose stack takes weight off you and which therefore progresses downwards (issue #232) — these

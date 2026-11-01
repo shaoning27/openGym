@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { EXIDX, EXDB, smOf } from './exercises.js'
-import { LANGS, DERIVED_LOCALES } from './i18n-core.js'
+import { EXIDX, EXDB, smOf } from './exercises.ts'
+import { LANGS, DERIVED_LOCALES } from './i18n-core.ts'
 import {
   MUSCLE_NAME, exerciseMuscleSnapshot, hasExplicitMuscleMetadata, levelsOf, loadOf,
   loadOfWorkouts, loadOfWeeklyPlan, matchesMuscleGroups, muscleBalanceWindow, muscleGroupsOf,
   musclesOf, muscleWeightsOf, rankOf
-} from './muscles.js'
+} from './muscles.ts'
 
 describe('multi-muscle exercise metadata', () => {
   it('normalizes legacy primary/secondary fields and removes duplicate groups', () => {
@@ -257,7 +257,7 @@ describe('deleted custom exercises', () => {
   })
 })
 
-// muscles.js counts completed work, so its warm-up boundary has to agree with the one the
+// muscles.ts counts completed work, so its warm-up boundary has to agree with the one the
 // session runtime uses — including the legacy spellings phaseForSet normalises.
 describe('warm-up boundary', () => {
   it('excludes every phase spelling the workout model treats as a warm-up', () => {

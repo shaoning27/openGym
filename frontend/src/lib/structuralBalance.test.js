@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { computeBalance, classify, ratioFor, resolveCurrent, resolveCurrentReps, targetFor, overrideKey, overrideIdOf, withOverride, loadForReps, loadAtReps } from './structuralBalance.js'
-import { TEMPLATES, EVALUATION_MODES, BALANCE_STATUSES, BORDERLINE_BAND_PCT } from './structuralBalanceTemplates.js'
+import { computeBalance, classify, ratioFor, resolveCurrent, resolveCurrentReps, targetFor, overrideKey, overrideIdOf, withOverride, loadForReps, loadAtReps } from './structuralBalance.ts'
+import { TEMPLATES, EVALUATION_MODES, BALANCE_STATUSES, BORDERLINE_BAND_PCT } from './structuralBalanceTemplates.ts'
 
 const NOW = Date.parse('2026-01-15T00:00:00Z')
 
@@ -477,7 +477,7 @@ describe('an assistance machine counts the help against the lifter', () => {
 
 describe('rep-count on a unilateral set', () => {
   it('reads the better side, not the both-sides total', () => {
-    // workout-model.js keeps `r` as L.r + R.r on a per-side row; a "10 reps" target is per limb.
+    // workout-model.ts keeps `r` as L.r + R.r on a per-side row; a "10 reps" target is per limb.
     const S = { unit: 'kg', workouts: [workoutAt('0652', NOW, [
       { done: true, w: 0, r: 12, sides: { L: { r: 5, done: true }, R: { r: 7, done: true } } },
     ])] }
@@ -539,7 +539,7 @@ describe('exercise override', () => {
   })
 })
 
-// How an override is stored: `{ id, _ts }`, a clear as `id: null` (see sync-merge.js).
+// How an override is stored: `{ id, _ts }`, a clear as `id: null` (see sync-merge.ts).
 describe('stored overrides', () => {
   const template = TEMPLATES.atg
   const key = overrideKey(template, findRole(template, 'nordicCurl'))

@@ -5,14 +5,14 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import RoutineEdit from './RoutineEdit.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { POLICY_DESC } from '../lib/progression.js'
+import RoutineEdit from './RoutineEdit.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { POLICY_DESC } from '../lib/progression.ts'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})) }))
-vi.mock('../sheets.jsx', () => ({ glyphPicker: vi.fn(), exercisePicker: vi.fn(), exConfigSheet: vi.fn(), confirmSheet: vi.fn() }))
-vi.mock('../components/Media.jsx', () => ({ Thumb: () => null }))
-vi.mock('../components/BodyMap.jsx', () => ({ default: () => null }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})) }))
+vi.mock('../sheets.tsx', () => ({ glyphPicker: vi.fn(), exercisePicker: vi.fn(), exConfigSheet: vi.fn(), confirmSheet: vi.fn() }))
+vi.mock('../components/Media.tsx', () => ({ Thumb: () => null }))
+vi.mock('../components/BodyMap.tsx', () => ({ default: () => null }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))

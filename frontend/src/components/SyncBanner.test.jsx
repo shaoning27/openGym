@@ -2,8 +2,8 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import SyncBanner, { PENDING_GRACE_MS, useConnectionTrouble } from './SyncBanner.jsx'
-import { connectionView } from './ServerSync.jsx'
+import SyncBanner, { PENDING_GRACE_MS, useConnectionTrouble } from './SyncBanner.tsx'
+import { connectionView } from './ServerSync.tsx'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -13,7 +13,7 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
    A phone kept local on purpose gets no line at all (#454).
    Never in the public demo, never during the phone's first-launch choice, and a change merely
    waiting for its push does not flash it. The store is a stand-in: its `sync` is what each test
-   sets; ServerSync.jsx (the words and the actions) is the real one. */
+   sets; ServerSync.tsx (the words and the actions) is the real one. */
 const mocks = vi.hoisted(() => {
   const state = { MOBILE: false, DEMO: false, webauthn: true, user: null, guest: false, onboarding: false, sync: null, S: {}, sheets: [], navs: [] }
   state.toast = vi.fn()
@@ -27,24 +27,24 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: (render, opts) => { mocks.sheets.push({ render, opts }); return {} } })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => to => mocks.navs.push(to) }))
-vi.mock('../lib/mobile.js', () => ({ get MOBILE() { return mocks.MOBILE } }))
-vi.mock('../lib/demo.js', () => ({ get DEMO() { return mocks.DEMO } }))
-vi.mock('../lib/api.js', () => ({ webauthnOK: () => mocks.webauthn, passkeyLogin: (...a) => mocks.passkeyLogin(...a) }))
-vi.mock('../sheets.jsx', () => ({ askAddDeviceData: vi.fn() }))
+vi.mock('../lib/mobile.ts', () => ({ get MOBILE() { return mocks.MOBILE } }))
+vi.mock('../lib/demo.ts', () => ({ get DEMO() { return mocks.DEMO } }))
+vi.mock('../lib/api.ts', () => ({ webauthnOK: () => mocks.webauthn, passkeyLogin: (...a) => mocks.passkeyLogin(...a) }))
+vi.mock('../sheets.tsx', () => ({ askAddDeviceData: vi.fn() }))
 // What the connect sheet was opened with is the point; its own form is tested elsewhere.
-vi.mock('../views/MobileOnboarding.jsx', () => ({ ConnectSheet: props => <div className="connect" data-url={props.initialUrl ?? ''} data-again={String(!!props.again)} /> }))
+vi.mock('../views/MobileOnboarding.tsx', () => ({ ConnectSheet: props => <div className="connect" data-url={props.initialUrl ?? ''} data-again={String(!!props.again)} /> }))
 
 const BASE = 'https://gym.example.com'
 const sync = (status, extra = {}) => ({ status, offline: false, pending: false, auth: false, lastError: null, lastSynced: 0, server: BASE, ...extra })

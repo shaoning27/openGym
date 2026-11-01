@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { FATIGUE_STATES, fatigueHalfLifeOf, fatigueOf, strengthOf } from './recovery.js'
-import { fatigueStateOf, fatigueRecoveryMs, fmtRecoveryIn } from './recovery-view.js'
-import { MUSCLES, levelsOf } from './muscles.js'
+import { FATIGUE_STATES, fatigueHalfLifeOf, fatigueOf, strengthOf } from './recovery.ts'
+import { fatigueStateOf, fatigueRecoveryMs, fmtRecoveryIn } from './recovery-view.ts'
+import { MUSCLES, levelsOf } from './muscles.ts'
 
 const FATIGUE_BANDS = [
   { at: 0, level: 4 },

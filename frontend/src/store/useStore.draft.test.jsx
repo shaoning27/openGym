@@ -5,9 +5,9 @@
 // saved is the same document a full clone would have saved.
 import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('../lib/api.js', () => ({ api: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn() }))
 
-import { draftOf, useStore } from './useStore.js'
+import { draftOf, useStore } from './useStore.ts'
 
 const base = () => ({ unit: 'kg', n: 3, gone: undefined, bad: NaN, workouts: [{ id: 'w1', sets: [1, 2] }], active: { cur: 0, entries: [{ id: 'a', sets: [] }] }, week: { 1: 'r1' } })
 

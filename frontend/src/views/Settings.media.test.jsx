@@ -2,12 +2,12 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Settings from './Settings.jsx'
-import { createMediaStore, memoryBackend, _setMediaStore } from '../lib/media-store.js'
-import { _resetMediaOwed } from '../lib/media-owed.js'
-import { readZip, zipStore } from '../lib/zip.js'
-import { sha256Hex } from '../lib/sha256.js'
-import { jpeg } from '../lib/media-samples.test-util.js'
+import Settings from './Settings.tsx'
+import { createMediaStore, memoryBackend, _setMediaStore } from '../lib/media-store.ts'
+import { _resetMediaOwed } from '../lib/media-owed.ts'
+import { readZip, zipStore } from '../lib/zip.ts'
+import { sha256Hex } from '../lib/sha256.ts'
+import { jpeg } from '../lib/media-samples.test-util.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -39,27 +39,27 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore, DEF: { reminder: { time: '17:30' }, workouts: [] }, hasData: () => false }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: vi.fn() })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
   return { useUI }
 })
 vi.mock('react-router-dom', () => ({ useNavigate: () => () => {} }))
-vi.mock('../lib/api.js', () => ({
+vi.mock('../lib/api.ts', () => ({
   api: (...a) => mocks.api(...a), webauthnOK: () => false, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), IS_ANDROID: false,
 }))
-vi.mock('../lib/push.js', () => ({ pushSupported: () => false, enablePush: vi.fn(), disablePush: vi.fn(), sendTestPush: vi.fn() }))
-vi.mock('../lib/wakelock.js', () => ({ wakeLockSupported: () => false }))
-vi.mock('../lib/mobile.js', () => ({ MOBILE: false, isAndroid: () => Promise.resolve(false), shareExport: vi.fn(), shareExportBlob: vi.fn(), syncReminder: vi.fn() }))
-vi.mock('../lib/coach-api.js', () => ({ forgetCoach: vi.fn(() => Promise.resolve()) }))
-vi.mock('./MobileOnboarding.jsx', () => ({ ConnectSheet: () => null }))
-vi.mock('../sheets.jsx', () => ({
+vi.mock('../lib/push.ts', () => ({ pushSupported: () => false, enablePush: vi.fn(), disablePush: vi.fn(), sendTestPush: vi.fn() }))
+vi.mock('../lib/wakelock.ts', () => ({ wakeLockSupported: () => false }))
+vi.mock('../lib/mobile.ts', () => ({ MOBILE: false, isAndroid: () => Promise.resolve(false), shareExport: vi.fn(), shareExportBlob: vi.fn(), syncReminder: vi.fn() }))
+vi.mock('../lib/coach-api.ts', () => ({ forgetCoach: vi.fn(() => Promise.resolve()) }))
+vi.mock('./MobileOnboarding.tsx', () => ({ ConnectSheet: () => null }))
+vi.mock('../sheets.tsx', () => ({
   starterPlanSheet: vi.fn(), confirmSheet: (...a) => mocks.confirmSheet(...a), importFromApp: vi.fn(),
   importFromHevy: vi.fn(), equipmentProfileSheet: vi.fn(), menuSheet: (...a) => mocks.menuSheet(...a), askAddDeviceData: vi.fn(),
 }))

@@ -3,7 +3,7 @@
 // per-side (two sides, each ticked on its own), holds (seconds), supersets (group), warm-ups,
 // the best set before today (the watch's PRs) and the workout's start (its summary).
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { buildSnapshot, applyEvents, bindWatchAppActions, patchSetIn, _resetWatchSync } from './watch-sync.js'
+import { buildSnapshot, applyEvents, bindWatchAppActions, patchSetIn, _resetWatchSync } from './watch-sync.ts'
 
 beforeEach(() => { localStorage.clear(); _resetWatchSync() })
 
@@ -107,13 +107,13 @@ describe('a snapshot too big for the application context', () => {
   const size = v => new TextEncoder().encode(JSON.stringify(v)).length
 
   it('is left alone when it fits', async () => {
-    const { fitSnapshot } = await import('./watch-sync.js')
+    const { fitSnapshot } = await import('./watch-sync.ts')
     const small = { v: 1, active: null, ready: null }
     expect(fitSnapshot(small)).toBe(small)
   })
 
   it('loses what matters least first, never the running sets, and fits', async () => {
-    const { fitSnapshot, SNAPSHOT_MAX_BYTES } = await import('./watch-sync.js')
+    const { fitSnapshot, SNAPSHOT_MAX_BYTES } = await import('./watch-sync.ts')
     const snap = big()
     expect(size(snap)).toBeGreaterThan(SNAPSHOT_MAX_BYTES)
     const fit = fitSnapshot(snap)
@@ -125,7 +125,7 @@ describe('a snapshot too big for the application context', () => {
   })
 
   it('keeps today\'s routine when cutting the others is enough', async () => {
-    const { fitSnapshot } = await import('./watch-sync.js')
+    const { fitSnapshot } = await import('./watch-sync.ts')
     const snap = big()
     const fit = fitSnapshot(snap, size({ ...snap, ready: { today: snap.ready.today, others: [] } }) + 10)
     expect(fit.ready.today.entries).toHaveLength(12)
@@ -151,7 +151,7 @@ describe('the weigh-in from the watch', () => {
   })
 
   it('is logged on its day, replacing that day\'s', async () => {
-    const { logWeighIn } = await import('./bodyweight.js')
+    const { logWeighIn } = await import('./bodyweight.ts')
     const at = new Date('2026-10-14T08:00:00').getTime()
     const s = { bodyweight: [{ d: '2026-10-13', w: 82, t: 1 }, { d: '2026-10-14', w: 81, t: 2 }] }
     expect(logWeighIn(s, 80.96, at)).toBe(true)
@@ -160,7 +160,7 @@ describe('the weigh-in from the watch', () => {
   })
 
   it('the watch is told the app\'s language, whether to ask, and the last weight', async () => {
-    const { watchExtras } = await import('./watch-sync.js')
+    const { watchExtras } = await import('./watch-sync.ts')
     expect(watchExtras({ weighIn: false, bodyweight: [{ d: '2026-10-01', w: 80 }, { d: '2026-10-10', w: 79.5 }] }))
       .toEqual({ lang: 'en', weighIn: false, lastBw: 79.5 })
     expect(watchExtras({})).toEqual({ lang: 'en', weighIn: true })
@@ -169,7 +169,7 @@ describe('the weigh-in from the watch', () => {
 
 describe('workouts deleted in openGym, for the watch\'s own copies in Apple Health', () => {
   it('names the deleted workouts newest first, leaves add-backs out, and caps the list', async () => {
-    const { healthGoneFor } = await import('./watch-sync.js')
+    const { healthGoneFor } = await import('./watch-sync.ts')
     const S = { deleted: { workouts: { a: 100, b: 300, c: -5, d: 200 }, bodyweight: { '2026-10-01': 50 } } }
     expect(healthGoneFor(S)).toEqual(['opengym-w-b', 'opengym-w-d', 'opengym-w-a'])
     expect(healthGoneFor(S, 2)).toEqual(['opengym-w-b', 'opengym-w-d'])

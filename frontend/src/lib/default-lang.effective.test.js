@@ -3,7 +3,7 @@
 // (rememberDefaultLang) that stands in for /api/config until it answers, so a boot does not flash
 // the browser's language first.
 import { beforeEach, describe, expect, it } from 'vitest'
-import { effectiveLang, rememberDefaultLang, browserLangs } from './default-lang.js'
+import { effectiveLang, rememberDefaultLang, browserLangs } from './default-lang.ts'
 
 const auto = { lang: 'en', langAuto: true }
 

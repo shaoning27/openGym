@@ -2,7 +2,7 @@
 // the newest fourteen there. Nothing outside that folder, and nothing but the app's own dated
 // backups inside it, is ever deleted.
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { todayISO } from './format.js'
+import { todayISO } from './format.ts'
 
 const h = vi.hoisted(() => ({ files: new Map(), refuseWrite: false, refuseList: false, stuck: new Set(), deleted: [], foreign: new Set() }))
 
@@ -37,7 +37,7 @@ vi.mock('@capacitor/filesystem', () => ({
   },
 }))
 
-const { writeAutoBackup, AUTO_BACKUP_DIR, AUTO_BACKUP_KEEP } = await import('./mobile.js')
+const { writeAutoBackup, AUTO_BACKUP_DIR, AUTO_BACKUP_KEEP } = await import('./mobile.ts')
 
 const day = n => { const d = new Date(2026, 0, 1); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10) }
 const backup = d => 'opengym-backup-' + d + '.json'
@@ -150,8 +150,8 @@ describe('writeAutoBackup where today\'s name belongs to another install', () =>
 // module wholesale), so the two are pinned together here.
 it('the Settings subtitle names the same number of copies the pruning keeps', async () => {
   const fs = await import('node:fs')
-  const src = fs.readFileSync(new URL('../views/Settings.jsx', import.meta.url), 'utf8')
-  // autoBackupSubtitle(folder, keep) (components/BackupFolderRow.jsx) fills in every wording
+  const src = fs.readFileSync(new URL('../views/Settings.tsx', import.meta.url), 'utf8')
+  // autoBackupSubtitle(folder, keep) (components/BackupFolderRow.tsx) fills in every wording
   const m = src.match(/autoBackupSubtitle\([^)]*, (\d+)\)/)
   expect(m && Number(m[1])).toBe(AUTO_BACKUP_KEEP)
 })

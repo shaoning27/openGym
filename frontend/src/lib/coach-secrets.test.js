@@ -25,7 +25,7 @@ const SecureStorage = new Proxy({}, {
 })
 vi.mock('@aparajita/capacitor-secure-storage', () => ({ SecureStorage }))
 
-const secrets = await import('./coach-secrets.js')
+const secrets = await import('./coach-secrets.ts')
 
 const within = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(`hung for ${ms} ms`)), ms))])
 

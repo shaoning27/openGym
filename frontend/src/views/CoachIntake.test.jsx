@@ -7,17 +7,17 @@
 // the two paths that are awkward to reach by hand: a plan request that fails after the answers
 // are already saved, and the editor's rule about not opening a second conversation.
 //
-// coach.js is deliberately NOT mocked: `hasConsent`, `emptyCoach`, `appendChat` and
+// coach.ts is deliberately NOT mocked: `hasConsent`, `emptyCoach`, `appendChat` and
 // `coachAvailable` are the contract this screen is written against, so the tests run the real
 // ones. MOBILE and DEMO are both false in a test build, which is the web gate.
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import CoachIntake from './CoachIntake.jsx'
-import { requestPlan, disclosure } from '../lib/coach-api.js'
-import { CONSENT_VERSION, CATEGORY_TEXT } from '../lib/coach.js'
-import { setLang } from '../lib/i18n.js'
-import { consentTarget, hasAiConsent, aiConsents, _resetAiConsent } from '../lib/coach-consent.js'
+import CoachIntake from './CoachIntake.tsx'
+import { requestPlan, disclosure } from '../lib/coach-api.ts'
+import { CONSENT_VERSION, CATEGORY_TEXT } from '../lib/coach.ts'
+import { setLang } from '../lib/i18n.ts'
+import { consentTarget, hasAiConsent, aiConsents, _resetAiConsent } from '../lib/coach-consent.ts'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
@@ -34,12 +34,12 @@ const mocks = vi.hoisted(() => {
   })
   return state
 })
-vi.mock('../store/useStore.js', () => {
+vi.mock('../store/useStore.ts', () => {
   const useStore = selector => selector ? selector(mocks.snapshot()) : mocks.snapshot()
   useStore.getState = mocks.snapshot
   return { useStore }
 })
-vi.mock('../store/useUI.js', () => {
+vi.mock('../store/useUI.ts', () => {
   const snap = () => ({ toast: (...a) => mocks.toast(...a), openSheet: vi.fn() })
   const useUI = selector => selector ? selector(snap()) : snap()
   useUI.getState = snap
@@ -49,7 +49,7 @@ vi.mock('react-router-dom', () => ({
   useNavigate: () => mocks.nav,
   useSearchParams: () => [new URLSearchParams(mocks.search), vi.fn()],
 }))
-vi.mock('../lib/coach-api.js', () => ({
+vi.mock('../lib/coach-api.ts', () => ({
   requestPlan: vi.fn(() => Promise.resolve({})),
   disclosure: vi.fn(() => Promise.resolve(null)),
   JOB_ERRORS: { busy: 'the app’s busy line' },
@@ -215,7 +215,7 @@ describe('CoachIntake — the consent screen', () => {
   })
 
   it('the training line names the session notes, which the Coach reads', () => {
-    // api/coach/core/payload.js sends each recent session's note (cleanWorkout). The consent
+    // api/coach/core/payload.ts sends each recent session's note (cleanWorkout). The consent
     // screen listed weights, reps, times, effort and durations, and never said so.
     mount()
     const training = all('.ob-consent-row').find(r => r.querySelector('b').textContent === 'Your logged training')
@@ -336,7 +336,7 @@ describe('CoachIntake — the two answers that gate the flow', () => {
     } finally { await setLang('en') }
   })
 
-  // The app's own wheels (DurationWheel.jsx HourMinuteWheel), like every other time picker.
+  // The app's own wheels (DurationWheel.tsx HourMinuteWheel), like every other time picker.
   it('the session wheels never go under ten minutes', () => {
     mount(); walkTo('Session length')
     expect(all('.ob-wheel')).toEqual([])

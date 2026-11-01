@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { canMoveActiveWorkoutUnit, moveActiveWorkoutUnit, canMoveActiveWorkoutEntry, moveActiveWorkoutEntry } from './active-workout-order.js'
-import { supersetFlowStep } from './supersetFlow.js'
-import { supersetUnits } from './history.js'
-import { LANGS, DERIVED_LOCALES } from './i18n-core.js'
+import { canMoveActiveWorkoutUnit, moveActiveWorkoutUnit, canMoveActiveWorkoutEntry, moveActiveWorkoutEntry } from './active-workout-order.ts'
+import { supersetFlowStep } from './supersetFlow.ts'
+import { supersetUnits } from './history.ts'
+import { LANGS, DERIVED_LOCALES } from './i18n-core.ts'
 import { PT_BR_OVERRIDES } from '../locales/pt-BR.js'
 
 const entry = (id, extra = {}) => ({

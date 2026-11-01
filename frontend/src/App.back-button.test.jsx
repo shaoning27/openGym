@@ -6,11 +6,11 @@
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import App from './App.jsx'
-import { DEF, useStore } from './store/useStore.js'
+import App from './App.tsx'
+import { DEF, useStore } from './store/useStore.ts'
 
-vi.mock('./lib/sound.js', async importOriginal => ({ ...(await importOriginal()), setPlayOnSilent: vi.fn(), setVibrate: vi.fn(), setAlarmBuzzer: vi.fn(), setNativeBuzzer: vi.fn() }))
-vi.mock('./lib/api.js', async importOriginal => {
+vi.mock('./lib/sound.ts', async importOriginal => ({ ...(await importOriginal()), setPlayOnSilent: vi.fn(), setVibrate: vi.fn(), setAlarmBuzzer: vi.fn(), setNativeBuzzer: vi.fn() }))
+vi.mock('./lib/api.ts', async importOriginal => {
   const actual = await importOriginal()
   return { ...actual, api: vi.fn(() => Promise.resolve({})), beacon: vi.fn() }
 })
@@ -25,7 +25,7 @@ const scrolledTo = async y => {
 }
 const frame = () => act(async () => { await new Promise(r => requestAnimationFrame(() => r())) })
 const tap = async el => { await act(async () => { el.click() }); await frame() }
-// A screen loaded on demand (App.jsx lazyView) renders a few turns after its route does.
+// A screen loaded on demand (App.tsx lazyView) renders a few turns after its route does.
 const appear = async find => {
   const get = typeof find === 'string' ? () => document.querySelector(find) : find
   for (let i = 0; i < 500 && !get(); i++) await act(async () => { await new Promise(r => setTimeout(r, 10)) })

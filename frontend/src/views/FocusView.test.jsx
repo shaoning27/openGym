@@ -3,12 +3,12 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import Workout from './Workout.jsx'
-import { DEF, useStore } from '../store/useStore.js'
-import { useUI } from '../store/useUI.js'
+import Workout from './Workout.tsx'
+import { DEF, useStore } from '../store/useStore.ts'
+import { useUI } from '../store/useUI.ts'
 
-vi.mock('../lib/sound.js', () => ({ beep: vi.fn(), vibrate: vi.fn(), unlock: vi.fn() }))
-vi.mock('../lib/api.js', () => ({ api: vi.fn(() => Promise.resolve({})) }))
+vi.mock('../lib/sound.ts', () => ({ beep: vi.fn(), vibrate: vi.fn(), unlock: vi.fn() }))
+vi.mock('../lib/api.ts', () => ({ api: vi.fn(() => Promise.resolve({})) }))
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 const clone = value => JSON.parse(JSON.stringify(value))
@@ -151,7 +151,7 @@ describe('Focus workout view', () => {
   })
 })
 
-// The speed stepper follows the profile's speed unit like the set row does (lib/speed.js): shown,
+// The speed stepper follows the profile's speed unit like the set row does (lib/speed.ts): shown,
 // stepped and typed in mph, stored in km/h. It used to say km/h whatever the setting.
 describe('Focus view cardio speed', () => {
   const BIKE = '2138'   // stationary bike, cardio
